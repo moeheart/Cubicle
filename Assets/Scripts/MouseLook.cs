@@ -3,8 +3,7 @@ using System.Collections;
 
 public class MouseLook : MonoBehaviour {
 
-	//TODO
-	//Should probably attach this to camera instead of player
+	//Handles the rotation of the gameobject
 
 	public enum RotationAxes {
 		MouseXAndY = 0,
