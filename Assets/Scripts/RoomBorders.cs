@@ -10,6 +10,7 @@ public class RoomBorders : MonoBehaviour {
 	private float lengthPerUnit = Configurations.lengthPerUnit;
 
 	public void BuildRoom(Vector3 position, Vector3 dimension) {
+		Debug.Log("building room... position: " + position + "size: " + dimension);
 		BuildSide(position, Direction.XZ, new Vector2(dimension[0], dimension[2]));
 		BuildSide(position, Direction.XY, new Vector2(dimension[0], dimension[1]));
 		BuildSide(position, Direction.ZY, new Vector2(dimension[2], dimension[1]));
@@ -27,25 +28,46 @@ public class RoomBorders : MonoBehaviour {
 		for (int i = 0; i < dimension.x; ++i) {
 			for (int j = 0; j < dimension.z; ++j) {
 				GameObject border;
+				string name;
+				Vector3 pos;
 				switch (direction) {
 					case Direction.XZ:
-						border = Instantiate(floor) as GameObject;
-						border.transform.parent = this.transform;
-						border.transform.position = new Vector3(position.x + i * lengthPerUnit, 
+						pos = new Vector3(position.x + i * lengthPerUnit, 
 							position.y, position.z + j * lengthPerUnit);
+						name = pos + "-XZ";
+
+						if (GameObject.Find(name) == null) {
+							border = Instantiate(floor) as GameObject;
+							border.transform.parent = this.transform;
+							border.transform.position = pos;
+							border.name = name;
+						}
 						break;
+
 					case Direction.XY:
-						border = Instantiate(wallXY) as GameObject;
-						border.transform.parent = this.transform;
-						border.transform.position = new Vector3(position.x + i * lengthPerUnit, 
+						pos = new Vector3(position.x + i * lengthPerUnit, 
 							position.y + j * lengthPerUnit, position.z);
+						name = pos + "-XY";
+
+						if (GameObject.Find(name) == null) {
+							border = Instantiate(wallXY) as GameObject;
+							border.transform.parent = this.transform;
+							border.transform.position = pos;
+							border.name = name;
+						}
 						break;
+
 					case Direction.ZY:
-						border = Instantiate(wallZY) as GameObject;
-						border.transform.parent = this.transform;
-						border.transform.parent = this.transform;
-						border.transform.position = new Vector3(position.x, 
+						pos = new Vector3(position.x, 
 							position.y + j * lengthPerUnit, position.z + i * lengthPerUnit);
+						name = pos + "-ZY";
+
+						if (GameObject.Find(name) == null) {
+							border = Instantiate(wallZY) as GameObject;
+							border.transform.parent = this.transform;
+							border.transform.position = pos;
+							border.name = name;
+						}
 						break;
 				}
 			}

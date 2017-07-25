@@ -17,6 +17,7 @@ public class LevelManager : MonoBehaviour {
 		roomBorders = Instantiate(roomPrefab) as RoomBorders;
 		ReadAndParse();
 		GameObject player = Instantiate(playerPrefab) as GameObject;
+		player.transform.position = new Vector3(15,10,15);
 	}
 	
 	// Update is called once per frame
@@ -46,9 +47,9 @@ public class LevelManager : MonoBehaviour {
 			List<object> positionList = ((List<object>) entryValueDict["position"]);
 			List<object> dimensionList = ((List<object>) entryValueDict["dimension"]);
 
-			posX = System.Convert.ToSingle(positionList[0]);
-			posY = System.Convert.ToSingle(positionList[1]);
-			posZ = System.Convert.ToSingle(positionList[2]);
+			posX = System.Convert.ToSingle(positionList[0]) * 10;
+			posY = System.Convert.ToSingle(positionList[1]) * 10;
+			posZ = System.Convert.ToSingle(positionList[2]) * 10;
 			dimX = System.Convert.ToSingle(dimensionList[0]);
 			dimY = System.Convert.ToSingle(dimensionList[1]);
 			dimZ = System.Convert.ToSingle(dimensionList[2]);
