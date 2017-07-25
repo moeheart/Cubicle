@@ -45,8 +45,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\Scripts\FPSInput.cs" />
-     <Compile Include="Assets\Scripts\MouseLook.cs" />
+     <Compile Include="Assets\Scripts\Configurations.cs" />
+     <Compile Include="Assets\Scripts\Input Handler\FPSInput.cs" />
+     <Compile Include="Assets\Scripts\Input Handler\MouseLook.cs" />
+     <Compile Include="Assets\Scripts\Manager\LevelManager.cs" />
+     <Compile Include="Assets\Scripts\RoomBorders.cs" />
+     <Compile Include="Assets\Scripts\Util\Direction.cs" />
+     <Compile Include="Assets\Scripts\Util\IntVector2.cs" />
+     <Compile Include="Assets\Scripts\Util\MiniJSON.cs" />
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>
