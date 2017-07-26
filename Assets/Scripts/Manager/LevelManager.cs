@@ -10,8 +10,9 @@ public class LevelManager : MonoBehaviour {
 	public GameObject playerPrefab;
 
 	private RoomBorders roomBorders;
-	private string levelJsonFilePath = "Assets/Scripts/Json/Level.json";
-	private float lengthPerUnit = Configurations.lengthPerUnit;
+	private List<Room> rooms = new List<Room>();
+	private const string levelJsonFilePath = "Assets/Scripts/Json/Level.json";
+	private const float lengthPerUnit = Configurations.lengthPerUnit;
 
 	// Use this for initialization
 	void Start () {
@@ -35,9 +36,10 @@ public class LevelManager : MonoBehaviour {
 		Dictionary<string, object> dict;
 		dict = Json.Deserialize(data) as Dictionary<string,object>;
 
+		//The first run builds the walls and floors of the rooms
 		foreach (KeyValuePair<string, object> entry in dict) {
-			//entry.key should be a string
-			//entry.value should be a dictionary type
+			//entry.key should be a string, which is the roomId
+			//entry.value should be a dictionary type, which contains the room information
 
 			int roomId = int.Parse(entry.Key);
 			float posX, posY, posZ;
@@ -66,8 +68,25 @@ public class LevelManager : MonoBehaviour {
 
 			Room room = ScriptableObject.CreateInstance<Room>();
 			room.Initialize(roomId, position, dimension, color);
+			rooms.Insert(roomId, room);
 
 			roomBorders.BuildRoom(position, dimension);
+		}
+		
+		//The second run replaces blocks with doors between adjacent rooms
+		foreach (KeyValuePair<string, object> entry in dict) {
+			int id1 = int.Parse(entry.Key);
+			Room room1 = rooms[id1];
+			Dictionary<string, object> entryValueDict = (Dictionary<string,object>)entry.Value;
+			List<object> adjacentRooms = ((List<object>) entryValueDict["adjacent"]);
+			foreach (object obj in adjacentRooms) {
+				int id2 = System.Convert.ToInt32(obj);
+				if (id1 > id2) {
+					continue;
+				}
+				Room room2 = rooms[id2];
+				roomBorders.BuildTunnel(room1, room2);
+			}
 		}
 	}
 }

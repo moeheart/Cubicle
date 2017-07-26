@@ -7,11 +7,11 @@ public class RoomBorders : MonoBehaviour {
 	public GameObject wallXY;
 	public GameObject wallZY;
 
-	private float lengthPerUnit = Configurations.lengthPerUnit;
-	private float borderThickness = Configurations.borderThickness;
+	private const float lengthPerUnit = Configurations.lengthPerUnit;
+	private const float borderThickness = Configurations.borderThickness;
 
 	public void BuildRoom(Vector3 position, Vector3 dimension) {
-		Debug.Log("building room... position: " + position + "size: " + dimension);
+		//Debug.Log("building room... position: " + position + "size: " + dimension);
 
 		Vector3 bottomFacePosition = new Vector3(position.x, position.y + borderThickness/2, position.z);
 		BuildSide(bottomFacePosition, Direction.XZ, new Vector2(dimension[0], dimension[2]));
@@ -95,7 +95,21 @@ public class RoomBorders : MonoBehaviour {
 		}
 	}
 
-	public void FindOverlapArea(Room room1, Room room2, out Vector3 position, out Vector2 size, out Direction direction) {
+	public void BuildTunnel(Room room1, Room room2) {
+		Vector3 position;
+		Vector2 size;
+		Direction direction;
+		FindOverlapArea(room1, room2, out position, out size, out direction);
+		Debug.Log("Room: " + room1.id + " " + room2.id + ". Pos=" + position + " Size=" + size + " Direction:" + direction);
+
+		switch (direction) {
+			case Direction.ZY:
+
+				break;
+		}
+	}
+
+	private void FindOverlapArea(Room room1, Room room2, out Vector3 position, out Vector2 size, out Direction direction) {
 		position = Vector3.zero;
 		size = Vector2.zero;
 		direction = Direction.XZ;
@@ -103,18 +117,19 @@ public class RoomBorders : MonoBehaviour {
 		Vector2 intersectionPoint;
 		Vector2 intersectionSize;
 
-		if (room1.position.y == room2.position.y + room2.dimension.y 
-				|| room1.position.y + room1.dimension.y == room2.position.y) {
+		if (room1.position.y == room2.position.y + room2.size.y
+				|| room1.position.y + room1.size.y == room2.position.y) {
 			//room1's bottom and room2's top
+			//Debug.Log("The XZ Plane overlaps");
 			direction = Direction.XZ;
 			Vector2 pos1 = new Vector2(room1.position.x, room1.position.z);
 			Vector2 pos2 = new Vector2(room2.position.x, room2.position.z);
-			Vector2 size1 = new Vector2(room1.dimension.x, room1.dimension.z);
-			Vector2 size2 = new Vector2(room2.dimension.x, room2.dimension.z);
+			Vector2 size1 = new Vector2(room1.size.x, room1.size.z);
+			Vector2 size2 = new Vector2(room2.size.x, room2.size.z);
 			
 			FindOverlapOfRectangle(pos1, pos2, size1, size2, out intersectionPoint, out intersectionSize);
 
-			if (room1.position.y == room2.position.y + room2.dimension.y) {
+			if (room1.position.y == room2.position.y + room2.size.y) {
 				position = new Vector3(intersectionPoint[0], room1.position.y, intersectionPoint[1]);
 				size = intersectionSize;
 				return;
@@ -128,18 +143,19 @@ public class RoomBorders : MonoBehaviour {
 
 		}
 
-		if (room1.position.x == room2.position.x + room2.dimension.x 
-				|| room1.position.x + room1.dimension.x == room2.position.x) {
+		if (room1.position.x == room2.position.x + room2.size.x
+				|| room1.position.x + room1.size.x == room2.position.x) {
 			//room1's left and room2's right
+			//Debug.Log("The ZY Plane overlaps");
 			direction = Direction.ZY;
 			Vector2 pos1 = new Vector2(room1.position.z, room1.position.y);
 			Vector2 pos2 = new Vector2(room2.position.z, room2.position.y);
-			Vector2 size1 = new Vector2(room1.dimension.z, room1.dimension.y);
-			Vector2 size2 = new Vector2(room2.dimension.z, room2.dimension.y);
+			Vector2 size1 = new Vector2(room1.size.z, room1.size.y);
+			Vector2 size2 = new Vector2(room2.size.z, room2.size.y);
 
 			FindOverlapOfRectangle(pos1, pos2, size1, size2, out intersectionPoint, out intersectionSize);
 
-			if (room1.position.x == room2.position.x + room2.dimension.x) {
+			if (room1.position.x == room2.position.x + room2.size.x) {
 				position = new Vector3(room1.position.x, intersectionPoint[1], intersectionPoint[0]);
 				size = intersectionSize;
 				return;
@@ -152,18 +168,19 @@ public class RoomBorders : MonoBehaviour {
 			}
 		}
 
-		if (room1.position.z == room2.position.z + room2.dimension.z
-				|| room1.position.z + room1.dimension.z == room2.dimension.z) {
+		if (room1.position.z == room2.position.z + room2.size.z
+				|| room1.position.z + room1.size.z == room2.size.z) {
 			//room1's front and room2's back
+			//Debug.Log("The XY Plane overlaps");
 			direction = Direction.XY;
 			Vector2 pos1 = new Vector2(room1.position.x, room1.position.y);
 			Vector2 pos2 = new Vector2(room2.position.x, room2.position.y);
-			Vector2 size1 = new Vector2(room1.dimension.x, room1.dimension.y);
-			Vector2 size2 = new Vector2(room2.dimension.x, room2.dimension.y);
+			Vector2 size1 = new Vector2(room1.size.x, room1.size.y);
+			Vector2 size2 = new Vector2(room2.size.x, room2.size.y);
 
 			FindOverlapOfRectangle(pos1, pos2, size1, size2, out intersectionPoint, out intersectionSize);
 
-			if (room1.position.z == room2.position.z + room2.dimension.z) {
+			if (room1.position.z == room2.position.z + room2.size.z) {
 				position = new Vector3(intersectionPoint[0], intersectionPoint[1], room1.position.z);
 				size = intersectionSize;
 				return;

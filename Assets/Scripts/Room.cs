@@ -9,6 +9,14 @@ public class Room : ScriptableObject {
 
 	public Color color;
 
+	private const float lengthPerUnit = Configurations.lengthPerUnit;
+
+	public Vector3 size {
+		get {
+			return dimension * lengthPerUnit;
+		}
+	}
+
 	public void Initialize(int id, Vector3 position, Vector3 dimension, Color color) {
 		this.id = id;
 		this.position = position;
