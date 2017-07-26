@@ -100,12 +100,65 @@ public class RoomBorders : MonoBehaviour {
 		Vector2 size;
 		Direction direction;
 		FindOverlapArea(room1, room2, out position, out size, out direction);
-		Debug.Log("Room: " + room1.id + " " + room2.id + ". Pos=" + position + " Size=" + size + " Direction:" + direction);
 
-		switch (direction) {
-			case Direction.ZY:
+		IntVector2 overlapDimension = new IntVector2((int)(size.x/lengthPerUnit), (int)(size.y/lengthPerUnit));
+		Debug.Log("Room: " + room1.id + " " + room2.id + ". Pos=" + position + " Size=" + overlapDimension + " Direction:" + direction);
 
-				break;
+		//First delete the walls blocking them
+		for (int i = 0; i < overlapDimension.x; ++i) {
+			for (int j = 0; j < overlapDimension.z; ++j) {
+				string name;
+				Vector3 pos;
+				switch (direction) {
+					case Direction.XZ:
+						pos = new Vector3(position.x + i * lengthPerUnit, 
+							position.y + borderThickness/2, position.z + j * lengthPerUnit);
+						name = pos + "-XZ";
+						DestroyGameObjectByName(name);
+
+						pos = new Vector3(position.x + i * lengthPerUnit, 
+							position.y - borderThickness/2, position.z + j * lengthPerUnit);
+						name = pos + "-XZ";
+						DestroyGameObjectByName(name);
+						break;
+
+					case Direction.XY:
+						pos = new Vector3(position.x + i * lengthPerUnit, 
+							position.y + j * lengthPerUnit, position.z + borderThickness/2);
+						name = pos + "-XY";
+						DestroyGameObjectByName(name);
+
+						pos = new Vector3(position.x + i * lengthPerUnit, 
+							position.y + j * lengthPerUnit, position.z - borderThickness/2);
+						name = pos + "-XY";
+						DestroyGameObjectByName(name);
+						break;
+
+					case Direction.ZY:
+						pos = new Vector3(position.x + borderThickness/2, 
+							position.y + j * lengthPerUnit, position.z + i * lengthPerUnit);
+						name = pos + "-ZY";
+						DestroyGameObjectByName(name);
+
+						pos = new Vector3(position.x - borderThickness/2, 
+							position.y + j * lengthPerUnit, position.z + i * lengthPerUnit);
+						name = pos + "-ZY";
+						DestroyGameObjectByName(name);
+						break;
+				}
+			}
+		}
+
+		//TODO
+		//Then replace them with doors/trapdoors
+	}
+
+	private void DestroyGameObjectByName(string name) {
+		if (GameObject.Find(name) != null) {
+			Destroy(GameObject.Find(name));
+		}
+		else {
+			Debug.LogError("Cannot find block: " + name);
 		}
 	}
 
