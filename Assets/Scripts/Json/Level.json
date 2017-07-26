@@ -3,11 +3,23 @@
         "position": [0, 0 ,0],
         "dimension": [4, 4, 4],
         "color": [1, 1, 1, 1],
-        "adjacent": [1]
+        "adjacent": [1, 2, 3]
     },
     "1" : {
         "position": [4,2,1],
         "dimension": [1,2,3],
+        "color": [1,1,0,1],
+        "adjacent": [0]
+    },
+    "2" : {
+        "position": [-1,-1,0],
+        "dimension": [2,1,1],
+        "color": [1,1,0,1],
+        "adjacent": [0]
+    },
+    "3" : {
+        "position": [0,0,4],
+        "dimension": [1,1,1],
         "color": [1,1,0,1],
         "adjacent": [0]
     }
