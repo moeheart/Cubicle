@@ -70,7 +70,7 @@ public class LevelManager : MonoBehaviour {
 			room.Initialize(roomId, position, dimension, color);
 			rooms.Insert(roomId, room);
 
-			roomBorders.BuildRoom(position, dimension);
+			roomBorders.BuildRoom(position, dimension, color);
 		}
 		
 		//The second run replaces blocks with doors between adjacent rooms

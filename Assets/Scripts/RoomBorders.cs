@@ -7,35 +7,39 @@ public class RoomBorders : MonoBehaviour {
 	public GameObject wallXY;
 	public GameObject wallZY;
 
+	public GameObject trapdoor;
+	public GameObject doorXY;
+	public GameObject doorZY;
+
 	private const float lengthPerUnit = Configurations.lengthPerUnit;
 	private const float borderThickness = Configurations.borderThickness;
 
-	public void BuildRoom(Vector3 position, Vector3 dimension) {
+	public void BuildRoom(Vector3 position, Vector3 dimension, Color color) {
 		//Debug.Log("building room... position: " + position + "size: " + dimension);
 
 		Vector3 bottomFacePosition = new Vector3(position.x, position.y + borderThickness/2, position.z);
-		BuildSide(bottomFacePosition, Direction.XZ, new Vector2(dimension[0], dimension[2]));
+		BuildSide(bottomFacePosition, Direction.XZ, new Vector2(dimension[0], dimension[2]), color);
 
 		Vector3 frontFacePosition = new Vector3(position.x, position.y, position.z + borderThickness/2);
-		BuildSide(frontFacePosition, Direction.XY, new Vector2(dimension[0], dimension[1]));
+		BuildSide(frontFacePosition, Direction.XY, new Vector2(dimension[0], dimension[1]), color);
 
 		Vector3 leftFacePosition = new Vector3(position.x + borderThickness/2, position.y, position.z);
-		BuildSide(leftFacePosition, Direction.ZY, new Vector2(dimension[2], dimension[1]));
+		BuildSide(leftFacePosition, Direction.ZY, new Vector2(dimension[2], dimension[1]), color);
 
 		Vector3 topFacePosition = new Vector3(position.x, 
 			position.y + dimension[1] * lengthPerUnit - borderThickness/2, position.z);
-		BuildSide(topFacePosition, Direction.XZ, new Vector2(dimension[0], dimension[2]));
+		BuildSide(topFacePosition, Direction.XZ, new Vector2(dimension[0], dimension[2]), color);
 
 		Vector3 backFacePosition = new Vector3(position.x, position.y, 
 			position.z + dimension[2] * lengthPerUnit - borderThickness/2);
-		BuildSide(backFacePosition, Direction.XY, new Vector2(dimension[0], dimension[1]));
+		BuildSide(backFacePosition, Direction.XY, new Vector2(dimension[0], dimension[1]), color);
 
 		Vector3 rightFacePosition = new Vector3(position.x + dimension[0] * lengthPerUnit - borderThickness/2, 
 			position.y, position.z);
-		BuildSide(rightFacePosition, Direction.ZY, new Vector2(dimension[2], dimension[1]));
+		BuildSide(rightFacePosition, Direction.ZY, new Vector2(dimension[2], dimension[1]), color);
 	}
 
-	private void BuildSide(Vector3 position, Direction direction, Vector2 size) {
+	private void BuildSide(Vector3 position, Direction direction, Vector2 size, Color color) {
 		IntVector2 dimension = new IntVector2((int)size.x, (int)size.y);
 		for (int i = 0; i < dimension.x; ++i) {
 			for (int j = 0; j < dimension.z; ++j) {
@@ -50,6 +54,7 @@ public class RoomBorders : MonoBehaviour {
 
 						if (GameObject.Find(name) == null) {
 							border = Instantiate(floor) as GameObject;
+							border.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = color;
 							border.transform.parent = this.transform;
 							border.transform.position = pos;
 							border.name = name;
@@ -66,6 +71,7 @@ public class RoomBorders : MonoBehaviour {
 
 						if (GameObject.Find(name) == null) {
 							border = Instantiate(wallXY) as GameObject;
+							border.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = color;
 							border.transform.parent = this.transform;
 							border.transform.position = pos;
 							border.name = name;
@@ -82,6 +88,7 @@ public class RoomBorders : MonoBehaviour {
 
 						if (GameObject.Find(name) == null) {
 							border = Instantiate(wallZY) as GameObject;
+							border.transform.GetChild(0).GetComponent<MeshRenderer>().material.color = color;
 							border.transform.parent = this.transform;
 							border.transform.position = pos;
 							border.name = name;
@@ -151,6 +158,28 @@ public class RoomBorders : MonoBehaviour {
 
 		//TODO
 		//Then replace them with doors/trapdoors
+		GameObject entrance;
+		switch (direction) {
+			case Direction.XZ:
+				entrance = Instantiate(trapdoor) as GameObject;
+				entrance.transform.position = position;
+				entrance.transform.localScale = new Vector3(overlapDimension.x, 2, overlapDimension.z);
+				break;
+
+			case Direction.XY:
+				entrance = Instantiate(doorXY) as GameObject;
+				entrance.transform.position = position;
+				entrance.transform.localScale = new Vector3(overlapDimension.x, overlapDimension.z, 2);
+				break;
+
+			case Direction.ZY:
+				entrance = Instantiate(doorZY) as GameObject;
+				entrance.transform.position = position;
+				entrance.transform.localScale = new Vector3(overlapDimension.x, overlapDimension.z, 2);
+				Debug.Log(entrance.transform.position);
+				Debug.Log(entrance.transform.localScale);
+				break;
+		}
 	}
 
 	private void DestroyGameObjectByName(string name) {
