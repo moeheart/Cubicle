@@ -3,6 +3,8 @@ using System.Collections;
 
 public class RoomBorders : MonoBehaviour {
 
+	//Responsible for instantiating the walls, floors and doors
+
 	public GameObject floor;
 	public GameObject wallXY;
 	public GameObject wallZY;
@@ -16,6 +18,9 @@ public class RoomBorders : MonoBehaviour {
 
 	public void BuildRoom(Vector3 position, Vector3 dimension, Color color) {
 		//Debug.Log("building room... position: " + position + "size: " + dimension);
+		//Responsible for building the walls of the room
+		//Builds the six sides without considering the doors
+		//The doors are handled in BuildTunnel
 
 		Vector3 bottomFacePosition = new Vector3(position.x, position.y + borderThickness/2, position.z);
 		BuildSide(bottomFacePosition, Direction.XZ, new Vector2(dimension[0], dimension[2]), color);
@@ -40,6 +45,7 @@ public class RoomBorders : MonoBehaviour {
 	}
 
 	private void BuildSide(Vector3 position, Direction direction, Vector2 size, Color color) {
+		//Instantiates a cube
 		IntVector2 dimension = new IntVector2((int)size.x, (int)size.y);
 		for (int i = 0; i < dimension.x; ++i) {
 			for (int j = 0; j < dimension.z; ++j) {
@@ -103,10 +109,14 @@ public class RoomBorders : MonoBehaviour {
 	}
 
 	public void BuildTunnel(Room room1, Room room2) {
+		//Builds a tunnel between adjacent rooms
 		Vector3 position;
 		Vector2 size;
 		Direction direction;
-		FindOverlapArea(room1, room2, out position, out size, out direction);
+		bool doOverlap = FindOverlapArea(room1, room2, out position, out size, out direction);
+		if (doOverlap == false) {
+			return;
+		}
 
 		IntVector2 overlapDimension = new IntVector2((int)(size.x/lengthPerUnit), (int)(size.y/lengthPerUnit));
 		Debug.Log("Room: " + room1.id + " " + room2.id + ". Pos=" + position + " Size=" + overlapDimension + " Direction:" + direction);
@@ -156,8 +166,6 @@ public class RoomBorders : MonoBehaviour {
 			}
 		}
 
-		//TODO
-		//Then replace them with doors/trapdoors
 		GameObject entrance;
 		switch (direction) {
 			case Direction.XZ:
@@ -191,13 +199,17 @@ public class RoomBorders : MonoBehaviour {
 		}
 	}
 
-	private void FindOverlapArea(Room room1, Room room2, out Vector3 position, out Vector2 size, out Direction direction) {
+	private bool FindOverlapArea(Room room1, Room room2, out Vector3 position, out Vector2 size, out Direction direction) {
+		//Find the overlap area of two rooms
+		//Use this information to build the tunnels
 		position = Vector3.zero;
 		size = Vector2.zero;
 		direction = Direction.XZ;
 
 		Vector2 intersectionPoint;
 		Vector2 intersectionSize;
+
+		bool doOverlap = false;
 
 		if (room1.position.y == room2.position.y + room2.size.y
 				|| room1.position.y + room1.size.y == room2.position.y) {
@@ -209,18 +221,19 @@ public class RoomBorders : MonoBehaviour {
 			Vector2 size1 = new Vector2(room1.size.x, room1.size.z);
 			Vector2 size2 = new Vector2(room2.size.x, room2.size.z);
 			
-			FindOverlapOfRectangle(pos1, pos2, size1, size2, out intersectionPoint, out intersectionSize);
+			doOverlap = FindOverlapOfRectangle(pos1, pos2, size1, size2, out intersectionPoint, out intersectionSize);
+			if (doOverlap == true) {
+				if (room1.position.y == room2.position.y + room2.size.y) {
+					position = new Vector3(intersectionPoint[0], room1.position.y, intersectionPoint[1]);
+					size = intersectionSize;
+					return true;
+				}
 
-			if (room1.position.y == room2.position.y + room2.size.y) {
-				position = new Vector3(intersectionPoint[0], room1.position.y, intersectionPoint[1]);
-				size = intersectionSize;
-				return;
-			}
-
-			else {
-				position = new Vector3(intersectionPoint[0], room2.position.y, intersectionPoint[1]);
-				size = intersectionSize;
-				return;
+				else {
+					position = new Vector3(intersectionPoint[0], room2.position.y, intersectionPoint[1]);
+					size = intersectionSize;
+					return true;
+				}
 			}
 
 		}
@@ -235,18 +248,19 @@ public class RoomBorders : MonoBehaviour {
 			Vector2 size1 = new Vector2(room1.size.z, room1.size.y);
 			Vector2 size2 = new Vector2(room2.size.z, room2.size.y);
 
-			FindOverlapOfRectangle(pos1, pos2, size1, size2, out intersectionPoint, out intersectionSize);
+			doOverlap = FindOverlapOfRectangle(pos1, pos2, size1, size2, out intersectionPoint, out intersectionSize);
+			if (doOverlap == true) {
+				if (room1.position.x == room2.position.x + room2.size.x) {
+					position = new Vector3(room1.position.x, intersectionPoint[1], intersectionPoint[0]);
+					size = intersectionSize;
+					return true;
+				}
 
-			if (room1.position.x == room2.position.x + room2.size.x) {
-				position = new Vector3(room1.position.x, intersectionPoint[1], intersectionPoint[0]);
-				size = intersectionSize;
-				return;
-			}
-
-			else {
-				position = new Vector3(room2.position.x, intersectionPoint[1], intersectionPoint[0]);
-				size = intersectionSize;
-				return;
+				else {
+					position = new Vector3(room2.position.x, intersectionPoint[1], intersectionPoint[0]);
+					size = intersectionSize;
+					return true;
+				}
 			}
 		}
 
@@ -260,30 +274,39 @@ public class RoomBorders : MonoBehaviour {
 			Vector2 size1 = new Vector2(room1.size.x, room1.size.y);
 			Vector2 size2 = new Vector2(room2.size.x, room2.size.y);
 
-			FindOverlapOfRectangle(pos1, pos2, size1, size2, out intersectionPoint, out intersectionSize);
+			doOverlap = FindOverlapOfRectangle(pos1, pos2, size1, size2, out intersectionPoint, out intersectionSize);
+			if (doOverlap == true) {
+				if (room1.position.z == room2.position.z + room2.size.z) {
+					position = new Vector3(intersectionPoint[0], intersectionPoint[1], room1.position.z);
+					size = intersectionSize;
+					return true;
+				}
 
-			if (room1.position.z == room2.position.z + room2.size.z) {
-				position = new Vector3(intersectionPoint[0], intersectionPoint[1], room1.position.z);
-				size = intersectionSize;
-				return;
-			}
-
-			else {
-				position = new Vector3(intersectionPoint[0], intersectionPoint[1], room2.position.z);
-				size = intersectionSize;
-				return;
+				else {
+					position = new Vector3(intersectionPoint[0], intersectionPoint[1], room2.position.z);
+					size = intersectionSize;
+					return true;
+				}
 			}
 		}
+
+		return false;
 	}
 
-	private void FindOverlapOfRectangle(Vector2 pos1, Vector2 pos2, Vector2 size1, Vector2 size2, 
+	private bool FindOverlapOfRectangle(Vector2 pos1, Vector2 pos2, Vector2 size1, Vector2 size2, 
 			out Vector2 outPos, out Vector2 outSize) {
+		//A Util function that finds the intersection area of two rectangles
 		float left = Mathf.Max(pos1.x, pos2.x);
 		float right = Mathf.Min(pos1.x + size1.x , pos2.x + size2.x);
 		float bottom = Mathf.Max(pos1.y, pos2.y);
 		float top = Mathf.Min(pos1.y + size1.y, pos2.y + size2.y);
 		outPos = new Vector2(left, bottom);
 		outSize = new Vector2(right - left, top - bottom);
+
+		if (right > left && top > bottom)
+			return true;
+		else
+			return false;
 	}
 
 	// Use this for initialization

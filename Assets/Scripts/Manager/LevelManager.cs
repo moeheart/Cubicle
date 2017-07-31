@@ -77,16 +77,21 @@ public class LevelManager : MonoBehaviour {
 		foreach (KeyValuePair<string, object> entry in dict) {
 			int id1 = int.Parse(entry.Key);
 			Room room1 = rooms[id1];
-			Dictionary<string, object> entryValueDict = (Dictionary<string,object>)entry.Value;
-			List<object> adjacentRooms = ((List<object>) entryValueDict["adjacent"]);
-			foreach (object obj in adjacentRooms) {
+			//Dictionary<string, object> entryValueDict = (Dictionary<string,object>)entry.Value;
+			//List<object> adjacentRooms = ((List<object>) entryValueDict["adjacent"]);
+			for (int i = 0; i < id1; ++i) {
+				int id2 = i;
+				Room room2 = rooms[id2];
+				roomBorders.BuildTunnel(room1, room2);
+			}
+			/*foreach (object obj in adjacentRooms) {
 				int id2 = System.Convert.ToInt32(obj);
 				if (id1 > id2) {
 					continue;
 				}
 				Room room2 = rooms[id2];
 				roomBorders.BuildTunnel(room1, room2);
-			}
+			}*/
 		}
 	}
 }
