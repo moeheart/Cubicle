@@ -1,22 +1,86 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using System.IO;
+using MiniJSON;
 
-public class RoomBorders : MonoBehaviour {
+public class World : MonoBehaviour {
 
 	//Responsible for instantiating the walls, floors and doors
 
 	public GameObject floor;
 	public GameObject wallXY;
 	public GameObject wallZY;
+	public Door trapdoor;
+	public Door doorXY;
+	public Door doorZY;
 
-	public GameObject trapdoor;
-	public GameObject doorXY;
-	public GameObject doorZY;
+	private List<Room> rooms = new List<Room>();
 
 	private const float lengthPerUnit = Configurations.lengthPerUnit;
 	private const float borderThickness = Configurations.borderThickness;
 
-	public void BuildRoom(Vector3 position, Vector3 dimension, Color color) {
+	public void GenerateRooms(string jsonFilePath) {
+		string jsonString = File.ReadAllText(jsonFilePath);
+		ParseJsonString(jsonString);
+	}
+
+	private void ParseJsonString(string data) {
+		Dictionary<string, object> dict;
+		dict = Json.Deserialize(data) as Dictionary<string,object>;
+
+		//The first run builds the walls and floors of the rooms
+		foreach (KeyValuePair<string, object> entry in dict) {
+			//entry.key should be a string, which is the roomId
+			//entry.value should be a dictionary type, which contains the room information
+
+			int roomId = int.Parse(entry.Key);
+			float posX, posY, posZ;
+			float dimX, dimY, dimZ;
+			float colorR, colorG, colorB, colorA;
+
+			Dictionary<string, object> entryValueDict = (Dictionary<string,object>)entry.Value;
+			List<object> positionList = ((List<object>) entryValueDict["position"]);
+			List<object> dimensionList = ((List<object>) entryValueDict["dimension"]);
+			List<object> colorList = ((List<object>) entryValueDict["color"]);
+
+			posX = System.Convert.ToSingle(positionList[0]) * lengthPerUnit;
+			posY = System.Convert.ToSingle(positionList[1]) * lengthPerUnit;
+			posZ = System.Convert.ToSingle(positionList[2]) * lengthPerUnit;
+			dimX = System.Convert.ToSingle(dimensionList[0]);
+			dimY = System.Convert.ToSingle(dimensionList[1]);
+			dimZ = System.Convert.ToSingle(dimensionList[2]);
+			colorR = System.Convert.ToSingle(colorList[0]);
+			colorG = System.Convert.ToSingle(colorList[1]);
+			colorB = System.Convert.ToSingle(colorList[2]);
+			colorA = System.Convert.ToSingle(colorList[3]);
+			
+			Vector3 position = new Vector3(posX, posY, posZ);
+			Vector3 dimension = new Vector3(dimX, dimY, dimZ);
+			Color color = new Color(colorR, colorG, colorB, colorA);
+
+			Room room = ScriptableObject.CreateInstance<Room>();
+			room.Initialize(roomId, position, dimension, color);
+			rooms.Insert(roomId, room);
+
+			BuildRoom(position, dimension, color);
+		}
+		
+		//The second run replaces blocks with doors between adjacent rooms
+		foreach (KeyValuePair<string, object> entry in dict) {
+			int id1 = int.Parse(entry.Key);
+			Room room1 = rooms[id1];
+			//Dictionary<string, object> entryValueDict = (Dictionary<string,object>)entry.Value;
+			//List<object> adjacentRooms = ((List<object>) entryValueDict["adjacent"]);
+			for (int i = 0; i < id1; ++i) {
+				int id2 = i;
+				Room room2 = rooms[id2];
+				BuildTunnel(room1, room2);
+			}
+		}
+	}
+
+	private void BuildRoom(Vector3 position, Vector3 dimension, Color color) {
 		//Debug.Log("building room... position: " + position + "size: " + dimension);
 		//Responsible for building the walls of the room
 		//Builds the six sides without considering the doors
@@ -108,7 +172,7 @@ public class RoomBorders : MonoBehaviour {
 		}
 	}
 
-	public void BuildTunnel(Room room1, Room room2) {
+	private void BuildTunnel(Room room1, Room room2) {
 		//Builds a tunnel between adjacent rooms
 		Vector3 position;
 		Vector2 size;
@@ -166,26 +230,33 @@ public class RoomBorders : MonoBehaviour {
 			}
 		}
 
-		GameObject entrance;
+		Door entrance;
 		switch (direction) {
 			case Direction.XZ:
-				entrance = Instantiate(trapdoor) as GameObject;
+				entrance = Instantiate(trapdoor) as Door;
+				entrance.transform.parent = this.transform;
 				entrance.transform.position = position;
 				entrance.transform.localScale = new Vector3(overlapDimension.x, 2, overlapDimension.z);
+				room1.AddDoor(entrance);
+				room2.AddDoor(entrance);
 				break;
 
 			case Direction.XY:
-				entrance = Instantiate(doorXY) as GameObject;
+				entrance = Instantiate(doorXY) as Door;
+				entrance.transform.parent = this.transform;
 				entrance.transform.position = position;
 				entrance.transform.localScale = new Vector3(overlapDimension.x, overlapDimension.z, 2);
+				room1.AddDoor(entrance);
+				room2.AddDoor(entrance);
 				break;
 
 			case Direction.ZY:
-				entrance = Instantiate(doorZY) as GameObject;
+				entrance = Instantiate(doorZY) as Door;
+				entrance.transform.parent = this.transform;
 				entrance.transform.position = position;
 				entrance.transform.localScale = new Vector3(overlapDimension.x, overlapDimension.z, 2);
-				Debug.Log(entrance.transform.position);
-				Debug.Log(entrance.transform.localScale);
+				room1.AddDoor(entrance);
+				room2.AddDoor(entrance);
 				break;
 		}
 	}

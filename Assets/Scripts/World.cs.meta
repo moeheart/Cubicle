@@ -1,13 +1,10 @@
 fileFormatVersion: 2
-guid: 8fc1dc1187f9343e6853848ae23bcde3
-timeCreated: 1500941652
+guid: 8bd3d0dc929be49b6903ed13762ab9e1
+timeCreated: 1501620231
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences:
-  - floor: {instanceID: 0}
-  - wallXY: {instanceID: 0}
-  - wallZY: {instanceID: 0}
+  defaultReferences: []
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

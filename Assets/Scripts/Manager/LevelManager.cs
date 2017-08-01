@@ -5,19 +5,16 @@ using System.IO;
 using MiniJSON;
 public class LevelManager : MonoBehaviour {
 
-	public RoomBorders roomPrefab;
-
+	public World worldPrefab;
 	public GameObject playerPrefab;
 
-	private RoomBorders roomBorders;
-	private List<Room> rooms = new List<Room>();
+	private World worldInstance;
 	private const string levelJsonFilePath = "Assets/Scripts/Json/Level.json";
-	private const float lengthPerUnit = Configurations.lengthPerUnit;
 
 	// Use this for initialization
 	void Start () {
-		roomBorders = Instantiate(roomPrefab) as RoomBorders;
-		ReadAndParse();
+		worldInstance = Instantiate(worldPrefab) as World;
+		worldInstance.GenerateRooms(levelJsonFilePath);
 		GameObject player = Instantiate(playerPrefab) as GameObject;
 		player.transform.position = new Vector3(15,10,15);
 	}
@@ -27,7 +24,7 @@ public class LevelManager : MonoBehaviour {
 	
 	}
 
-	void ReadAndParse() {
+	/*void ReadAndParse() {
 		string jsonString = File.ReadAllText(levelJsonFilePath);
 		ParseJsonString(jsonString);
 	}
@@ -70,7 +67,7 @@ public class LevelManager : MonoBehaviour {
 			room.Initialize(roomId, position, dimension, color);
 			rooms.Insert(roomId, room);
 
-			roomBorders.BuildRoom(position, dimension, color);
+			worldInstance.BuildRoom(position, dimension, color);
 		}
 		
 		//The second run replaces blocks with doors between adjacent rooms
@@ -82,7 +79,7 @@ public class LevelManager : MonoBehaviour {
 			for (int i = 0; i < id1; ++i) {
 				int id2 = i;
 				Room room2 = rooms[id2];
-				roomBorders.BuildTunnel(room1, room2);
+				worldInstance.BuildTunnel(room1, room2);
 			}
 			/*foreach (object obj in adjacentRooms) {
 				int id2 = System.Convert.ToInt32(obj);
@@ -91,7 +88,7 @@ public class LevelManager : MonoBehaviour {
 				}
 				Room room2 = rooms[id2];
 				roomBorders.BuildTunnel(room1, room2);
-			}*/
+			}
 		}
-	}
+	}*/
 }

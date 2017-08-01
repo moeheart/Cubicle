@@ -1,13 +1,15 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Room : ScriptableObject {
 
 	public int id;
 	public Vector3 position;
 	public Vector3 dimension;
-
 	public Color color;
+
+	private List<Door> doors = new List<Door>();
 
 	private const float lengthPerUnit = Configurations.lengthPerUnit;
 
@@ -22,6 +24,16 @@ public class Room : ScriptableObject {
 		this.position = position;
 		this.dimension = dimension;
 		this.color = color;
+	}
+
+	public void AddDoor(Door door) {
+		doors.Add(door);
+	}
+
+	public void OnCompleteRoomObjective() {
+		foreach (Door door in doors) {
+			door.Unlock();
+		}
 	}
 
 	// Use this for initialization
