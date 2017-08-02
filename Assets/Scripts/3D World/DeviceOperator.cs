@@ -14,7 +14,10 @@ public class DeviceOperator : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.E)) {
 			Collider[] hitColliders = Physics.OverlapSphere(transform.position, radius);
 			foreach (Collider hitCollider in hitColliders) {
-				hitCollider.SendMessage("Operate", SendMessageOptions.DontRequireReceiver);
+				Vector3 direction = hitCollider.transform.position - this.transform.position;
+				if (Vector3.Dot(transform.forward, direction) > .5f) {
+					hitCollider.SendMessage("Operate", SendMessageOptions.DontRequireReceiver);
+				}
 			}
 		}
 	}

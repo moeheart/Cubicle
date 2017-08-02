@@ -7,7 +7,7 @@ public class BaseGrid : MonoBehaviour {
 	public BaseGridCell cellPrefab;
 	public float generationStepDelay = 0.01f;
 
-	private IntVector2 size = Configuration.gridSize;
+	private IntVector2 size = BlockBuilderConfigs.gridSize;
 	private BaseGridCell[,] cells;
 	private const float cellLength = 1f;
 	private const float cellHeight = 0.1f;

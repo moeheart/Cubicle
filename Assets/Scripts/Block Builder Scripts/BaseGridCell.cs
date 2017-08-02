@@ -8,7 +8,7 @@ public class BaseGridCell : MonoBehaviour {
 
 	public CubeBlock cubeBlockPrefab;
 	
-	private int maxHeight = Configuration.maxHeight;
+	private int maxHeight = BlockBuilderConfigs.maxHeight;
 
 	//private bool isHighlighted = false;
 	private LinkedList<CubeBlock> cubes = new LinkedList<CubeBlock>();

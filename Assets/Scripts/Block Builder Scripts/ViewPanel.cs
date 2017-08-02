@@ -17,24 +17,24 @@ public class ViewPanel : MonoBehaviour {
 	
 	private IntVector2 blockSize; //E.g., the max display of this panel is 3 by 5
 	private Vector2 panelSize; //E.g., the length is 300 by 500, equals blockSize * lengthPerBlock
-	private int lengthPerBlock = Configuration.panelLengthPerBlock;
+	private int lengthPerBlock = BlockBuilderConfigs.panelLengthPerBlock;
 
 	private Color defaultColor;
 	private Color highlightColor = new Color(0,1,1,0.2f);
 	void Awake () {
 		if (viewType == ViewType.TopView) {
-			blockSize.x = Configuration.gridSize.x;
-			blockSize.z = Configuration.gridSize.z;
+			blockSize.x = BlockBuilderConfigs.gridSize.x;
+			blockSize.z = BlockBuilderConfigs.gridSize.z;
 		}
 
 		if (viewType == ViewType.FrontView) {
-			blockSize.x = Configuration.gridSize.x;
-			blockSize.z = Configuration.maxHeight;
+			blockSize.x = BlockBuilderConfigs.gridSize.x;
+			blockSize.z = BlockBuilderConfigs.maxHeight;
 		}
 
 		if (viewType == ViewType.RightView) {
-			blockSize.x = Configuration.gridSize.z;
-			blockSize.z = Configuration.maxHeight;
+			blockSize.x = BlockBuilderConfigs.gridSize.z;
+			blockSize.z = BlockBuilderConfigs.maxHeight;
 			//Debug.Log("panelSize" + panelSize);
 		}
 

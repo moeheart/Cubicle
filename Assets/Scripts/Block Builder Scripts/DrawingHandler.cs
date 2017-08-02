@@ -24,7 +24,7 @@ public class DrawingHandler : MonoBehaviour {
 	void Start () {
 		//TODO
 		//This should be somewhere else
-		int[,] height = new int[Configuration.gridSize.x, Configuration.gridSize.z];
+		int[,] height = new int[BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.gridSize.z];
 		ParseJson(jsonFilePath, height);
 		Dictionary<IntVector3, bool> targetBlock = To3DMapping(height);
 		
@@ -42,9 +42,9 @@ public class DrawingHandler : MonoBehaviour {
 		Dictionary<string, object> dict;
 		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
 		List<object> _2DList = ((List<object>) dict["height"]);
-		for (int i = 0; i < Configuration.gridSize.x; ++i) {
+		for (int i = 0; i < BlockBuilderConfigs.gridSize.x; ++i) {
 			List<object> _list = ((List<object>) _2DList[i]);
-			for (int j = 0; j < Configuration.gridSize.z; ++j) {
+			for (int j = 0; j < BlockBuilderConfigs.gridSize.z; ++j) {
 				height[i,j] = System.Convert.ToInt32(_list[j]);
 			}
 		}
@@ -80,9 +80,9 @@ public class DrawingHandler : MonoBehaviour {
 	}
 
 	private int[,] To2DMapping(BaseGridCell[,] cells) {
-		int[,] mapping = new int[Configuration.gridSize.x, Configuration.gridSize.z];
-		for (int x = 0; x < Configuration.gridSize.x; ++x) {
-			for (int z = 0; z < Configuration.gridSize.z; ++z) {
+		int[,] mapping = new int[BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.gridSize.z];
+		for (int x = 0; x < BlockBuilderConfigs.gridSize.x; ++x) {
+			for (int z = 0; z < BlockBuilderConfigs.gridSize.z; ++z) {
 				int height = cells[x,z].height;
 				mapping[x,z] = height;
 			}
@@ -92,8 +92,8 @@ public class DrawingHandler : MonoBehaviour {
 
 	private Dictionary<IntVector3, bool> To3DMapping(int[,] heightArray) {
 		Dictionary<IntVector3, bool> cubes = new Dictionary<IntVector3, bool>();
-		for (int x = 0; x < Configuration.gridSize.x; ++x) {
-			for (int z = 0; z < Configuration.gridSize.z; ++z) {
+		for (int x = 0; x < BlockBuilderConfigs.gridSize.x; ++x) {
+			for (int z = 0; z < BlockBuilderConfigs.gridSize.z; ++z) {
 				int height = heightArray[x,z];
 				for (int h = 0; h < height; ++h) {
 					IntVector3 coords = new IntVector3(x,z,h);

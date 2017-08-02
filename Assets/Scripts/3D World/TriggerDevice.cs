@@ -8,7 +8,7 @@ public class TriggerDevice : MonoBehaviour {
 
 	public void Operate() {
 		Debug.Log("Operating the trigger..!!");
-		SceneManager.LoadScene("Block Builder Scene");
+		SceneManager.LoadScene("Block Builder Scene", LoadSceneMode.Single);
 		thisRoom.OnCompleteRoomObjective();
 	}
 

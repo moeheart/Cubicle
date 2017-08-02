@@ -6,7 +6,7 @@ public class ThreeView {
 
 	public static Dictionary<Segment, LineType> GetFrontView(Dictionary<IntVector3,bool> cubes) {
 		Dictionary<Segment, LineType> frontView = new Dictionary<Segment, LineType>();
-		IntVector2 size = new IntVector2(Configuration.gridSize.x, Configuration.maxHeight);
+		IntVector2 size = new IntVector2(BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.maxHeight);
 		for (int x = 0; x <= size.x; ++x) {
 			for (int z = 0; z <= size.z; ++z) {
 				IntVector2 p1 = new IntVector2(x,z);
@@ -31,7 +31,7 @@ public class ThreeView {
 
 	public static Dictionary<Segment, LineType> GetRightView(Dictionary<IntVector3,bool> cubes) {
 		Dictionary<Segment, LineType> rightView = new Dictionary<Segment, LineType>();
-		IntVector2 size = new IntVector2(Configuration.gridSize.z, Configuration.maxHeight);
+		IntVector2 size = new IntVector2(BlockBuilderConfigs.gridSize.z, BlockBuilderConfigs.maxHeight);
 		for (int x = 0; x <= size.x; ++x) {
 			for (int z = 0; z <= size.z; ++z) {
 				IntVector2 p1 = new IntVector2(x,z);
@@ -56,7 +56,7 @@ public class ThreeView {
 
 	public static Dictionary<Segment, LineType> GetTopView(Dictionary<IntVector3,bool> cubes) {
 		Dictionary<Segment, LineType> topView = new Dictionary<Segment, LineType>();
-		IntVector2 size = new IntVector2(Configuration.gridSize.x, Configuration.gridSize.z);
+		IntVector2 size = new IntVector2(BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.gridSize.z);
 		for (int x = 0; x <= size.x; ++x) {
 			for (int z = 0; z <= size.z; ++z) {
 				IntVector2 p1 = new IntVector2(x,z);
@@ -83,7 +83,7 @@ public class ThreeView {
 		switch (viewType) {
 			case ViewType.TopView: {
 				//Currently only supports cubes, and there cant be any "hollows"
-				int height = Configuration.maxHeight;
+				int height = BlockBuilderConfigs.maxHeight;
 				List<bool> blockListA = new List<bool>(height);
 				List<bool> blockListB = new List<bool>(height);
 				IntVector2 gridCoordA;
@@ -114,7 +114,7 @@ public class ThreeView {
 			}//End of case ViewType.TopView
 
 			case ViewType.FrontView: {
-				int length = Configuration.gridSize.z;
+				int length = BlockBuilderConfigs.gridSize.z;
 				List<bool> blockListA = new List<bool>(length);
 				List<bool> blockListB = new List<bool>(length);
 				IntVector2 frontPlaneCoordA;
@@ -145,7 +145,7 @@ public class ThreeView {
 			}//End of case ViewType.FrontView
 
 			case ViewType.RightView: {
-				int length = Configuration.gridSize.x;
+				int length = BlockBuilderConfigs.gridSize.x;
 				List<bool> blockListA = new List<bool>(length);
 				List<bool> blockListB = new List<bool>(length);
 				IntVector2 rightPlaneCoordA;

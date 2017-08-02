@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class GameManager : MonoBehaviour {
+public class BlockBuilderManager : MonoBehaviour {
 
 	public BaseGrid baseGridPrefab;
 	private BaseGrid baseGridInstance;
