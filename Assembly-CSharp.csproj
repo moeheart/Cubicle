@@ -51,6 +51,7 @@
      <Compile Include="Assets\Scripts\3D World\Input Handler\MouseLook.cs" />
      <Compile Include="Assets\Scripts\3D World\Manager\LevelManager.cs" />
      <Compile Include="Assets\Scripts\3D World\Room.cs" />
+     <Compile Include="Assets\Scripts\3D World\Trigger.cs" />
      <Compile Include="Assets\Scripts\3D World\Util\Direction.cs" />
      <Compile Include="Assets\Scripts\3D World\World.cs" />
      <Compile Include="Assets\Scripts\Block Builder Scripts\BaseGrid.cs" />

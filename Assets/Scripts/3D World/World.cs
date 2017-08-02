@@ -14,6 +14,7 @@ public class World : MonoBehaviour {
 	public Door trapdoor;
 	public Door doorXY;
 	public Door doorZY;
+	public Room roomPrefab;
 
 	private List<Room> rooms = new List<Room>();
 
@@ -23,6 +24,10 @@ public class World : MonoBehaviour {
 	public void GenerateRooms(string jsonFilePath) {
 		string jsonString = File.ReadAllText(jsonFilePath);
 		ParseJsonString(jsonString);
+		rooms[0].OnCompleteRoomObjective();
+		foreach (Room room in rooms) {
+			room.AddTrigger();
+		}
 	}
 
 	private void ParseJsonString(string data) {
@@ -59,7 +64,7 @@ public class World : MonoBehaviour {
 			Vector3 dimension = new Vector3(dimX, dimY, dimZ);
 			Color color = new Color(colorR, colorG, colorB, colorA);
 
-			Room room = ScriptableObject.CreateInstance<Room>();
+			Room room = Instantiate(roomPrefab) as Room;
 			room.Initialize(roomId, position, dimension, color);
 			rooms.Insert(roomId, room);
 

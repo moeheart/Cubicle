@@ -2,16 +2,20 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Room : ScriptableObject {
+public class Room : MonoBehaviour {
 
 	public int id;
 	public Vector3 position;
 	public Vector3 dimension;
 	public Color color;
+	public Trigger triggerPrefab;
 
 	private List<Door> doors = new List<Door>();
+	private Trigger trigger;
 
 	private const float lengthPerUnit = Configurations.lengthPerUnit;
+
+	public bool isUnlocked;
 
 	public Vector3 size {
 		get {
@@ -24,6 +28,7 @@ public class Room : ScriptableObject {
 		this.position = position;
 		this.dimension = dimension;
 		this.color = color;
+		this.transform.position = position;
 	}
 
 	public void AddDoor(Door door) {
@@ -31,9 +36,16 @@ public class Room : ScriptableObject {
 	}
 
 	public void OnCompleteRoomObjective() {
+		isUnlocked = true;
 		foreach (Door door in doors) {
 			door.Unlock();
 		}
+	}
+
+	public void AddTrigger() {
+		trigger = Instantiate(triggerPrefab) as Trigger;
+		trigger.transform.parent = this.transform;
+		trigger.transform.localPosition = new Vector3(this.size.x/2, 1.1f, this.size.z/2);
 	}
 
 	// Use this for initialization
