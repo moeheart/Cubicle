@@ -8,10 +8,10 @@ public class Room : MonoBehaviour {
 	public Vector3 position;
 	public Vector3 dimension;
 	public Color color;
-	public Trigger triggerPrefab;
+	public TriggerDevice triggerPrefab;
 
 	private List<Door> doors = new List<Door>();
-	private Trigger trigger;
+	private TriggerDevice trigger;
 
 	private const float lengthPerUnit = Configurations.lengthPerUnit;
 
@@ -43,9 +43,10 @@ public class Room : MonoBehaviour {
 	}
 
 	public void AddTrigger() {
-		trigger = Instantiate(triggerPrefab) as Trigger;
+		trigger = Instantiate(triggerPrefab) as TriggerDevice;
 		trigger.transform.parent = this.transform;
-		trigger.transform.localPosition = new Vector3(this.size.x/2, 1.1f, this.size.z/2);
+		trigger.transform.localPosition = new Vector3(this.size.x/2, 1.5f, this.size.z/2);
+		trigger.thisRoom = this;
 	}
 
 	// Use this for initialization

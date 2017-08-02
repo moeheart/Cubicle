@@ -188,7 +188,7 @@ public class World : MonoBehaviour {
 		}
 
 		IntVector2 overlapDimension = new IntVector2((int)(size.x/lengthPerUnit), (int)(size.y/lengthPerUnit));
-		Debug.Log("Room: " + room1.id + " " + room2.id + ". Pos=" + position + " Size=" + overlapDimension + " Direction:" + direction);
+		//Debug.Log("Room: " + room1.id + " " + room2.id + ". Pos=" + position + " Size=" + overlapDimension + " Direction:" + direction);
 
 		//First delete the walls blocking them
 		for (int i = 0; i < overlapDimension.x; ++i) {
@@ -290,7 +290,7 @@ public class World : MonoBehaviour {
 		if (room1.position.y == room2.position.y + room2.size.y
 				|| room1.position.y + room1.size.y == room2.position.y) {
 			//room1's bottom and room2's top
-			Debug.Log("The XZ Plane overlaps");
+			//Debug.Log("The XZ Plane overlaps");
 			direction = Direction.XZ;
 			Vector2 pos1 = new Vector2(room1.position.x, room1.position.z);
 			Vector2 pos2 = new Vector2(room2.position.x, room2.position.z);
@@ -317,7 +317,7 @@ public class World : MonoBehaviour {
 		if (room1.position.x == room2.position.x + room2.size.x
 				|| room1.position.x + room1.size.x == room2.position.x) {
 			//room1's left and room2's right
-			Debug.Log("The ZY Plane overlaps");
+			//Debug.Log("The ZY Plane overlaps");
 			direction = Direction.ZY;
 			Vector2 pos1 = new Vector2(room1.position.z, room1.position.y);
 			Vector2 pos2 = new Vector2(room2.position.z, room2.position.y);
@@ -343,7 +343,7 @@ public class World : MonoBehaviour {
 		if (room1.position.z == room2.position.z + room2.size.z
 				|| room1.position.z + room1.size.z == room2.position.z) {
 			//room1's front and room2's back
-			Debug.Log("The XY Plane overlaps");
+			//Debug.Log("The XY Plane overlaps");
 			direction = Direction.XY;
 			Vector2 pos1 = new Vector2(room1.position.x, room1.position.y);
 			Vector2 pos2 = new Vector2(room2.position.x, room2.position.y);
