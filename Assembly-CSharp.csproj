@@ -52,7 +52,6 @@
      <Compile Include="Assets\Scripts\3D World\Manager\LevelManager.cs" />
      <Compile Include="Assets\Scripts\3D World\Room.cs" />
      <Compile Include="Assets\Scripts\3D World\Util\Direction.cs" />
-     <Compile Include="Assets\Scripts\3D World\Util\MiniJSON.cs" />
      <Compile Include="Assets\Scripts\3D World\World.cs" />
      <Compile Include="Assets\Scripts\Block Builder Scripts\BaseGrid.cs" />
      <Compile Include="Assets\Scripts\Block Builder Scripts\BaseGridCell.cs" />
@@ -62,13 +61,14 @@
      <Compile Include="Assets\Scripts\Block Builder Scripts\Managers\GameManager.cs" />
      <Compile Include="Assets\Scripts\Block Builder Scripts\RotateObject.cs" />
      <Compile Include="Assets\Scripts\Block Builder Scripts\ThreeView.cs" />
-     <Compile Include="Assets\Scripts\Block Builder Scripts\Utils\IntVector2.cs" />
-     <Compile Include="Assets\Scripts\Block Builder Scripts\Utils\IntVector3.cs" />
      <Compile Include="Assets\Scripts\Block Builder Scripts\Utils\LineType.cs" />
      <Compile Include="Assets\Scripts\Block Builder Scripts\Utils\Segment.cs" />
-     <Compile Include="Assets\Scripts\Block Builder Scripts\Utils\Tuple.cs" />
      <Compile Include="Assets\Scripts\Block Builder Scripts\Utils\ViewType.cs" />
      <Compile Include="Assets\Scripts\Block Builder Scripts\ViewPanel.cs" />
+     <Compile Include="Assets\Scripts\Utils\IntVector2.cs" />
+     <Compile Include="Assets\Scripts\Utils\IntVector3.cs" />
+     <Compile Include="Assets\Scripts\Utils\MiniJSON.cs" />
+     <Compile Include="Assets\Scripts\Utils\Tuple.cs" />
      <None Include="Assets\Scripts\Readme.txt" />
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
