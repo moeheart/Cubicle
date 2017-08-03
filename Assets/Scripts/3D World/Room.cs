@@ -15,7 +15,7 @@ public class Room : MonoBehaviour {
 
 	private const float lengthPerUnit = Configurations.lengthPerUnit;
 
-	public bool isUnlocked;
+	public bool isUnlocked {get; private set;}
 
 	public Vector3 size {
 		get {
