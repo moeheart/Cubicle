@@ -67,22 +67,26 @@ public class DrawingHandler : MonoBehaviour {
 
 	public void DrawMultiView(BaseGridCell[,] cells) {
 		Dictionary<IntVector3, bool> cubes = To3DMapping(To2DMapping(cells));
-		bool flag;
+		bool isTopViewCorrect, isFrontViewCorrect, isRightViewCorrect;
 
 		Dictionary<Segment, LineType> topView = ThreeView.GetTopView(cubes);
 		currentTopViewPanel.GetComponent<ViewPanel>().DrawView(topView);
-		flag = CompareCurrentAndTargetView(topView, targetTopView);
-		targetTopViewPanel.GetComponent<ViewPanel>().ChangeColorOnCompare(flag);
+		isTopViewCorrect = CompareCurrentAndTargetView(topView, targetTopView);
+		targetTopViewPanel.GetComponent<ViewPanel>().ChangeColorOnCompare(isTopViewCorrect);
 
 		Dictionary<Segment, LineType> frontView = ThreeView.GetFrontView(cubes);
 		currentFrontViewPanel.GetComponent<ViewPanel>().DrawView(frontView);
-		flag = CompareCurrentAndTargetView(frontView, targetFrontView);
-		targetFrontViewPanel.GetComponent<ViewPanel>().ChangeColorOnCompare(flag);
+		isFrontViewCorrect = CompareCurrentAndTargetView(frontView, targetFrontView);
+		targetFrontViewPanel.GetComponent<ViewPanel>().ChangeColorOnCompare(isFrontViewCorrect);
 
 		Dictionary<Segment, LineType> rightView = ThreeView.GetRightView(cubes);
 		currentRightViewPanel.GetComponent<ViewPanel>().DrawView(rightView);
-		flag = CompareCurrentAndTargetView(rightView, targetRightView);
-		targetRightViewPanel.GetComponent<ViewPanel>().ChangeColorOnCompare(flag);
+		isRightViewCorrect = CompareCurrentAndTargetView(rightView, targetRightView);
+		targetRightViewPanel.GetComponent<ViewPanel>().ChangeColorOnCompare(isRightViewCorrect);
+
+		if (isTopViewCorrect && isFrontViewCorrect && isRightViewCorrect) {
+			//TODO
+		}
 	}
 
 	private bool CompareCurrentAndTargetView(Dictionary<Segment, LineType> currentView, Dictionary<Segment,LineType> targetView) {
