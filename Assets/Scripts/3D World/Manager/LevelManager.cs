@@ -3,25 +3,68 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using MiniJSON;
+using System.Runtime.Serialization.Formatters.Binary;
+
 public class LevelManager : MonoBehaviour {
 
 	public World worldPrefab;
 	public GameObject playerPrefab;
 
-	private World worldInstance;
+	private static World worldInstance;
+	private GameObject player;
 	private const string levelJsonFilePath = "Assets/Scripts/Json/Level.json";
+
+	private string saveFilePath;
 
 	// Use this for initialization
 	void Start () {
+		saveFilePath = Path.Combine(Application.persistentDataPath, "game.dat");
 		worldInstance = Instantiate(worldPrefab) as World;
 		worldInstance.GenerateRooms(levelJsonFilePath);
-		GameObject player = Instantiate(playerPrefab) as GameObject;
+		player = Instantiate(playerPrefab) as GameObject;
 		player.transform.position = new Vector3(15,10,15);
+		LoadGameState();
+		SaveGameState();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	public void SaveGameState() {
+		//TODO
+		Dictionary<string, object> gameState = new Dictionary<string, object>();
+		gameState.Add("player position x", player.transform.position.x);
+		gameState.Add("player position y", player.transform.position.y);
+		gameState.Add("player position z", player.transform.position.z);
+
+		FileStream stream = File.Create(saveFilePath);
+		BinaryFormatter formatter = new BinaryFormatter();
+		formatter.Serialize(stream, gameState);
+		stream.Close();
+	}
+
+	public void LoadGameState() {
+		if (!File.Exists(saveFilePath)) {
+			Debug.Log("No saved game.");
+			return;
+		}
+
+		Dictionary<string, object> gameState;
+
+		BinaryFormatter formatter = new BinaryFormatter();
+		FileStream stream = File.Open(saveFilePath, FileMode.Open);
+		gameState = formatter.Deserialize(stream) as Dictionary<string, object>;
+		stream.Close();
+
+		player.transform.position = new Vector3(
+			(float)gameState["player position x"],
+			(float)gameState["player position y"],
+			(float)gameState["player position z"]
+		);
+
+		Debug.Log("Successfully Loaded save game...!!");
 	}
 
 	/*void ReadAndParse() {

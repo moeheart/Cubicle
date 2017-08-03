@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class BlockBuilderManager : MonoBehaviour {
 
@@ -15,6 +16,9 @@ public class BlockBuilderManager : MonoBehaviour {
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.Space)) {
 			RestartGame();
+		}
+		if (Input.GetKeyDown(KeyCode.Q)) {
+			SceneManager.LoadScene("World Scene");
 		}
 	}
 
