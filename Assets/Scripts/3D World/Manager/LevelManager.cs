@@ -9,20 +9,15 @@ public class LevelManager : MonoBehaviour {
 
 	public World worldPrefab;
 
-	private static World worldInstance;
+	public static World worldInstance {get; private set;}
 	private const string levelJsonFilePath = "Assets/Scripts/Json/Level.json";
-
-	private string saveFilePath;
 
 	// Use this for initialization
 	void Start () {
-		saveFilePath = Path.Combine(Application.persistentDataPath, "game.dat");
 		worldInstance = Instantiate(worldPrefab) as World;
 		worldInstance.GenerateWorld(levelJsonFilePath);
-		//player = Instantiate(playerPrefab) as GameObject;
-		//player.transform.position = new Vector3(15,10,15);
-		//LoadGameState();
-		//SaveGameState();
+		worldInstance.LoadData();
+		worldInstance.SaveData();
 	}
 	
 	// Update is called once per frame
@@ -30,12 +25,10 @@ public class LevelManager : MonoBehaviour {
 	
 	}
 
-	public void SaveGameState() {
+	/*public void SaveGameState() {
 		//TODO
 		Dictionary<string, object> gameState = new Dictionary<string, object>();
-		//gameState.Add("player position x", player.transform.position.x);
-		//gameState.Add("player position y", player.transform.position.y);
-		//gameState.Add("player position z", player.transform.position.z);
+		//worldInstance.SaveData(gameState);
 
 		FileStream stream = File.Create(saveFilePath);
 		BinaryFormatter formatter = new BinaryFormatter();
@@ -56,14 +49,10 @@ public class LevelManager : MonoBehaviour {
 		gameState = formatter.Deserialize(stream) as Dictionary<string, object>;
 		stream.Close();
 
-		/*player.transform.position = new Vector3(
-			(float)gameState["player position x"],
-			(float)gameState["player position y"],
-			(float)gameState["player position z"]
-		);*/
+		//worldInstance.LoadData(gameState);
 
 		Debug.Log("Successfully Loaded save game...!!");
-	}
+	}*/
 
 	/*void ReadAndParse() {
 		string jsonString = File.ReadAllText(levelJsonFilePath);

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using MiniJSON;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class World : MonoBehaviour {
 
@@ -19,11 +20,15 @@ public class World : MonoBehaviour {
 
 	private List<Room> rooms = new List<Room>();
 	private GameObject player;
+	public int currentRoomId {private get; set;}
 
 	private const float lengthPerUnit = Configurations.lengthPerUnit;
 	private const float borderThickness = Configurations.borderThickness;
 
+	private string saveFilePath;
+
 	public void GenerateWorld(string jsonFilePath) {
+		saveFilePath = Path.Combine(Application.persistentDataPath, "game.dat");
 		string jsonString = File.ReadAllText(jsonFilePath);
 		ParseJsonString(jsonString);
 		rooms[0].OnCompleteRoomObjective();
@@ -87,6 +92,58 @@ public class World : MonoBehaviour {
 				BuildTunnel(room1, room2);
 			}
 		}
+	}
+
+	public void LoadData() {
+
+		if (!File.Exists(saveFilePath)) {
+			Debug.Log("No saved game.");
+			return;
+		}
+
+		Dictionary<string, object> gameState;
+
+		BinaryFormatter formatter = new BinaryFormatter();
+		FileStream stream = File.Open(saveFilePath, FileMode.Open);
+		gameState = formatter.Deserialize(stream) as Dictionary<string, object>;
+		stream.Close();
+
+		player.transform.position = new Vector3(
+			(float)gameState["player position x"],
+			(float)gameState["player position y"],
+			(float)gameState["player position z"]
+		);
+		player.transform.rotation = new Quaternion(
+			(float)gameState["player rotation x"],
+			(float)gameState["player rotation y"],
+			(float)gameState["player rotation z"],
+			(float)gameState["player rotation w"]
+		);
+
+		Debug.Log("Successfully Loaded save game...!!");
+
+	}
+
+	public void SaveData() {
+
+		Dictionary<string, object> gameState = new Dictionary<string, object>();
+
+		gameState.Add("player position x", player.transform.position.x);
+		gameState.Add("player position y", player.transform.position.y);
+		gameState.Add("player position z", player.transform.position.z);
+
+		gameState.Add("player rotation w", player.transform.rotation.w);
+		gameState.Add("player rotation x", player.transform.rotation.x);
+		gameState.Add("player rotation y", player.transform.rotation.y);
+		gameState.Add("player rotation z", player.transform.rotation.z);
+
+		gameState.Add("current room id", currentRoomId);
+
+		FileStream stream = File.Create(saveFilePath);
+		BinaryFormatter formatter = new BinaryFormatter();
+		formatter.Serialize(stream, gameState);
+		stream.Close();
+
 	}
 
 	private void BuildRoom(Vector3 position, Vector3 dimension, Color color) {

@@ -1,8 +1,29 @@
 {
-    "size": {
-        "x": 3,
-        "z": 3
+    "0": {
+        "type": "Block Builder",
+        "size": {
+            "x": 3,
+            "z": 3
+        },
+        "maxHeight": 5,
+        "height": [[2,4,2],[5,1,0],[2,3,1]]
     },
-    "maxHeight": 5,
-    "height": [[2,4,2],[5,1,0],[2,3,1]]
+    "1": {
+        "type": "Block Builder",
+        "size": {
+            "x": 3,
+            "z": 3
+        },
+        "maxHeight": 5,
+        "height": [[1,1,1],[1,1,1],[0,0,0]]
+    },
+    "2": {
+        "type": "Block Builder",
+        "size": {
+            "x": 3,
+            "z": 3
+        },
+        "maxHeight": 5,
+        "height": [[1,1,1],[1,1,1],[2,2,2]]
+    }
 }

@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using MiniJSON;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class DrawingHandler : MonoBehaviour {
 
@@ -20,12 +21,24 @@ public class DrawingHandler : MonoBehaviour {
 
 	private string jsonFilePath = "Assets/Scripts/Json/Puzzles.json";
 
+	private string saveFilePath;
+
 	// Use this for initialization
 	void Start () {
-		//TODO
-		//This should be somewhere else
+
+		saveFilePath = Path.Combine(Application.persistentDataPath, "game.dat");
+
+		Dictionary<string, object> gameState;
+
+		BinaryFormatter formatter = new BinaryFormatter();
+		FileStream stream = File.Open(saveFilePath, FileMode.Open);
+		gameState = formatter.Deserialize(stream) as Dictionary<string, object>;
+		stream.Close();
+
+		int id = (int)gameState["current room id"];
+
 		int[,] height = new int[BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.gridSize.z];
-		ParseJson(jsonFilePath, height);
+		ParseJson(jsonFilePath, height, id);
 		Dictionary<IntVector3, bool> targetBlock = To3DMapping(height);
 		
 		targetTopView = ThreeView.GetTopView(targetBlock);
@@ -37,10 +50,12 @@ public class DrawingHandler : MonoBehaviour {
 		targetRightViewPanel.GetComponent<ViewPanel>().DrawView(targetRightView);
 	}
 	
-	private void ParseJson(string jsonFilePath, int[,] height) {
+	private void ParseJson(string jsonFilePath, int[,] height, int roomId) {
 		string jsonString = File.ReadAllText(jsonFilePath);
 		Dictionary<string, object> dict;
 		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
+		dict = (Dictionary<string, object>)dict[roomId.ToString()];
+
 		List<object> _2DList = ((List<object>) dict["height"]);
 		for (int i = 0; i < BlockBuilderConfigs.gridSize.x; ++i) {
 			List<object> _list = ((List<object>) _2DList[i]);
