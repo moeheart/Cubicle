@@ -23,19 +23,21 @@ public class DrawingHandler : MonoBehaviour {
 
 	private string saveFilePath;
 
+	private int id;
+
+	private Dictionary<string, object> gameState;
+
 	// Use this for initialization
 	void Start () {
 
 		saveFilePath = Path.Combine(Application.persistentDataPath, "game.dat");
 
-		Dictionary<string, object> gameState;
-
+		//Get the id
 		BinaryFormatter formatter = new BinaryFormatter();
 		FileStream stream = File.Open(saveFilePath, FileMode.Open);
 		gameState = formatter.Deserialize(stream) as Dictionary<string, object>;
 		stream.Close();
-
-		int id = (int)gameState["current room id"];
+		id = (int)gameState["current room id"];
 
 		int[,] height = new int[BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.gridSize.z];
 		ParseJson(jsonFilePath, height, id);
@@ -85,7 +87,15 @@ public class DrawingHandler : MonoBehaviour {
 		targetRightViewPanel.GetComponent<ViewPanel>().ChangeColorOnCompare(isRightViewCorrect);
 
 		if (isTopViewCorrect && isFrontViewCorrect && isRightViewCorrect) {
+			BlockBuilderManager.OnComplete();
 			//TODO
+			//Unlock this room!
+			//To unlock this room, we only need to store this id in the savefile
+			((List<int>) gameState["unlocked rooms"]).Add(id);
+			FileStream stream = File.Create(saveFilePath);
+			BinaryFormatter formatter = new BinaryFormatter();
+			formatter.Serialize(stream, gameState);
+			stream.Close();
 		}
 	}
 

@@ -27,11 +27,13 @@ public class World : MonoBehaviour {
 
 	private string saveFilePath;
 
+	private Dictionary<string, object> gameState;
+
 	public void GenerateWorld(string jsonFilePath) {
 		saveFilePath = Path.Combine(Application.persistentDataPath, "game.dat");
 		string jsonString = File.ReadAllText(jsonFilePath);
 		ParseJsonString(jsonString);
-		rooms[0].OnCompleteRoomObjective();
+		//rooms[0].OnCompleteRoomObjective();
 		foreach (Room room in rooms) {
 			room.AddTrigger();
 		}
@@ -97,11 +99,10 @@ public class World : MonoBehaviour {
 	public void LoadData() {
 
 		if (!File.Exists(saveFilePath)) {
+			gameState = new Dictionary<string, object>();
 			Debug.Log("No saved game.");
 			return;
 		}
-
-		Dictionary<string, object> gameState;
 
 		BinaryFormatter formatter = new BinaryFormatter();
 		FileStream stream = File.Open(saveFilePath, FileMode.Open);
@@ -120,15 +121,36 @@ public class World : MonoBehaviour {
 			(float)gameState["player rotation w"]
 		);
 
+		List<int> unlockedRooms = (List<int>) gameState["unlocked rooms"];
+		foreach (int id in unlockedRooms) {
+			rooms[id].OnCompleteRoomObjective();
+		}
+
 		Debug.Log("Successfully Loaded save game...!!");
 
 	}
 
 	public void SaveData() {
 
-		Dictionary<string, object> gameState = new Dictionary<string, object>();
+		//TODO
+		//Actually, should not "save from scratch", as the save file contains other info
 
-		gameState.Add("player position x", player.transform.position.x);
+		gameState["player position x"] = player.transform.position.x;
+		gameState["player position y"] = player.transform.position.y;
+		gameState["player position z"] = player.transform.position.z;
+
+		gameState["player rotation x"] = player.transform.rotation.x;
+		gameState["player rotation y"] = player.transform.rotation.y;
+		gameState["player rotation z"] = player.transform.rotation.z;
+		gameState["player rotation w"] = player.transform.rotation.w;
+
+		gameState["current room id"] = currentRoomId;
+
+		if (gameState.ContainsKey("unlocked rooms") == false) {
+			gameState["unlocked rooms"] = new List<int>();
+		}
+
+		/*gameState.Add("player position x", player.transform.position.x);
 		gameState.Add("player position y", player.transform.position.y);
 		gameState.Add("player position z", player.transform.position.z);
 
@@ -137,7 +159,7 @@ public class World : MonoBehaviour {
 		gameState.Add("player rotation y", player.transform.rotation.y);
 		gameState.Add("player rotation z", player.transform.rotation.z);
 
-		gameState.Add("current room id", currentRoomId);
+		gameState.Add("current room id", currentRoomId);*/
 
 		FileStream stream = File.Create(saveFilePath);
 		BinaryFormatter formatter = new BinaryFormatter();

@@ -11,7 +11,7 @@ public class TriggerDevice : MonoBehaviour {
 		LevelManager.worldInstance.currentRoomId = thisRoom.id;
 		LevelManager.worldInstance.SaveData();
 		SceneManager.LoadScene("Block Builder Scene", LoadSceneMode.Single);
-		thisRoom.OnCompleteRoomObjective();
+		//thisRoom.OnCompleteRoomObjective();
 	}
 
 	// Use this for initialization

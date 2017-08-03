@@ -50,11 +50,11 @@ public class BaseGridCell : MonoBehaviour {
 	}
 
 	public void AddCube() {
-		CubeBlock newCubeBlock = Instantiate(cubeBlockPrefab) as CubeBlock;
-		newCubeBlock.transform.parent = this.transform;
 		if (cubes.Count == maxHeight) {
 			return;
 		}
+		CubeBlock newCubeBlock = Instantiate(cubeBlockPrefab) as CubeBlock;
+		newCubeBlock.transform.parent = this.transform;
 		if (cubes.Count == 0) {
 			newCubeBlock.transform.localPosition = new Vector3(0f, .55f, 0f);
 		}

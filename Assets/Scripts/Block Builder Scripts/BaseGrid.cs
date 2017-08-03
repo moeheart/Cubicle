@@ -14,6 +14,7 @@ public class BaseGrid : MonoBehaviour {
 	private IntVector2 currentCoordinates = new IntVector2(0,0);
 
 	private GameObject DrawingHandler;
+	private bool isCompleted = false;
 
 	// Use this for initialization
 	void Start () {
@@ -27,6 +28,10 @@ public class BaseGrid : MonoBehaviour {
 		//Perhaps a separate script named InputHandler.cs...?
 
 		//The clamp to ensure the new coord is inside the grid is handled inside ChangeCurrentCoordinates mthd
+		if (isCompleted == true) {
+			return;
+		}
+		
 		if (Input.GetKeyDown(KeyCode.UpArrow)) {
 			IntVector2 newCoordinates = currentCoordinates;
 			newCoordinates.z++;
@@ -65,6 +70,11 @@ public class BaseGrid : MonoBehaviour {
 			}
 		}
 		HighlightCell(currentCoordinates);
+	}
+
+	public void OnCompleteBlockBuilderPuzzle() {
+		isCompleted = true;
+		UnhighlightCell(currentCoordinates);
 	}
 
 	private void CreateCell(IntVector2 coordinates) {

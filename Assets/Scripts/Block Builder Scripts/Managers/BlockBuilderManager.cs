@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 public class BlockBuilderManager : MonoBehaviour {
 
 	public BaseGrid baseGridPrefab;
-	private BaseGrid baseGridInstance;
+	public static BaseGrid baseGridInstance {get; private set;}
 
 	// Use this for initialization
 	void Start () {
@@ -14,9 +14,9 @@ public class BlockBuilderManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Space)) {
+		/*if (Input.GetKeyDown(KeyCode.Space)) {
 			RestartGame();
-		}
+		}*/
 		if (Input.GetKeyDown(KeyCode.Q)) {
 			SceneManager.LoadScene("World Scene");
 		}
@@ -31,5 +31,9 @@ public class BlockBuilderManager : MonoBehaviour {
 		StopAllCoroutines();
 		Destroy(baseGridInstance.gameObject);
 		BeginGame();
+	}
+
+	public static void OnComplete() {
+		baseGridInstance.OnCompleteBlockBuilderPuzzle();
 	}
 }
