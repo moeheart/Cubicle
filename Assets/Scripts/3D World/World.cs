@@ -8,6 +8,7 @@ public class World : MonoBehaviour {
 
 	//Responsible for instantiating the walls, floors and doors
 
+	public GameObject playerPrefab;
 	public GameObject floor;
 	public GameObject wallXY;
 	public GameObject wallZY;
@@ -17,17 +18,20 @@ public class World : MonoBehaviour {
 	public Room roomPrefab;
 
 	private List<Room> rooms = new List<Room>();
+	private GameObject player;
 
 	private const float lengthPerUnit = Configurations.lengthPerUnit;
 	private const float borderThickness = Configurations.borderThickness;
 
-	public void GenerateRooms(string jsonFilePath) {
+	public void GenerateWorld(string jsonFilePath) {
 		string jsonString = File.ReadAllText(jsonFilePath);
 		ParseJsonString(jsonString);
 		rooms[0].OnCompleteRoomObjective();
 		foreach (Room room in rooms) {
 			room.AddTrigger();
 		}
+		player = Instantiate(playerPrefab) as GameObject;
+		player.transform.position = new Vector3(15,10,15);
 	}
 
 	private void ParseJsonString(string data) {

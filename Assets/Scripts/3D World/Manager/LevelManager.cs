@@ -8,10 +8,8 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class LevelManager : MonoBehaviour {
 
 	public World worldPrefab;
-	public GameObject playerPrefab;
 
 	private static World worldInstance;
-	private GameObject player;
 	private const string levelJsonFilePath = "Assets/Scripts/Json/Level.json";
 
 	private string saveFilePath;
@@ -20,11 +18,11 @@ public class LevelManager : MonoBehaviour {
 	void Start () {
 		saveFilePath = Path.Combine(Application.persistentDataPath, "game.dat");
 		worldInstance = Instantiate(worldPrefab) as World;
-		worldInstance.GenerateRooms(levelJsonFilePath);
-		player = Instantiate(playerPrefab) as GameObject;
-		player.transform.position = new Vector3(15,10,15);
-		LoadGameState();
-		SaveGameState();
+		worldInstance.GenerateWorld(levelJsonFilePath);
+		//player = Instantiate(playerPrefab) as GameObject;
+		//player.transform.position = new Vector3(15,10,15);
+		//LoadGameState();
+		//SaveGameState();
 	}
 	
 	// Update is called once per frame
@@ -35,9 +33,9 @@ public class LevelManager : MonoBehaviour {
 	public void SaveGameState() {
 		//TODO
 		Dictionary<string, object> gameState = new Dictionary<string, object>();
-		gameState.Add("player position x", player.transform.position.x);
-		gameState.Add("player position y", player.transform.position.y);
-		gameState.Add("player position z", player.transform.position.z);
+		//gameState.Add("player position x", player.transform.position.x);
+		//gameState.Add("player position y", player.transform.position.y);
+		//gameState.Add("player position z", player.transform.position.z);
 
 		FileStream stream = File.Create(saveFilePath);
 		BinaryFormatter formatter = new BinaryFormatter();
@@ -58,11 +56,11 @@ public class LevelManager : MonoBehaviour {
 		gameState = formatter.Deserialize(stream) as Dictionary<string, object>;
 		stream.Close();
 
-		player.transform.position = new Vector3(
+		/*player.transform.position = new Vector3(
 			(float)gameState["player position x"],
 			(float)gameState["player position y"],
 			(float)gameState["player position z"]
-		);
+		);*/
 
 		Debug.Log("Successfully Loaded save game...!!");
 	}
