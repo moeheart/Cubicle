@@ -16,6 +16,7 @@ public class Door : MonoBehaviour {
 	}
 
 	public void Unlock() {
+		//TODO
 		int childCount = this.transform.childCount;
 		for (int i = 0; i < childCount; ++i) {
 			GameObject cube = this.transform.GetChild(i).gameObject;
