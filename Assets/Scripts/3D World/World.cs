@@ -475,6 +475,10 @@ public class World : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		//TODO
+		//Add a key to delete the save file
+		if (Input.GetKeyDown(KeyCode.Delete)) {
+			File.Delete(saveFilePath);
+		}
 	}
 }
