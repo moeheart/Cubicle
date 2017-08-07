@@ -32,3 +32,19 @@ An Example:
 			SceneManager.LoadScene("World Scene");
 		}
 	}
+
+4. You can modify Level.json if you need to. Abide by the following format:
+{
+    "0" : {
+        "position": [0, 0 ,0],
+        "dimension": [4, 4, 4],
+        "color": [1, 0.8, 1, 1],
+        "puzzle type": "none"
+    },
+    "1" : {
+        "position": [4,0,0],
+        "dimension": [2,2,2],
+        "color": [1,1,0,1],
+        "puzzle type": "block builder"
+    }
+}
