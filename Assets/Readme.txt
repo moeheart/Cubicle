@@ -26,4 +26,9 @@ An Example:
 3. Once the player completes the puzzle, unlock the current Room. Do this by calling
     DataUtil.UnlockCurrentRoom();
 
-3. In your Scene, the user should be able to go back to the World Scene by pressing "Q" anytime. 
+3. In your Scene, the user should be able to go back to the World Scene by pressing "Q" anytime. You can use:
+	void Update () {
+		if (Input.GetKeyDown(KeyCode.Q)) {
+			SceneManager.LoadScene("World Scene");
+		}
+	}
