@@ -21,7 +21,7 @@ An Example:
 }
 
 2. You need to get the currentRoomId to know which puzzle to load, do this by using
-    int id = DataUtil.getCurrentRoomId();
+    int id = DataUtil.GetCurrentRoomId();
 
 3. Once the player completes the puzzle, unlock the current Room. Do this by calling
     DataUtil.UnlockCurrentRoom();
