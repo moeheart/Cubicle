@@ -81,12 +81,7 @@ public class World : MonoBehaviour {
 			Color color = new Color(colorR, colorG, colorB, colorA);
 			PuzzleType puzzleType = PuzzleType.None;
 
-			if (puzzleTypeString == "block builder") {
-				puzzleType = PuzzleType.BlockBuilder;
-			}
-			else if (puzzleTypeString == "none") {
-				puzzleType = PuzzleType.None;
-			}
+			puzzleType = PuzzleTypes.GetTypeFromString(puzzleTypeString);
 
 			Room room = Instantiate(roomPrefab) as Room;
 			room.Initialize(roomId, position, dimension, color, puzzleType);

@@ -1,9 +1,25 @@
 What you need to do:
 
+0. 
+The ONLY C# script file you should and need to change is PuzzleType.cs, to register your own puzzles.
+(Open the script and you will know what I mean.)
+
+In the prefabs folder, you will find a prefab named "Room", 
+in the inspector, you will find a script with the same name ("Room") attached to this prefab.
+This script file has a field named "Trigger Prefabs", and it is an array to store the prefabs for the triggers. 
+(Each type of puzzle will have a differently looking trigger, 
+ so that the player will know what type of puzzle he/she is about to activate.
+ Design a trigger for your own puzzle.)
+Make sure the "id" for your puzzle in PuzzleType.cs is the same as the index in this array. 
+Make sure that your prefab is of suitable size. Add a collider to your prefab. 
+Also, attach my TriggerDevice.cs script to your trigger prefab.
+You can refer to my Room Builder Trigger prefab to get a sense of how large the prefab should be. 
+
+These should be the ONLY two things that you need to change. 
 
 1. Write Puzzles.json file. 
 I don't care how you write this, as long as your own Scene can parse the json file correctly. 
-The key of each entry is the room id, and the value is the puzzle
+The key of each entry is the room id, and the value specifies the puzzle. 
 An Example:
 {
     "0": {
