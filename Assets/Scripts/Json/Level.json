@@ -2,26 +2,31 @@
     "0" : {
         "position": [0, 0 ,0],
         "dimension": [4, 4, 4],
-        "color": [1, 0.8, 1, 1]
+        "color": [1, 0.8, 1, 1],
+        "puzzle type": "none"
     },
     "1" : {
         "position": [4,0,0],
         "dimension": [2,2,2],
-        "color": [1,1,0,1]
+        "color": [1,1,0,1],
+        "puzzle type": "block builder"
     },
     "2" : {
         "position": [-1,-1,0],
         "dimension": [2,1,1],
-        "color": [1,1,0,1]
+        "color": [1,1,0,1],
+        "puzzle type": "block builder"
     },
     "3" : {
         "position": [0,0,4],
         "dimension": [1,1,1],
-        "color": [1,1,0,1]
+        "color": [1,1,0,1],
+        "puzzle type": "block builder"
     },
     "4" : {
         "position": [6,0,0],
         "dimension": [1,1,1],
-        "color": [1,1,0,1]
+        "color": [1,1,0,1],
+        "puzzle type": "block builder"
     }
 }

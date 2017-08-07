@@ -36,6 +36,9 @@ public class World : MonoBehaviour {
 		//rooms[0].OnCompleteRoomObjective();
 		foreach (Room room in rooms) {
 			room.AddTrigger();
+			if (room.puzzleType == PuzzleType.None) {
+				room.OnCompleteRoomObjective();
+			}
 		}
 		player = Instantiate(playerPrefab) as GameObject;
 		player.transform.position = new Vector3(15,10,15);
@@ -70,13 +73,23 @@ public class World : MonoBehaviour {
 			colorG = System.Convert.ToSingle(colorList[1]);
 			colorB = System.Convert.ToSingle(colorList[2]);
 			colorA = System.Convert.ToSingle(colorList[3]);
+
+			string puzzleTypeString = (string)entryValueDict["puzzle type"];
 			
 			Vector3 position = new Vector3(posX, posY, posZ);
 			Vector3 dimension = new Vector3(dimX, dimY, dimZ);
 			Color color = new Color(colorR, colorG, colorB, colorA);
+			PuzzleType puzzleType = PuzzleType.None;
+
+			if (puzzleTypeString == "block builder") {
+				puzzleType = PuzzleType.BlockBuilder;
+			}
+			else if (puzzleTypeString == "none") {
+				puzzleType = PuzzleType.None;
+			}
 
 			Room room = Instantiate(roomPrefab) as Room;
-			room.Initialize(roomId, position, dimension, color);
+			room.Initialize(roomId, position, dimension, color, puzzleType);
 			rooms.Insert(roomId, room);
 
 			BuildRoom(position, dimension, color);

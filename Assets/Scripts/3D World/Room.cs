@@ -8,7 +8,9 @@ public class Room : MonoBehaviour {
 	public Vector3 position;
 	public Vector3 dimension;
 	public Color color;
-	public TriggerDevice triggerPrefab;
+	public TriggerDevice[] triggerPrefabs;
+
+	public PuzzleType puzzleType;
 
 	private List<Door> doors = new List<Door>();
 	private TriggerDevice trigger;
@@ -23,11 +25,12 @@ public class Room : MonoBehaviour {
 		}
 	}
 
-	public void Initialize(int id, Vector3 position, Vector3 dimension, Color color) {
+	public void Initialize(int id, Vector3 position, Vector3 dimension, Color color, PuzzleType puzzleType) {
 		this.id = id;
 		this.position = position;
 		this.dimension = dimension;
 		this.color = color;
+		this.puzzleType = puzzleType;
 		this.transform.position = position;
 	}
 
@@ -43,7 +46,10 @@ public class Room : MonoBehaviour {
 	}
 
 	public void AddTrigger() {
-		trigger = Instantiate(triggerPrefab) as TriggerDevice;
+		if (puzzleType == PuzzleType.None) {
+			return;
+		}
+		trigger = Instantiate(triggerPrefabs[(int)puzzleType]) as TriggerDevice;
 		trigger.transform.parent = this.transform;
 		trigger.transform.localPosition = new Vector3(this.size.x/2, 1.5f, this.size.z/2);
 		trigger.thisRoom = this;

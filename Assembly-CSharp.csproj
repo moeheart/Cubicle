@@ -50,7 +50,9 @@
      <Compile Include="Assets\Scripts\3D World\Door.cs" />
      <Compile Include="Assets\Scripts\3D World\Input Handler\FPSInput.cs" />
      <Compile Include="Assets\Scripts\3D World\Input Handler\MouseLook.cs" />
+     <Compile Include="Assets\Scripts\3D World\Manager\DataUtil.cs" />
      <Compile Include="Assets\Scripts\3D World\Manager\LevelManager.cs" />
+     <Compile Include="Assets\Scripts\3D World\PuzzleType.cs" />
      <Compile Include="Assets\Scripts\3D World\Room.cs" />
      <Compile Include="Assets\Scripts\3D World\TriggerDevice.cs" />
      <Compile Include="Assets\Scripts\3D World\Util\Direction.cs" />
@@ -71,7 +73,8 @@
      <Compile Include="Assets\Scripts\Utils\IntVector3.cs" />
      <Compile Include="Assets\Scripts\Utils\MiniJSON.cs" />
      <Compile Include="Assets\Scripts\Utils\Tuple.cs" />
-     <None Include="Assets\Scripts\Readme.txt" />
+     <None Include="Assets\Scripts\Notes.txt" />
+     <None Include="Assets\Readme.txt" />
  <Reference Include="UnityEngine.Networking">
  <HintPath>/Applications/Unity/Unity.app/Contents/UnityExtensions/Unity/Networking/UnityEngine.Networking.dll</HintPath>
  </Reference>

@@ -3,8 +3,6 @@ using System.Collections;
 
 public class Door : MonoBehaviour {
 
-	private Color unlockColor = Color.cyan;
-
 	// Use this for initialization
 	void Start () {
 	

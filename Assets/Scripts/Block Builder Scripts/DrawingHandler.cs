@@ -30,6 +30,7 @@ public class DrawingHandler : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
+		/*
 		saveFilePath = Path.Combine(Application.persistentDataPath, "game.dat");
 
 		//Get the id
@@ -38,6 +39,9 @@ public class DrawingHandler : MonoBehaviour {
 		gameState = formatter.Deserialize(stream) as Dictionary<string, object>;
 		stream.Close();
 		id = (int)gameState["current room id"];
+		*/
+
+		id = DataUtil.GetCurrentRoomId();
 
 		int[,] height = new int[BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.gridSize.z];
 		ParseJson(jsonFilePath, height, id);
@@ -91,11 +95,12 @@ public class DrawingHandler : MonoBehaviour {
 			//TODO
 			//Unlock this room!
 			//To unlock this room, we only need to store this id in the savefile
-			((List<int>) gameState["unlocked rooms"]).Add(id);
+			DataUtil.UnlockCurrentRoom();
+			/*((List<int>) gameState["unlocked rooms"]).Add(id);
 			FileStream stream = File.Create(saveFilePath);
 			BinaryFormatter formatter = new BinaryFormatter();
 			formatter.Serialize(stream, gameState);
-			stream.Close();
+			stream.Close();*/
 		}
 	}
 
