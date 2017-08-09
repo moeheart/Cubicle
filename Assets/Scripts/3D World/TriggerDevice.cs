@@ -10,6 +10,7 @@ public class TriggerDevice : MonoBehaviour {
 		//Debug.Log("Operating the trigger..!!");
 		LevelManager.worldInstance.currentRoomId = thisRoom.id;
 		LevelManager.worldInstance.SaveData();
+		Debug.Log("Operating Trigger...!!!");
 		PuzzleTypes.LoadScene(thisRoom.puzzleType);
 		//SceneManager.LoadScene("Block Builder Scene", LoadSceneMode.Single);
 		//thisRoom.OnCompleteRoomObjective();

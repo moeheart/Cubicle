@@ -51,7 +51,7 @@ public class Room : MonoBehaviour {
 		}
 		trigger = Instantiate(triggerPrefabs[(int)puzzleType]) as TriggerDevice;
 		trigger.transform.parent = this.transform;
-		trigger.transform.localPosition = new Vector3(this.size.x/2, 1.5f, this.size.z/2);
+		trigger.transform.localPosition = new Vector3(this.size.x/2, 1.05f, this.size.z/2);
 		trigger.thisRoom = this;
 	}
 
