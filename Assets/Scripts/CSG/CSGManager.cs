@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-//using ConstructiveSolidGeometry;
+using ConstructiveSolidGeometry;
 
 public class CSGManager : MonoBehaviour {
 
@@ -36,7 +36,7 @@ public class CSGManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		/*if (Input.GetKeyDown(KeyCode.Space)) {
+		if (Input.GetKeyDown(KeyCode.Space)) {
 			//GameObject newGo = Instantiate(newObjectPrefab, Vector3.zero, Quaternion.identity) as GameObject;
 			CSG result= CSGOperations.Subtract(opA, opB);
 			GameObject newGo = Instantiate(newObjectPrefab, Vector3.zero, Quaternion.identity) as GameObject;
@@ -44,6 +44,6 @@ public class CSGManager : MonoBehaviour {
 				newGo.GetComponent<MeshFilter>().mesh = result.toMesh();
 			Destroy(opA);
 			Destroy(opB);
-		}*/
+		}
 	}
 }
