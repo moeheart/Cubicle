@@ -134,7 +134,6 @@
      <Compile Include="Assets\Scripts\CSG\CSG Example\RuntimeCSGExample1.cs" />
      <Compile Include="Assets\Scripts\CSG\CSG Example\RuntimeCSGExample2.cs" />
      <Compile Include="Assets\Scripts\CSG\CSGManager.cs" />
-     <Compile Include="Assets\Scripts\CSG\CSGOperations.cs" />
      <Compile Include="Assets\Scripts\CSG\ObjectControls.cs" />
      <Compile Include="Assets\Scripts\Library\CSG\CSG.cs" />
      <Compile Include="Assets\Scripts\Library\CSG\Example\CubeTest.cs" />
