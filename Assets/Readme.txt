@@ -1,5 +1,7 @@
 What you need to do:
 
+Download this repo, import your scene into my project, and create a pull request once ready. 
+
 0. 
 The ONLY C# script file you should and need to change is PuzzleType.cs, to register your own puzzles.
 (Open the script and you will know what I mean.)
