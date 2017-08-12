@@ -6,3 +6,4 @@
 *.sln
 *.csproj
 *.meta
+*.DS_Store
