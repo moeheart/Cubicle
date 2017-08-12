@@ -1,2 +1,8 @@
 /Library/
 /Temp/
+/.vscode/
+/ProjectSettings/
+/obj/
+*.sln
+*.csproj
+*.meta
