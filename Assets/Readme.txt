@@ -1,6 +1,7 @@
 What you need to do:
 
 Download this repo, import your scene into my project, and create a pull request once ready. 
+World Scene is the main Scene, start the game from there. 
 
 0. 
 The ONLY C# script file you should and need to change is PuzzleType.cs, to register your own puzzles.
