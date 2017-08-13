@@ -15,7 +15,7 @@ public class Door : MonoBehaviour {
 
 	public void Unlock() {
 		//TODO
-		GameObject doorChild = this.transform.FindChild("Door").gameObject;
+		GameObject doorChild = this.transform.Find("Door").gameObject;
 		Destroy(doorChild);
 	}
 }

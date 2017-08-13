@@ -1555,7 +1555,7 @@ namespace Sabresaurus.SabreCSG
 		{
 			base.UpdateBrushVisibility ();
 
-			Transform meshGroup = transform.FindChild("MeshGroup");
+			Transform meshGroup = transform.Find("MeshGroup");
 
 			if(meshGroup != null)
 			{
@@ -1804,7 +1804,7 @@ namespace Sabresaurus.SabreCSG
 
 		static void CleanupForBuild(Transform csgModelTransform)
 		{
-			Transform meshGroup = csgModelTransform.FindChild("MeshGroup");
+			Transform meshGroup = csgModelTransform.Find("MeshGroup");
 			if(meshGroup != null)
 			{
 				// Reanchor the meshes to the root
