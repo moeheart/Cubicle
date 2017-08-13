@@ -9,7 +9,7 @@
         "position": [4,0,0],
         "dimension": [2,2,2],
         "color": [1,1,0,1],
-        "puzzle type": "CSG"
+        "puzzle type": "cube shift"
     },
     "2" : {
         "position": [-1,-1,0],

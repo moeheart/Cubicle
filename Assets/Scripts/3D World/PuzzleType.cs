@@ -5,7 +5,9 @@ using UnityEngine.SceneManagement;
 public enum PuzzleType {
 	None = -1, 
 	BlockBuilder = 0,
-	CSG = 1
+	CSG = 1,
+	RevolutionSolid = 2,
+	CubeShift = 3
 }
 
 public static class PuzzleTypes {
@@ -16,6 +18,12 @@ public static class PuzzleTypes {
 		if (str == "CSG") {
 			return PuzzleType.CSG;
 		}
+		if (str == "revolution solid") {
+ 			return PuzzleType.RevolutionSolid;
+ 		}
+ 		if (str == "cube shift") {
+ 			return PuzzleType.CubeShift;
+ 		}
 		return PuzzleType.None;
 	}
 
@@ -26,5 +34,11 @@ public static class PuzzleTypes {
 		if (type == PuzzleType.CSG) {
 			SceneManager.LoadScene("CSG Scene", LoadSceneMode.Single);
 		}
+		if (type == PuzzleType.RevolutionSolid) {
+ 			SceneManager.LoadScene("Revolution Solid Scene", LoadSceneMode.Single);
+ 		}
+ 		if (type == PuzzleType.CubeShift) {
+ 			SceneManager.LoadScene("Cube Shift Scene", LoadSceneMode.Single);
+ 		}
 	}
 }
