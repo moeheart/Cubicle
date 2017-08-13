@@ -105,7 +105,9 @@ namespace Sabresaurus.SabreCSG
 			}
 
 #if UNITY_EDITOR
-            UnityEditor.EditorUtility.SetSelectedWireframeHidden(GetComponent<Renderer>(), true);
+            //UnityEditor.EditorUtility.SetSelectedWireframeHidden(GetComponent<Renderer>(), true);
+			UnityEditor.EditorUtility.SetSelectedRenderState(GetComponent<Renderer>(), 
+				UnityEditor.EditorSelectedRenderState.Hidden);
 #endif
 
 			objectVersionUnserialized = objectVersionSerialized;

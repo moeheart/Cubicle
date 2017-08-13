@@ -57,7 +57,7 @@ namespace ConstructiveSolidGeometry
     public class CSG
     {
         public List<Polygon> polygons;
-        private Bounds bounds = new Bounds();
+//        private Bounds bounds = new Bounds();
 
         /// <summary>
         /// Constuctor
