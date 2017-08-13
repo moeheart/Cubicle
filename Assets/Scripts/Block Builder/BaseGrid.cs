@@ -31,7 +31,7 @@ public class BaseGrid : MonoBehaviour {
 		if (isCompleted == true) {
 			return;
 		}
-		
+
 		if (Input.GetKeyDown(KeyCode.UpArrow)) {
 			IntVector2 newCoordinates = currentCoordinates;
 			newCoordinates.z++;
