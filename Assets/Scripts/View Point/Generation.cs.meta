@@ -1,0 +1,23 @@
+fileFormatVersion: 2
+guid: 4605ed0ea2fc04365a873718d4901cb7
+timeCreated: 1501781985
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - solid0: {fileID: 1971370751679010, guid: 45266d1a22fe94ddc8f8d44cc52fa4d9, type: 2}
+  - solid1: {fileID: 1225379716645714, guid: fe47ce9bf7ee24906861120b257dc027, type: 2}
+  - solid2: {fileID: 100000, guid: c015689de05374ea5befa35f03a3e303, type: 3}
+  - solid3: {fileID: 100000, guid: f3c8dade5fa0a4ccfb625c5dec8ec0be, type: 3}
+  - solid4: {fileID: 100000, guid: a64f757915d784f4b9349905535d61b9, type: 3}
+  - solid5: {fileID: 100000, guid: 21b99db48944a46c693c768675447025, type: 3}
+  - solid6: {fileID: 100000, guid: cac42721f406b433f945faf94573efc0, type: 3}
+  - solid7: {fileID: 1871966732359686, guid: d4aa07ceed319406fb9a584b364b7b5c, type: 2}
+  - solid8: {fileID: 1260450291842274, guid: 7a29d17d0a2fd4a3d8069bf9f3d15fa8, type: 2}
+  - solid9: {fileID: 100000, guid: 8818f518a52cd46258b294ae1e90e6e7, type: 3}
+  - solid10: {fileID: 100000, guid: 743ec4548af854c75b6d14289a21bf35, type: 3}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
