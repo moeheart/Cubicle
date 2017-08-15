@@ -1,6 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using MiniJSON;
+using System.Runtime.Serialization.Formatters.Binary;
+
 
 public class Generation : MonoBehaviour {
 
@@ -31,8 +35,14 @@ public class Generation : MonoBehaviour {
 	private List<Vector4> collisionBox;
 	private Vector4 box;
 
+	private int id;
+	private string jsonFilePath = "Assets/Scripts/Json/Puzzles.json";
+
 
 	void Start () {
+
+		id = DataUtil.GetCurrentRoomId();
+		ParseJson(jsonFilePath, id);
 
 		GameObject container = GameObject.Find("Solids");
 
@@ -51,9 +61,6 @@ public class Generation : MonoBehaviour {
 		sDown = 25 / (totNum + 2);
 		sUp = 44 / (totNum + 3);
 		sRatio = 3;
-//		sDown = 1;
-//		sUp = 2;
-//		sRatio = 4;
 		mScale = 1.5f;
 
 		collisionBox = new List<Vector4> ();
@@ -152,6 +159,18 @@ public class Generation : MonoBehaviour {
 //		collisionBox.Add (box);
 //		Vector4 box1 = new Vector4 (-1, -1, 1, 3);
 //		print (CheckCollision (box1));
+
+	}
+
+
+	private void ParseJson(string jsonFilePath, int roomId) {
+		string jsonString = File.ReadAllText(jsonFilePath);
+		Dictionary<string, object> dict;
+		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
+		dict = (Dictionary<string, object>)dict[roomId.ToString()];
+
+		totNum = System.Convert.ToInt32 (dict ["solidNum"]);
+		print (totNum);
 
 	}
 

@@ -38,7 +38,6 @@
     },
 	"6": {
         "type": "plane exploration",
-        "level": 1,
     },
 	"7": {
         "type": "transform limitation",

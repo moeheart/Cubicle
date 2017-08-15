@@ -1,6 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using MiniJSON;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class TransformGeneration : MonoBehaviour {
 
@@ -12,7 +15,13 @@ public class TransformGeneration : MonoBehaviour {
 
 	private int[] transformation;
 
+	private int id;
+	private string jsonFilePath = "Assets/Scripts/Json/Puzzles.json";
+
 	void OnEnable () {
+
+		id = DataUtil.GetCurrentRoomId();
+		ParseJson(jsonFilePath, id);
 
 		transformation = new int[] { 0, 0, 0, 0, 0, 0 };
 
@@ -59,6 +68,17 @@ public class TransformGeneration : MonoBehaviour {
 		curModel = AlignModel (curModel);
 
 		RenderTransModel (curModel);
+	}
+
+
+	private void ParseJson(string jsonFilePath, int roomId) {
+		string jsonString = File.ReadAllText(jsonFilePath);
+		Dictionary<string, object> dict;
+		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
+		dict = (Dictionary<string, object>)dict[roomId.ToString()];
+
+		transNum = System.Convert.ToInt32 (dict ["baicSteps"]);
+
 	}
 
 

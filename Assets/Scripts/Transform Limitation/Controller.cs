@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using MiniJSON;
+using System.Runtime.Serialization.Formatters.Binary;
 
 
 public class Controller : MonoBehaviour {
@@ -23,22 +26,47 @@ public class Controller : MonoBehaviour {
 
 	public Text text;
 
-	private int restStep;
+	public int restStep;
+
+	private int id;
+	private string jsonFilePath = "Assets/Scripts/Json/Puzzles.json";
+
+	public GameObject undoObject;
+	public Dictionary<Vector3, bool> lastModel;
+
+	public GameObject retryButton;
 
 	void Start () {
 
+		id = DataUtil.GetCurrentRoomId();
+		ParseJson(jsonFilePath, id);
+
 		curModel = startModel.GetComponent<ModelGeneration> ().model;
 		tarModel = targetModel.GetComponent<TransformGeneration> ().curModel;
+		lastModel = null;
 
 		restStep = targetModel.GetComponent<TransformGeneration> ().transNum + difficulty;
 		text.text = " Rest Steps: " + restStep;
+
+
+	}
+
+
+	void ParseJson(string jsonFilePath, int roomId) {
+		
+		string jsonString = File.ReadAllText(jsonFilePath);
+		Dictionary<string, object> dict;
+		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
+		dict = (Dictionary<string, object>)dict[roomId.ToString()];
+
+		difficulty = System.Convert.ToInt32 (dict ["difficulty"]);
 
 	}
 
 
 	void Update () {
 
-		Dictionary<Vector3, bool> nextModel = new Dictionary<Vector3, bool>();
+
 
 		Ray ray;
 		RaycastHit rayhit;
@@ -50,29 +78,59 @@ public class Controller : MonoBehaviour {
 			if (Physics.Raycast (ray, out rayhit, fDistance)) {
 				string operation = rayhit.collider.gameObject.name;
 				if (rayhit.collider.gameObject.transform.parent.transform.parent.name == "Controller") {
-					if (operation.Equals ("X Axis"))
+					Dictionary<Vector3, bool> nextModel = new Dictionary<Vector3, bool>();
+					if (operation.Equals ("X Axis")) {
 						nextModel = RotX (curModel);
-					else if (operation.Equals ("Y Axis"))
+						AfterTrans (nextModel);
+					}
+					else if (operation.Equals ("Y Axis")) {
 						nextModel = RotY (curModel);
-					else if (operation.Equals ("Z Axis"))
+						AfterTrans (nextModel);
+					}
+					else if (operation.Equals ("Z Axis")) {
 						nextModel = RotZ (curModel);
-					else if (operation.Equals ("XY Plane"))
+						AfterTrans (nextModel);
+					}
+					else if (operation.Equals ("XY Plane")) {
 						nextModel = SymXY (curModel);
-					else if (operation.Equals ("XZ Plane"))
+						AfterTrans (nextModel);
+					}
+					else if (operation.Equals ("XZ Plane")) {
 						nextModel = SymXZ (curModel);
-					else // YZ Plane
+						AfterTrans (nextModel);
+					}
+					else if (operation.Equals ("YZ Plane")) {
 						nextModel = SymYZ (curModel);
-					
-					curModel = nextModel;
-					curModel = AlignModel (curModel);
-					restStep -= 1;
-					RenderTransModel (curModel);
-					text.text = " Rest Steps: " + restStep;
-					CheckResult ();
+						AfterTrans (nextModel);
+					}
+					else {  // undo
+						curModel = lastModel;
+						restStep += 1;
+						text.text = " Rest Steps: " + restStep;
+						lastModel = null;
+					}
 				}
 			}
 		}
 
+		RenderTransModel (curModel);
+
+		if (lastModel != null)
+			undoObject.SetActive (true);
+		else
+			undoObject.SetActive (false);
+
+
+
+	}
+
+	void AfterTrans(Dictionary<Vector3, bool> nextModel){
+		lastModel = curModel;
+		curModel = nextModel;
+		curModel = AlignModel (curModel);
+		restStep -= 1;
+		text.text = " Rest Steps: " + restStep;
+		CheckResult ();
 	}
 
 
@@ -307,15 +365,18 @@ public class Controller : MonoBehaviour {
 
 	void Win(){
 		text.text = "You Win!";
-		Destroy(controllerObject);
-		Destroy (notationController);
+		controllerObject.SetActive(false);
+		notationController.SetActive(false);
 		DataUtil.UnlockCurrentRoom();
 	}
 
 	void Over(){
 		text.text = "Game Over!";
-		Destroy(controllerObject);
-		Destroy (notationController);
+		controllerObject.SetActive(false);
+		notationController.SetActive(false);
+		retryButton.SetActive (true);
+
 	}
+		
 
 }

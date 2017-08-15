@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: 8818f518a52cd46258b294ae1e90e6e7
-timeCreated: 1501723848
+guid: cac42721f406b433f945faf94573efc0
+timeCreated: 1501723888
 licenseType: Free
 ModelImporter:
-  serializedVersion: 19
+  serializedVersion: 20
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: pPyramid1
+    4300000: pTorus1
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -40,7 +40,10 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    importVisibility: 0
     importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -56,6 +59,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
+    normalCalculationMode: 0
   importAnimation: 1
   copyAvatar: 0
   humanDescription:
