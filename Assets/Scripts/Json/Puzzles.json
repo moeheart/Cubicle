@@ -34,16 +34,16 @@
     },
 	"5": {
         "type": "view point",
-        "solidNum": 5,
+        "solidNum": 5
     },
 	"6": {
         "type": "plane exploration",
-        "level": 1,
+        "level": 1
     },
 	"7": {
         "type": "transform limitation",
         "blockNum": 5,
 		"baicSteps": 3,
-		"difficulty": 1,
-    },
+		"difficulty": 1
+    }
 }
