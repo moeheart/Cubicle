@@ -8,7 +8,7 @@ public class NotationController : MonoBehaviour {
 	public Material highlightMaterial;
 	public Material originMaterial;
 
-	public GameObject xArrow, yArrow, zArrow, xyMirror, xzMirror, yzMirror; 
+	public GameObject xArrow, yArrow, zArrow, xyMirror, xzMirror, yzMirror, undoArrow; 
 
 	private GameObject curObject, lastObject;
 	public GameObject lastNotation;
@@ -73,11 +73,13 @@ public class NotationController : MonoBehaviour {
 					lastNotation = xzMirror;
 					nextModel = SymXZ (curModel);
 					RenderTransModel (nextModel, XZ);
-				} else { // YZ Plane
+				} else if (operation.Equals ("YZ Plane")) {
 					yzMirror.SetActive (true);
 					lastNotation = yzMirror;
 					nextModel = SymYZ (curModel);
 					RenderTransModel (nextModel, YZ);
+				} else {
+					;
 				}
 
 				lastObject = curObject;

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.IO;
+using MiniJSON;
+using System.Runtime.Serialization.Formatters.Binary;
 
 public class ModelGeneration : MonoBehaviour {
 
@@ -12,7 +15,13 @@ public class ModelGeneration : MonoBehaviour {
 
 	private List<Vector3> selectedPoints;
 
+	private int id;
+	private string jsonFilePath = "Assets/Scripts/Json/Puzzles.json";
+
 	void Awake () {
+
+		id = DataUtil.GetCurrentRoomId();
+		ParseJson(jsonFilePath, id);
 
 		selectedPoints = new List<Vector3> ();
 
@@ -20,6 +29,17 @@ public class ModelGeneration : MonoBehaviour {
 		InitializeModel ();
 		GenerateModel ();
 		RenderModel ();
+
+	}
+
+	private void ParseJson(string jsonFilePath, int roomId) {
+		
+		string jsonString = File.ReadAllText(jsonFilePath);
+		Dictionary<string, object> dict;
+		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
+		dict = (Dictionary<string, object>)dict[roomId.ToString()];
+
+		blockNum = System.Convert.ToInt32 (dict ["blockNum"]);
 
 	}
 

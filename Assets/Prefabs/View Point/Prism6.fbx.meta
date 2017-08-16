@@ -1,15 +1,15 @@
 fileFormatVersion: 2
-guid: f3c8dade5fa0a4ccfb625c5dec8ec0be
-timeCreated: 1501723744
+guid: 693a293fb14a84dfda50c0e05a07aeef
+timeCreated: 1502837818
 licenseType: Free
 ModelImporter:
-  serializedVersion: 19
+  serializedVersion: 20
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
     2300000: //RootNode
     3300000: //RootNode
-    4300000: pHelix1
+    4300000: pPrism1
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -40,7 +40,10 @@ ModelImporter:
     globalScale: 1
     meshCompression: 0
     addColliders: 0
+    importVisibility: 0
     importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
@@ -56,6 +59,7 @@ ModelImporter:
     normalSmoothAngle: 60
     normalImportMode: 0
     tangentImportMode: 3
+    normalCalculationMode: 4
   importAnimation: 1
   copyAvatar: 0
   humanDescription:

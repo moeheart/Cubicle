@@ -21,7 +21,7 @@ public class Player5 : MonoBehaviour {
 	public GameObject isometricButton;
 	public GameObject exitButton;
 
-	private static float r = 1.0f;
+//	private static float r = 1.0f;
 
 	void Start ()
 	{

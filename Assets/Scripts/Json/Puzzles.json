@@ -37,8 +37,7 @@
         "solidNum": 5
     },
 	"6": {
-        "type": "plane exploration",
-        "level": 1
+        "type": "plane exploration"
     },
 	"7": {
         "type": "transform limitation",
