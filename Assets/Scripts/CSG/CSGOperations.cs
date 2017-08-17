@@ -1,11 +1,12 @@
 using UnityEngine;
 using System.Collections;
-using ConstructiveSolidGeometry;
+using Parabox.CSG;
 public static class CSGOperations {
-    public static CSG Subtract(GameObject a, GameObject b) {
-        CSG A = CSG.fromMesh(a.GetComponent<MeshFilter>().mesh, a.transform);
-        CSG B = CSG.fromMesh(b.GetComponent<MeshFilter>().mesh, b.transform);
-        CSG result = A.subtract(B);
-        return result;
+    public static GameObject Subtract(GameObject a, GameObject b, Material material) {
+        Mesh m = CSG.Subtract(a,b);
+		GameObject composite = new GameObject();
+		composite.AddComponent<MeshFilter>().mesh = m;
+		composite.AddComponent<MeshRenderer>().material = material;
+        return composite;
     }
 }

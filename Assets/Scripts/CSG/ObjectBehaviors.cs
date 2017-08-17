@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ObjectControls : MonoBehaviour {
+public class ObjectBehaviors : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
@@ -14,6 +14,8 @@ public class ObjectControls : MonoBehaviour {
 		//These controls are pretty bad right now
 		//Change it to something more natural
 		//The Y-axis
+
+		/*
 		if (Input.GetKeyDown(KeyCode.I)) {
 			this.transform.localPosition += new Vector3(0,1,0);
 		}
@@ -59,6 +61,13 @@ public class ObjectControls : MonoBehaviour {
 		}
 		if (Input.GetKeyDown(KeyCode.E)) {
 			this.transform.Rotate(0,0,-90);
+		}
+		*/
+	}
+
+	public void OnMouseOver() {
+		if (Input.GetMouseButtonDown(0)) {
+			CSGManager.objectsManager.OnGameObjectClick(this.gameObject);
 		}
 	}
 }
