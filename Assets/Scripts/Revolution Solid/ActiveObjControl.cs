@@ -2,16 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RevSolidControl : MonoBehaviour {
+public class ActiveObjControl : MonoBehaviour {
 
 	delegate void ObjectBehaviour(int objectIndex);
 	ObjectBehaviour objectBehaviour;
 
 	public static List<RevSolid> revSolids;
 	public static List<ActiveObject> activeObjects;
-	private Vector3 midPos;
+	private static Vector3 midPos;
 	public static int MaxPolygonNum=12;
 	public static int MaxPanelNum=4;
+	static float forbiddenRadius=2.0f; 
 
 	// Use this for initialization
 	void Awake(){
@@ -27,6 +28,7 @@ public class RevSolidControl : MonoBehaviour {
 		//polygonBehaviour += FadeInOrOut;
 		objectBehaviour += Rotate;
 		objectBehaviour += Move;
+		objectBehaviour += Pitfall;
 
 	}
 	
@@ -102,6 +104,7 @@ public class RevSolidControl : MonoBehaviour {
 		if (activeObjects [objIndex].isKilled == false && activeObjects [objIndex].gameObject.transform.position != midPos) {
 			activeObjects [objIndex].gameObject.transform.position=Vector3.MoveTowards(activeObjects [objIndex].gameObject.transform.position,midPos,Time.deltaTime*activeObjects[objIndex].speed);
 		}
+			
 	}
 
 	void FadeInOrOut(int objIndex){
@@ -113,6 +116,34 @@ public class RevSolidControl : MonoBehaviour {
 			activeObjects [objIndex].gameObject.GetComponent<MeshRenderer> ().material.SetFloat ("_AlphaScale",Mathf.Clamp(activeObjects [objIndex].alphaScale-=0.2f,0.0f,0.6f));
 			activeObjects [objIndex].gameObject.transform.position = new Vector3 (-100,-100,0);
 		}
+			
+	}
+
+	void Pitfall(int objIndex){
+		if (InCentralArea (objIndex)) {
+			activeObjects [objIndex].isKilled = true;
+		}
+	}
+
+	bool InCentralArea(int objIndex){
+		if (Distance2Center(objIndex) < forbiddenRadius) {
+			RevSolidGameInfo.Add2FalseStrokeCount (1);
+			RevSolidUIControl.RefreshBroadcasts ();
+			Tutorial.IndicateAnApproachingObject ();
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
+
+	public static bool WithinViewport(int objIndex){
+		return (Mathf.Abs (activeObjects [objIndex].gameObject.transform.position.x - midPos.x) <= 8
+		&& Mathf.Abs (activeObjects [objIndex].gameObject.transform.position.y - midPos.y) <= 5);
+	}
+
+	public static float Distance2Center(int objIndex){
+		return Vector3.Distance (activeObjects [objIndex].gameObject.transform.position, midPos);
 	}
 		
 }

@@ -24,7 +24,7 @@ public class ActiveObject : MonoBehaviour {
 
 		polygonIndex = newPolygonIndex;
 		isKilled = false;
-		gameObject = RevSolidControl.revSolids [polygonIndex].gameObject;
+		gameObject = ActiveObjControl.revSolids [polygonIndex].gameObject;
 		initialPos = GenRandomPos ();
 		speed = GenRandomSpeed ();
 		gameObject.transform.position = initialPos;
@@ -36,7 +36,7 @@ public class ActiveObject : MonoBehaviour {
 		image.sprite = AxisDrawing.sections [polygonIndex].imgSprite;
 
 		isKilled = false;
-		gameObject = RevSolidControl.revSolids [polygonIndex].gameObject;
+		gameObject = ActiveObjControl.revSolids [polygonIndex].gameObject;
 
 		initialPos = GenRandomPos ();
 		speed = GenRandomSpeed ();
