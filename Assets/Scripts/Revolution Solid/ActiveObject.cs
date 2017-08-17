@@ -25,7 +25,8 @@ public class ActiveObject : MonoBehaviour {
 		polygonIndex = newPolygonIndex;
 		isKilled = false;
 		gameObject = ActiveObjControl.revSolids [polygonIndex].gameObject;
-		initialPos = GenRandomPos ();
+		//initialPos = GenRandomPos ();
+		initialPos = GenPosAccordingToPanelIndex(panelIndex);
 		speed = GenRandomSpeed ();
 		gameObject.transform.position = initialPos;
 
@@ -33,16 +34,44 @@ public class ActiveObject : MonoBehaviour {
 	}
 	public void Refresh(){
 		image.gameObject.SetActive (true);
-		image.sprite = AxisDrawing.sections [polygonIndex].imgSprite;
+		ChangeSpriteAccordingToSolid ();
 
 		isKilled = false;
 		gameObject = ActiveObjControl.revSolids [polygonIndex].gameObject;
 
-		initialPos = GenRandomPos ();
+		//initialPos = GenRandomPos ();
+		initialPos = GenPosAccordingToPanelIndex(panelIndex);
 		speed = GenRandomSpeed ();
 
 		gameObject.transform.position = initialPos;
 		alphaScale = 1.0f;
+	}
+
+	public void ChangeSpriteAccordingToSolid(){
+		image.sprite = AxisDrawing.sections [polygonIndex].imgSprite;
+	}
+
+	public void UseTutorialSpriteMatchingSolid(){
+		image.sprite = AxisDrawing.sections [polygonIndex].tutorialSprite;
+	}
+
+	Vector3 GenPosAccordingToPanelIndex(int i){
+		Vector3 newPos = new Vector3 (10.0f, 5.0f, 0);
+		switch (i) {
+		case 0:
+			newPos = new Vector3 (10.0f, 5.0f, 0);
+			break;
+		case 1:
+			newPos = new Vector3 (-10.0f, 5.0f, 0);
+			break;
+		case 2:
+			newPos = new Vector3 (-10.0f, -5.0f, 0);
+			break;
+		case 3:
+			newPos = new Vector3 (10.0f, -5.0f, 0);
+			break;
+		}
+		return newPos;
 	}
 
 	Vector3 GenRandomPos(){
