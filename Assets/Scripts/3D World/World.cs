@@ -41,7 +41,7 @@ public class World : MonoBehaviour {
 			}
 		}
 		player = Instantiate(playerPrefab) as GameObject;
-		player.transform.position = new Vector3(15,10,15);
+		player.transform.position = new Vector3(10,10,10);
 	}
 
 	private void ParseJsonString(string data) {
@@ -485,7 +485,8 @@ public class World : MonoBehaviour {
 	void Update () {
 		//TODO
 		//Add a key to delete the save file
-		if (Input.GetKeyDown(KeyCode.Delete)) {
+		if (Input.GetKeyDown(KeyCode.P)) {
+			Debug.Log("Deleting file...!!!");
 			File.Delete(saveFilePath);
 		}
 	}

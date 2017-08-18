@@ -3,7 +3,13 @@
         "type": "none"
     },
     "1": {
-        "type": "CSG"
+        "type": "block builder",
+        "size": {
+            "x": 3,
+            "z": 3
+        },
+        "maxHeight": 5,
+        "height": [[1,0,0],[0,2,0],[0,0,3]]
     },
     "2": {
         "type": "block builder",

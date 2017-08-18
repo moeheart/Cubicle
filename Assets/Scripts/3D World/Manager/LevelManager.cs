@@ -10,14 +10,14 @@ public class LevelManager : MonoBehaviour {
 	public World worldPrefab;
 
 	public static World worldInstance {get; private set;}
-	private const string levelJsonFilePath = "Assets/Scripts/Json/Level.json";
+	private const string levelJsonFilePath = "Assets/Scripts/Json/0818.json";
 
 	// Use this for initialization
 	void Start () {
 		worldInstance = Instantiate(worldPrefab) as World;
 		worldInstance.GenerateWorld(levelJsonFilePath);
 		worldInstance.LoadData();
-		worldInstance.SaveData();
+		//worldInstance.SaveData();
 	}
 	
 	// Update is called once per frame
