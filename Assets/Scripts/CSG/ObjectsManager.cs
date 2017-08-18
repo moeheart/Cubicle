@@ -6,7 +6,11 @@ using Parabox.CSG;
 public class ObjectsManager : MonoBehaviour {
 
 	public Material opAMaterial, opBMaterial;
-	public Material objMaterial;
+	public Material defaultMaterial;
+	public Material targetMaterial;
+	public Mesh targetMesh;
+
+	private GameObject target;
 
 	private List<GameObject> gameObjects = new List<GameObject>();
 	private GameObject opA, opB;
@@ -16,19 +20,24 @@ public class ObjectsManager : MonoBehaviour {
 
 		GameObject obj1 = GameObject.CreatePrimitive(PrimitiveType.Cube);
 		GameObject obj2 = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-		obj1.SetActive(false);
-		obj2.SetActive(false);
 		obj1.transform.parent = this.transform;
 		obj2.transform.parent = this.transform;
+		obj1.transform.localPosition = new Vector3(-3,-3,0);
+		obj2.transform.localPosition = new Vector3(-3,3,0);
 		obj1.AddComponent<ObjectBehaviors>();
 		obj2.AddComponent<ObjectBehaviors>();
-		obj1.GetComponent<MeshRenderer>().material = objMaterial;
-		obj2.GetComponent<MeshRenderer>().material = objMaterial;
+		obj1.GetComponent<MeshRenderer>().material = defaultMaterial;
+		obj2.GetComponent<MeshRenderer>().material = defaultMaterial;
 		obj2.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
 		gameObjects.Add(obj1);
 		gameObjects.Add(obj2);
-		opA = obj1;
-		opB = obj2;
+		//opA = obj1;
+		//opB = obj2;
+
+		target = new GameObject("target");
+
+		target.AddComponent<MeshFilter>().mesh = targetMesh;
+		target.AddComponent<MeshRenderer>().material = targetMaterial;
 	}
 
 	// Use this for initialization
@@ -92,13 +101,14 @@ public class ObjectsManager : MonoBehaviour {
 		}
 
 		if (Input.GetKeyDown(KeyCode.Space)) {
-			GameObject composite;
-			Mesh m = CSG.Subtract(opA, opB);
-			composite = new GameObject();
-			composite.AddComponent<MeshFilter>().sharedMesh = m;
-			composite.AddComponent<MeshRenderer>().sharedMaterial = opA.GetComponent<MeshRenderer>().sharedMaterial;
+			GameObject composite = CSGOperations.Subtract(opA, opB, defaultMaterial);
+			composite.name = "subtraction";
+			gameObjects.Remove(opA);
+			gameObjects.Remove(opB);
+			gameObjects.Add(composite);
 			Destroy(opA);
 			Destroy(opB);
+			Debug.Log("There are " + gameObjects.Count + "objects left in scene");
 		}	
 	}
 
@@ -132,7 +142,7 @@ public class ObjectsManager : MonoBehaviour {
 		if (selectedGameObject == null) {
 			return;
 		}
-		float alpha = objMaterial.color.a;
+		float alpha = defaultMaterial.color.a;
 		Color color = gameObject.GetComponent<MeshRenderer>().material.color;
 		color.a = alpha;
 		gameObject.GetComponent<MeshRenderer>().material.color = color;

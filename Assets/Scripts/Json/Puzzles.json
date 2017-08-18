@@ -50,5 +50,8 @@
         "blockNum": 5,
 		"baicSteps": 3,
 		"difficulty": 1
+    },
+    "8": {
+        "type": "CSG"
     }
 }
