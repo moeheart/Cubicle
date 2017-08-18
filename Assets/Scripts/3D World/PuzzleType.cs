@@ -8,6 +8,7 @@ public enum PuzzleType {
 	CSG = 1,
 	RevolutionSolid = 2,
 	CubeShift = 3,
+    Unfolding = 4,
 	ViewPoint = 5,
 	PlaneExploration = 6,
 	TransformLimitation = 7,
@@ -24,6 +25,10 @@ public static class PuzzleTypes {
 		if (str == "revolution solid") {
  			return PuzzleType.RevolutionSolid;
  		}
+        if (str == "Unfolding")
+        {
+            return PuzzleType.Unfolding;
+        }
  		if (str == "cube shift") {
  			return PuzzleType.CubeShift;
  		}
@@ -49,6 +54,10 @@ public static class PuzzleTypes {
 		if (type == PuzzleType.RevolutionSolid) {
  			SceneManager.LoadScene("Revolution Solid Scene", LoadSceneMode.Single);
  		}
+        if (type == PuzzleType.Unfolding)
+        {
+            SceneManager.LoadScene("Unfolding Scene", LoadSceneMode.Single);
+        }
  		if (type == PuzzleType.CubeShift) {
  			SceneManager.LoadScene("Cube Shift Scene", LoadSceneMode.Single);
  		}

@@ -105,8 +105,7 @@ public class World : MonoBehaviour {
 	}
 
 	public void LoadData() {
-
-		if (!File.Exists(saveFilePath)) {
+        if (!File.Exists(saveFilePath)) {
 			gameState = new Dictionary<string, object>();
 			Debug.Log("No saved game.");
 			return;
