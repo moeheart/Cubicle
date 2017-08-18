@@ -8,25 +8,37 @@ using System.Runtime.Serialization.Formatters.Binary;
 public class TransformGeneration : MonoBehaviour {
 
 	public Dictionary<Vector3, bool> curModel, nextModel;
-	public int transNum;
+	public int transNum, difficulty;
 	public GameObject block;
 	public GameObject container;
 	public GameObject startModel;
 
 	private int[] transformation;
 
+	private int blockNum;
 	private int id;
 	private string jsonFilePath = "Assets/Scripts/Json/Puzzles.json";
 
+	public GameObject logObject;
+
+	private int trialNum = 0;
+	string startModelLog, targetModelLog;
+
 	void OnEnable () {
+
+
 
 		id = DataUtil.GetCurrentRoomId();
 		ParseJson(jsonFilePath, id);
 
 		transformation = new int[] { 0, 0, 0, 0, 0, 0 };
 
+		blockNum = startModel.GetComponent<ModelGeneration> ().blockNum;
 		curModel = startModel.GetComponent<ModelGeneration> ().model;
 		nextModel = new Dictionary<Vector3,bool> ();
+
+		startModelLog = GetModelLog (curModel);
+		print (startModelLog);
 
 		for (int i = 0; i < transNum; i++) {
 			int transIndex = Random.Range (0, 6); // 0-2 xyz rot; 3-5 sym
@@ -37,27 +49,27 @@ public class TransformGeneration : MonoBehaviour {
 				switch (transIndex) {
 				case 0:
 					nextModel = RotX (curModel);
-					print ("rotX");
+//					print ("rotX");
 					break;
 				case 1:
 					nextModel = RotY (curModel);
-					print ("rotY");
+//					print ("rotY");
 					break;
 				case 2:
 					nextModel = RotZ (curModel); 
-					print ("rotZ");
+//					print ("rotZ");
 					break;
 				case 3:
 					nextModel = SymXY (curModel);
-					print ("symXY");
+//					print ("symXY");
 					break;
 				case 4:
 					nextModel = SymXZ (curModel);
-					print ("symXZ");
+//					print ("symXZ");
 					break;
 				case 5:
 					nextModel = SymYZ (curModel);
-					print ("symYZ");
+//					print ("symYZ");
 					break;
 				}
 				transformation [transIndex]++;
@@ -67,9 +79,18 @@ public class TransformGeneration : MonoBehaviour {
 		}
 		curModel = AlignModel (curModel);
 
-		RenderTransModel (curModel);
-	}
+		targetModelLog = GetModelLog (curModel);
 
+		RenderTransModel (curModel);
+
+		InitializeRecord ();
+
+	}
+	
+	public void InitializeRecord(){
+		logObject.GetComponent<TransformLimitationLog> ().RecordInitialization (trialNum, blockNum, transNum, difficulty, startModelLog, targetModelLog);
+		trialNum++;
+	}
 
 	private void ParseJson(string jsonFilePath, int roomId) {
 		string jsonString = File.ReadAllText(jsonFilePath);
@@ -78,7 +99,23 @@ public class TransformGeneration : MonoBehaviour {
 		dict = (Dictionary<string, object>)dict[roomId.ToString()];
 
 		transNum = System.Convert.ToInt32 (dict ["baicSteps"]);
+		difficulty = System.Convert.ToInt32 (dict ["difficulty"]);
 
+	}
+
+	string GetModelLog(Dictionary<Vector3, bool> model){
+
+		string modelLog = "";
+
+		for (int x = -1; x <= 1; x++)
+			for (int y = -1; y <= 1; y++)
+				for (int z = -1; z <= 1; z++)
+					if (model [new Vector3 (x, y, z)])
+						modelLog += "1";
+					else
+						modelLog += "0";
+
+		return modelLog;
 	}
 
 

@@ -31,5 +31,9 @@ public class TransformRetry : MonoBehaviour {
 		controllerObject.GetComponent<Controller> ().lastModel = null;
 
 		text.text = " Rest Steps: " + controllerObject.GetComponent<Controller> ().restStep;
+
+		targetModelObject.GetComponent<TransformGeneration> ().InitializeRecord ();
+
+
 	}
 }
