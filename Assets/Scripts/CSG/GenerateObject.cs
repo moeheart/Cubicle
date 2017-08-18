@@ -21,7 +21,7 @@ public class GenerateObject : MonoBehaviour {
 		}
 
 
-		composite = CSGOperations.Subtract(objs[0], objs[1], defaultMaterial);
+		composite = CSGUtil.Subtract(objs[0], objs[1], defaultMaterial);
 		Mesh m = CSG.Subtract(objs[0], objs[1]);
 		composite.name = "csg1";
 
