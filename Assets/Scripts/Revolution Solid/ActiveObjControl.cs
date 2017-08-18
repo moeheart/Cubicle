@@ -13,6 +13,7 @@ public class ActiveObjControl : MonoBehaviour {
 	public static int MaxPolygonNum=12;
 	public static int MaxPanelNum=4;
 	static float forbiddenRadius=2.0f; 
+	static float PitfallWarningRadius=3.0f;
 
 	// Use this for initialization
 	void Awake(){
@@ -131,7 +132,12 @@ public class ActiveObjControl : MonoBehaviour {
 			RevSolidUIControl.RefreshBroadcasts ();
 			Tutorial.IndicateAnApproachingObject ();
 			return true;
-		} else {
+		}
+		else if(Distance2Center(objIndex) < PitfallWarningRadius){
+			Tutorial.IndicatePitfalls ();
+			return false;
+		}
+		else {
 			return false;
 		}
 		

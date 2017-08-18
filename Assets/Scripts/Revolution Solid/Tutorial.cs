@@ -6,14 +6,15 @@ using UnityEngine.UI;
 public class Tutorial : MonoBehaviour {
 
 	public static bool isTutorialModeOn; 
+	static bool isPitfallWarningDone;//done once
 
 	public static GameObject axisPrefab;
 
 	void Awake(){
 		isTutorialModeOn = true;
+		isPitfallWarningDone = false;
 
 		axisPrefab = GameObject.Find ("axisPrefab");
-		//GameObject.Destroy(GameObject.Find ("axis"));
 	}
 	// Use this for initialization
 	void Start () {
@@ -28,7 +29,7 @@ public class Tutorial : MonoBehaviour {
 	IEnumerator AutoDisableTutorial(){
 		while (true) {
 			if (RevSolidGameInfo.CheckIfPlayerLearned () == true) {
-				isTutorialModeOn = false;
+				DisableTutorial ();
 			}
 			yield return new WaitForSeconds (10);
 		}
@@ -36,19 +37,20 @@ public class Tutorial : MonoBehaviour {
 
 	public static void EnableTutorial (){
 		isTutorialModeOn = true;
+		isPitfallWarningDone=false;
 	}
 
 	public static void DisableTutorial(){
 		isTutorialModeOn = false;
+		isPitfallWarningDone = true;
 	}
 
 	public static void IndicateAnApproachingObject (){
 		if(isTutorialModeOn){
-			Debug.Log ("IndicateAnApproachingObject");
 			Time.timeScale = 0;
 			RevSolidUIControl.SetTutorialMessage("AS YOU MAY NOTICE \n\n" +
-				"All solids approaching your window center, are formed by revolution of the 4 shapes here.\n\n"+
-				"1. Find for each solid the shape it revolutes by,\n2. Draw on the shape the corresponding revolution axis in your mind");
+				"Every solid approaching your window center, are formed by revolution of a shape here.\n\n"+
+				"1. Observe each solid & the shape it revolutes by,\n2. Draw on the shape the corresponding revolution axis in your mind");
 			RevSolidUIControl.ShowResponseButton ();
 		}
 	}
@@ -63,27 +65,35 @@ public class Tutorial : MonoBehaviour {
 			RevSolidUIControl.SetTutorialMessage("Here we show the revolution axis and corresponding stroke. Try it yourself!");
 			IndicateAxisAndStroke (panel);
 			RevSolidUIControl.ShowResponseButton ();
+			ActiveObjControl.activeObjects [panel].UseTutorialSpriteMatchingSolid ();
 		}
 	}
 
 	public static void CancelAnsIndication(){
-		Destroy(GameObject.Find ("axis"));
+		if (GameObject.Find ("axis") != null) {
+			Destroy (GameObject.Find ("axis"));
+		}
+		for (int i = 0; i < ActiveObjControl.MaxPanelNum; i++) {
+			ActiveObjControl.activeObjects [i].ChangeSpriteAccordingToSolid ();
+		}
 	}
 
 	public static void IndicateAxisAndStroke (int panel){
 		GameObject tempAxis;
 		tempAxis = Instantiate (axisPrefab, ActiveObjControl.activeObjects [panel].gameObject.transform);
 		tempAxis.name = "axis";
-		//specially
+		//exception
 		if (ActiveObjControl.activeObjects [panel].polygonIndex == 2) {
 			tempAxis.transform.localPosition= new Vector3(0,0,0.035f);
 		}
 	}
-
-	void IndicatePitfalls (){
-		if (ActiveObjControl.Distance2Center (0) < 2.1f && ActiveObjControl.activeObjects [0].isKilled == false) {
+		
+	public static void IndicatePitfalls (){
+		if (isTutorialModeOn&&isPitfallWarningDone==false) {
 			Time.timeScale = 0;
-			//display tutorial img3
+			RevSolidUIControl.SetTutorialMessage("Watch out. Once a solid enter the ring in the middle, you will lose your point.");
+			RevSolidUIControl.ShowResponseButton ();
+			isPitfallWarningDone = true;
 		}
 	}
 }
