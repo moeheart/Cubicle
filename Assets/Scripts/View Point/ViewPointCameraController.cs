@@ -9,10 +9,14 @@ public class ViewPointCameraController : MonoBehaviour {
 
 	void Awake () {
 
-//		camDir = 0;
+		GenerateDir ();
+
+	}
+
+	public void GenerateDir(){
+		
 		camDir = Random.Range (0, 8);
 		controller.transform.eulerAngles = new Vector3 (0, camDir * 45, 0);
-//		print (camDir);
 
 	}
 

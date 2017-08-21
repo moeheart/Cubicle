@@ -56,6 +56,8 @@ public class M3Top2 : MonoBehaviour {
 			lineRenderer.SetPosition (0, new Vector3 (1, 2.001f, 3));
 			lineRenderer.SetPosition (1, new Vector3 (0, 2.001f, 3));
 		}
+		else
+			meshFilter.mesh = null;
 
 	}
 
