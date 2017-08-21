@@ -14,7 +14,6 @@ public class RevSolidGameInfo : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		Debug.Log ("revsolidGIAwake");
 		hit = 0;
 		falseStrokeCount = 0;
 	}

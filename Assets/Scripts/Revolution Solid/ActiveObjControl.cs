@@ -14,6 +14,7 @@ public class ActiveObjControl : MonoBehaviour {
 	public static int MaxPanelNum=4;
 	static float forbiddenRadius=2.0f; 
 	static float PitfallWarningRadius=3.0f;
+	static float RecoverInterval=3.0f;
 
 	// Use this for initialization
 	void Awake(){
@@ -87,9 +88,9 @@ public class ActiveObjControl : MonoBehaviour {
 					Debug.Log (i);
 					Debug.Log ("+1");*/
 				}
-				yield return new WaitForSeconds (2);
+				yield return new WaitForSeconds (RecoverInterval);
 			}
-			yield return new WaitForSeconds (2);
+			yield return new WaitForSeconds (RecoverInterval);
 
 		}
 	}

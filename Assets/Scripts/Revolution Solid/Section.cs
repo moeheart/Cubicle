@@ -23,7 +23,6 @@ public class Section : MonoBehaviour {
 
 	//candidate 
 	void Awake(){
-		Debug.Log ("sectionAwake");
 		InitAxisKernels ();
 		InitCandidateKernels ();
 	}
