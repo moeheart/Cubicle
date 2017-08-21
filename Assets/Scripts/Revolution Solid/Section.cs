@@ -13,7 +13,6 @@ public class Section : MonoBehaviour {
 	public static int[][] candKernels;
 	public static float imgRes=550;
 
-
 	//points on the correct axis
 	//in pixel relative to original 550x550 image //increment from leftbottom
 
@@ -27,8 +26,9 @@ public class Section : MonoBehaviour {
 		InitCandidateKernels ();
 	}
 	public Section(int newPanelIndex,int corresPolygonIndex){
-		imgSprite = GameObject.Find ("section"+newPanelIndex.ToString()).GetComponent<Image>().sprite;
-		tutorialSprite = GameObject.Find ("section"+newPanelIndex.ToString()+"_t").GetComponent<Image>().sprite;
+		imgSprite = Resources.Load ("section"+newPanelIndex.ToString()) as Sprite;//Find ("section"+newPanelIndex.ToString()).GetComponent<Image>().sprite;
+		tutorialSprite = Resources.Load ("section"+newPanelIndex.ToString()+"_t") as Sprite;//Find ("section"+newPanelIndex.ToString()+"_t").GetComponent<Image>().sprite;
+
 		panelIndex = newPanelIndex;
 		polygonIndex = corresPolygonIndex;
 	}

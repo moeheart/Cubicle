@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AxisDrawing: MonoBehaviour {
+public class AxisDrawing: ResponseProcessing {
 
 	private LineRenderer line;
 	private bool isLineInstantiated;
@@ -15,15 +15,12 @@ public class AxisDrawing: MonoBehaviour {
 	private float alphaScale;
 
 	private Vector3 mousePos;
-	protected float wx, wy;
+
 	protected float sectionScale=0.2f;//depend on the gameObject empty
 
 	public static List<Section> sections;
 
 	void Awake(){
-
-		wx = Camera.main.pixelRect.center.x;
-		wy = Camera.main.pixelRect.center.y;
 
 		isLineInstantiated = false;
 		InitSections ();
@@ -38,21 +35,11 @@ public class AxisDrawing: MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
 		OnResize ();
 
 		GetMousePosRelative2Screen ();
 
 		FreeStrokeDrawingAndGrading ();
-
-		RevSolidGameInfo.CheckEndOfGame ();
-	}
-
-	void OnResize(){
-		if (wx != Camera.main.pixelRect.center.x || wy != Camera.main.pixelRect.center.y) {
-			wx = Camera.main.pixelRect.center.x;
-			wy = Camera.main.pixelRect.center.y;
-		}
 	}
 
 	void GetMousePosRelative2Screen(){
