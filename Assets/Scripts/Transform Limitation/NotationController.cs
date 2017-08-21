@@ -23,7 +23,7 @@ public class NotationController : MonoBehaviour {
 	void Start() {
 		lastObject = null;
 		lastNotation = null;
-		curModel = GetComponentInParent<Controller> ().curModel;
+
 	}
 
 	void Update () {
@@ -52,7 +52,7 @@ public class NotationController : MonoBehaviour {
 				curObject.GetComponent<Renderer> ().material = highlightMaterial;
 
 				string operation = curObject.name;
-
+				curModel = GetComponentInParent<Controller> ().curModel;
 
 				if (operation.Equals ("X Axis")) {
 					xArrow.SetActive (true);

@@ -38,8 +38,17 @@ public class Generation : MonoBehaviour {
 	private int id;
 	private string jsonFilePath = "Assets/Scripts/Json/Puzzles.json";
 
+	public GameObject logObject;
+
+	private int trialNum;
+	private string modelLog;
+
+	private int dir;
 
 	void Start () {
+
+		trialNum = 0;
+		modelLog = ""; 
 
 		id = DataUtil.GetCurrentRoomId();
 		ParseJson(jsonFilePath, id);
@@ -70,7 +79,7 @@ public class Generation : MonoBehaviour {
 		if (totNum < 4)
 			totNum = 4;
 
-		int dir = cam.GetComponent<ViewPointCameraController> ().camDir;
+		dir = cam.GetComponent<ViewPointCameraController> ().camDir;
 
 		for (int i = 0; i < 3; i++) {
 
@@ -146,6 +155,8 @@ public class Generation : MonoBehaviour {
 				solidInstance.transform.position = new Vector3 (posX, posY, posZ);
 				solidInstance.transform.localScale = new Vector3 (scale, scale, scale);
 				solidInstance.transform.eulerAngles = new Vector3 (0, rotY, 0);
+
+				modelLog += solidNum.ToString() + ",";
 			
 				collisionBox.Add (box);
 
@@ -155,22 +166,34 @@ public class Generation : MonoBehaviour {
 			}
 		}
 
+
+		for (int i = 0; i < 8 - totNum; i++)
+			modelLog += ",";
+
+		InitializeRecord ();
+
+
 //		box = new Vector4 (0, 2, 2, 4);
 //		collisionBox.Add (box);
 //		Vector4 box1 = new Vector4 (-1, -1, 1, 3);
 //		print (CheckCollision (box1));
-
 	}
 
 
+	public void InitializeRecord(){
+		logObject.GetComponent<ViewPointLog> ().RecordInitialization (trialNum, totNum, dir, modelLog);
+		trialNum++;
+	}
+
 	private void ParseJson(string jsonFilePath, int roomId) {
+		
 		string jsonString = File.ReadAllText(jsonFilePath);
 		Dictionary<string, object> dict;
 		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
 		dict = (Dictionary<string, object>)dict[roomId.ToString()];
 
 		totNum = System.Convert.ToInt32 (dict ["solidNum"]);
-		print (totNum);
+//		print (totNum);
 
 	}
 
