@@ -11,7 +11,7 @@ public class PlaneExplorationLog : MonoBehaviour {
 
 	private string logIdPath = "Assets/Logs/Plane Exploration/_IdLog.txt";
 	private string logFilePath = "Assets/Logs/Plane Exploration/_PlaneExplorationLogs.txt";
-	private string logDetailPath = "Assets/Logs/PlaneExploration/";
+	private string logDetailPath = "Assets/Logs/Plane Exploration/";
 
 	/* id,timestamp,trial_num,level,tot_time,result */
 
@@ -23,16 +23,7 @@ public class PlaneExplorationLog : MonoBehaviour {
 	private uint id;
 
 	private System.DateTime startTime;
-
-
-	//	void Start(){
-	//		FileStream _fs = new FileStream(logIdPath, FileMode.Open, FileAccess.Write);
-	//
-	//		int x = 0;
-	//		_fs.WriteByte ((byte)x);
-	//		_fs.Close();
-	//		_fs.Dispose();
-	//	}
+	private System.DateTime lastTime;
 
 
 	public void RecordInitialization(int trial_num, int level){
@@ -50,6 +41,7 @@ public class PlaneExplorationLog : MonoBehaviour {
 
 		// get start time
 		startTime = System.DateTime.Now;
+		lastTime = System.DateTime.Now;
 
 		// initialize log
 		logString = "\n" + id.ToString () + "," + startTime + "," + trial_num.ToString () + "," + level.ToString() + ",";
@@ -57,25 +49,28 @@ public class PlaneExplorationLog : MonoBehaviour {
 		// initialize detail log file
 		string detailFileName = logDetailPath + id.ToString() + ".txt";
 		fsDetail = new FileStream(detailFileName, FileMode.Create, FileAccess.Write);
-		string detailInitialization = "timestamp,operation";
+		string detailInitialization = "timestamp,x_operation,z_operation,position";
 		byte[] map = Encoding .UTF8.GetBytes(detailInitialization.ToString());
 		fsDetail.Write(map, 0, map.Length);
 
 	}
 
 
-	public void LogDetail(string operation, string position){
+	public void LogDetail(float x_operation, float z_operation, string position){
 
 		System.DateTime curTime = System.DateTime.Now;
 
-		string detail = "\n" + curTime + "," + operation + "," + position;
-		byte[] map = Encoding .UTF8.GetBytes(detail.ToString());
-		fsDetail.Write(map, 0, map.Length);
+		if ((curTime-lastTime).TotalSeconds >= 0.5) {
+			string detail = "\n" + curTime + "," + x_operation.ToString () + "," + z_operation.ToString () + "," + position;
+			byte[] map = Encoding.UTF8.GetBytes (detail.ToString ());
+			fsDetail.Write (map, 0, map.Length);
+			lastTime = curTime;
+		}
 
 	}
 
 
-	public void RecordResult(bool result){
+	public void RecordResult(int result){ // -1:die 0:inadequate 1:right 
 
 		System.DateTime curTime = System.DateTime.Now;
 		logString += (curTime-startTime).ToString() + "," + result.ToString ();

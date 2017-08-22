@@ -14,6 +14,7 @@ public class Isometric2 : MonoBehaviour {
 	public GameObject isometricButton;
 	public GameObject isoRetryButton;
 	public GameObject projectionButton;
+	public GameObject nextButton;
 
 	public GameObject top1;
 	public GameObject top2;
@@ -26,6 +27,7 @@ public class Isometric2 : MonoBehaviour {
 		right1.SetActive (false);
 
 		isoCamera.SetActive(true);
+		nextButton.SetActive (false);
 
 		panel.SetActive (false);
 		resultText.text = "";

@@ -12,16 +12,28 @@ public class ModelGeneration : MonoBehaviour {
 	public int blockNum;
 	public GameObject block;
 	public GameObject container;
+	public GameObject tarModelObject;
 
 	private List<Vector3> selectedPoints;
 
 	private int id;
+	public int levelNum;
+	public int level;
 	private string jsonFilePath = "Assets/Scripts/Json/Puzzles.json";
+	public string method;
 
 	void Awake () {
 
+		level = 0;
 		id = DataUtil.GetCurrentRoomId();
-		ParseJson(jsonFilePath, id);
+
+		Initialize ();
+
+	}
+
+	public void Initialize(){
+
+		ParseJson(jsonFilePath, id, level);
 
 		selectedPoints = new List<Vector3> ();
 
@@ -29,17 +41,31 @@ public class ModelGeneration : MonoBehaviour {
 		InitializeModel ();
 		GenerateModel ();
 		RenderModel ();
-
+		
 	}
 
-	private void ParseJson(string jsonFilePath, int roomId) {
+	private void ParseJson(string jsonFilePath, int roomId, int level) {
 		
 		string jsonString = File.ReadAllText(jsonFilePath);
 		Dictionary<string, object> dict;
 		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
 		dict = (Dictionary<string, object>)dict[roomId.ToString()];
 
+		levelNum = System.Convert.ToInt32 (dict ["levelNum"]);
+
+		dict = (Dictionary<string, object>)dict["levels"];
+		dict = (Dictionary<string, object>)dict[level.ToString()];
+
 		blockNum = System.Convert.ToInt32 (dict ["blockNum"]);
+		method = System.Convert.ToString (dict ["method"]);
+
+		tarModelObject.GetComponent<TransformGeneration>().transNum = 
+			System.Convert.ToInt32 (dict ["baicSteps"]);
+		tarModelObject.GetComponent<TransformGeneration>().difficulty = 
+			System.Convert.ToInt32 (dict ["difficulty"]);
+
+
+
 
 	}
 

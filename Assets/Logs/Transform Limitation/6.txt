@@ -1,0 +1,3 @@
+timestamp,operation
+08/21/2017 18:23:53,RotY
+08/21/2017 18:23:55,RotX
