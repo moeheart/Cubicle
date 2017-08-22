@@ -73,7 +73,7 @@ public class Tutorial : MonoBehaviour {
 		if (GameObject.Find ("axis") != null) {
 			Destroy (GameObject.Find ("axis"));
 		}
-		for (int i = 0; i < ActiveObjControl.MaxPanelNum; i++) {
+		for (int i = 0; i < RevSolidGameInfo.MaxPanelNum; i++) {
 			ActiveObjControl.activeObjects [i].ChangeSpriteAccordingToSolid ();
 		}
 	}

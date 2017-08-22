@@ -12,10 +12,21 @@ public class RevSolidGameInfo : MonoBehaviour {
 	const int LearningThres = 3;
 	const int WinningCriterion = 12;
 
+	public static float RecoverInterval=3.0f;
+	public static int MaxPolygonNum=12;
+	public static int MaxPanelNum;
+
+	public static int levelOfDifficulty=0;//0,1
+
 	// Use this for initialization
 	void Awake () {
 		hit = 0;
 		falseStrokeCount = 0;
+		if (RevSolidGameInfo.levelOfDifficulty == 0) {
+			MaxPanelNum=1;
+		} else if (RevSolidGameInfo.levelOfDifficulty == 1){
+			MaxPanelNum=4;
+		}
 	}
 	
 	// Update is called once per frame

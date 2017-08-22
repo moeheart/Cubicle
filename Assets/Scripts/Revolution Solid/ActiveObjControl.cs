@@ -4,21 +4,16 @@ using UnityEngine;
 
 public class ActiveObjControl : MonoBehaviour {
 
-	delegate void ObjectBehaviour(int objectIndex);
-	ObjectBehaviour objectBehaviour;
+	protected delegate void ObjectBehaviour(int objectIndex);
+	protected ObjectBehaviour objectBehaviour;
 
 	public static List<RevSolid> revSolids;
 	public static List<ActiveObject> activeObjects;
-	private static Vector3 midPos;
-	public static int MaxPolygonNum=12;
-	public static int MaxPanelNum=4;
-	static float forbiddenRadius=2.0f; 
-	static float PitfallWarningRadius=3.0f;
-	static float RecoverInterval=3.0f;
+	protected static Vector3 midPos=new Vector3(0,0,0);
 
 	// Use this for initialization
 	void Awake(){
-		midPos = GameObject.Find ("middle").transform.position;
+		
 	}
 
 	void Start () {
@@ -28,37 +23,38 @@ public class ActiveObjControl : MonoBehaviour {
 		StartCoroutine("RecoverObjects");
 
 		//polygonBehaviour += FadeInOrOut;
-		objectBehaviour += Rotate;
-		objectBehaviour += Move;
-		objectBehaviour += Pitfall;
+		if (RevSolidGameInfo.levelOfDifficulty == 0) {
+			Camera.main.gameObject.AddComponent <Easy>();
+		} else if (RevSolidGameInfo.levelOfDifficulty == 1) {
+			Camera.main.gameObject.AddComponent <Hard>();
+		}
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (objectBehaviour != null) {
-			for (int i = 0; i < activeObjects.Count; i++) {
-				objectBehaviour (i);
-				FadeInOrOut (i);
+		if (RevSolidGameInfo.levelOfDifficulty == 0) {
+			for (int i = 0; i < RevSolidGameInfo.MaxPanelNum; i++) {
+				activeObjects[i].RecordReactionTime ();
 			}
 		}
 	}
 		
 	void InitPolygon(){
 		revSolids = new List<RevSolid> ();//constructor
-		for (int i = 0; i < MaxPolygonNum; i++) {
-			if (i < MaxPanelNum) {
+		for (int i = 0; i < RevSolidGameInfo.MaxPolygonNum; i++) {
+			if (i < RevSolidGameInfo.MaxPanelNum) {
 				revSolids.Add (new RevSolid (i));
 			} else {
 				revSolids.Add (new RevSolid (i));
 			}
-			//yield return new WaitForSeconds (2);
 		}
 	}
 
 	void ActivateObjects(){
 		activeObjects = new List<ActiveObject> ();//constructor
-		for (int i = 0; i < MaxPanelNum; i++) {
+		for (int i=0;i <RevSolidGameInfo.MaxPanelNum;i++) {
+			Debug.Log (i);
 			activeObjects.Add (new ActiveObject (i,i));
 			//yield return new WaitForSeconds (2);
 		}
@@ -67,18 +63,18 @@ public class ActiveObjControl : MonoBehaviour {
 	IEnumerator RecoverObjects(){
 		while (true) {
 			//recover & shift sectionPanel-polygon correspondence
-			for(int i=0;i<MaxPanelNum;i++){
+			for(int i=0;i<RevSolidGameInfo.MaxPanelNum;i++){
 				if (activeObjects [i].isKilled == true) {
 					//replace with one of the polygons(that is currently not on screen
 					int k;
 					while(true){
-						k = Mathf.FloorToInt (Random.value * MaxPolygonNum);
+						k = Mathf.FloorToInt (Random.value * RevSolidGameInfo.MaxPolygonNum);
 						int j;
-						for (j = 0; j < MaxPanelNum; j++) {
+						for (j = 0; j < RevSolidGameInfo.MaxPanelNum; j++) {
 							if (activeObjects [j].polygonIndex == k)
 								break;//for
 						}
-						if (j == MaxPanelNum) {
+						if (j == RevSolidGameInfo.MaxPanelNum) {
 							break;//while
 						}
 					}
@@ -88,28 +84,26 @@ public class ActiveObjControl : MonoBehaviour {
 					Debug.Log (i);
 					Debug.Log ("+1");*/
 				}
-				yield return new WaitForSeconds (RecoverInterval);
+				yield return new WaitForSeconds (RevSolidGameInfo.RecoverInterval);
 			}
-			yield return new WaitForSeconds (RecoverInterval);
+			yield return new WaitForSeconds (RevSolidGameInfo.RecoverInterval);
 
 		}
 	}
-		
 
-	void Rotate(int objIndex){
+	public static bool WithinViewport(int objIndex){
+		return (Mathf.Abs (activeObjects [objIndex].gameObject.transform.position.x - midPos.x) <= 8
+			&& Mathf.Abs (activeObjects [objIndex].gameObject.transform.position.y - midPos.y) <= 5);
+	}
+
+
+	protected void Rotate(int objIndex){
 		if (activeObjects [objIndex].isKilled == false) {
 			activeObjects [objIndex].gameObject.transform.Rotate (0.5f, 0.5f, 0.5f);
 		}
 	}
 
-	void Move(int objIndex){
-		if (activeObjects [objIndex].isKilled == false && activeObjects [objIndex].gameObject.transform.position != midPos) {
-			activeObjects [objIndex].gameObject.transform.position=Vector3.MoveTowards(activeObjects [objIndex].gameObject.transform.position,midPos,Time.deltaTime*activeObjects[objIndex].speed);
-		}
-			
-	}
-
-	void FadeInOrOut(int objIndex){
+	protected void FadeInOrOut(int objIndex){
 		if (!activeObjects [objIndex].isKilled) {
 			activeObjects [objIndex].gameObject.GetComponent<MeshRenderer> ().material.SetFloat ("_AlphaScale",Mathf.Clamp(activeObjects [objIndex].alphaScale+=0.2f,0.0f,0.6f));
 		}
@@ -120,37 +114,7 @@ public class ActiveObjControl : MonoBehaviour {
 		}
 			
 	}
-
-	void Pitfall(int objIndex){
-		if (InCentralArea (objIndex)) {
-			activeObjects [objIndex].isKilled = true;
-		}
-	}
-
-	bool InCentralArea(int objIndex){
-		if (Distance2Center(objIndex) < forbiddenRadius) {
-			RevSolidGameInfo.Add2FalseStrokeCount (1);
-			RevSolidUIControl.RefreshBroadcasts ();
-			Tutorial.IndicateAnApproachingObject ();
-			return true;
-		}
-		else if(Distance2Center(objIndex) < PitfallWarningRadius){
-			Tutorial.IndicatePitfalls ();
-			return false;
-		}
-		else {
-			return false;
-		}
 		
-	}
 
-	public static bool WithinViewport(int objIndex){
-		return (Mathf.Abs (activeObjects [objIndex].gameObject.transform.position.x - midPos.x) <= 8
-		&& Mathf.Abs (activeObjects [objIndex].gameObject.transform.position.y - midPos.y) <= 5);
-	}
-
-	public static float Distance2Center(int objIndex){
-		return Vector3.Distance (activeObjects [objIndex].gameObject.transform.position, midPos);
-	}
 		
 }

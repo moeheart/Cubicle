@@ -16,23 +16,27 @@ public class ActiveObject : MonoBehaviour {
 
 	public Vector3 initialPos;
 	public float speed;
+	float refreshTime;
+	float endingTime;
+	float reactionTime;
 
 	public ActiveObject(int newPanelIndex,int newPolygonIndex){
 		
 		panelIndex = newPanelIndex;
+
 		image =  GameObject.Find ("Section_"+panelIndex.ToString()).GetComponent<Image>();
 		image.gameObject.SetActive (false);
-
 		polygonIndex = newPolygonIndex;
 		isKilled = true;//false;
 		gameObject = ActiveObjControl.revSolids [polygonIndex].gameObject;
-		//initialPos = GenRandomPos ();
-		initialPos = GenPosAccordingToPanelIndex(panelIndex);
-		speed = GenRandomSpeed ();
-		gameObject.transform.position = initialPos;
 
 		alphaScale = 1.0f;
+
+		//SetPosAndSpeed ();
 	}
+
+
+
 	public void Refresh(){
 		image.gameObject.SetActive (true);
 		ChangeSpriteAccordingToSolid ();
@@ -40,12 +44,55 @@ public class ActiveObject : MonoBehaviour {
 		isKilled = false;
 		gameObject = ActiveObjControl.revSolids [polygonIndex].gameObject;
 
-		//initialPos = GenRandomPos ();
-		initialPos = GenPosAccordingToPanelIndex(panelIndex);
-		speed = GenRandomSpeed ();
+		SetPosAndSpeed ();
 
-		gameObject.transform.position = initialPos;
 		alphaScale = 1.0f;
+		GetRefreshTime ();
+	}
+
+	void GetRefreshTime (){
+		refreshTime = Time.time;
+	}
+
+	public void GetEndingTime(){
+		endingTime = Time.time;
+		RecordReactionTime ();
+	}
+
+	public void RecordReactionTime(){
+		if (isKilled) {
+			endingTime = Time.time;
+			reactionTime = endingTime - refreshTime;
+		} else {
+			reactionTime = Time.time - refreshTime;
+
+			if (RevSolidGameInfo.levelOfDifficulty == 0) {
+				if (reactionTime >= 5.0f) {
+					this.isKilled = true;
+				}
+			}
+		}
+	}
+
+	void SetPosAndSpeed(){
+		if (RevSolidGameInfo.levelOfDifficulty == 0) {
+			this.SetFixedPosition ();
+		} else if (RevSolidGameInfo.levelOfDifficulty == 1) {
+			this.RegeneratePositionAndSpeed();
+		}
+	}
+
+	void SetFixedPosition (){
+		initialPos = new Vector3(3.0f,0,0);
+		speed = 0;
+		gameObject.transform.position = initialPos;
+	}
+
+	void RegeneratePositionAndSpeed(){
+		//initialPos = GenRandomPos ();
+		initialPos = Hard.GenPosAccordingToPanelIndex(panelIndex);
+		speed = Hard.GenRandomSpeed ();
+		gameObject.transform.position = initialPos;
 	}
 
 	public void ChangeSpriteAccordingToSolid(){
@@ -54,64 +101,6 @@ public class ActiveObject : MonoBehaviour {
 
 	public void UseTutorialSpriteMatchingSolid(){
 		image.sprite = AxisDrawing.sections [polygonIndex].tutorialSprite;
-	}
-
-	Vector3 GenPosAccordingToPanelIndex(int i){
-		Vector3 newPos = new Vector3 (10.0f, 5.0f, 0);
-		switch (i) {
-		case 0:
-			newPos = new Vector3 (10.0f, 5.0f, 0);
-			break;
-		case 1:
-			newPos = new Vector3 (-10.0f, 5.0f, 0);
-			break;
-		case 2:
-			newPos = new Vector3 (-10.0f, -5.0f, 0);
-			break;
-		case 3:
-			newPos = new Vector3 (10.0f, -5.0f, 0);
-			break;
-		}
-		return newPos;
-	}
-
-	Vector3 GenRandomPos(){
-		Vector3 newPos = new Vector3 (-10.0f, 0.0f, 0);
-		int rand = Mathf.FloorToInt(Random.value*8);
-		switch (rand) {
-		case 0:
-			newPos = new Vector3 (10.0f, -5.0f, 0);
-			break;
-		case 1:
-			newPos = new Vector3 (-10.0f, -5.0f, 0);
-			break;
-		case 2:
-			newPos = new Vector3 (10.0f, 5.0f, 0);
-			break;
-		case 3:
-			newPos = new Vector3 (-10.0f, 5.0f, 0);
-			break;
-		case 4:
-			newPos = new Vector3 (10.0f, 2.5f, 0);
-			break;
-		case 5:
-			newPos = new Vector3 (-10.0f, 2.5f, 0);
-			break;
-		case 6:
-			newPos = new Vector3 (10.0f, -2.5f, 0);
-			break;
-		case 7:
-			newPos = new Vector3 (-10.0f, -2.5f, 0);
-			break;
-		}
-
-		return newPos;
-	}
-
-	float GenRandomSpeed(){
-		float spd;
-		spd=Mathf.Clamp(Random.value*1.0f,0.1f,1.0f);
-		return spd;
 	}
 
 }

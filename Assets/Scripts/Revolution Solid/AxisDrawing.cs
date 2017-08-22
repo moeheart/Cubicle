@@ -136,17 +136,13 @@ public class AxisDrawing: ResponseProcessing {
 		}
 	}
 
-	public static Sprite[] polygonSprites=new Sprite[ActiveObjControl.MaxPolygonNum];
+	public static Sprite[] polygonSprites=new Sprite[RevSolidGameInfo.MaxPolygonNum];
 	void InitSections(){
 		sections = new List<Section> ();//constructor
-		for(int i=0;i<ActiveObjControl.MaxPolygonNum;i++){
+		for(int i=0;i<RevSolidGameInfo.MaxPolygonNum;i++){
 			sections.Add(new Section(i,i));//bottomleft be origin
 		}
 	}
-
-
-	//Grading methods
-
 
 	public int BestMatchCandidate (List<Vector3> path,int panelIndex){
 		int bestMatchCandidateNo=-2;//refer to the correct one
@@ -160,17 +156,9 @@ public class AxisDrawing: ResponseProcessing {
 		if (maxConvolution >= 3) {
 			bestMatchCandidateNo = -1;
 		}
-		/*
-		Debug.Log ("-1");
-		Debug.Log (maxConvolution);
-		*/
 
 		for (int i = 0; i < 6; i ++) {
 			tempConvolution = Convolution(pathKernel,Section.candKernels[i]);
-			/*
-Debug.Log (i);
-			Debug.Log (tempConvolution);
-			*/
 
 			if (tempConvolution > maxConvolution) {
 				if (maxConvolution >= 1) {
@@ -229,17 +217,8 @@ Debug.Log (i);
 			return -2;
 		}
 
-		int panelIndex=0;//sectionIndex
-		//panel position 0-UR,1-UL,2-BL,3-BR
-		if (mid.x > -thres && mid.y > -thres) {
-			panelIndex = 0;
-		} else if (mid.x > -thres && mid.y < thres) {
-			panelIndex = 3;
-		}else if (mid.x < thres && mid.y > -thres) {
-			panelIndex = 1;
-		}else if (mid.x < thres && mid.y < thres) {
-			panelIndex = 2;
-		}
+		//sectionIndex
+		int panelIndex=IdentifyPanelIndexOfStroke(mid);
 		//Debug.Log (panelIndex);
 		int bestMatchCandNo=-2;
 		if (ActiveObjControl.activeObjects [sections[panelIndex].polygonIndex].isKilled == false) {
@@ -256,6 +235,24 @@ Debug.Log (i);
 			}
 		}
 		return bestMatchCandNo;
+	}
+
+	int IdentifyPanelIndexOfStroke(Vector3 mid){
+		int panelIndex=0;
+
+		if (RevSolidGameInfo.levelOfDifficulty == 1) {
+			//panel position 0-UR,1-UL,2-BL,3-BR
+			if (mid.x > -thres && mid.y > -thres) {
+				panelIndex = 0;
+			} else if (mid.x > -thres && mid.y < thres) {
+				panelIndex = 3;
+			} else if (mid.x < thres && mid.y > -thres) {
+				panelIndex = 1;
+			} else if (mid.x < thres && mid.y < thres) {
+				panelIndex = 2;
+			}
+		}
+		return panelIndex;
 	}
 		
 }
