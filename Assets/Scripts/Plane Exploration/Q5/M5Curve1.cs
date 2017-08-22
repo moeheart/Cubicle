@@ -49,6 +49,8 @@ public class M5Curve1 : MonoBehaviour {
 
 		if (collide)
 			meshFilter.mesh = mesh;
+		else
+			meshFilter.mesh = null;
 
 	}
 

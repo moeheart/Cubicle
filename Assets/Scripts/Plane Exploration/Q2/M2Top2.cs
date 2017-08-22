@@ -53,6 +53,8 @@ public class M2Top2 : MonoBehaviour {
 
 		if (collide)
 			meshFilter.mesh = mesh;
+		else
+			meshFilter.mesh = null;
 
 	}
 

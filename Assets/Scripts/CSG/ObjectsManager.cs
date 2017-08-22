@@ -9,12 +9,17 @@ public class ObjectsManager : MonoBehaviour {
 	public Material defaultMaterial;
 	public Material targetMaterial;
 	public Mesh targetMesh;
+	public Material wireframeMaterial = null;
 
 	private GameObject target;
 
 	private List<GameObject> gameObjects = new List<GameObject>();
 	private GameObject opA, opB;
 	private GameObject selectedGameObject;
+
+	private bool wireframe = false;
+
+	float wireframe_alpha = 0f, cur_alpha = 0f, dest_alpha = 1f, start_time = 0f;
 
 	public void LoadGameObjects() {
 
@@ -26,19 +31,36 @@ public class ObjectsManager : MonoBehaviour {
 		obj2.transform.localPosition = new Vector3(-3,3,0);
 		obj1.AddComponent<ObjectBehaviors>();
 		obj2.AddComponent<ObjectBehaviors>();
-		obj1.GetComponent<MeshRenderer>().material = defaultMaterial;
-		obj2.GetComponent<MeshRenderer>().material = defaultMaterial;
+		obj1.GetComponent<MeshRenderer>().material = wireframeMaterial;
+		obj2.GetComponent<MeshRenderer>().material = wireframeMaterial;
 		obj2.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
 		gameObjects.Add(obj1);
 		gameObjects.Add(obj2);
+		obj1.GetComponent<ObjectBehaviors>().GenerateBarycentric();
+		obj2.GetComponent<ObjectBehaviors>().GenerateBarycentric();
 		//opA = obj1;
 		//opB = obj2;
 
 		target = new GameObject("Target");
 		Debug.Log("Target Volume" + CSGUtil.VolumeOfMesh(targetMesh));
 
-		target.AddComponent<MeshFilter>().mesh = targetMesh;
-		target.AddComponent<MeshRenderer>().material = targetMaterial;
+		target.AddComponent<MeshFilter>().sharedMesh = targetMesh;
+		target.AddComponent<MeshRenderer>().sharedMaterial = wireframeMaterial;
+
+		wireframeMaterial.SetFloat("_Opacity", 0);
+		cur_alpha = 0f;
+		dest_alpha = 0f;
+		
+		ToggleWireframe();
+	}
+
+	public void ToggleWireframe()
+	{
+		wireframe = !wireframe;
+
+		cur_alpha = wireframe ? 0f : 1f;
+		dest_alpha = wireframe ? 1f : 0f;
+		start_time = Time.time;
 	}
 
 	// Use this for initialization
@@ -47,7 +69,8 @@ public class ObjectsManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		wireframe_alpha = Mathf.Lerp(cur_alpha, dest_alpha, Time.time - start_time);
+		wireframeMaterial.SetFloat("_Opacity", wireframe_alpha);
 		//TODO
 		//These controls are pretty bad right now
 		//Change it to something more natural
@@ -110,18 +133,21 @@ public class ObjectsManager : MonoBehaviour {
 			gameObjects.Remove(opA);
 			gameObjects.Remove(opB);
 			gameObjects.Add(composite);
+			composite.GetComponent<ObjectBehaviors>().GenerateBarycentric();
 			Destroy(opA);
 			Destroy(opB);
 			Debug.Log("There are " + gameObjects.Count + " objects left in scene");
 
-			Mesh m = composite.GetComponent<MeshFilter>().mesh;
+			Mesh m = composite.GetComponent<MeshFilter>().sharedMesh;
 			Debug.Log("your volume: " + CSGUtil.VolumeOfMesh(m));
-			Mesh m1 = CSG.Union(target, composite);
-			Mesh m2 = CSG.Intersect(target, composite);
-			//GameObject g1 = CSGUtil.Subtract(target, composite, defaultMaterial);
-			//GameObject g2 = CSGUtil.Subtract(composite, target, defaultMaterial);
-			//g1.transform.localPosition = new Vector3(-2,0,0);
-			//g2.transform.localPosition = new Vector3(2,0,0);
+			Mesh m1 = CSG.Subtract(target, composite);
+			Mesh m2 = CSG.Subtract(composite, target);
+			GameObject g1 = CSGUtil.Subtract(target, composite, wireframeMaterial);
+			GameObject g2 = CSGUtil.Subtract(composite, target, wireframeMaterial);
+			g1.transform.localPosition = new Vector3(-2,0,0);
+			g2.transform.localPosition = new Vector3(2,0,0);
+			g1.AddComponent<ObjectBehaviors>().GenerateBarycentric();
+			g2.AddComponent<ObjectBehaviors>().GenerateBarycentric();
 			Debug.Log("union volume: " + CSGUtil.VolumeOfMesh(m1));
 			Debug.Log("intersection volume: " + CSGUtil.VolumeOfMesh(m2));
 			if (CSGUtil.VolumeOfMesh(m1) - CSGUtil.VolumeOfMesh(m2) < 1e-2) {
@@ -144,7 +170,7 @@ public class ObjectsManager : MonoBehaviour {
 			opA = opB;
 			opB = gameObject;
 		}
-		UpdateMaterial();
+		//UpdateMaterial();
 	}
 
 	private void UpdateMaterial() {

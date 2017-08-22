@@ -28,46 +28,59 @@ public class Controller : MonoBehaviour {
 
 	public int restStep;
 
-	private int id;
-	private string jsonFilePath = "Assets/Scripts/Json/Puzzles.json";
 
-	public GameObject undoObject;
+	public GameObject undoObject, symObject, rotObject;
 	public Dictionary<Vector3, bool> lastModel;
 
-	public GameObject retryButton;
+	public GameObject retryButton, nextButton, exitButton;
+
+	public GameObject logObject;
+
+	private string method;
 
 	void Start () {
 
-		id = DataUtil.GetCurrentRoomId();
-		ParseJson(jsonFilePath, id);
+		Initialize ();
 
+	}
+
+	public void Initialize(){
 		curModel = startModel.GetComponent<ModelGeneration> ().model;
+
 		tarModel = targetModel.GetComponent<TransformGeneration> ().curModel;
 		lastModel = null;
+
+		difficulty = targetModel.GetComponent<TransformGeneration> ().difficulty;
 
 		restStep = targetModel.GetComponent<TransformGeneration> ().transNum + difficulty;
 		text.text = " Rest Steps: " + restStep;
 
-
-	}
-
-
-	void ParseJson(string jsonFilePath, int roomId) {
-		
-		string jsonString = File.ReadAllText(jsonFilePath);
-		Dictionary<string, object> dict;
-		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
-		dict = (Dictionary<string, object>)dict[roomId.ToString()];
-
-		difficulty = System.Convert.ToInt32 (dict ["difficulty"]);
-
+		method = startModel.GetComponent<ModelGeneration> ().method;
+		if (method == "r") {
+			rotObject.SetActive (true);
+			undoObject.SetActive (true);
+			symObject.SetActive (false);
+			rotObject.transform.localPosition = new Vector3 (-1.6f, 0, 1.6f);
+			undoObject.transform.localPosition = new Vector3 (0, 0, 0);
+		} else if (method == "s") {
+			rotObject.SetActive (false);
+			undoObject.SetActive (true);
+			symObject.SetActive (true);
+			symObject.transform.localPosition = new Vector3 (-1.6f, 0, 1.6f);
+			undoObject.transform.localPosition = new Vector3 (0, 0, 0);
+		} else { // rs
+			rotObject.SetActive (true);
+			undoObject.SetActive (true);
+			symObject.SetActive (true);
+			symObject.transform.localPosition = new Vector3 (-1.6f, 0, 1.6f);
+			rotObject.transform.localPosition = new Vector3 (0, 0, 0);
+			undoObject.transform.localPosition = new Vector3 (1.6f, 0, -1.6f);
+		}
 	}
 
 
 	void Update () {
-
-
-
+		
 		Ray ray;
 		RaycastHit rayhit;
 		float fDistance = 20f;
@@ -81,29 +94,36 @@ public class Controller : MonoBehaviour {
 					Dictionary<Vector3, bool> nextModel = new Dictionary<Vector3, bool>();
 					if (operation.Equals ("X Axis")) {
 						nextModel = RotX (curModel);
+						logObject.GetComponent<TransformLimitationLog> ().LogDetail ("RotX");
 						AfterTrans (nextModel);
 					}
 					else if (operation.Equals ("Y Axis")) {
 						nextModel = RotY (curModel);
+						logObject.GetComponent<TransformLimitationLog> ().LogDetail ("RotY");
 						AfterTrans (nextModel);
 					}
 					else if (operation.Equals ("Z Axis")) {
 						nextModel = RotZ (curModel);
+						logObject.GetComponent<TransformLimitationLog> ().LogDetail ("RotZ");
 						AfterTrans (nextModel);
 					}
 					else if (operation.Equals ("XY Plane")) {
 						nextModel = SymXY (curModel);
+						logObject.GetComponent<TransformLimitationLog> ().LogDetail ("SymXY");
 						AfterTrans (nextModel);
 					}
 					else if (operation.Equals ("XZ Plane")) {
 						nextModel = SymXZ (curModel);
+						logObject.GetComponent<TransformLimitationLog> ().LogDetail ("SymXZ");
 						AfterTrans (nextModel);
 					}
 					else if (operation.Equals ("YZ Plane")) {
 						nextModel = SymYZ (curModel);
+						logObject.GetComponent<TransformLimitationLog> ().LogDetail ("SymYZ");
 						AfterTrans (nextModel);
 					}
 					else {  // undo
+						logObject.GetComponent<TransformLimitationLog> ().LogDetail ("Undo");
 						curModel = lastModel;
 						restStep += 1;
 						text.text = " Rest Steps: " + restStep;
@@ -367,7 +387,15 @@ public class Controller : MonoBehaviour {
 		text.text = "You Win!";
 		controllerObject.SetActive(false);
 		notationController.SetActive(false);
-		DataUtil.UnlockCurrentRoom();
+		logObject.GetComponent<TransformLimitationLog> ().RecordResult (true);
+		int level = startModel.GetComponent<ModelGeneration> ().level;
+		int levelNum = startModel.GetComponent<ModelGeneration> ().levelNum;
+		if (level < levelNum - 1)
+			nextButton.SetActive (true);
+		else {
+			exitButton.SetActive (true);
+			DataUtil.UnlockCurrentRoom();
+		}
 	}
 
 	void Over(){
@@ -375,6 +403,7 @@ public class Controller : MonoBehaviour {
 		controllerObject.SetActive(false);
 		notationController.SetActive(false);
 		retryButton.SetActive (true);
+		logObject.GetComponent<TransformLimitationLog> ().RecordResult (false);
 
 	}
 		

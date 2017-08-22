@@ -40,16 +40,126 @@
     },
 	"5": {
         "type": "view point",
-        "solidNum": 5
+		"levelNum":12,
+		"levels":{
+			"0":{
+				"solidNum":4,
+				"method":"d",
+				},
+			"1":{
+				"solidNum":4,
+				"method":"d",
+				},
+			"2":{
+				"solidNum":6,
+				"method":"d",
+				},
+			"3":{
+				"solidNum":5,
+				"method":"d",
+				},
+			"4":{
+				"solidNum":4,
+				"method":"r",
+				},
+			"5":{
+				"solidNum":5,
+				"method":"r",
+				},
+			"6":{
+				"solidNum":7,
+				"method":"r",
+				},
+			"7":{
+				"solidNum":8,
+				"method":"r",
+				},
+			"8":{
+				"solidNum":7,
+				"method":"s",
+				},
+			"9":{
+				"solidNum":6,
+				"method":"s",
+				},
+			"10":{
+				"solidNum":5,
+				"method":"s",
+				},
+			"11":{
+				"solidNum":4,
+				"method":"s",
+				},
+			}
     },
 	"6": {
         "type": "plane exploration"
     },
 	"7": {
         "type": "transform limitation",
-        "blockNum": 5,
-		"baicSteps": 3,
-		"difficulty": 1
+		"levelNum":10,
+		"levels":{
+			"0":{
+		        "blockNum": 4,
+				"baicSteps": 1,
+				"difficulty": 9,
+				"method": "r"
+				},
+			"1":{
+		        "blockNum": 5,
+				"baicSteps": 2,
+				"difficulty": 6,
+				"method": "r"
+				},
+			"2":{
+		        "blockNum": 7,
+				"baicSteps": 2,
+				"difficulty": 3,
+				"method": "r"
+				},
+			"3":{
+		        "blockNum": 5,
+				"baicSteps": 1,
+				"difficulty": 4,
+				"method": "s"
+				},
+			"4":{
+		        "blockNum": 7,
+				"baicSteps": 1,
+				"difficulty": 4,
+				"method": "s"
+				},
+			"5":{
+		        "blockNum": 9,
+				"baicSteps": 2,
+				"difficulty": 2,
+				"method": "s"
+				},
+			"6":{
+		        "blockNum": 4,
+				"baicSteps": 3,
+				"difficulty": 7,
+				"method": "rs"
+				} ,
+			"7":{
+		        "blockNum": 7,
+				"baicSteps": 3,
+				"difficulty": 5,
+				"method": "rs"
+				} ,
+			"8":{
+		        "blockNum": 10,
+				"baicSteps": 4,
+				"difficulty": 1,
+				"method": "rs"
+				} ,
+			"9":{
+		        "blockNum": 12,
+				"baicSteps": 3,
+				"difficulty": 0,
+				"method": "rs"
+				} ,
+			},
     },
   "8": {
     "type": "CSG"

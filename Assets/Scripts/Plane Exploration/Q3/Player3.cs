@@ -21,6 +21,8 @@ public class Player3 : MonoBehaviour {
 	public GameObject isometricButton;
 	public GameObject nextButton;
 
+	public GameObject logObject;
+
 	void Start ()
 	{
 		transform = GetComponent<Transform> ();
@@ -39,6 +41,10 @@ public class Player3 : MonoBehaviour {
 	{
 		float moveHorizontal = Input.GetAxis ("Horizontal");
 		float moveVertical = Input.GetAxis ("Vertical");
+
+		if (moveHorizontal != 0 || moveVertical != 0)
+			logObject.GetComponent<PlaneExplorationLog> ().LogDetail (-moveVertical * speed, 
+				moveHorizontal * speed, transform.position.ToString ());
 
 		if (transform.position.x - speed * moveVertical >= edge / 2
 			&& transform.position.x - speed * moveVertical <= 2 - edge / 2
@@ -67,6 +73,7 @@ public class Player3 : MonoBehaviour {
 				player.SetActive (false);
 				nextButton.SetActive (true);
 				isometricButton.SetActive (true);
+				logObject.GetComponent<PlaneExplorationLog> ().RecordResult (1);
 			} else {
 				panel.SetActive (true);
 				winText.text = "Inadequate Exploration!";
@@ -74,6 +81,7 @@ public class Player3 : MonoBehaviour {
 				player.SetActive (false);
 				retryButton.SetActive (true);
 				isometricButton.SetActive (true);
+				logObject.GetComponent<PlaneExplorationLog> ().RecordResult (0);
 			}
 		}
 

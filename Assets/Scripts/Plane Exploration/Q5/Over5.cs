@@ -11,6 +11,8 @@ public class Over5 : MonoBehaviour {
 	public GameObject retryButton;
 	public GameObject isometricButton;
 
+	public GameObject logObject;
+
 	void Start () {
 		overText.text = "";
 	}
@@ -25,6 +27,7 @@ public class Over5 : MonoBehaviour {
 			instructionText.text = "";
 			retryButton.SetActive (true);
 			isometricButton.SetActive (true);
+			logObject.GetComponent<PlaneExplorationLog> ().RecordResult (-1);
 		}
 	}
 }

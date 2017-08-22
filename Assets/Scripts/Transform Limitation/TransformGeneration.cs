@@ -7,78 +7,132 @@ using System.Runtime.Serialization.Formatters.Binary;
 
 public class TransformGeneration : MonoBehaviour {
 
-	public Dictionary<Vector3, bool> curModel, nextModel;
-	public int transNum;
+	public Dictionary<Vector3, bool> curModel, nextModel, originModel;
+	public int transNum, difficulty;
 	public GameObject block;
 	public GameObject container;
 	public GameObject startModel;
 
 	private int[] transformation;
 
-	private int id;
-	private string jsonFilePath = "Assets/Scripts/Json/Puzzles.json";
+	public int blockNum;
+
+	public GameObject logObject;
+
+	private int trialNum;
+	string startModelLog, targetModelLog;
+
+	private string method;
 
 	void OnEnable () {
+		Initialize ();
+	}
 
-		id = DataUtil.GetCurrentRoomId();
-		ParseJson(jsonFilePath, id);
+	public void Initialize(){
+
+		foreach(Transform child in container.transform){
+			Destroy (child.gameObject);
+		}
+
+		trialNum = 0;
 
 		transformation = new int[] { 0, 0, 0, 0, 0, 0 };
 
+		method = startModel.GetComponent<ModelGeneration> ().method;
+		blockNum = startModel.GetComponent<ModelGeneration> ().blockNum;
 		curModel = startModel.GetComponent<ModelGeneration> ().model;
+		originModel = startModel.GetComponent<ModelGeneration> ().model;
 		nextModel = new Dictionary<Vector3,bool> ();
 
+		startModelLog = GetModelLog (curModel);
+		//		print (startModelLog);
+
 		for (int i = 0; i < transNum; i++) {
-			int transIndex = Random.Range (0, 6); // 0-2 xyz rot; 3-5 sym
+
+			int transIndex;
+			if (method == "r")
+				transIndex = Random.Range (0, 3); // 0-2 xyz rot; 3-5 sym
+			else if (method=="s")
+				transIndex = Random.Range (3, 6);
+			else
+				transIndex = Random.Range (0, 6);
 
 			if ((transIndex <= 2 && transformation [transIndex] <= 3) ||
-			    (transIndex >= 3 && transformation [transIndex] < 1
-			    && transformation [3] + transformation [4] + transformation [5] < 2)) {
+				(transIndex >= 3 && transformation [transIndex] < 1
+					&& transformation [3] + transformation [4] + transformation [5] < 2)) {
 				switch (transIndex) {
 				case 0:
 					nextModel = RotX (curModel);
-					print ("rotX");
+					//					print ("rotX");
 					break;
 				case 1:
 					nextModel = RotY (curModel);
-					print ("rotY");
+					//					print ("rotY");
 					break;
 				case 2:
 					nextModel = RotZ (curModel); 
-					print ("rotZ");
+					//					print ("rotZ");
 					break;
 				case 3:
 					nextModel = SymXY (curModel);
-					print ("symXY");
+					//					print ("symXY");
 					break;
 				case 4:
 					nextModel = SymXZ (curModel);
-					print ("symXZ");
+					//					print ("symXZ");
 					break;
 				case 5:
 					nextModel = SymYZ (curModel);
-					print ("symYZ");
+					//					print ("symYZ");
 					break;
 				}
 				transformation [transIndex]++;
 			}
 
 			curModel = nextModel;
-		}
-		curModel = AlignModel (curModel);
+			curModel = AlignModel (curModel);
 
+			if(CompareModels(curModel,originModel))
+				i--;
+
+		}
+
+		targetModelLog = GetModelLog (curModel);
 		RenderTransModel (curModel);
+
+		InitializeRecord ();
 	}
 
 
-	private void ParseJson(string jsonFilePath, int roomId) {
-		string jsonString = File.ReadAllText(jsonFilePath);
-		Dictionary<string, object> dict;
-		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
-		dict = (Dictionary<string, object>)dict[roomId.ToString()];
+	bool CompareModels(Dictionary<Vector3, bool> model1, Dictionary<Vector3, bool> model2){
+		foreach (Vector3 point in curModel.Keys)
+		{
+			if (model1 [point] != model2 [point]) {
+				return false;
+			}
+		}
+		return true;
+	}
 
-		transNum = System.Convert.ToInt32 (dict ["baicSteps"]);
+	public void InitializeRecord(){
+		logObject.GetComponent<TransformLimitationLog> ().RecordInitialization (trialNum, blockNum, transNum, difficulty, startModelLog, targetModelLog, method);
+		trialNum++;
+	}
 
+
+	string GetModelLog(Dictionary<Vector3, bool> model){
+
+		string modelLog = "";
+
+		for (int x = -1; x <= 1; x++)
+			for (int y = -1; y <= 1; y++)
+				for (int z = -1; z <= 1; z++)
+					if (model [new Vector3 (x, y, z)])
+						modelLog += "1";
+					else
+						modelLog += "0";
+
+		return modelLog;
 	}
 
 

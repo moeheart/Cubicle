@@ -22,6 +22,11 @@ public class ViewPoint : MonoBehaviour {
 
 	public Text resultText;
 
+	public GameObject logObject;
+	public GameObject solidsObject;
+	public GameObject exitButton;
+
+	private GameObject curPoint;
 
 	void Start(){
 
@@ -57,7 +62,8 @@ public class ViewPoint : MonoBehaviour {
 							prePoint.GetComponent<Renderer>().material = normalMaterial;
 						
 						selectedNum = int.Parse(hit.collider.gameObject.name.Substring(5));
-						hit.collider.gameObject.GetComponent<Renderer>().material = chosenMaterial;
+						curPoint = hit.collider.gameObject;
+						curPoint.GetComponent<Renderer>().material = chosenMaterial;
 
 //						print(selectedNum);
 
@@ -71,12 +77,29 @@ public class ViewPoint : MonoBehaviour {
 
 			if (Input.GetButtonDown ("Submit")) {
 //				print (selectedNum == trueNum);
-				if (!(selectedNum == trueNum))
+				logObject.GetComponent<ViewPointLog> ().RecordResult (selectedNum, selectedNum == trueNum);
+				if (!(selectedNum == trueNum)) {
 					resultText.text = "Try Again!";
-				else {
-					resultText.text = "You Win!";
-					DataUtil.UnlockCurrentRoom();
+					if (curPoint != null)
+						curPoint.SetActive (false);
+					solidsObject.GetComponent<Generation> ().InitializeRecord ();
 				}
+				else {
+					int level = solidsObject.GetComponent<Generation> ().level;
+					int levelNum = solidsObject.GetComponent<Generation> ().levelNum;
+					if (level < levelNum - 1) {
+						resultText.text = "Try Next!";
+						mainCam.GetComponent<ViewPointCameraController> ().GenerateDir ();
+						solidsObject.GetComponent<Generation> ().level++;
+						solidsObject.GetComponent<Generation> ().Initialize ();
+						trueNum = mainCam.GetComponent<ViewPointCameraController> ().camDir;
+					} else {
+						resultText.text = "You Win!";
+						exitButton.SetActive (true);
+						DataUtil.UnlockCurrentRoom ();
+					}
+				}
+
 			}
 		}
 
