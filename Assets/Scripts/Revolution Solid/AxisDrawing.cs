@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AxisDrawing: MonoBehaviour {
+public class AxisDrawing: ResponseProcessing {
 
 	private LineRenderer line;
 	private bool isLineInstantiated;
@@ -15,23 +15,12 @@ public class AxisDrawing: MonoBehaviour {
 	private float alphaScale;
 
 	private Vector3 mousePos;
-	protected float wx, wy;
+
 	protected float sectionScale=0.2f;//depend on the gameObject empty
 
 	public static List<Section> sections;
 
-
-	//RevSolidUIControl gameInfoBroadcaster= new RevSolidUIControl();
-
-	/*
-	public delegate int Grade(List<Vector3> path);
-	public static Grade grade;
-	*/
-
 	void Awake(){
-
-		wx = Camera.main.pixelRect.center.x;
-		wy = Camera.main.pixelRect.center.y;
 
 		isLineInstantiated = false;
 		InitSections ();
@@ -40,23 +29,26 @@ public class AxisDrawing: MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
 		StartCoroutine("RecordLinePath");
-		/*
-		grade += LeastSquareMethod;*/
 	}
 
 	
 	// Update is called once per frame
 	void Update () {
-		if (wx != Camera.main.pixelRect.center.x || wy != Camera.main.pixelRect.center.y) {
-			wx = Camera.main.pixelRect.center.x;
-			wy = Camera.main.pixelRect.center.y;
-		}
+		OnResize ();
+
+		GetMousePosRelative2Screen ();
+
+		FreeStrokeDrawingAndGrading ();
+	}
+
+	void GetMousePosRelative2Screen(){
 		mousePos = Input.mousePosition;
 		mousePos.x =mousePos.x- wx;
 		mousePos.y =mousePos.y- wy;
+	}
 
+	void FreeStrokeDrawingAndGrading(){
 		if (Input.GetMouseButtonDown (0)) {
 			//destroy existing one and instantiate new
 
@@ -71,18 +63,15 @@ public class AxisDrawing: MonoBehaviour {
 
 		if (Input.GetMouseButtonUp (0)) {
 			if (isLineInstantiated&&linePath.Count>0) {
-				//DisplayScore (grade(linePath));
 				DisplayScore (Grading(linePath));
 				DestroyAxis ();
 				linePath.Clear ();
 			}
 		}
-			
+
 		if (isLineInstantiated) {
 			AxisFadeOut ();
 		}
-
-		RevSolidGameInfo.CheckEndOfGame ();
 	}
 
 	void DestroyAxis(){
