@@ -18,8 +18,13 @@ public class Model1 : MonoBehaviour {
 	private LineRenderer lineRenderer;
 	private int lineLength;
 
+	public GameObject logObject;
+	public int trialNum;
+
 	// define points
 	void Start () {
+
+		trialNum = 0;
 
 		// object name is Model
 		ModelGameObject = GameObject.Find ("Model");
@@ -127,6 +132,14 @@ public class Model1 : MonoBehaviour {
 		lineLength = edgeTrack.Length;
 		lineRenderer.SetVertexCount(lineLength);
 
+		InitializeLog ();
+
+	}
+
+
+	public void InitializeLog(){
+		logObject.GetComponent<PlaneExplorationLog> ().RecordInitialization (trialNum, 1);
+		trialNum++;
 	}
 
 	// render

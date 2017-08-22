@@ -48,6 +48,8 @@ public class M1Top1 : MonoBehaviour {
 
 		if (collide)
 			meshFilter.mesh = mesh;
+		else
+			meshFilter.mesh = null;
 
 	}
 

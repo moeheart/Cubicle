@@ -23,17 +23,17 @@ public class TransformLimitationLog : MonoBehaviour {
 	private System.DateTime startTime;
 
 
-//	void Start(){
-//		FileStream _fs = new FileStream(logIdPath, FileMode.Open, FileAccess.Write);
-//
-//		int x = 0;
-//		_fs.WriteByte ((byte)x);
-//		_fs.Close();
-//		_fs.Dispose();
-//	}
+	void Start(){
+		FileStream _fs = new FileStream(logIdPath, FileMode.Open, FileAccess.Write);
+
+		int x = 0;
+		_fs.WriteByte ((byte)x);
+		_fs.Close();
+		_fs.Dispose();
+	}
 
 
-	public void RecordInitialization(int trial_num, int block_num, int basic_step, int difficulty, string start_model, string target_model){
+	public void RecordInitialization(int trial_num, int block_num, int basic_step, int difficulty, string start_model, string target_model, string method){
 
 		// get id
 		FileStream _fs = new FileStream(logIdPath, FileMode.Open, FileAccess.Read);
@@ -51,7 +51,8 @@ public class TransformLimitationLog : MonoBehaviour {
 
 		// initialize log
 		logString = "\n" + id.ToString () + "," + startTime + "," + trial_num.ToString () + "," + block_num.ToString () +
-			"," + basic_step.ToString () + "," + difficulty.ToString() + "," + start_model + "," + target_model + ",";
+			"," + basic_step.ToString () + "," + difficulty.ToString() + "," + start_model + "," + target_model + "," +
+			method + ",";
 
 		// initialize detail log file
 		string detailFileName = logDetailPath + id.ToString() + ".txt";
