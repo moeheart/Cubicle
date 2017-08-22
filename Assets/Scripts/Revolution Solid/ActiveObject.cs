@@ -20,10 +20,11 @@ public class ActiveObject : MonoBehaviour {
 	public ActiveObject(int newPanelIndex,int newPolygonIndex){
 		
 		panelIndex = newPanelIndex;
-		image =  GameObject.Find ("section"+panelIndex.ToString()).GetComponent<Image>();
+		image =  GameObject.Find ("Section_"+panelIndex.ToString()).GetComponent<Image>();
+		image.gameObject.SetActive (false);
 
 		polygonIndex = newPolygonIndex;
-		isKilled = false;
+		isKilled = true;//false;
 		gameObject = ActiveObjControl.revSolids [polygonIndex].gameObject;
 		//initialPos = GenRandomPos ();
 		initialPos = GenPosAccordingToPanelIndex(panelIndex);

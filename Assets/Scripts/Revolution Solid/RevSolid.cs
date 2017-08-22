@@ -11,7 +11,7 @@ public class RevSolid : MonoBehaviour {
 	public RevSolid(int newIndex){
 		index = newIndex;
 
-		gameObject = GameObject.Find ("poly" + index.ToString());
+		gameObject = GameObject.Instantiate(Resources.Load("revsolid"+index.ToString()) as GameObject,new Vector3(15,0,0),Quaternion.identity);//GameObject.Find ("poly" + index.ToString());
 
 		if (gameObject.GetComponent<MeshRenderer>().material !=null) {
 			mat = gameObject.GetComponent<MeshRenderer>().material;

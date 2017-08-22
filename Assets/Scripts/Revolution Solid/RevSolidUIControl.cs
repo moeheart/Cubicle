@@ -13,7 +13,6 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	private static Button responseBtn;
 	// Use this for initialization
 	void Awake() {
-		Debug.Log ("revsolidUIAwake");
 		broadcast= GameObject.Find ("Text").GetComponent<Text> ();
 		totalHit=GameObject.Find ("hit").GetComponent<Text> ();
 		falseCount=GameObject.Find ("miss").GetComponent<Text> ();

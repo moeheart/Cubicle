@@ -1,6 +1,13 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+<<<<<<< HEAD
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/View Point/Generation.cs">
+=======
+<<<<<<< HEAD
+  <MonoDevelop.Ide.Workbench />
+=======
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Transform Limitation/Controller.cs">
+>>>>>>> e41ccece7dce95f0536fe343b79c2dca683c74ba
     <Files>
       <File FileName="Assets/Scripts/View Point/Generation.cs" Line="57" Column="5" />
       <File FileName="Assets/Scripts/Transform Limitation/ModelGeneration.cs" Line="60" Column="54" />
@@ -8,6 +15,7 @@
       <File FileName="Assets/Logs/View Point/_ViewPointLogs.txt" Line="8" Column="65" />
     </Files>
   </MonoDevelop.Ide.Workbench>
+>>>>>>> upstream/master
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
