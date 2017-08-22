@@ -22,6 +22,8 @@ public class ViewPoint : MonoBehaviour {
 
 	public Text resultText;
 
+	public GameObject logObject;
+	public GameObject solidsObject;
 
 	void Start(){
 
@@ -71,12 +73,16 @@ public class ViewPoint : MonoBehaviour {
 
 			if (Input.GetButtonDown ("Submit")) {
 //				print (selectedNum == trueNum);
-				if (!(selectedNum == trueNum))
+				logObject.GetComponent<ViewPointLog> ().RecordResult (selectedNum, selectedNum == trueNum);
+				if (!(selectedNum == trueNum)) {
 					resultText.text = "Try Again!";
+					solidsObject.GetComponent<Generation> ().InitializeRecord ();
+				}
 				else {
 					resultText.text = "You Win!";
 					DataUtil.UnlockCurrentRoom();
 				}
+
 			}
 		}
 

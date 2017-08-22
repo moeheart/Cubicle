@@ -36,6 +36,8 @@ public class Controller : MonoBehaviour {
 
 	public GameObject retryButton;
 
+	public GameObject logObject;
+
 	void Start () {
 
 		id = DataUtil.GetCurrentRoomId();
@@ -81,29 +83,36 @@ public class Controller : MonoBehaviour {
 					Dictionary<Vector3, bool> nextModel = new Dictionary<Vector3, bool>();
 					if (operation.Equals ("X Axis")) {
 						nextModel = RotX (curModel);
+						logObject.GetComponent<TransformLimitationLog> ().LogDetail ("RotX");
 						AfterTrans (nextModel);
 					}
 					else if (operation.Equals ("Y Axis")) {
 						nextModel = RotY (curModel);
+						logObject.GetComponent<TransformLimitationLog> ().LogDetail ("RotY");
 						AfterTrans (nextModel);
 					}
 					else if (operation.Equals ("Z Axis")) {
 						nextModel = RotZ (curModel);
+						logObject.GetComponent<TransformLimitationLog> ().LogDetail ("RotZ");
 						AfterTrans (nextModel);
 					}
 					else if (operation.Equals ("XY Plane")) {
 						nextModel = SymXY (curModel);
+						logObject.GetComponent<TransformLimitationLog> ().LogDetail ("SymXY");
 						AfterTrans (nextModel);
 					}
 					else if (operation.Equals ("XZ Plane")) {
 						nextModel = SymXZ (curModel);
+						logObject.GetComponent<TransformLimitationLog> ().LogDetail ("SymXZ");
 						AfterTrans (nextModel);
 					}
 					else if (operation.Equals ("YZ Plane")) {
 						nextModel = SymYZ (curModel);
+						logObject.GetComponent<TransformLimitationLog> ().LogDetail ("SymYZ");
 						AfterTrans (nextModel);
 					}
 					else {  // undo
+						logObject.GetComponent<TransformLimitationLog> ().LogDetail ("Undo");
 						curModel = lastModel;
 						restStep += 1;
 						text.text = " Rest Steps: " + restStep;
@@ -367,6 +376,7 @@ public class Controller : MonoBehaviour {
 		text.text = "You Win!";
 		controllerObject.SetActive(false);
 		notationController.SetActive(false);
+		logObject.GetComponent<TransformLimitationLog> ().RecordResult (true);
 		DataUtil.UnlockCurrentRoom();
 	}
 
@@ -375,6 +385,7 @@ public class Controller : MonoBehaviour {
 		controllerObject.SetActive(false);
 		notationController.SetActive(false);
 		retryButton.SetActive (true);
+		logObject.GetComponent<TransformLimitationLog> ().RecordResult (false);
 
 	}
 		
