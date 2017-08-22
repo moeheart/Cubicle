@@ -5,8 +5,8 @@ public static class CSGUtil {
     public static GameObject Subtract(GameObject a, GameObject b, Material material = null) {
         Mesh m = CSG.Subtract(a,b);
 		GameObject composite = new GameObject();
-		composite.AddComponent<MeshFilter>().mesh = m;
-		composite.AddComponent<MeshRenderer>().material = material;
+		composite.AddComponent<MeshFilter>().sharedMesh = m;
+		composite.AddComponent<MeshRenderer>().sharedMaterial = material;
         composite.AddComponent<MeshCollider>().sharedMesh = m;
         composite.AddComponent<ObjectBehaviors>();
         return composite;
@@ -14,8 +14,8 @@ public static class CSGUtil {
     public static GameObject Intersect(GameObject a, GameObject b, Material material = null) {
         Mesh m = CSG.Intersect(a,b);
 		GameObject composite = new GameObject();
-		composite.AddComponent<MeshFilter>().mesh = m;
-		composite.AddComponent<MeshRenderer>().material = material;
+		composite.AddComponent<MeshFilter>().sharedMesh = m;
+		composite.AddComponent<MeshRenderer>().sharedMaterial = material;
         composite.AddComponent<MeshCollider>().sharedMesh = m;
         composite.AddComponent<ObjectBehaviors>();
         return composite;
@@ -23,8 +23,8 @@ public static class CSGUtil {
     public static GameObject Union(GameObject a, GameObject b, Material material = null) {
         Mesh m = CSG.Union(a,b);
 		GameObject composite = new GameObject();
-		composite.AddComponent<MeshFilter>().mesh = m;
-		composite.AddComponent<MeshRenderer>().material = material;
+		composite.AddComponent<MeshFilter>().sharedMesh = m;
+		composite.AddComponent<MeshRenderer>().sharedMaterial = material;
         composite.AddComponent<MeshCollider>().sharedMesh = m;
         composite.AddComponent<ObjectBehaviors>();
         return composite;
