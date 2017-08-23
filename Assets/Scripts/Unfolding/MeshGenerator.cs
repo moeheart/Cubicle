@@ -1,15 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System.IO;
 using Container;
 
 public class MeshGenerator : MonoBehaviour {
+
+    public RawImage goalImage;
 
     MeshFilter mf;
     Mesh mesh;
 
     Data data;
     string JsonFilePath = "Assets/Scripts/Unfolding/Json/model.json";
+    public string path { get; private set; }
+    private string path1 = "Assets/Resources/Unfolding/_Results/Level";
+    private string path2 = ".png";
+
+    public Material EasyLevelMaterial;
+    public Material MiddleLevelMaterial;
+
     public int CurrentLevel {get; private set;}
 
     public Model model;
@@ -533,8 +544,6 @@ public class MeshGenerator : MonoBehaviour {
 
     public void StartUnfolding(int FaceIndex, Quaternion rotation, Vector3 _StartNormal, Vector3 _TargetNormal, Vector3 startingPoint, Vector3 endingPoint)
     {
-        
-
         /*int offset = model.faces[FaceIndex].offset;
         int vertexSize = model.faces[FaceIndex].vertices.ToArray().Length;
         for (int i = 0; i < vertexSize; i++)
@@ -656,6 +665,25 @@ public class MeshGenerator : MonoBehaviour {
         mesh.uv = uvs.ToArray();
 
         CreateLines();
+
+        // Reload a material uv image
+        LoadMaterialByLevel(CurrentLevel);
+
+        // Reload a new goal image.
+        path = path1 + CurrentLevel + path2;
+        Texture2D newTexture = new Texture2D(250,125);
+        byte[] ImageBytes = File.ReadAllBytes(path);
+        newTexture.LoadImage(ImageBytes);
+
+        goalImage.texture = newTexture;
+    }
+
+    private void LoadMaterialByLevel(int _level)
+    {
+        if (_level <= 2)
+            gameObject.GetComponent<MeshRenderer>().material = EasyLevelMaterial;
+        else
+            gameObject.GetComponent<MeshRenderer>().material = MiddleLevelMaterial;
     }
 
     public void AddDashedLineMidpoints(Vector3 _Midpoint)

@@ -14,8 +14,13 @@ public class PlayerControl : MonoBehaviour {
     public GameObject WinCanvas;
     public GameObject LoseCanvas;
     public GameObject UserCanvas;
+    LogTool logtool;
 
-    private string path = "Assets/Resources/Unfolding/_Results/Level3.txt";
+    private string path;
+    private string path1 = "Assets/Resources/Unfolding/_Results/Level";
+    private string path2 = ".txt";
+
+    private List<int> FinalLevelofStage = new List<int> { 2, 4, 6 };
 
     [HideInInspector]
     public bool unfolding = false;
@@ -34,6 +39,8 @@ public class PlayerControl : MonoBehaviour {
         LoseCanvas.SetActive(false);
         
         WaitingLines = new List<Vector3>();
+        logtool = GetComponent<LogTool>();
+        path = path1 + meshGenerator.CurrentLevel + path2;
     }
 	
 	// Update is called once per frame
@@ -69,6 +76,7 @@ public class PlayerControl : MonoBehaviour {
                 
                 ClickAtLine(midPoint);
 
+                logtool.LineClick(startingPoint, endingPoint);
                 PreviousStartingPoint = startingPoint;
                 PreviousEndingPoint = endingPoint;
             }
@@ -82,6 +90,7 @@ public class PlayerControl : MonoBehaviour {
             if(PreviousStartingPoint != Vector3.zero || PreviousEndingPoint != Vector3.zero)
             {
                 meshGenerator.ReCreateLine(PreviousStartingPoint, PreviousEndingPoint);
+                logtool.LineRevert(PreviousStartingPoint, PreviousEndingPoint);
             }
 
             PreviousStartingPoint = Vector3.zero;
@@ -250,6 +259,9 @@ public class PlayerControl : MonoBehaviour {
         Debug.Log("Your grade is: " + grade);
         UserCanvas.SetActive(false);
 
+        logtool.Submit(grade);
+        logtool.SaveLog();
+
         if (grade == 100)
         {
             WinCanvas.SetActive(true);
@@ -268,6 +280,7 @@ public class PlayerControl : MonoBehaviour {
         float TotalGrade = 0;
         float CurrentGrade = 0;
 
+        path = path1 + meshGenerator.CurrentLevel + path2;
         StreamReader reader = new StreamReader(path, false);
         char[] delimiterChars = { ';' };
 
@@ -313,6 +326,7 @@ public class PlayerControl : MonoBehaviour {
 
     public void SaveResult()
     {
+        path = path1 + meshGenerator.CurrentLevel + path2;
         StreamWriter writer = new StreamWriter(path, false);
 
         int NumofFaces = meshGenerator.NumofFaces;
@@ -341,4 +355,19 @@ public class PlayerControl : MonoBehaviour {
         UserCanvas.SetActive(true);
     }
     
+    public void Proceed()
+    {
+        int currentLevel = meshGenerator.CurrentLevel;
+        if (FinalLevelofStage.Contains(currentLevel))
+        {
+            SceneManager.LoadScene("World Scene");
+        }
+        else
+        {
+            WinCanvas.SetActive(false);
+            UserCanvas.SetActive(true);
+            meshGenerator.ReGenerate(++currentLevel);
+        }
+    }
+
 }

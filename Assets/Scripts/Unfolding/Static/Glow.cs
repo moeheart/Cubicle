@@ -41,6 +41,7 @@ public class Glow : MonoBehaviour
     public void ChangeToDashedLine()
     {
         transform.GetComponent<Renderer>().material = DashedLineMaterial;
+        //transform.GetComponent<LineRenderer>().SetWidth(1,1);
         clicked = true;
     }
 }

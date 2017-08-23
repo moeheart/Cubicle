@@ -1,20 +1,22 @@
 Face 0 contains:
-3;2;1;4;4;
+2;
 Face 1 contains:
-5;0;
+8;3;
 Face 2 contains:
-0;
+3;0;4;9;9;
 Face 3 contains:
-0;
+1;2;
 Face 4 contains:
-6;0;0;
+7;2;
 Face 5 contains:
-1;
+6;
 Face 6 contains:
-9;4;
+5;9;
 Face 7 contains:
-8;
+10;4;
 Face 8 contains:
-7;9;
+1;
 Face 9 contains:
-8;6;
+6;2;2;
+Face 10 contains:
+7;

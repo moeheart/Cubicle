@@ -1,0 +1,12 @@
+Type: ClickLine, Line: (0,2,1:1,2,1), Time: 8/23/2017 5:14:48 PM
+Type: ClickLine, Line: (0,2,0:0,2,1), Time: 8/23/2017 5:14:49 PM
+Type: ClickLine, Line: (1,2,0:1,2,1), Time: 8/23/2017 5:14:50 PM
+Type: ClickLine, Line: (0,0,1:0,2,1), Time: 8/23/2017 5:14:56 PM
+Type: ClickLine, Line: (0,0,0:0,2,0), Time: 8/23/2017 5:14:57 PM
+Type: ClickLine, Line: (1,1,0:1,2,0), Time: 8/23/2017 5:15:03 PM
+Type: Stepback, Line: (1,1,0:1,2,0), Time: 8/23/2017 5:15:04 PM
+Type: Submit, Score: 20, Time: 8/23/2017 5:15:06 PM
+Type: Submit, Score: 0, Time: 8/23/2017 5:35:40 PM
+Type: Submit, Score: 0, Time: 8/23/2017 5:35:40 PM
+Type: Submit, Score: 0, Time: 8/23/2017 5:35:42 PM
+Type: Submit, Score: 0, Time: 8/23/2017 5:48:01 PM

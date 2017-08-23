@@ -90,12 +90,28 @@ public class TutorialBarControl : MonoBehaviour {
 
     }
 
+    private int GetLevelByRoomid(int _roomid)
+    {
+        int level = 0;
+
+        if (_roomid == 9)
+            level = 1;
+        if (_roomid == 10)
+            level = 3;
+        if (_roomid == 11)
+            level = 4;
+
+        return level;
+    }
+
     IEnumerator WaitAndJump()
     {
         yield return new WaitForSeconds(3.0f);
         TutorialCanvas.SetActive(false);
         UserCanvas.SetActive(true);
         gameObj.SetActive(true);
-        meshgenerator.ReGenerate(1);
+        int roomid = DataUtil.GetCurrentRoomId();
+        int Level = GetLevelByRoomid(roomid);
+        meshgenerator.ReGenerate(Level);
     }
 }
