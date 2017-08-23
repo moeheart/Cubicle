@@ -86,6 +86,7 @@ public class MeshGenerator : MonoBehaviour {
         mesh.vertices = vertices.ToArray();
         mesh.normals = normals.ToArray();
         mesh.triangles = triangles.ToArray();
+        mesh.uv = uvs.ToArray();
 
         CreateLines();    
     }
@@ -216,7 +217,7 @@ public class MeshGenerator : MonoBehaviour {
             Debug.LogError("Information of the model is missing!");
         }
         else {
-            NumofFaces = data.Faces[0];
+            NumofFaces = (int)data.Faces[0];
             int ptr = 1;
             int offset = 0;
             for(int i = 0; i < NumofFaces * 2; i++)
@@ -226,13 +227,13 @@ public class MeshGenerator : MonoBehaviour {
 
                 Face newFace = FaceInit();
 
-                int NumofVertices = data.Faces[ptr++];
-                int NumofTriangles = data.Faces[ptr++];
+                int NumofVertices = (int)data.Faces[ptr++];
+                int NumofTriangles = (int)data.Faces[ptr++];
                 Vector3 normal = new Vector3();
                 if (i < NumofFaces)
-                    normal = GetNormalByNum(data.Faces[ptr++]);
+                    normal = GetNormalByNum((int)data.Faces[ptr++]);
                 else
-                    normal = GetReverseNormalByNum(data.Faces[ptr++]);
+                    normal = GetReverseNormalByNum((int)data.Faces[ptr++]);
 
                 for (int j = 0; j < NumofVertices; j++)
                 {
@@ -244,12 +245,15 @@ public class MeshGenerator : MonoBehaviour {
 
                     newFace.normals.Add(normal);
                     normals.Add(normal);
+
+                    Vector2 uv = new Vector2(data.Faces[ptr++], data.Faces[ptr++]);
+                    uvs.Add(uv);
                 }
                 for(int k = 0; k < NumofTriangles; k++)
                 {
-                    int triangleNode1 = data.Faces[ptr++] + offset;
-                    int triangleNode2 = data.Faces[ptr++] + offset;
-                    int triangleNode3 = data.Faces[ptr++] + offset;
+                    int triangleNode1 = (int)data.Faces[ptr++] + offset;
+                    int triangleNode2 = (int)data.Faces[ptr++] + offset;
+                    int triangleNode3 = (int)data.Faces[ptr++] + offset;
 
                     if (i < NumofFaces)
                     {
@@ -374,7 +378,8 @@ public class MeshGenerator : MonoBehaviour {
         currentLineObj.tag = "Line";
 
         LineRenderer currentRenderer = currentLineObj.AddComponent<LineRenderer>();
-
+        currentRenderer.textureMode = LineTextureMode.Tile;
+        
         //currentRenderer.sortingLayerName = "Foreground";
 
         currentRenderer.material = LineMaterial;
@@ -583,6 +588,7 @@ public class MeshGenerator : MonoBehaviour {
         mesh.vertices = vertices.ToArray();
         mesh.normals = normals.ToArray();
         mesh.triangles = triangles.ToArray();
+        mesh.uv = uvs.ToArray();
 
         CreateLines();
     }

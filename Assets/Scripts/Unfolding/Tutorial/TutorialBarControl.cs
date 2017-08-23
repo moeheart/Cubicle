@@ -96,6 +96,6 @@ public class TutorialBarControl : MonoBehaviour {
         TutorialCanvas.SetActive(false);
         UserCanvas.SetActive(true);
         gameObj.SetActive(true);
-        meshgenerator.ReGenerate(3);
+        meshgenerator.ReGenerate(1);
     }
 }

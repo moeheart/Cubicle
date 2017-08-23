@@ -230,7 +230,7 @@ public class PlayerControl : MonoBehaviour {
         Debug.Log("Your grade is: " + grade);
         UserCanvas.SetActive(false);
 
-        if (grade == 1)
+        if (grade == 100)
         {
             WinCanvas.SetActive(true);
             WinScoreManager.SetScore(grade);
