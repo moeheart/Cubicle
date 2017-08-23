@@ -5,7 +5,7 @@ using UnityEngine;
 public class Easy : ActiveObjControl {
 
 	void Awake(){
-		
+		RevSolidGameInfo.MaxPanelNum=1;
 	}
 	// Use this for initialization
 	void Start () {

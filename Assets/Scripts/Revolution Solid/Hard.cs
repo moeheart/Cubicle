@@ -7,7 +7,7 @@ public class Hard : ActiveObjControl {
 	static float forbiddenRadius=2.0f; 
 	static float PitfallWarningRadius=3.0f;
 	void Awake(){
-		
+		RevSolidGameInfo.MaxPanelNum=4;
 	}
 	// Use this for initialization
 	void Start () {

@@ -14,7 +14,7 @@ public class ActiveObjControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake(){
-		
+		CheckLevelAndAddScript();
 	}
 
 	void Start () {
@@ -23,16 +23,17 @@ public class ActiveObjControl : MonoBehaviour {
 		ActivateObjects ();
 		StartCoroutine("RecoverObjects");
 
-		CheckLevelAndAddScript();
-
 	}
 
 	void CheckLevelAndAddScript(){
 		RevSolidGameInfo.levelOfDifficulty = (SceneManager.GetActiveScene().name == "Easy") ? 0 : 1;
 		if (RevSolidGameInfo.levelOfDifficulty == 0) {
 			Camera.main.gameObject.AddComponent <Easy>();
+
+				
 		} else if (RevSolidGameInfo.levelOfDifficulty == 1) {
 			Camera.main.gameObject.AddComponent <Hard>();
+
 		}
 	}
 	

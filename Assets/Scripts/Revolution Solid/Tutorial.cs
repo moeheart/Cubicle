@@ -14,7 +14,7 @@ public class Tutorial : MonoBehaviour {
 		isTutorialModeOn = true;
 		isPitfallWarningDone = false;
 
-		axisPrefab = GameObject.Find ("axisPrefab");
+		axisPrefab =Resources.Load ("axisPrefab") as GameObject;
 	}
 	// Use this for initialization
 	void Start () {

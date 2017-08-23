@@ -16,17 +16,12 @@ public class RevSolidGameInfo : MonoBehaviour {
 	public static int MaxPolygonNum=12;
 	public static int MaxPanelNum;
 
-	public static int levelOfDifficulty=0;//0,1
+	public static int levelOfDifficulty;//0,1
 
 	// Use this for initialization
 	void Awake () {
 		hit = 0;
 		falseStrokeCount = 0;
-		if (RevSolidGameInfo.levelOfDifficulty == 0) {
-			MaxPanelNum=1;
-		} else if (RevSolidGameInfo.levelOfDifficulty == 1){
-			MaxPanelNum=4;
-		}
 	}
 	
 	// Update is called once per frame
