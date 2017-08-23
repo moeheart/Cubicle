@@ -18,11 +18,11 @@ public class Hard : ActiveObjControl {
 	
 	// Update is called once per frame
 	void Update () {
-		if (objectBehaviour != null) {
-			for (int i = 0; i < activeObjects.Count; i++) {
+		for (int i = 0; i < activeObjects.Count; i++) {
+			if (objectBehaviour != null) {
 				objectBehaviour (i);
-				FadeInOrOut (i);
 			}
+			FadeInOrOut (i);
 		}
 	}
 

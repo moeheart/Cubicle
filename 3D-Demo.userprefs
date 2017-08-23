@@ -1,21 +1,17 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-<<<<<<< HEAD
-<<<<<<< HEAD
-  <MonoDevelop.Ide.Workbench />
-=======
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Transform Limitation/Controller.cs">
-=======
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/View Point/Generation.cs">
->>>>>>> upstream/master
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Revolution Solid\ActiveObjControl.cs">
     <Files>
-      <File FileName="Assets/Scripts/View Point/Generation.cs" Line="57" Column="5" />
-      <File FileName="Assets/Scripts/Transform Limitation/ModelGeneration.cs" Line="60" Column="54" />
-      <File FileName="Assets/Scripts/Json/Puzzles.json" Line="75" Column="16" />
-      <File FileName="Assets/Logs/View Point/_ViewPointLogs.txt" Line="8" Column="65" />
+      <File FileName="Assets\Scripts\Revolution Solid\AxisDrawing.cs" Line="228" Column="108" />
+      <File FileName="Assets\Scripts\Revolution Solid\RevSolidGameInfo.cs" Line="65" Column="3" />
+      <File FileName="Assets\Scripts\Revolution Solid\Tutorial.cs" Line="38" Column="29" />
+      <File FileName="Assets\Scripts\Revolution Solid\ActiveObject.cs" Line="68" Column="4" />
+      <File FileName="Assets\Scripts\Revolution Solid\ActiveObjControl.cs" Line="38" Column="44" />
+      <File FileName="Assets\Scripts\Revolution Solid\Easy.cs" Line="37" Column="1" />
+      <File FileName="Assets\Scripts\Revolution Solid\Hard.cs" Line="61" Column="11" />
+      <File FileName="Assets\Scripts\Revolution Solid\RevSolidUIControl.cs" Line="78" Column="13" />
     </Files>
   </MonoDevelop.Ide.Workbench>
->>>>>>> upstream/master
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

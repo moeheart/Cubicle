@@ -39,9 +39,8 @@ public class RevSolidGameInfo : MonoBehaviour {
 		return hit;
 	}
 
-	public static int Add2FalseStrokeCount (int scoreAdded){
+	public static void Add2FalseStrokeCount (int scoreAdded){
 		falseStrokeCount+=scoreAdded;
-		return falseStrokeCount;
 	}
 		
 	public static void CheckEndOfGame(){

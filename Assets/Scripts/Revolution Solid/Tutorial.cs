@@ -96,4 +96,10 @@ public class Tutorial : MonoBehaviour {
 			isPitfallWarningDone = true;
 		}
 	}
+
+	public static void IndicateKeyUsage(){
+		if (isTutorialModeOn) {
+			RevSolidUIControl.SetTutorialMessage ("Press SPACE key anytime to freeze solid.");
+		}
+	}
 }

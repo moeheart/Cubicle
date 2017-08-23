@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ActiveObject : MonoBehaviour {
 	//constant
-	public int panelIndex;
+	int panelIndex;
 	public Image image;
 
 	//alterable
@@ -14,11 +14,11 @@ public class ActiveObject : MonoBehaviour {
 	public GameObject gameObject;
 	public float alphaScale;
 
-	public Vector3 initialPos;
+	Vector3 initialPos;
 	public float speed;
 	float refreshTime;
 	float endingTime;
-	float reactionTime;
+	public float reactionTime;
 
 	public ActiveObject(int newPanelIndex,int newPolygonIndex){
 		
@@ -67,10 +67,18 @@ public class ActiveObject : MonoBehaviour {
 			reactionTime = Time.time - refreshTime;
 
 			if (RevSolidGameInfo.levelOfDifficulty == 0) {
-				if (reactionTime >= 5.0f) {
-					this.isKilled = true;
-				}
+				RespondToReactionTime ();
 			}
+		}
+	}
+
+	public void RespondToReactionTime(){
+		if (reactionTime >= 5.0f) {
+			isKilled = true;
+			RevSolidGameInfo.Add2FalseStrokeCount (1);
+			RevSolidUIControl.RefreshBroadcasts ();
+		} else if (reactionTime >= 3.0f) {
+			Tutorial.IndicateKeyUsage ();
 		}
 	}
 

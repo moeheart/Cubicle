@@ -15,16 +15,16 @@ public class Easy : ActiveObjControl {
 	
 	// Update is called once per frame
 	void Update () {
-		RotateSwitchByClick ();
-		if (objectBehaviour != null) {
-			for (int i = 0; i < activeObjects.Count; i++) {
+		SwitchRotationByKey ();
+		for (int i = 0; i < activeObjects.Count; i++) {
+			if (objectBehaviour != null) {
 				objectBehaviour (i);
-				FadeInOrOut (i);
 			}
+			FadeInOrOut (i);
 		}
 	}
 
-	void RotateSwitchByClick(){
+	void SwitchRotationByKey(){
 		if (Input.GetKeyDown("space")) {
 			if (objectBehaviour != null) {
 				objectBehaviour -= Rotate;

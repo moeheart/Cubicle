@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ActiveObjControl : MonoBehaviour {
 
@@ -22,13 +23,17 @@ public class ActiveObjControl : MonoBehaviour {
 		ActivateObjects ();
 		StartCoroutine("RecoverObjects");
 
-		//polygonBehaviour += FadeInOrOut;
+		CheckLevelAndAddScript();
+
+	}
+
+	void CheckLevelAndAddScript(){
+		RevSolidGameInfo.levelOfDifficulty = (SceneManager.GetActiveScene().name == "Easy") ? 0 : 1;
 		if (RevSolidGameInfo.levelOfDifficulty == 0) {
 			Camera.main.gameObject.AddComponent <Easy>();
 		} else if (RevSolidGameInfo.levelOfDifficulty == 1) {
 			Camera.main.gameObject.AddComponent <Hard>();
 		}
-
 	}
 	
 	// Update is called once per frame
