@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class ObjectBehaviors : MonoBehaviour {
+public class CSGSceneObj : CSGObject {
 
-	public bool isSelected;
+	private bool isSelected {get; set;}
 
 	// Use this for initialization
 	void Start () {
@@ -67,11 +67,11 @@ public class ObjectBehaviors : MonoBehaviour {
 		*/
 	}
 
-	public void OnMouseOver() {
+	/*public void OnMouseOver() {
 		if (Input.GetMouseButtonDown(0)) {
 			CSGManager.objectsManager.OnGameObjectClick(this.gameObject);
 		}
-	}
+	}*/
 
 	public void GenerateBarycentric()
 	{

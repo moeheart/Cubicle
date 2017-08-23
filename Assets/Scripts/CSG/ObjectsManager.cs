@@ -1,9 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Parabox.CSG;
 
 public class ObjectsManager : MonoBehaviour {
+	public CSGSceneObj CSGObjectPrefab;
+	public CSGSceneObj CSGCube, CSGSphere, CSGCylinder;
+
+	public void LoadGameObjects() {
+	}
+}
+
+/*public class ObjectsManager : MonoBehaviour {
 
 	public Material opAMaterial, opBMaterial;
 	public Material defaultMaterial;
@@ -29,10 +36,12 @@ public class ObjectsManager : MonoBehaviour {
 		obj2.transform.parent = this.transform;
 		obj1.transform.localPosition = new Vector3(-3,-3,0);
 		obj2.transform.localPosition = new Vector3(-3,3,0);
+		obj1.AddComponent<CSGObject>();
+		obj2.AddComponent<CSGObject>();
 		obj1.AddComponent<ObjectBehaviors>();
 		obj2.AddComponent<ObjectBehaviors>();
-		obj1.GetComponent<MeshRenderer>().material = wireframeMaterial;
-		obj2.GetComponent<MeshRenderer>().material = wireframeMaterial;
+		//obj1.GetComponent<MeshRenderer>().material = wireframeMaterial;
+		//obj2.GetComponent<MeshRenderer>().material = wireframeMaterial;
 		obj2.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
 		gameObjects.Add(obj1);
 		gameObjects.Add(obj2);
@@ -128,7 +137,20 @@ public class ObjectsManager : MonoBehaviour {
 			if (opA == null || opB == null) {
 				return;
 			}
-			GameObject composite = CSGUtil.Subtract(opA, opB, defaultMaterial);
+
+			CSGObject obj = opA.GetComponent<CSGObject>();
+			GameObject[] slaves = new GameObject[2] {opA, opB};
+			Destroy(opB);
+			obj.PerformCSG(CsgOperation.ECsgOperation.CsgOper_Subtractive, slaves);
+			Destroy(opA.GetComponent<Collider>());
+
+			GameObject union = Instantiate(opA) as GameObject;
+			CSGObject unionCSG = union.AddComponent<CSGObject>();
+			slaves = new GameObject[2] {union, target};
+			unionCSG.PerformCSG(CsgOperation.ECsgOperation.CsgOper_Additive, slaves);
+			Debug.Log(CSGUtil.VolumeOfMesh(union.GetComponent<MeshFilter>().mesh));
+
+			/*GameObject composite = CSGUtil.Subtract(opA, opB, defaultMaterial);
 			composite.name = "(" + opA.name + ") - (" + opB.name + ")";
 			gameObjects.Remove(opA);
 			gameObjects.Remove(opB);
@@ -142,18 +164,18 @@ public class ObjectsManager : MonoBehaviour {
 			Debug.Log("your volume: " + CSGUtil.VolumeOfMesh(m));
 			Mesh m1 = CSG.Subtract(target, composite);
 			Mesh m2 = CSG.Subtract(composite, target);
-			GameObject g1 = CSGUtil.Subtract(target, composite, wireframeMaterial);
-			GameObject g2 = CSGUtil.Subtract(composite, target, wireframeMaterial);
-			g1.transform.localPosition = new Vector3(-2,0,0);
-			g2.transform.localPosition = new Vector3(2,0,0);
-			g1.AddComponent<ObjectBehaviors>().GenerateBarycentric();
-			g2.AddComponent<ObjectBehaviors>().GenerateBarycentric();
+			//GameObject g1 = CSGUtil.Subtract(target, composite, wireframeMaterial);
+			//GameObject g2 = CSGUtil.Subtract(composite, target, wireframeMaterial);
+			//g1.transform.localPosition = new Vector3(-2,0,0);
+			//g2.transform.localPosition = new Vector3(2,0,0);
+			//g1.AddComponent<ObjectBehaviors>().GenerateBarycentric();
+			//g2.AddComponent<ObjectBehaviors>().GenerateBarycentric();
 			Debug.Log("union volume: " + CSGUtil.VolumeOfMesh(m1));
 			Debug.Log("intersection volume: " + CSGUtil.VolumeOfMesh(m2));
 			if (CSGUtil.VolumeOfMesh(m1) - CSGUtil.VolumeOfMesh(m2) < 1e-2) {
 				Debug.Log("You completed the level..!!");
-			}
-		}	
+			}*/
+/*		}	
 	}
 
 	public void OnGameObjectClick(GameObject gameObject) {
@@ -199,4 +221,4 @@ public class ObjectsManager : MonoBehaviour {
 		gameObject.GetComponent<MeshRenderer>().material.color = color;
 	}
 
-}
+}*/

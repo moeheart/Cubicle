@@ -1,6 +1,17 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+<<<<<<< HEAD
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Revolution Solid\AxisDrawing.cs">
+=======
+<<<<<<< HEAD
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/View Point/Generation.cs">
+=======
+<<<<<<< HEAD
+  <MonoDevelop.Ide.Workbench />
+=======
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Transform Limitation/Controller.cs">
+>>>>>>> e41ccece7dce95f0536fe343b79c2dca683c74ba
+>>>>>>> upstream/master
     <Files>
       <File FileName="Assets\Scripts\Revolution Solid\AxisDrawing.cs" Line="156" Column="53" />
       <File FileName="Assets\Scripts\Revolution Solid\RevSolidGameInfo.cs" Line="1" Column="1" />
