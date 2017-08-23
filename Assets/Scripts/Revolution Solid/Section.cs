@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class Section : MonoBehaviour {
+public class Section {
 
 	public Sprite imgSprite;
 	public Sprite tutorialSprite;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PostEffects : MonoBehaviour {
 
 	public BrightnessSaturationAndContrast bscCamera;
-	public Camera camera;
+	public Camera camera = new Camera();
 	public GameInfo gameInfo;
 	float initialSaturation;
 	float initialGreenValue;

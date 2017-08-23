@@ -48,18 +48,13 @@ public class ActiveObjControl : MonoBehaviour {
 	void InitPolygon(){
 		revSolids = new List<RevSolid> ();//constructor
 		for (int i = 0; i < RevSolidGameInfo.MaxPolygonNum; i++) {
-			if (i < RevSolidGameInfo.MaxPanelNum) {
-				revSolids.Add (new RevSolid (i));
-			} else {
-				revSolids.Add (new RevSolid (i));
-			}
+			revSolids.Add (new RevSolid (i));
 		}
 	}
 
 	void ActivateObjects(){
 		activeObjects = new List<ActiveObject> ();//constructor
 		for (int i=0;i <RevSolidGameInfo.MaxPanelNum;i++) {
-			Debug.Log (i);
 			activeObjects.Add (new ActiveObject (i,i));
 			//yield return new WaitForSeconds (2);
 		}

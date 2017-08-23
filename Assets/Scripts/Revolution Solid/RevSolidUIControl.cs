@@ -34,7 +34,7 @@ public class RevSolidUIControl : RevSolidGameInfo {
 		
 	}
 
-	public static void BroadcastMessage (string message){
+	public static void BroadcastMsg (string message){
 		broadcast.text = message;
 	}
 

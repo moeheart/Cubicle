@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RevSolid : MonoBehaviour {
+public class RevSolid {
 	public GameObject gameObject;
 	public int index;
 	private Material mat;

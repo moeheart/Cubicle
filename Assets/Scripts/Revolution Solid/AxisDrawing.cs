@@ -81,7 +81,8 @@ public class AxisDrawing: ResponseProcessing {
 
 	void InitAxis(){ 
 		line = GameObject.Instantiate (linePrefab, linePrefab.transform.position, transform.rotation).GetComponent<LineRenderer> ();
-		line.SetWidth (0.05f, 0.15f);
+		line.startWidth = 0.05f;
+		line.endWidth = 0.15f;
 		vertexCount = 0;
 		alphaScale = 1.0f;
 		isLineInstantiated = true;
@@ -110,28 +111,28 @@ public class AxisDrawing: ResponseProcessing {
 	void DisplayScore(int bestMatchCand){
 		switch(bestMatchCand) {
 		case -1:
-			RevSolidUIControl.BroadcastMessage("fantastic!");
+			RevSolidUIControl.BroadcastMsg("fantastic!");
 			break;
 		case 0:
-			RevSolidUIControl.BroadcastMessage("left edge is not the correct axis");
+			RevSolidUIControl.BroadcastMsg("left edge is not the correct axis");
 			break;
 		case 1:
-			RevSolidUIControl.BroadcastMessage("right edge is not the correct axis");
+			RevSolidUIControl.BroadcastMsg("right edge is not the correct axis");
 			break;
 		case 2:
-			RevSolidUIControl.BroadcastMessage("bottom edge is not the correct axis");
+			RevSolidUIControl.BroadcastMsg("bottom edge is not the correct axis");
 			break;
 		case 3:
-			RevSolidUIControl.BroadcastMessage("top edge is not the correct axis");
+			RevSolidUIControl.BroadcastMsg("top edge is not the correct axis");
 			break;
 		case 4:
-			RevSolidUIControl.BroadcastMessage("diagonal / is not the correct axis");
+			RevSolidUIControl.BroadcastMsg("diagonal / is not the correct axis");
 			break;
 		case 5:
-			RevSolidUIControl.BroadcastMessage("diagonal \\ is not the correct axis");
+			RevSolidUIControl.BroadcastMsg("diagonal \\ is not the correct axis");
 			break;
 		default:
-			RevSolidUIControl.BroadcastMessage("try again!");
+			RevSolidUIControl.BroadcastMsg("try again!");
 			break;
 		}
 	}
