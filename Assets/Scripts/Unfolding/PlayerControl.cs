@@ -24,6 +24,9 @@ public class PlayerControl : MonoBehaviour {
 
     List<Vector3> WaitingLines;
 
+    Vector3 PreviousStartingPoint;
+    Vector3 PreviousEndingPoint;
+
     // Use this for initialization
     void Start () {
         //TargetPositions = new List<Vector3>();
@@ -63,10 +66,27 @@ public class PlayerControl : MonoBehaviour {
 
                 Vector3 midPoint = (startingPoint + endingPoint) / 2;
                 //Debug.Log(midPoint);
-
+                
                 ClickAtLine(midPoint);
+
+                PreviousStartingPoint = startingPoint;
+                PreviousEndingPoint = endingPoint;
             }
         }
+    }
+
+    public void StepBack()
+    {
+        if (!unfolding)
+        {
+            if(PreviousStartingPoint != Vector3.zero || PreviousEndingPoint != Vector3.zero)
+            {
+                meshGenerator.ReCreateLine(PreviousStartingPoint, PreviousEndingPoint);
+            }
+
+            PreviousStartingPoint = Vector3.zero;
+            PreviousEndingPoint = Vector3.zero;
+        }   
     }
 
     private void ClickAtLine(Vector3 midPoint)

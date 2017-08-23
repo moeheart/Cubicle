@@ -141,17 +141,7 @@ public class MeshGenerator : MonoBehaviour {
 
                 player.unfolding = false;
                 smoothPassedTime = 0f;
-                UnfoldingFaces.Clear();
-                StartingVertices.Clear();
-                UnfoldingVertices.Clear();
-                StartingNormals.Clear();
-                UnfoldingNormals.Clear();
-                PivotPoints.Clear();
-
-                LinePivotPoints.Clear();
-                StartingLines.Clear();
-                EndingLines.Clear();
-                DashedLines.Clear();
+                ResetUnfoldingArrays();
             }
             else
             {
@@ -368,6 +358,64 @@ public class MeshGenerator : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// When we're stepping back and wanting to recreate a deleted line.
+    /// </summary>
+    public void ReCreateLine(Vector3 startingPoint, Vector3 endingPoint)
+    {
+        Vector3 midPoint = (startingPoint + endingPoint) / 2;
+
+        //Get two faces' indices of the selected line.
+        List<int> faceIndices = GetFaceIndicesOfLine(midPoint);
+        int faceA = faceIndices[0];
+        int faceB = faceIndices[1];
+
+        model.faces[faceA].linesMidpoints.Add((startingPoint + endingPoint) / 2);
+        model.faces[faceA].lineStartingPoint.Add(startingPoint);
+        model.faces[faceA].lineEndingPoint.Add(endingPoint);
+        model.faces[faceB].linesMidpoints.Add((startingPoint + endingPoint) / 2);
+        model.faces[faceB].lineStartingPoint.Add(startingPoint);
+        model.faces[faceB].lineEndingPoint.Add(endingPoint);
+
+
+        GameObject currentLineObj = new GameObject();
+        currentLineObj.transform.parent = this.transform;
+        currentLineObj.name = "Line";
+        currentLineObj.tag = "Line";
+
+        LineRenderer currentRenderer = currentLineObj.AddComponent<LineRenderer>();
+        currentRenderer.textureMode = LineTextureMode.Tile;
+
+        //currentRenderer.sortingLayerName = "Foreground";
+
+        currentRenderer.material = LineMaterial;
+        currentRenderer.positionCount = vertexCount;
+        currentRenderer.startColor = Color.red;
+        currentRenderer.endColor = Color.red;
+        currentRenderer.startWidth = lineWidth;
+        currentRenderer.endWidth = lineWidth;
+
+        currentRenderer.SetPosition(0, startingPoint);
+        currentRenderer.SetPosition(1, endingPoint);
+
+        /*MeshCollider meshCollider = currentLineObj.AddComponent<MeshCollider>();
+        meshCollider.sharedMesh = mesh;*/
+        currentLineObj.AddComponent<Glow>();
+        currentLineObj.GetComponent<Glow>().originalMaterial = LineMaterial;
+        currentLineObj.GetComponent<Glow>().DashedLineMaterial = DashedLineMaterial;
+
+        BoxCollider boxCollider = currentLineObj.AddComponent<BoxCollider>();
+        float lineLength = Vector3.Distance(startingPoint, endingPoint);
+
+        //TODO: This is buggy because lines may not be vertical or horizontal.
+        if (startingPoint.x != endingPoint.x)
+            boxCollider.size = new Vector3(lineLength, 0.1f, 0.1f);
+        if (startingPoint.y != endingPoint.y)
+            boxCollider.size = new Vector3(0.1f, lineLength, 0.1f);
+        if (startingPoint.z != endingPoint.z)
+            boxCollider.size = new Vector3(0.1f, 0.1f, lineLength);
+    }
+
     Line LineInit(Vector3 _vertexA, Vector3 _vertexB)
     {
         Line currentLine = new Line(_vertexA, _vertexB);
@@ -468,8 +516,25 @@ public class MeshGenerator : MonoBehaviour {
         return model.faces[index].normals[0];
     }
 
+    private void ResetUnfoldingArrays()
+    {
+        UnfoldingFaces.Clear();
+        StartingVertices.Clear();
+        UnfoldingVertices.Clear();
+        StartingNormals.Clear();
+        UnfoldingNormals.Clear();
+        PivotPoints.Clear();
+
+        LinePivotPoints.Clear();
+        StartingLines.Clear();
+        EndingLines.Clear();
+        DashedLines.Clear();
+    }
+
     public void StartUnfolding(int FaceIndex, Quaternion rotation, Vector3 _StartNormal, Vector3 _TargetNormal, Vector3 startingPoint, Vector3 endingPoint)
     {
+        
+
         /*int offset = model.faces[FaceIndex].offset;
         int vertexSize = model.faces[FaceIndex].vertices.ToArray().Length;
         for (int i = 0; i < vertexSize; i++)
