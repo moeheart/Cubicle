@@ -16,7 +16,7 @@ public class AxisDrawing: ResponseProcessing {
 
 	private Vector3 mousePos;
 
-	protected float sectionScale=0.2f;//depend on the gameObject empty
+	protected float sectionScale;
 
 	public static List<Section> sections;
 
@@ -25,6 +25,11 @@ public class AxisDrawing: ResponseProcessing {
 		isLineInstantiated = false;
 		InitSections ();
 		linePath = new List<Vector3> ();
+		if (RevSolidGameInfo.levelOfDifficulty == 0) {
+			sectionScale = 0.3f;
+		}else if(RevSolidGameInfo.levelOfDifficulty == 1){
+			sectionScale = 0.2f;
+		}
 	}
 
 	// Use this for initialization
@@ -145,6 +150,24 @@ public class AxisDrawing: ResponseProcessing {
 		}
 	}
 
+	public static void ReloadSectionsWithCandidateAxes(){
+		for(int i=0;i<RevSolidGameInfo.MaxPolygonNum;i++){
+			sections[i].imgSprite=Resources.Load<Sprite> ("section"+i.ToString()+"_a");
+		}
+		for(int i=0;i<RevSolidGameInfo.MaxPanelNum;i++){
+			ActiveObjControl.activeObjects[i].ChangeSpriteAccordingToSolid();
+		}
+	}
+
+	public static void RecoverOriginalSections(){
+		for(int i=0;i<RevSolidGameInfo.MaxPolygonNum;i++){
+			sections[i].imgSprite=Resources.Load<Sprite> ("section"+i.ToString());
+		}
+		for(int i=0;i<RevSolidGameInfo.MaxPanelNum;i++){
+			ActiveObjControl.activeObjects[i].ChangeSpriteAccordingToSolid();
+		}
+	}
+
 	public int BestMatchCandidate (List<Vector3> path,int panelIndex){
 		int bestMatchCandidateNo=-2;//refer to the correct one
 		int tempConvolution=0;
@@ -225,10 +248,9 @@ public class AxisDrawing: ResponseProcessing {
 		if (ActiveObjControl.activeObjects [sections[panelIndex].polygonIndex].isKilled == false) {
 			bestMatchCandNo = BestMatchCandidate (path, panelIndex);
 			if (bestMatchCandNo == -1) {
-				ActiveObjControl.activeObjects [sections [panelIndex].polygonIndex].isKilled = true;
-				ActiveObjControl.activeObjects [sections [panelIndex].polygonIndex].image.gameObject.SetActive (false);
 				RevSolidGameInfo.Add2TotalHit (1);
 				RevSolidUIControl.BroadcastHits ();
+				StartCoroutine (ShowAnswerAndDisableFormerQuestion(panelIndex));
 			} else {
 				RevSolidGameInfo.Add2FalseStrokeCount (1);
 				RevSolidUIControl.BroadcastFalseStrokeCount ();
@@ -236,6 +258,17 @@ public class AxisDrawing: ResponseProcessing {
 			}
 		}
 		return bestMatchCandNo;
+	}
+
+	IEnumerator ShowAnswerAndDisableFormerQuestion(int panelIndex){
+		Tutorial.IndicateAxisAndStroke (panelIndex);
+		yield return new WaitForSeconds (2.0f);
+
+		ActiveObjControl.activeObjects [sections [panelIndex].polygonIndex].isKilled = true;
+		ActiveObjControl.activeObjects [sections [panelIndex].polygonIndex].image.gameObject.SetActive (false);
+
+		Tutorial.CancelAnsIndication ();
+
 	}
 
 	int IdentifyPanelIndexOfStroke(Vector3 mid){

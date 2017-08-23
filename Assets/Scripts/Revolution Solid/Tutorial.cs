@@ -65,7 +65,7 @@ public class Tutorial : MonoBehaviour {
 			RevSolidUIControl.SetTutorialMessage("Here we show the revolution axis and corresponding stroke. Try it yourself!");
 			IndicateAxisAndStroke (panel);
 			RevSolidUIControl.ShowResponseButton ();
-			ActiveObjControl.activeObjects [panel].UseTutorialSpriteMatchingSolid ();
+
 		}
 	}
 
@@ -86,6 +86,8 @@ public class Tutorial : MonoBehaviour {
 		if (ActiveObjControl.activeObjects [panel].polygonIndex == 2) {
 			tempAxis.transform.localPosition= new Vector3(0,0,0.035f);
 		}
+
+		ActiveObjControl.activeObjects [panel].UseTutorialSpriteMatchingSolid ();
 	}
 		
 	public static void IndicatePitfalls (){

@@ -26,8 +26,8 @@ public class Section:MonoBehaviour {
 		InitCandidateKernels ();
 	}
 	public Section(int newPanelIndex,int corresPolygonIndex){
-		imgSprite = Resources.Load<Sprite> ("section"+newPanelIndex.ToString());//Find ("section"+newPanelIndex.ToString()).GetComponent<Image>().sprite;
-		tutorialSprite = Resources.Load<Sprite> ("section"+newPanelIndex.ToString()+"_t");//Find ("section"+newPanelIndex.ToString()+"_t").GetComponent<Image>().sprite;
+		imgSprite = Resources.Load<Sprite> ("section"+corresPolygonIndex.ToString());//Find ("section"+newPanelIndex.ToString()).GetComponent<Image>().sprite;
+		tutorialSprite = Resources.Load<Sprite> ("section"+corresPolygonIndex.ToString()+"_t");//Find ("section"+newPanelIndex.ToString()+"_t").GetComponent<Image>().sprite;
 
 		panelIndex = newPanelIndex;
 		polygonIndex = corresPolygonIndex;

@@ -11,6 +11,10 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	static Text tutorialText;
 	private static Button retryBtn;
 	private static Button responseBtn;
+	private static Button showAllBtn;
+	private static Text showAllSwitch;
+	private static bool isCandidateAxesShown = false;
+	private static string defaultString = "Try drawing on the left panel\nrevolution axis of the solid";
 	// Use this for initialization
 	void Awake() {
 		broadcast= GameObject.Find ("Text").GetComponent<Text> ();
@@ -27,6 +31,9 @@ public class RevSolidUIControl : RevSolidGameInfo {
 
 		tutorialText = GameObject.Find ("tutorialText").GetComponent<Text>();
 
+		showAllBtn = GameObject.Find ("showAllBtn").GetComponent<Button> ();
+		showAllBtn.onClick.AddListener (CandidateAxesSwitch);
+		showAllSwitch=GameObject.Find ("showAllSwitch").GetComponent<Text> ();
 	}
 
 	// Update is called once per frame
@@ -65,6 +72,7 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	public override void Retry(){
 		base.Retry ();
 		HideRetryButton ();
+		BroadcastMsg (defaultString);
 		RefreshBroadcasts ();
 		Time.timeScale = 1;
 
@@ -105,6 +113,25 @@ public class RevSolidUIControl : RevSolidGameInfo {
 
 	public static void SetTutorialMessage(string message){
 		tutorialText.text = message;
+	}
+
+	static void CandidateAxesSwitch(){
+		isCandidateAxesShown = !isCandidateAxesShown;
+		if (isCandidateAxesShown) {
+			showAllSwitch.text = "ON";
+			ShowCandidateAxes ();
+		} else {
+			showAllSwitch.text = "OFF";
+			HideCandidateAxes ();
+		}
+	}
+
+	static void ShowCandidateAxes(){
+		AxisDrawing.ReloadSectionsWithCandidateAxes ();
+	}
+
+	static void HideCandidateAxes(){
+		AxisDrawing.RecoverOriginalSections ();
 	}
 
 }
