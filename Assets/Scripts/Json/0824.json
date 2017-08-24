@@ -58,5 +58,35 @@
         "dimension": [ 1, 1, 1 ],
         "color": [ 0.2, 0.4, 0.6, 1 ],
         "puzzle type": "block builder"
+    },
+    "10" : {
+        "position" : [1,0,2],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "view point"
+    },
+    "11" : {
+        "position" : [2,0,0],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "plane exploration"
+    },
+    "12" : {
+        "position" : [2,0,1],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "transform limitation"
+    },
+    "13" : {
+        "position" : [0,-1,0],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "CSG"
+    },
+    "14" : {
+        "position" : [0,0,-1],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "Unfolding"
     }
 }
