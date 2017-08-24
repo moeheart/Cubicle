@@ -69,7 +69,7 @@ public class ActiveObject {
 		} else {
 			reactionTime = Time.time - refreshTime;
 
-			if (RevSolidGameInfo.GetLODByInt() == 2) {
+			if (RevSolidGameInfo.GetLODByInt() == 1) {
 				RespondToReactionTime ();
 			}
 		}

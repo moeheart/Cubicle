@@ -193,3 +193,43 @@ recordNo	timeStamp	trialNum	level	action	detail
 3	1.73998	1	1	grading	 for solid 4 on panelNo.0 is -2	
 
 shift from  to World Scene
+recordNo	timeStamp	trialNum	level	action	detail	
+
+1	1.575097	0	2	mouseDown		
+
+2	1.628741	0	1.5	mouseRelease		
+
+3	6.258403	1	1.5	mouseDown		
+
+4	6.342648	1	2	mouseRelease		
+
+shift from  to World Scene
+recordNo	timeStamp	trialNum	level	action	detail	
+
+1	7.3957	0	2	mouseDown		
+
+2	7.631641	0	2	grading	 for solid 11 on panelNo.0 is -2	
+
+3	7.631641	0	2	mouseRelease		
+
+4	7.631641	1	2	mouseDown		
+
+5	7.631641	1	2	mouseRelease		
+
+6	10.47915	2	2	mouseDown		
+
+7	10.54654	2	1.5	mouseRelease		
+
+8	13.25273	3	1.5	mouseDown		
+
+9	13.32023	3	2	mouseRelease		
+
+10	14.16258	4	2	mouseDown		
+
+11	14.16258	4	1.5	mouseRelease		
+
+12	14.16258	5	1.5	mouseDown		
+
+13	14.16258	5	1.5	mouseRelease		
+
+shift from  to World Scene

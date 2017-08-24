@@ -11,7 +11,8 @@ public class AxisDrawing: ResponseProcessing {
 	private int vertexCount;
 	public GameObject linePrefab;
 
-	protected static List<Vector3> linePath;
+	protected List<Vector3> linePath;
+	public static string pathStringToLog;
 
 	private float alphaScale;
 
@@ -104,11 +105,12 @@ public class AxisDrawing: ResponseProcessing {
 	}
 
 	void DestroyFreeStroke(){
+		pathStringToLog = GetPathString (linePath);
 		DestroyAxisObject ();
 		linePath.Clear ();
 	}
 
-	public static string GetPathString(){
+	string GetPathString(List<Vector3> linePath){
 		string pathString="";
 		for (int i = 0; i < linePath.Count; i++) {
 			pathString += linePath [i].x.ToString ();

@@ -70,7 +70,7 @@ public class RevSolidLog : MonoBehaviour {
 	} 
 
 	void RecordMouseUp(){
-		FormulateResult ("mouseRelease", AxisDrawing.GetPathString ());
+		FormulateResult ("mouseRelease", AxisDrawing.pathStringToLog);
 		AddToTrialNum ();
 	}
 

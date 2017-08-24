@@ -40,11 +40,9 @@ public class ActiveObjControl : MonoBehaviour {
 		RevSolidGameInfo.levelOfDifficulty = (SceneManager.GetActiveScene().name == "Easy") ? 1 : 2;
 		if (RevSolidGameInfo.GetLODByInt() == 1) {
 			Camera.main.gameObject.AddComponent <Easy>();
-
 				
 		} else if (RevSolidGameInfo.GetLODByInt() == 2) {
 			Camera.main.gameObject.AddComponent <Hard>();
-
 		}
 	}
 	
