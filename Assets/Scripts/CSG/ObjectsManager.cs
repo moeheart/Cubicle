@@ -3,11 +3,64 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectsManager : MonoBehaviour {
-	public CSGSceneObj CSGObjectPrefab;
-	public CSGSceneObj CSGCube, CSGSphere, CSGCylinder;
+	public SceneObject CSGObjectPrefab;
+	public SceneObject CSGCube, CSGSphere, CSGCylinder;
+	public SceneObject targetPrefab;
+
+	public Mesh targetMesh;
+	public Material wireframeMaterial;
+
+	private List<GameObject> sceneObjs = new List<GameObject>();
+	private SceneObject targetObj;
+	private SceneObject opA, opB;
+	private SceneObject selectedObj;
 
 	public void LoadGameObjects() {
+		//SceneObject cube = Instantiate(CSGCube) as SceneObject;
+		//SceneObject sphere = Instantiate(CSGSphere) as SceneObject;
+		GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+		GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+		cube.gameObject.AddComponent<CSGObject>();
+		sphere.gameObject.AddComponent<CSGObject>();
+		cube.AddComponent<SceneObject>();
+		sphere.AddComponent<SceneObject>();
+		cube.transform.localPosition = new Vector3(-2,2,0);
+		sphere.transform.localPosition = new Vector3(-2,-2,0);
+		sphere.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
+		sceneObjs.Add(cube);
+		sceneObjs.Add(sphere.gameObject);
+		targetObj = Instantiate(targetPrefab) as SceneObject;
+		targetObj.GetComponent<MeshFilter>().mesh = targetMesh;
 	}
+
+	void Update() {
+		if (Input.GetKeyDown(KeyCode.Space)) {
+			CSGUtil.Subtract(opA.gameObject, opB.gameObject);
+			sceneObjs.Remove(opB.gameObject);
+			Destroy(opB.gameObject);
+		}
+	}
+
+	public void OnSceneObjClick(SceneObject obj) {
+		if (selectedObj) {
+			selectedObj.OnDeselect();
+		}
+		selectedObj = obj;
+		selectedObj.OnSelect();
+		if (opA == null) {
+			opA = obj;
+		}
+		else if (opB == null) {
+			opB = obj;
+		}
+		else {
+			opA.SetDefaultMaterial();
+			opA = opB;
+			opB = obj;
+		}
+	}
+
+
 }
 
 /*public class ObjectsManager : MonoBehaviour {

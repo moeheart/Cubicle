@@ -34,6 +34,7 @@ public class CameraControls : MonoBehaviour
 		// orbits
 		if( Input.GetMouseButton(0) )
 		{
+			Debug.Log(distance);
 			float rot_x = Input.GetAxis(INPUT_MOUSE_X);
 			float rot_y = -Input.GetAxis(INPUT_MOUSE_Y);
 

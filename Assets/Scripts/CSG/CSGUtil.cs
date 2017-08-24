@@ -5,8 +5,8 @@ public static class CSGUtil {
 
 
     public static void Subtract(GameObject a, GameObject b) {
-        GameObject[] slaves = new GameObject[2] {a,b};
         CSGObject obj = a.GetComponent<CSGObject>();
+        GameObject[] slaves = new GameObject[2] {a.gameObject,b.gameObject};
         obj.PerformCSG(CsgOperation.ECsgOperation.CsgOper_Subtractive, slaves);
         a.name = "(" + a.name + ") - (" + b.name + ")";
     }
