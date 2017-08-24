@@ -2,7 +2,16 @@ using UnityEngine;
 using System.Collections;
 using Parabox.CSG;
 public static class CSGUtil {
-    public static GameObject Subtract(GameObject a, GameObject b, Material material = null) {
+
+
+    public static void Subtract(GameObject a, GameObject b) {
+        CSGObject obj = a.GetComponent<CSGObject>();
+        GameObject[] slaves = new GameObject[2] {a.gameObject,b.gameObject};
+        obj.PerformCSG(CsgOperation.ECsgOperation.CsgOper_Subtractive, slaves);
+        a.name = "(" + a.name + ") - (" + b.name + ")";
+    }
+
+    /*public static GameObject Subtract(GameObject a, GameObject b, Material material = null) {
         Mesh m = CSG.Subtract(a,b);
 		GameObject composite = new GameObject();
 		composite.AddComponent<MeshFilter>().sharedMesh = m;
@@ -28,7 +37,7 @@ public static class CSGUtil {
         composite.AddComponent<MeshCollider>().sharedMesh = m;
         composite.AddComponent<ObjectBehaviors>();
         return composite;
-    }
+    }*/
 
     private static float SignedVolumeOfTriangle(Vector3 p1, Vector3 p2, Vector3 p3)
     {
