@@ -1,5 +1,5 @@
 Face 0 contains:
-2;4;
+2;4;4;
 Face 1 contains:
 4;
 Face 2 contains:
@@ -7,6 +7,6 @@ Face 2 contains:
 Face 3 contains:
 5;
 Face 4 contains:
-1;0;5;5;
+1;5;0;0;
 Face 5 contains:
-3;4;4;
+3;4;

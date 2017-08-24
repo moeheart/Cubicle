@@ -8,6 +8,7 @@ using Container;
 public class MeshGenerator : MonoBehaviour {
 
     public RawImage goalImage;
+    public LogTool logtool;
 
     MeshFilter mf;
     Mesh mesh;
@@ -88,7 +89,7 @@ public class MeshGenerator : MonoBehaviour {
         mf = gameObject.GetComponent<MeshFilter>();
         mesh = new Mesh();
         mesh.subMeshCount = MyMaterials.Length;
-        mf.mesh = mesh;        
+        mf.mesh = mesh;
 
         InitArrays();
 
@@ -422,20 +423,6 @@ public class MeshGenerator : MonoBehaviour {
     /// </summary>
     public void ReCreateLine(Vector3 startingPoint, Vector3 endingPoint)
     {
-        Vector3 midPoint = (startingPoint + endingPoint) / 2;
-
-        //Get two faces' indices of the selected line.
-        List<int> faceIndices = GetFaceIndicesOfLine(midPoint);
-        int faceA = faceIndices[0];
-        int faceB = faceIndices[1];
-
-        model.faces[faceA].linesMidpoints.Add((startingPoint + endingPoint) / 2);
-        model.faces[faceA].lineStartingPoint.Add(startingPoint);
-        model.faces[faceA].lineEndingPoint.Add(endingPoint);
-        model.faces[faceB].linesMidpoints.Add((startingPoint + endingPoint) / 2);
-        model.faces[faceB].lineStartingPoint.Add(startingPoint);
-        model.faces[faceB].lineEndingPoint.Add(endingPoint);
-
 
         GameObject currentLineObj = new GameObject();
         currentLineObj.transform.parent = this.transform;
@@ -726,6 +713,9 @@ public class MeshGenerator : MonoBehaviour {
         newTexture.LoadImage(ImageBytes);
 
         goalImage.texture = newTexture;
+
+        // Clear the previous log content.
+        logtool.ClearLog();
     }
 
     /*private void LoadMaterialByLevel(int _level)
@@ -742,8 +732,18 @@ public class MeshGenerator : MonoBehaviour {
         DashedLineMidpoints.Add(_Midpoint);
     }
 
+    public void DeleteDashedLineMidpoints(Vector3 _Midpoint)
+    {
+        DashedLineMidpoints.Remove(_Midpoint);
+    }
+
     public void AddDashedLineIndex(int index)
     {
         DashedLinesIndices.Add(index);
+    }
+
+    public void DeleteDashedLineIndex(int index)
+    {
+        DashedLinesIndices.Remove(index);
     }
 }

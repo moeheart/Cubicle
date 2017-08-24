@@ -44,4 +44,10 @@ public class Glow : MonoBehaviour
         //transform.GetComponent<LineRenderer>().SetWidth(1,1);
         clicked = true;
     }
+
+    public void ChangeToSolidLine()
+    {
+        transform.GetComponent<Renderer>().material = originalMaterial;
+        clicked = false;
+    }
 }

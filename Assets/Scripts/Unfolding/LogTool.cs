@@ -59,5 +59,13 @@ public class LogTool : MonoBehaviour {
         writer.Close();
     }
 
+    /// <summary>
+    /// Clear the log content.
+    /// </summary>
+    public void ClearLog()
+    {
+        content = "";
+    }
+
 
 }

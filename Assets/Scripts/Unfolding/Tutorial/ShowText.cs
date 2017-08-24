@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ShowText : MonoBehaviour {
 
-    public float timing = 5.0f;
+    public float timing = 8.0f;
     Text txt;
 
 	// Use this for initialization
