@@ -37,7 +37,7 @@ public class ActiveObjControl : MonoBehaviour {
 	}
 
 	void CheckLevelAndAddScript(){
-		RevSolidGameInfo.levelOfDifficulty = (SceneManager.GetActiveScene().name == "Easy") ? 1 : 2;
+		RevSolidGameInfo.levelOfDifficulty = (SceneManager.GetActiveScene().name == "Easy") ? 1.0f : 2.0f;
 		if (RevSolidGameInfo.GetLODByInt() == 1) {
 			Camera.main.gameObject.AddComponent <Easy>();
 				

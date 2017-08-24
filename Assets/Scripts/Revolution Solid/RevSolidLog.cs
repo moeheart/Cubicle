@@ -65,7 +65,6 @@ public class RevSolidLog : MonoBehaviour {
 	}
 
 	void RecordMouseDown(){
-		Debug.Log ("mousedown");
 		FormulateResult ("mouseDown", "");
 	} 
 
