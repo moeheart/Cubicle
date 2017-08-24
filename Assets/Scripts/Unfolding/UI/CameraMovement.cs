@@ -44,11 +44,12 @@ public class CameraMovement : MonoBehaviour {
             rotationX = Mathf.Lerp(rotationX, rotationX + Input.GetAxis ("Mouse X") * sensX * Time.deltaTime, smoothing * Time.deltaTime);
             rotationY = Mathf.Lerp(rotationY, rotationY + Input.GetAxis ("Mouse Y") * sensY * Time.deltaTime, smoothing * Time.deltaTime);
             
-            
 
             //rotationY = Mathf.Clamp(rotationY, minY, maxY);
             //rotationX = Mathf.Clamp(rotationX, minX, maxX);
-            transform.localEulerAngles = new Vector3 (-rotationY, rotationX, 0);
-		}
+            //transform.localEulerAngles = new Vector3 (-rotationY, rotationX, 0);
+            
+            transform.eulerAngles = new Vector3(-rotationY, rotationX, 0);
+        }
 	}
 }
