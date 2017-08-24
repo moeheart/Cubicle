@@ -20,6 +20,7 @@ public class ActiveObject {
 	float endingTime;
 	public float reactionTime;
 
+
 	public ActiveObject(int newPanelIndex,int newPolygonIndex){
 		
 		panelIndex = newPanelIndex;
@@ -56,21 +57,24 @@ public class ActiveObject {
 
 	public void GetEndingTime(){
 		endingTime = Time.time;
-		RecordReactionTime ();
+		GetReactionTime ();
 	}
 
-	public void RecordReactionTime(){
+	public void GetReactionTime(){
 		if (isKilled) {
 			endingTime = Time.time;
 			reactionTime = endingTime - refreshTime;
+			ActiveObjControl.RecordReactionTimeWhenObjectKilled (reactionTime);
+
 		} else {
 			reactionTime = Time.time - refreshTime;
 
-			if (RevSolidGameInfo.levelOfDifficulty == 0) {
+			if (RevSolidGameInfo.GetLODByInt() == 2) {
 				RespondToReactionTime ();
 			}
 		}
 	}
+
 
 	public void RespondToReactionTime(){
 		if (reactionTime >= 5.0f) {
@@ -83,9 +87,9 @@ public class ActiveObject {
 	}
 
 	void SetPosAndSpeed(){
-		if (RevSolidGameInfo.levelOfDifficulty == 0) {
+		if (RevSolidGameInfo.GetLODByInt() == 1) {
 			this.SetFixedPosition ();
-		} else if (RevSolidGameInfo.levelOfDifficulty == 1) {
+		} else if (RevSolidGameInfo.GetLODByInt() == 2) {
 			this.RegeneratePositionAndSpeed();
 		}
 	}

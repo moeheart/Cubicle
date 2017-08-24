@@ -16,7 +16,7 @@ public class RevSolidGameInfo : MonoBehaviour {
 	public static int MaxPolygonNum=12;
 	public static int MaxPanelNum;
 
-	public static int levelOfDifficulty;//0,1
+	public static float levelOfDifficulty;//(0.5,1)(1.5,2)
 
 	// Use this for initialization
 	void Awake () {
@@ -65,6 +65,9 @@ public class RevSolidGameInfo : MonoBehaviour {
 	public virtual void Retry(){
 		hit = 0;
 		falseStrokeCount = 0;
+	}
+	public static int GetLODByInt(){
+		return Mathf.CeilToInt(levelOfDifficulty);
 	}
 		
 }

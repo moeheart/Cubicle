@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class RevSolidUIControl : RevSolidGameInfo {
 	
@@ -23,7 +24,7 @@ public class RevSolidUIControl : RevSolidGameInfo {
 
 		retryBtn = GameObject.Find ("retryBtn").GetComponent<Button> ();
 		HideButton (retryBtn);
-		retryBtn.onClick.AddListener (Retry);
+		retryBtn.onClick.AddListener (TriggerRetry);
 
 		responseBtn = GameObject.Find ("responseBtn").GetComponent<Button> ();
 		HideButton (responseBtn);
@@ -34,6 +35,14 @@ public class RevSolidUIControl : RevSolidGameInfo {
 		showAllBtn = GameObject.Find ("showAllBtn").GetComponent<Button> ();
 		showAllBtn.onClick.AddListener (CandidateAxesSwitch);
 		showAllSwitch=GameObject.Find ("showAllSwitch").GetComponent<Text> ();
+	}
+
+	void OnEnable(){
+		EventManager.StartListening ("Retry",Retry);
+	}
+
+	void OnDisable(){
+		EventManager.StopListening ("Retry",Retry);
 	}
 
 	// Update is called once per frame
@@ -68,6 +77,10 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	public static void HideResponseButton(){
 		HideButton (responseBtn);
 	}
+		
+	void TriggerRetry(){
+		EventManager.TriggerEvent ("Retry");
+	}
 
 	public override void Retry(){
 		base.Retry ();
@@ -83,8 +96,12 @@ public class RevSolidUIControl : RevSolidGameInfo {
 			ConfirmTutorialAndResume ();
 		} else {
 			RequireTutorial ();
-			Tutorial.EnableTutorial ();
+			TutorialTrigger ();
 		}
+	}
+
+	public void TutorialTrigger(){
+		EventManager.TriggerEvent ("EnableTutorial");
 	}
 
 	void ConfirmTutorialAndResume(){
@@ -127,10 +144,12 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	}
 
 	static void ShowCandidateAxes(){
+		RevSolidGameInfo.levelOfDifficulty -= 0.5f;
 		AxisDrawing.ReloadSectionsWithCandidateAxes ();
 	}
 
 	static void HideCandidateAxes(){
+		RevSolidGameInfo.levelOfDifficulty += 0.5f;
 		AxisDrawing.RecoverOriginalSections ();
 	}
 

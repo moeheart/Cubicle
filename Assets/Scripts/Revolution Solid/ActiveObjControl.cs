@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class ActiveObjControl : MonoBehaviour {
 
@@ -12,9 +13,19 @@ public class ActiveObjControl : MonoBehaviour {
 	public static List<ActiveObject> activeObjects;
 	protected static Vector3 midPos=new Vector3(0,0,0);
 
+	public static string reactionTimeToLog;
+
 	// Use this for initialization
 	void Awake(){
 		CheckLevelAndAddScript();
+	}
+
+	void OnEnable(){
+		EventManager.StartListening ("RecordReactionTime",ReactionTimeToLog);
+	}
+
+	void OnDisable(){
+		EventManager.StopListening ("RecordReactionTime",ReactionTimeToLog);
 	}
 
 	void Start () {
@@ -26,12 +37,12 @@ public class ActiveObjControl : MonoBehaviour {
 	}
 
 	void CheckLevelAndAddScript(){
-		RevSolidGameInfo.levelOfDifficulty = (SceneManager.GetActiveScene().name == "Easy") ? 0 : 1;
-		if (RevSolidGameInfo.levelOfDifficulty == 0) {
+		RevSolidGameInfo.levelOfDifficulty = (SceneManager.GetActiveScene().name == "Easy") ? 1 : 2;
+		if (RevSolidGameInfo.GetLODByInt() == 1) {
 			Camera.main.gameObject.AddComponent <Easy>();
 
 				
-		} else if (RevSolidGameInfo.levelOfDifficulty == 1) {
+		} else if (RevSolidGameInfo.GetLODByInt() == 2) {
 			Camera.main.gameObject.AddComponent <Hard>();
 
 		}
@@ -39,9 +50,9 @@ public class ActiveObjControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (RevSolidGameInfo.levelOfDifficulty == 0) {
+		if (RevSolidGameInfo.GetLODByInt() == 1) {
 			for (int i = 0; i < RevSolidGameInfo.MaxPanelNum; i++) {
-				activeObjects[i].RecordReactionTime ();
+				activeObjects[i].GetReactionTime ();
 			}
 		}
 	}
@@ -116,6 +127,13 @@ public class ActiveObjControl : MonoBehaviour {
 			
 	}
 		
+	public static void RecordReactionTimeWhenObjectKilled(float reactionTime){
+		reactionTimeToLog = reactionTime.ToString();
+		EventManager.TriggerEvent("RecordReactionTime");
+	}
 
+	static void ReactionTimeToLog(){
+		
+	}
 		
 }

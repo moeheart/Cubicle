@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class AxisDrawing: ResponseProcessing {
 
@@ -10,7 +11,7 @@ public class AxisDrawing: ResponseProcessing {
 	private int vertexCount;
 	public GameObject linePrefab;
 
-	protected List<Vector3> linePath;
+	protected static List<Vector3> linePath;
 
 	private float alphaScale;
 
@@ -20,18 +21,31 @@ public class AxisDrawing: ResponseProcessing {
 
 	public static List<Section> sections;
 
-	void Awake(){
+	public static string lastGradingResult; 
 
+	void Awake(){
+		lastGradingResult = "";
 		isLineInstantiated = false;
 		InitSections ();
 		linePath = new List<Vector3> ();
-		if (RevSolidGameInfo.levelOfDifficulty == 0) {
+		if (RevSolidGameInfo.GetLODByInt() == 1) {
 			sectionScale = 0.3f;
-		}else if(RevSolidGameInfo.levelOfDifficulty == 1){
+		}else if(RevSolidGameInfo.GetLODByInt() == 2){
 			sectionScale = 0.2f;
 		}
 	}
 
+	void OnEnable(){
+		EventManager.StartListening ("OnMouseDown",OnMouseDown);
+		EventManager.StartListening ("OnMouseUp",OnMouseUp);
+		EventManager.StartListening ("Grading",GradingResToLog);
+	}
+
+	void OnDisable(){
+		EventManager.StopListening ("OnMouseDown",OnMouseDown);
+		EventManager.StopListening ("OnMouseUp",OnMouseUp);
+		EventManager.StopListening ("Grading",GradingResToLog);
+	}
 	// Use this for initialization
 	void Start () {
 		StartCoroutine("RecordLinePath");
@@ -56,22 +70,15 @@ public class AxisDrawing: ResponseProcessing {
 	void FreeStrokeDrawingAndGrading(){
 		if (Input.GetMouseButtonDown (0)) {
 			//destroy existing one and instantiate new
-
-			if (isLineInstantiated==false) {
-				InitAxis ();
-			}
+			EventManager.TriggerEvent("OnMouseDown");
 		}
 
 		if (Input.GetMouseButton (0)) {
-			DrawAxis ();
+			OnGetMouse ();
 		}
 
 		if (Input.GetMouseButtonUp (0)) {
-			if (isLineInstantiated&&linePath.Count>0) {
-				DisplayScore (Grading(linePath));
-				DestroyAxis ();
-				linePath.Clear ();
-			}
+			EventManager.TriggerEvent("OnMouseUp");
 		}
 
 		if (isLineInstantiated) {
@@ -79,7 +86,41 @@ public class AxisDrawing: ResponseProcessing {
 		}
 	}
 
-	void DestroyAxis(){
+	void OnMouseDown(){
+		if (isLineInstantiated==false) {
+			InitAxis ();
+		}
+	}
+
+	void OnGetMouse(){
+		DrawAxis ();
+	}
+
+	void OnMouseUp(){
+		if (isLineInstantiated&&linePath.Count>0) {
+			DisplayScore (Grading(linePath));
+			DestroyFreeStroke ();
+		}
+	}
+
+	void DestroyFreeStroke(){
+		DestroyAxisObject ();
+		linePath.Clear ();
+	}
+
+	public static string GetPathString(){
+		string pathString="";
+		for (int i = 0; i < linePath.Count; i++) {
+			pathString += linePath [i].x.ToString ();
+			pathString += " ";
+			pathString += linePath [i].y.ToString ();
+			pathString += ",";
+		}
+		return pathString;
+	}
+
+
+	void DestroyAxisObject(){
 		GameObject.Destroy (line.gameObject);
 		isLineInstantiated = false;
 	}
@@ -257,8 +298,26 @@ public class AxisDrawing: ResponseProcessing {
 				Tutorial.IndicateCorrectAns (panelIndex);
 			}
 		}
+		GetGradingResult(ActiveObjControl.activeObjects[panelIndex].polygonIndex,panelIndex,bestMatchCandNo);
+		EventManager.TriggerEvent("Grading");
 		return bestMatchCandNo;
 	}
+
+	void GetGradingResult(int solidIndex,int panelIndex,int bmcNo){
+		lastGradingResult="";
+		lastGradingResult += lastGradingResult.ToString ();
+		lastGradingResult += " for solid ";
+		lastGradingResult += solidIndex;
+		lastGradingResult+=" on panelNo.";
+		lastGradingResult+= panelIndex;
+		lastGradingResult+= " is ";
+		lastGradingResult+= bmcNo;
+	}
+
+	void GradingResToLog(){
+		
+	}
+
 
 	IEnumerator ShowAnswerAndDisableFormerQuestion(int panelIndex){
 		Tutorial.IndicateAxisAndStroke (panelIndex);
@@ -274,7 +333,7 @@ public class AxisDrawing: ResponseProcessing {
 	int IdentifyPanelIndexOfStroke(Vector3 mid){
 		int panelIndex=0;
 
-		if (RevSolidGameInfo.levelOfDifficulty == 1) {
+		if (RevSolidGameInfo.GetLODByInt() == 2) {
 			//panel position 0-UR,1-UL,2-BL,3-BR
 			if (mid.x > -thres && mid.y > -thres) {
 				panelIndex = 0;

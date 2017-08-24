@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class Tutorial : MonoBehaviour {
 
@@ -16,6 +17,17 @@ public class Tutorial : MonoBehaviour {
 
 		axisPrefab =Resources.Load ("axisPrefab") as GameObject;
 	}
+
+	void OnEnable(){
+		EventManager.StartListening ("EnableTutorial",EnableTutorial);
+		EventManager.StartListening ("DisableTutorial",DisableTutorial);
+	}
+
+	void OnDisable(){
+		EventManager.StopListening ("EnableTutorial",EnableTutorial);
+		EventManager.StopListening ("DisableTutorial",DisableTutorial);
+	}
+
 	// Use this for initialization
 	void Start () {
 		StartCoroutine ("AutoDisableTutorial");
@@ -29,7 +41,7 @@ public class Tutorial : MonoBehaviour {
 	IEnumerator AutoDisableTutorial(){
 		while (true) {
 			if (RevSolidGameInfo.CheckIfPlayerLearned () == true) {
-				DisableTutorial ();
+				EventManager.TriggerEvent("DisableTutorial");
 			}
 			yield return new WaitForSeconds (10);
 		}
