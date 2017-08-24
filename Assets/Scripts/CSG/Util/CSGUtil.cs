@@ -11,6 +11,13 @@ public static class CSGUtil {
         a.name = "(" + a.name + ") - (" + b.name + ")";
     }
 
+    public static void Union(GameObject a, GameObject b) {
+        CSGObject obj = a.GetComponent<CSGObject>();
+        GameObject[] slaves = new GameObject[2] {a.gameObject,b.gameObject};
+        obj.PerformCSG(CsgOperation.ECsgOperation.CsgOper_Additive, slaves);
+        a.name = "(" + a.name + ") + (" + b.name + ")";
+    }
+
     /*public static GameObject Subtract(GameObject a, GameObject b, Material material = null) {
         Mesh m = CSG.Subtract(a,b);
 		GameObject composite = new GameObject();
@@ -49,8 +56,9 @@ public static class CSGUtil {
         float v123 = p1.x * p2.y * p3.z;
         return (1.0f / 6.0f) * (-v321 + v231 + v312 - v132 - v213 + v123);
     }
-    public static float VolumeOfMesh(Mesh mesh)
+    public static float VolumeOfMesh(GameObject obj)
     {
+        Mesh mesh = obj.GetComponent<MeshFilter>().sharedMesh;
         float volume = 0;
         Vector3[] vertices = mesh.vertices;
         int[] triangles = mesh.triangles;

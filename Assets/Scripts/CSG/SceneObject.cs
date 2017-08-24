@@ -18,50 +18,50 @@ public class SceneObject : MonoBehaviour {
 		//The Y-axis
 
 		if (isSelected == true) {
-			if (Input.GetKeyDown(KeyCode.I)) {
+			if (Input.GetKeyDown(KeyCode.W)) {
 				this.transform.localPosition += new Vector3(0,1,0);
 			}
-			if (Input.GetKeyDown(KeyCode.K)) {
+			if (Input.GetKeyDown(KeyCode.S)) {
 				this.transform.localPosition += new Vector3(0,-1,0);
 			}
 
 			//The X-axis
-			if (Input.GetKeyDown(KeyCode.J)) {
+			if (Input.GetKeyDown(KeyCode.A)) {
 				this.transform.localPosition += new Vector3(-1,0,0);
 			}
-			if (Input.GetKeyDown(KeyCode.L)) {
+			if (Input.GetKeyDown(KeyCode.D)) {
 				this.transform.localPosition += new Vector3(1,0,0);
 			}
 
 			//The Z-axis
-			if (Input.GetKeyDown(KeyCode.U)) {
+			if (Input.GetKeyDown(KeyCode.Q)) {
 				this.transform.localPosition += new Vector3(0,0,1);
 			}
-			if (Input.GetKeyDown(KeyCode.O)) {
+			if (Input.GetKeyDown(KeyCode.E)) {
 				this.transform.localPosition += new Vector3(0,0,-1);
 			}
 
 			//Rotate around Y-axis
-			if (Input.GetKeyDown(KeyCode.D)) {
+			if (Input.GetKeyDown(KeyCode.L)) {
 				this.transform.Rotate(0,90,0);
 			}
-			if (Input.GetKeyDown(KeyCode.A)) {
+			if (Input.GetKeyDown(KeyCode.J)) {
 				this.transform.Rotate(0,-90,0);
 			}
 
 			//Rotate around X-axis
-			if (Input.GetKeyDown(KeyCode.W)) {
+			if (Input.GetKeyDown(KeyCode.I)) {
 				this.transform.Rotate(90,0,0);
 			}
-			if (Input.GetKeyDown(KeyCode.S)) {
+			if (Input.GetKeyDown(KeyCode.K)) {
 				this.transform.Rotate(-90,0,0);
 			}
 
 			//Rotate around Z-axis
-			if (Input.GetKeyDown(KeyCode.Q)) {
+			if (Input.GetKeyDown(KeyCode.U)) {
 				this.transform.Rotate(0,0,90);
 			}
-			if (Input.GetKeyDown(KeyCode.E)) {
+			if (Input.GetKeyDown(KeyCode.O)) {
 				this.transform.Rotate(0,0,-90);
 			}
 		}
