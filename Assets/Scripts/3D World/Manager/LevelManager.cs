@@ -10,7 +10,7 @@ public class LevelManager : MonoBehaviour {
 	public World worldPrefab;
 
 	public static World worldInstance {get; private set;}
-	private const string levelJsonFilePath = "Assets/Scripts/Json/0818.json";
+	private const string levelJsonFilePath = "Assets/Scripts/Json/0824.json";
 
 	// Use this for initialization
 	void Start () {
