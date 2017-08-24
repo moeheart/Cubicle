@@ -18,8 +18,7 @@ public class MeshGenerator : MonoBehaviour {
     private string path1 = "Assets/Resources/Unfolding/_Results/Level";
     private string path2 = ".png";
 
-    public Material EasyLevelMaterial;
-    public Material MiddleLevelMaterial;
+    public Material[] MyMaterials = new Material[3];
 
     public int CurrentLevel {get; private set;}
 
@@ -38,8 +37,10 @@ public class MeshGenerator : MonoBehaviour {
 
     //Vertices
     List<Vector3> vertices;
-    //Triangles
-    List<int> triangles;
+    //Triangles of 3 subMeshes
+    List<int> triangles0;
+    List<int> triangles1;
+    List<int> triangles2;
     //Normals
     List<Vector3> normals;
     //UVs
@@ -82,9 +83,12 @@ public class MeshGenerator : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        gameObject.GetComponent<MeshRenderer>().materials = MyMaterials;
+
         mf = gameObject.GetComponent<MeshFilter>();
         mesh = new Mesh();
-        mf.mesh = mesh;
+        mesh.subMeshCount = MyMaterials.Length;
+        mf.mesh = mesh;        
 
         InitArrays();
 
@@ -96,7 +100,9 @@ public class MeshGenerator : MonoBehaviour {
         //Assign Arrays
         mesh.vertices = vertices.ToArray();
         mesh.normals = normals.ToArray();
-        mesh.triangles = triangles.ToArray();
+        mesh.SetTriangles(triangles0.ToArray(), 0);
+        mesh.SetTriangles(triangles1.ToArray(), 1);
+        mesh.SetTriangles(triangles2.ToArray(), 2);
         mesh.uv = uvs.ToArray();
 
         CreateLines();    
@@ -110,7 +116,9 @@ public class MeshGenerator : MonoBehaviour {
     private void InitArrays()
     {
         vertices = new List<Vector3>();
-        triangles = new List<int>();
+        triangles0 = new List<int>();
+        triangles1 = new List<int>();
+        triangles2 = new List<int>();
         normals = new List<Vector3>();
         uvs = new List<Vector2>();
 
@@ -236,6 +244,8 @@ public class MeshGenerator : MonoBehaviour {
                 else
                     normal = GetReverseNormalByNum((int)data.Faces[ptr++]);
 
+                int submeshNum = (int)data.Faces[ptr++];
+
                 for (int j = 0; j < NumofVertices; j++)
                 {
                     Vector3 vertex = new Vector3(data.Faces[ptr++],
@@ -261,18 +271,56 @@ public class MeshGenerator : MonoBehaviour {
                         newFace.triangles.Add(triangleNode1);
                         newFace.triangles.Add(triangleNode2);
                         newFace.triangles.Add(triangleNode3);
-                        triangles.Add(triangleNode1);
-                        triangles.Add(triangleNode2);
-                        triangles.Add(triangleNode3);
+                        if(submeshNum == 0)
+                        {
+                            triangles0.Add(triangleNode1);
+                            triangles0.Add(triangleNode2);
+                            triangles0.Add(triangleNode3);
+                        }
+                        else if (submeshNum == 1)
+                        {
+                            triangles1.Add(triangleNode1);
+                            triangles1.Add(triangleNode2);
+                            triangles1.Add(triangleNode3);
+                        }
+                        else if (submeshNum == 2)
+                        {
+                            triangles2.Add(triangleNode1);
+                            triangles2.Add(triangleNode2);
+                            triangles2.Add(triangleNode3);
+                        }
+                        else
+                        {
+                            Debug.LogWarning("The submesh number is wrong.");
+                        }
                     }
                     else
                     {
                         newFace.triangles.Add(triangleNode3);
                         newFace.triangles.Add(triangleNode2);
                         newFace.triangles.Add(triangleNode1);
-                        triangles.Add(triangleNode3);
-                        triangles.Add(triangleNode2);
-                        triangles.Add(triangleNode1);
+                        if (submeshNum == 0)
+                        {
+                            triangles0.Add(triangleNode3);
+                            triangles0.Add(triangleNode2);
+                            triangles0.Add(triangleNode1);
+                        }
+                        else if (submeshNum == 1)
+                        {
+                            triangles1.Add(triangleNode3);
+                            triangles1.Add(triangleNode2);
+                            triangles1.Add(triangleNode1);
+                        }
+                        else if (submeshNum == 2)
+                        {
+                            triangles2.Add(triangleNode3);
+                            triangles2.Add(triangleNode2);
+                            triangles2.Add(triangleNode1);
+                        }
+                        else
+                        {
+                            Debug.LogWarning("The submesh number is wrong.");
+                        }
                     }
                 }
                 newFace.offset = offset;
@@ -661,13 +709,15 @@ public class MeshGenerator : MonoBehaviour {
         //Assign Arrays
         mesh.vertices = vertices.ToArray();
         mesh.normals = normals.ToArray();
-        mesh.triangles = triangles.ToArray();
+        mesh.SetTriangles(triangles0.ToArray(), 0);
+        mesh.SetTriangles(triangles1.ToArray(), 1);
+        mesh.SetTriangles(triangles2.ToArray(), 2);
         mesh.uv = uvs.ToArray();
 
         CreateLines();
 
-        // Reload a material uv image
-        LoadMaterialByLevel(CurrentLevel);
+        // Reload a material uv image(Now we don't need this because we have an array of materials.)
+        //LoadMaterialByLevel(CurrentLevel);
 
         // Reload a new goal image.
         path = path1 + CurrentLevel + path2;
@@ -678,13 +728,14 @@ public class MeshGenerator : MonoBehaviour {
         goalImage.texture = newTexture;
     }
 
-    private void LoadMaterialByLevel(int _level)
+    /*private void LoadMaterialByLevel(int _level)
     {
         if (_level <= 2)
             gameObject.GetComponent<MeshRenderer>().material = EasyLevelMaterial;
         else
             gameObject.GetComponent<MeshRenderer>().material = MiddleLevelMaterial;
-    }
+
+    }*/
 
     public void AddDashedLineMidpoints(Vector3 _Midpoint)
     {
