@@ -37,9 +37,11 @@ public class ObjectsManager : MonoBehaviour {
 
 	void Update() {
 		if (Input.GetKeyDown(KeyCode.Space)) {
-			CSGUtil.Subtract(opA.gameObject, opB.gameObject);
-			sceneObjs.Remove(opB);
-			Destroy(opB.gameObject);
+			if (opA && opB) {
+				CSGUtil.Subtract(opA.gameObject, opB.gameObject);
+				sceneObjs.Remove(opB);
+				Destroy(opB.gameObject);
+			}
 		}
 		if (Input.GetMouseButtonDown(0)) {
 			if (sceneObjs.Count == 1) {

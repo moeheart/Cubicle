@@ -89,52 +89,52 @@
 		"levels":{
 			"0":{
 				"solidNum":4,
-				"method":"d",
+				"method":"d"
 				},
 			"1":{
 				"solidNum":4,
-				"method":"d",
+				"method":"d"
 				},
 			"2":{
 				"solidNum":6,
-				"method":"d",
+				"method":"d"
 				},
 			"3":{
 				"solidNum":5,
-				"method":"d",
+				"method":"d"
 				},
 			"4":{
 				"solidNum":4,
-				"method":"r",
+				"method":"r"
 				},
 			"5":{
 				"solidNum":5,
-				"method":"r",
+				"method":"r"
 				},
 			"6":{
 				"solidNum":7,
-				"method":"r",
+				"method":"r"
 				},
 			"7":{
 				"solidNum":8,
-				"method":"r",
+				"method":"r"
 				},
 			"8":{
 				"solidNum":7,
-				"method":"s",
+				"method":"s"
 				},
 			"9":{
 				"solidNum":6,
-				"method":"s",
+				"method":"s"
 				},
 			"10":{
 				"solidNum":5,
-				"method":"s",
+				"method":"s"
 				},
 			"11":{
 				"solidNum":4,
-				"method":"s",
-				},
+				"method":"s"
+				}
 			}
     },
 	"11": {
@@ -203,13 +203,25 @@
 				"baicSteps": 3,
 				"difficulty": 0,
 				"method": "rs"
-				} ,
-			},
+				}
+			}
     },
-  "13": {
-    "type": "CSG"
-  },
-  "14": {
-    "type": "Unfolding"
-  }
+	"13": {
+		"type": "CSG"
+	},
+	"14": {
+		"type": "Unfolding"
+	},
+	"15": {
+		"type" : "Unfolding"
+	},
+	"16": {
+		"type" :  "Unfolding"
+	},
+	"17": {
+		"type" :  "revolution solid"
+	},
+	"18": {
+		"type" :  "cube shift"
+	}
 }
