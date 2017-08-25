@@ -1,6 +1,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 m_EditorVersion: 2017.1.0b1
 =======
 m_EditorVersion: 2017.1.0f3
@@ -15,4 +16,7 @@ m_EditorVersion: 2017.1.0b1
 
 m_EditorVersion: 2017.1.0f3
 
+>>>>>>> upstream/master
+=======
+m_EditorVersion: 2017.1.0f3
 >>>>>>> upstream/master
