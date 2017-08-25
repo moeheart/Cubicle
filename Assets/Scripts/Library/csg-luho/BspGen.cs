@@ -25,7 +25,7 @@ public class BspGen {
 			return null;
 		}
 		
-		Debug.Log( "Building Bsp Tree for " + inFaces.Count + " Faces" );
+//		Debug.Log( "Building Bsp Tree for " + inFaces.Count + " Faces" );
 		
 		// create root node
 		BspNode root = new BspNode();
@@ -35,7 +35,7 @@ public class BspGen {
 		// copy bsp faces back to array list (resulting faces...)
 		GetFaces( root, inFaces );
 		
-		Debug.Log( "Resulting in " + inFaces.Count + " Faces" );
+//		Debug.Log( "Resulting in " + inFaces.Count + " Faces" );
 		
 		// result
 		return root;

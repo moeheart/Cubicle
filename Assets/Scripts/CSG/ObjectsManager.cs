@@ -32,6 +32,7 @@ public class ObjectsManager : MonoBehaviour {
 		sceneObjs.Add(sphere);
 
 		targetObj = Instantiate(targetPrefab) as GameObject;
+		targetObj.name = "Target";
 		targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
 	}
 
@@ -43,6 +44,8 @@ public class ObjectsManager : MonoBehaviour {
 				Destroy(opB.gameObject);
 			}
 		}
+
+		//Check whether we completed the game...
 		if (Input.GetMouseButtonDown(0)) {
 			if (sceneObjs.Count == 1) {
 				GameObject composite = sceneObjs[0].gameObject;

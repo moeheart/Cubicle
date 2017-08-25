@@ -336,7 +336,7 @@ public class CSGObject : MonoBehaviour {
 		GetComponent<Renderer>().sharedMaterials = tmpMatArray;
 		
 		// 
-		Debug.Log( "Building Mesh with " + numVertices + " Vertices" );
+//		Debug.Log( "Building Mesh with " + numVertices + " Vertices" );
 		
 		// 
 		Vector3[] newVertices = new Vector3[numVertices];
