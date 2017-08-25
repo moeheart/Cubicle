@@ -6,12 +6,12 @@ using UnityEngine.SceneManagement;
 
 public class MouseAndKeyboard : MonoBehaviour {
 
-	Text cubeHit;
+	//Text cubeHit;
 	private GameInfo gameInfo=GameInfo.getInstance();
 
 	// Use this for initialization
 	void Start () {
-		cubeHit = GameObject.Find ("cubeHit").GetComponent<Text> ();
+		//cubeHit = GameObject.Find ("cubeHit").GetComponent<Text> ();
 	}
 	
 	// Update is called once per frame

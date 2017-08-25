@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class Tutorial : MonoBehaviour {
 
@@ -14,8 +15,19 @@ public class Tutorial : MonoBehaviour {
 		isTutorialModeOn = true;
 		isPitfallWarningDone = false;
 
-		axisPrefab = GameObject.Find ("axisPrefab");
+		axisPrefab =Resources.Load ("axisPrefab") as GameObject;
 	}
+
+	void OnEnable(){
+		EventManager.StartListening ("EnableTutorial",EnableTutorial);
+		EventManager.StartListening ("DisableTutorial",DisableTutorial);
+	}
+
+	void OnDisable(){
+		EventManager.StopListening ("EnableTutorial",EnableTutorial);
+		EventManager.StopListening ("DisableTutorial",DisableTutorial);
+	}
+
 	// Use this for initialization
 	void Start () {
 		StartCoroutine ("AutoDisableTutorial");
@@ -29,7 +41,7 @@ public class Tutorial : MonoBehaviour {
 	IEnumerator AutoDisableTutorial(){
 		while (true) {
 			if (RevSolidGameInfo.CheckIfPlayerLearned () == true) {
-				DisableTutorial ();
+				EventManager.TriggerEvent("DisableTutorial");
 			}
 			yield return new WaitForSeconds (10);
 		}
@@ -65,7 +77,7 @@ public class Tutorial : MonoBehaviour {
 			RevSolidUIControl.SetTutorialMessage("Here we show the revolution axis and corresponding stroke. Try it yourself!");
 			IndicateAxisAndStroke (panel);
 			RevSolidUIControl.ShowResponseButton ();
-			ActiveObjControl.activeObjects [panel].UseTutorialSpriteMatchingSolid ();
+
 		}
 	}
 
@@ -73,7 +85,7 @@ public class Tutorial : MonoBehaviour {
 		if (GameObject.Find ("axis") != null) {
 			Destroy (GameObject.Find ("axis"));
 		}
-		for (int i = 0; i < ActiveObjControl.MaxPanelNum; i++) {
+		for (int i = 0; i < RevSolidGameInfo.MaxPanelNum; i++) {
 			ActiveObjControl.activeObjects [i].ChangeSpriteAccordingToSolid ();
 		}
 	}
@@ -86,6 +98,8 @@ public class Tutorial : MonoBehaviour {
 		if (ActiveObjControl.activeObjects [panel].polygonIndex == 2) {
 			tempAxis.transform.localPosition= new Vector3(0,0,0.035f);
 		}
+
+		ActiveObjControl.activeObjects [panel].UseTutorialSpriteMatchingSolid ();
 	}
 		
 	public static void IndicatePitfalls (){
@@ -94,6 +108,12 @@ public class Tutorial : MonoBehaviour {
 			RevSolidUIControl.SetTutorialMessage("Watch out. Once a solid enter the ring in the middle, you will lose your point.");
 			RevSolidUIControl.ShowResponseButton ();
 			isPitfallWarningDone = true;
+		}
+	}
+
+	public static void IndicateKeyUsage(){
+		if (isTutorialModeOn) {
+			RevSolidUIControl.SetTutorialMessage ("Press SPACE key anytime to freeze solid.");
 		}
 	}
 }

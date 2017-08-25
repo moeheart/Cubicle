@@ -5,7 +5,7 @@ using UnityEngine;
 public class BrightnessSaturationAndContrast : PostEffectsBase
 {
     public Shader briSatConShader;
-    public Camera camera;
+	public Camera camera = new Camera();
     private Material briSatConMaterial;
     //private:私有成员,在类的内部才可以访问;protected:保护成员,该类内部和继承类中可以访问
     public Material material

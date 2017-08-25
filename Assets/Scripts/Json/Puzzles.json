@@ -219,9 +219,47 @@
 		"type" :  "Unfolding"
 	},
 	"17": {
-		"type" :  "revolution solid"
+		"type" :  "none"
 	},
 	"18": {
+		"type" :  "none"
+	},
+	"19": {
+		"type" :  "none"
+	},
+	"20": {
+		"type" :  "none"
+	},
+	"21": {
+		"type" :  "none"
+	},
+	"22": {
+		"type" :  "none"
+	},
+	"23": {
+		"type" :  "none"
+	},
+	"24": {
+		"type" :  "none"
+	},
+	"25": {
+		"type" :  "none"
+	},
+	"26": {
+		"type" :  "none"
+	},
+	"27": {
+		"type" :  "none"
+	},
+	"29": {
+		"type" :  "revolution solid",
+		"levelNum":1
+	},
+	"30": {
+		"type" :  "revolution solid",
+		"levelNum":2
+	},
+	"31": {
 		"type" :  "cube shift"
 	}
 }
