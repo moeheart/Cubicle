@@ -135,10 +135,10 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	static void CandidateAxesSwitch(){
 		isCandidateAxesShown = !isCandidateAxesShown;
 		if (isCandidateAxesShown) {
-			showAllSwitch.text = "ON";
+			showAllSwitch.text = "OFF";
 			ShowCandidateAxes ();
 		} else {
-			showAllSwitch.text = "OFF";
+			showAllSwitch.text = "ON";
 			HideCandidateAxes ();
 		}
 	}

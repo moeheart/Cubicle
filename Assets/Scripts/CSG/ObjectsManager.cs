@@ -3,11 +3,87 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectsManager : MonoBehaviour {
-	public CSGSceneObj CSGObjectPrefab;
-	public CSGSceneObj CSGCube, CSGSphere, CSGCylinder;
+	public SceneObject CSGObjectPrefab;
+	//public SceneObject CSGCube, CSGSphere, CSGCylinder;
+	public GameObject targetPrefab;
+	public Mesh targetMesh;
+	//public Material wireframeMaterial;
+
+	private List<SceneObject> sceneObjs = new List<SceneObject>();
+	private GameObject targetObj;
+	private SceneObject opA, opB;
+	private SceneObject selectedObj;
 
 	public void LoadGameObjects() {
+		SceneObject cube = Instantiate(CSGObjectPrefab) as SceneObject;
+		SceneObject sphere = Instantiate(CSGObjectPrefab) as SceneObject;
+		PrimitiveHelper.SetAsType(cube, PrimitiveType.Cube);
+		PrimitiveHelper.SetAsType(sphere, PrimitiveType.Sphere);
+		//GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+		//GameObject sphere = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+		
+
+		//Mesh cubeMesh = cube.GetComponent<MeshFilter>().mesh;
+		//cube.GetComponent<MeshFilter>().sharedMesh = cubeMesh;
+		cube.transform.localPosition = new Vector3(-2,2,0);
+		sphere.transform.localPosition = new Vector3(-2,-2,0);
+		sphere.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
+		sceneObjs.Add(cube);
+		sceneObjs.Add(sphere);
+
+		targetObj = Instantiate(targetPrefab) as GameObject;
+		targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
 	}
+
+	void Update() {
+		if (Input.GetKeyDown(KeyCode.Space)) {
+			CSGUtil.Subtract(opA.gameObject, opB.gameObject);
+			sceneObjs.Remove(opB);
+			Destroy(opB.gameObject);
+		}
+		if (Input.GetMouseButtonDown(0)) {
+			if (sceneObjs.Count == 1) {
+				GameObject composite = sceneObjs[0].gameObject;
+				float compositeVolume = CSGUtil.VolumeOfMesh(composite);
+				float targetVolume = CSGUtil.VolumeOfMesh(targetObj);
+				//GameObject flagObj = Instantiate(composite) as GameObject;
+				CSGUtil.Union(targetObj, composite);
+				float unionVolume = CSGUtil.VolumeOfMesh(targetObj);
+				
+				Debug.Log(unionVolume + " " + targetVolume + " " + compositeVolume);
+				if ((unionVolume - targetVolume < 2e-2) && (unionVolume - compositeVolume < 2e-2)) {
+					Debug.Log(unionVolume + " " + targetVolume + " " + compositeVolume);
+					Debug.Log("You win...!!!");
+					Destroy(composite);
+					Destroy(targetObj);
+					return;
+				}
+				targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
+				targetObj.name = "Target";
+			}
+		}
+	}
+
+	public void OnSceneObjClick(SceneObject obj) {
+		if (selectedObj) {
+			selectedObj.OnDeselect();
+		}
+		selectedObj = obj;
+		selectedObj.OnSelect();
+		if (opA == null) {
+			opA = obj;
+		}
+		else if (opB == null) {
+			opB = obj;
+		}
+		else {
+			opA.SetDefaultMaterial();
+			opA = opB;
+			opB = obj;
+		}
+	}
+
+
 }
 
 /*public class ObjectsManager : MonoBehaviour {

@@ -6,7 +6,7 @@ using MiniJSON;
 
 public class Data {
     public int[] Lines;
-    public int[] Faces;
+    public float[] Faces;
 
     public Data(string DataPath, int level)
     {
@@ -30,13 +30,13 @@ public class Data {
         List<object> FaceObjList = CurrentLevle["Faces"] as List<object>;
 
         List<int> LineList = new List<int>();
-        List<int> FaceList = new List<int>();
+        List<float> FaceList = new List<float>();
 
         foreach(object i in LineObjList)
             LineList.Add(System.Convert.ToInt32(i));
 
         foreach(object j in FaceObjList)
-            FaceList.Add(System.Convert.ToInt32(j));
+            FaceList.Add(System.Convert.ToSingle(j));
 
         Lines = LineList.ToArray();
         Faces = FaceList.ToArray();

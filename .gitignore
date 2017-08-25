@@ -5,3 +5,4 @@
 *.sln
 *.csproj
 *.DS_Store
+.vs/

@@ -29,10 +29,11 @@ public class AxisDrawing: ResponseProcessing {
 		isLineInstantiated = false;
 		InitSections ();
 		linePath = new List<Vector3> ();
-		if (RevSolidGameInfo.GetLODByInt() == 1) {
-			sectionScale = 0.3f;
-		}else if(RevSolidGameInfo.GetLODByInt() == 2){
-			sectionScale = 0.2f;
+		if (RevSolidGameInfo.levelOfDifficulty <= 1) { 
+			//RevSolidGameInfo class might not have awaken, be careful when calling its functions
+			sectionScale = 0.3f/resizedScale;
+		}else if(RevSolidGameInfo.levelOfDifficulty <= 2){
+			sectionScale = 0.2f/resizedScale;
 		}
 	}
 
@@ -226,7 +227,6 @@ public class AxisDrawing: ResponseProcessing {
 
 		for (int i = 0; i < 6; i ++) {
 			tempConvolution = Convolution(pathKernel,Section.candKernels[i]);
-
 			if (tempConvolution > maxConvolution) {
 				if (maxConvolution >= 1) {
 					maxConvolution = tempConvolution;
@@ -248,17 +248,18 @@ public class AxisDrawing: ResponseProcessing {
 		//transfrom into 550x550 resolution
 			
 		for (int i = 0; i < path.Count; i++) {
-
-			x =(path[i].x-(ActiveObjControl.activeObjects [panelIndex].image.transform.position.x-wx))/sectionScale+ Section.imgRes/2;
-			y =(path[i].y-(ActiveObjControl.activeObjects [panelIndex].image.transform.position.y-wy))/sectionScale+ Section.imgRes/2;
+			Vector3 panelPosRelativeToScreen = ActiveObjControl.activeObjects [panelIndex].image.transform.position + new Vector3 (-wx, -wy, 0);
+			x =(path[i].x-panelPosRelativeToScreen.x)/sectionScale+ Section.imgRes/2;
+			y =(path[i].y-panelPosRelativeToScreen.y)/sectionScale+ Section.imgRes/2;
+			//Debug.Log ((path[i].x-panelPosRelativeToScreen.x)/0.2f);
+			//Debug.Log ((path[i].y-panelPosRelativeToScreen.y)/0.2f);
 			x = Mathf.FloorToInt(x / 100);
 			y = Mathf.FloorToInt(y / 100);
-
 			if (x >= 0 && x<6&& y >= 0&&y<6) {//for cases where mousePos is out of image
 				pathKernel [(int)(y * 6 + x)] = 1;
 			}
 		}
-		
+
 	}
 
 	int Convolution(int[] kernel1,int[] kernel2){
@@ -288,7 +289,7 @@ public class AxisDrawing: ResponseProcessing {
 		int panelIndex=IdentifyPanelIndexOfStroke(mid);
 		//Debug.Log (panelIndex);
 		int bestMatchCandNo=-2;
-		if (ActiveObjControl.activeObjects [sections[panelIndex].polygonIndex].isKilled == false) {
+		if (ActiveObjControl.activeObjects [panelIndex].isKilled == false) {
 			bestMatchCandNo = BestMatchCandidate (path, panelIndex);
 			if (bestMatchCandNo == -1) {
 				RevSolidGameInfo.Add2TotalHit (1);

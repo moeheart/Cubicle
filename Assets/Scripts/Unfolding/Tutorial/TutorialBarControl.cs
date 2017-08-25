@@ -10,6 +10,7 @@ public class TutorialBarControl : MonoBehaviour {
     public MeshGenerator meshgenerator;
     public GameObject gameObj;
     public GameObject GoalImage;
+    public GameObject SkipButton;
     public GameObject[] Texts = new GameObject[5];
 
     public int TotalPageNum = 5;
@@ -85,9 +86,34 @@ public class TutorialBarControl : MonoBehaviour {
         {
             gameObj.SetActive(true);
             GoalImage.SetActive(false);
+            SkipButton.SetActive(true);
         }
         
 
+    }
+
+    private int GetLevelByRoomid(int _roomid)
+    {
+        int level = 0;
+
+        if (_roomid == 9)
+            level = 1;
+        if (_roomid == 10)
+            level = 3;
+        if (_roomid == 11)
+            level = 5;
+
+        return level;
+    }
+
+    public void SkipTutorial()
+    {
+        TutorialCanvas.SetActive(false);
+        UserCanvas.SetActive(true);
+        gameObj.SetActive(true);
+        int roomid = DataUtil.GetCurrentRoomId();
+        int Level = GetLevelByRoomid(roomid);
+        meshgenerator.ReGenerate(Level);
     }
 
     IEnumerator WaitAndJump()
@@ -96,6 +122,8 @@ public class TutorialBarControl : MonoBehaviour {
         TutorialCanvas.SetActive(false);
         UserCanvas.SetActive(true);
         gameObj.SetActive(true);
-        meshgenerator.ReGenerate(3);
+        int roomid = DataUtil.GetCurrentRoomId();
+        int Level = GetLevelByRoomid(roomid);
+        meshgenerator.ReGenerate(Level);
     }
 }

@@ -77,7 +77,7 @@ public class ActiveObject {
 
 
 	public void RespondToReactionTime(){
-		if (reactionTime >= 5.0f) {
+		if (reactionTime >= RevSolidGameInfo.MaxReactionTime) {
 			isKilled = true;
 			RevSolidGameInfo.Add2FalseStrokeCount (1);
 			RevSolidUIControl.RefreshBroadcasts ();

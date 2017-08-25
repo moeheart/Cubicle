@@ -14,23 +14,49 @@ public class PlayerControl : MonoBehaviour {
     public GameObject WinCanvas;
     public GameObject LoseCanvas;
     public GameObject UserCanvas;
+    LogTool logtool;
 
-    private string path = "Assets/Resources/Unfolding/_Results/Level3.txt";
+    private string path;
+    private string path1 = "Assets/Resources/Unfolding/_Results/Level";
+    private string path2 = ".txt";
+
+    private List<int> FinalLevelofStage = new List<int> { 2, 4, 6 };
 
     [HideInInspector]
     public bool unfolding = false;
     bool unfoldA = false;
     bool unfoldB = false;
 
-    List<Vector3> WaitingLines;
+    List<Vector3> WaitingLinesStartingPoint;
+    List<Vector3> WaitingLinesEndingPoint;
+
+    List<Vector3> PreviousStartingPoint;
+    List<Vector3> PreviousEndingPoint;
+    List<bool> PreviousUnfoldingA;
+    List<bool> PreviousUnfoldingB;
+    List<Vector3> PreviousStartingNormalA;
+    List<Vector3> PreviousStartingNormalB;
+    bool foldback = false;
 
     // Use this for initialization
     void Start () {
         //TargetPositions = new List<Vector3>();
         WinCanvas.SetActive(false);
         LoseCanvas.SetActive(false);
-        
-        WaitingLines = new List<Vector3>();
+
+        WaitingLinesStartingPoint = new List<Vector3>();
+        WaitingLinesEndingPoint = new List<Vector3>();
+
+        PreviousStartingPoint = new List<Vector3>();
+        PreviousEndingPoint = new List<Vector3>();
+        PreviousUnfoldingA = new List<bool>();
+        PreviousUnfoldingB = new List<bool>();
+        PreviousStartingNormalA = new List<Vector3>();
+        PreviousStartingNormalB = new List<Vector3>();
+
+        logtool = GetComponent<LogTool>();
+
+        path = path1 + meshGenerator.CurrentLevel + path2;
     }
 	
 	// Update is called once per frame
@@ -39,10 +65,15 @@ public class PlayerControl : MonoBehaviour {
         {
             SceneManager.LoadScene("World Scene");
         }
-        if (!unfolding && WaitingLines.ToArray().Length != 0)
+        if (!unfolding && WaitingLinesStartingPoint.ToArray().Length != 0)
         {
-            Vector3 midPoint = WaitingLines[0];
-            WaitingLines.RemoveAt(0);
+            Vector3 midPoint = (WaitingLinesStartingPoint[0] + WaitingLinesEndingPoint[0]) / 2;
+
+            PreviousStartingPoint.Add(WaitingLinesStartingPoint[0]);
+            PreviousEndingPoint.Add(WaitingLinesEndingPoint[0]);
+
+            WaitingLinesStartingPoint.RemoveAt(0);
+            WaitingLinesEndingPoint.RemoveAt(0);
             ClickAtLine(midPoint);
         }
 
@@ -62,11 +93,98 @@ public class PlayerControl : MonoBehaviour {
                 //hitObject.transform.GetComponent<Glow>().ChangeToGray();
 
                 Vector3 midPoint = (startingPoint + endingPoint) / 2;
-                //Debug.Log(midPoint);
+
+                foldback = false;
+                PreviousStartingPoint.Clear();
+                PreviousEndingPoint.Clear();
+                PreviousUnfoldingA.Clear();
+                PreviousUnfoldingB.Clear();
+                PreviousStartingNormalA.Clear();
+                PreviousStartingNormalB.Clear();
 
                 ClickAtLine(midPoint);
+
+                logtool.LineClick(startingPoint, endingPoint);
+
+                PreviousStartingPoint.Add(startingPoint);
+                PreviousEndingPoint.Add(endingPoint);
             }
         }
+    }
+
+    public void StepBack()
+    {
+        if (!unfolding && !foldback)
+        {
+            RecoverLineInfo(PreviousStartingPoint[0], PreviousEndingPoint[0]);
+            meshGenerator.ReCreateLine(PreviousStartingPoint[0], PreviousEndingPoint[0]);
+            logtool.LineRevert(PreviousStartingPoint[0], PreviousEndingPoint[0]);
+
+            if (PreviousUnfoldingA[0] || PreviousUnfoldingB[0])
+            {
+                if (PreviousStartingPoint.ToArray().Length == 2)
+                {
+                    RecoverLineInfo(PreviousStartingPoint[1], PreviousEndingPoint[1]);
+                    if (PreviousUnfoldingA[0])
+                    {
+                        Vector3 ckMidPoint = (PreviousStartingPoint[0] + PreviousEndingPoint[0]) / 2;
+                        // Vector3 rmMidPoint = (PreviousStartingPoint[1] + PreviousEndingPoint[1]) / 2;
+                        FoldingBack(ckMidPoint, PreviousStartingPoint[1], PreviousEndingPoint[1], 0, PreviousStartingNormalA[0]);
+                    }
+                    if (PreviousUnfoldingB[0])
+                    {
+                        Vector3 ckMidPoint = (PreviousStartingPoint[0] + PreviousEndingPoint[0]) / 2;
+                        // Vector3 rmMidPoint = (PreviousStartingPoint[1] + PreviousEndingPoint[1]) / 2;
+                        FoldingBack(ckMidPoint, PreviousStartingPoint[1], PreviousEndingPoint[1], 1, PreviousStartingNormalB[0]);
+                    }
+                }
+                else
+                {
+                    // TODO: We still need to consider the situation that unfolding happens one by one.
+                }
+            }
+            foldback = true;
+        }   
+    }
+
+    private void FoldingBack(Vector3 ckMidPoint, Vector3 rmStartingPoint, Vector3 rmEndingPoint, int index, Vector3 TargetNormal)
+    {
+        List<int> faceIndices = meshGenerator.GetFaceIndicesOfLine(ckMidPoint);
+        int FaceIndex = faceIndices[index];
+
+        Vector3 rmMidPoint = (rmStartingPoint + rmEndingPoint) / 2;
+        /*Vector3 rmStartingPoint = meshGenerator.model.faces[FaceIndex].lineStartingPoint[0];
+        Vector3 rmEndingPoint = meshGenerator.model.faces[FaceIndex].lineEndingPoint[0];
+        Vector3 rmMidPoint = meshGenerator.model.faces[FaceIndex].linesMidpoints[0];*/
+
+        RecoverLastLine(rmMidPoint);
+        meshGenerator.DeleteDashedLineIndex(FaceIndex);
+
+        int TargetIndex = meshGenerator.GetTheOtherFaceIndex(rmMidPoint, FaceIndex);
+        // TODO: The current Normal is the same as the TargetNormal now.
+        Vector3 currentNormal = meshGenerator.GetNormalofFace(FaceIndex);
+
+        // Vector3 TargetNormal = meshGenerator.GetNormalofFace(TargetIndex);
+
+        int NumOfConnectedFaces = meshGenerator.model.faces[FaceIndex].ConnectedFaces.ToArray().Length;
+        for (int i = -1; i < NumOfConnectedFaces; i++)
+        {
+            int currentIndex;
+            if (i == -1)
+            {
+                currentIndex = FaceIndex;
+                meshGenerator.model.faces[FaceIndex].Neighbors.Remove(currentIndex);
+                meshGenerator.model.faces[currentIndex].Neighbors.Remove(FaceIndex);
+            }
+            else
+                currentIndex = meshGenerator.model.faces[FaceIndex].ConnectedFaces[i];
+
+            meshGenerator.model.faces[TargetIndex].ConnectedFaces.Remove(currentIndex);
+        }
+
+        unfolding = true;
+        StartUnfolding(FaceIndex, currentNormal, TargetNormal, rmStartingPoint, rmEndingPoint);
+        //StartUnfolding(indexB, currentNormalofB, TargetNormalofB, rmStartingPoint, rmEndingPoint);
     }
 
     private void ClickAtLine(Vector3 midPoint)
@@ -83,18 +201,22 @@ public class PlayerControl : MonoBehaviour {
         unfolding = unfoldA || unfoldB;
         Debug.Log(unfolding);
 
+        PreviousUnfoldingA.Add(unfoldA);
+        PreviousUnfoldingB.Add(unfoldB);
+
         if (unfoldA)
         {
             Vector3 rmStartingPoint = meshGenerator.model.faces[indexA].lineStartingPoint[0];
             Vector3 rmEndingPoint = meshGenerator.model.faces[indexA].lineEndingPoint[0];
             Vector3 rmMidPoint = meshGenerator.model.faces[indexA].linesMidpoints[0];
 
-            DeleteLastLine(rmMidPoint);
+            DeleteLastLine(rmStartingPoint, rmEndingPoint);
             meshGenerator.AddDashedLineIndex(indexA);
 
             if (GameObject.FindGameObjectWithTag("Line") == null)
             {
-                WaitingLines.Clear();
+                WaitingLinesStartingPoint.Clear();
+                WaitingLinesEndingPoint.Clear();
                 return;
             }
 
@@ -119,7 +241,7 @@ public class PlayerControl : MonoBehaviour {
             }
 
 
-
+            PreviousStartingNormalA.Add(currentNormalofA);
             StartUnfolding(indexA, currentNormalofA, TargetNormalofA, rmStartingPoint, rmEndingPoint);
         }
         if (unfoldB)
@@ -129,12 +251,13 @@ public class PlayerControl : MonoBehaviour {
             Vector3 rmEndingPoint = meshGenerator.model.faces[indexB].lineEndingPoint[0];
             Vector3 rmMidPoint = meshGenerator.model.faces[indexB].linesMidpoints[0];
 
-            DeleteLastLine(rmMidPoint);
+            DeleteLastLine(rmStartingPoint, rmEndingPoint);
             meshGenerator.AddDashedLineIndex(indexB);
 
             if (GameObject.FindGameObjectWithTag("Line") == null)
             {
-                WaitingLines.Clear();
+                WaitingLinesStartingPoint.Clear();
+                WaitingLinesEndingPoint.Clear();
                 return;
             }
 
@@ -158,6 +281,7 @@ public class PlayerControl : MonoBehaviour {
                 meshGenerator.model.faces[TargetIndexofB].ConnectedFaces.Add(currentIndex);
             }
 
+            PreviousStartingNormalB.Add(currentNormalofB);
             StartUnfolding(indexB, currentNormalofB, TargetNormalofB, rmStartingPoint, rmEndingPoint);
         }
     }
@@ -200,19 +324,52 @@ public class PlayerControl : MonoBehaviour {
             return true;   
     }
 
-    private void DeleteLastLine(Vector3 midPoint)
+    private void RecoverLineInfo(Vector3 startingPoint, Vector3 endingPoint)
     {
-        foreach(GameObject line in GameObject.FindGameObjectsWithTag("Line"))
+        Vector3 midPoint = (startingPoint + endingPoint) / 2;
+        //Get two faces' indices of the selected line.
+        List<int> faceIndices = meshGenerator.GetFaceIndicesOfLine(midPoint);
+        int faceA = faceIndices[0];
+        int faceB = faceIndices[1];
+
+        meshGenerator.model.faces[faceA].linesMidpoints.Add((startingPoint + endingPoint) / 2);
+        meshGenerator.model.faces[faceA].lineStartingPoint.Add(startingPoint);
+        meshGenerator.model.faces[faceA].lineEndingPoint.Add(endingPoint);
+        meshGenerator.model.faces[faceB].linesMidpoints.Add((startingPoint + endingPoint) / 2);
+        meshGenerator.model.faces[faceB].lineStartingPoint.Add(startingPoint);
+        meshGenerator.model.faces[faceB].lineEndingPoint.Add(endingPoint);
+    }
+
+    private void RecoverLastLine(Vector3 midPoint)
+    {
+        foreach (GameObject line in GameObject.FindGameObjectsWithTag("Line"))
         {
             Vector3 startingPoint = line.GetComponent<LineRenderer>().GetPosition(0);
             Vector3 endingPoint = line.GetComponent<LineRenderer>().GetPosition(1);
             if (midPoint == (startingPoint + endingPoint) / 2)
             {
+                line.GetComponent<BoxCollider>().enabled = true;
+                line.GetComponent<Glow>().ChangeToSolidLine();
+
+                meshGenerator.DeleteDashedLineMidpoints(midPoint);
+            }
+
+        }
+    }
+
+    private void DeleteLastLine(Vector3 rmStartingPoint, Vector3 rmEndingPoint)
+    {
+        foreach(GameObject line in GameObject.FindGameObjectsWithTag("Line"))
+        {
+            Vector3 startingPoint = line.GetComponent<LineRenderer>().GetPosition(0);
+            Vector3 endingPoint = line.GetComponent<LineRenderer>().GetPosition(1);
+            if (startingPoint == rmStartingPoint && endingPoint == rmEndingPoint)
+            {
                 //Destroy(line);
                 line.GetComponent<BoxCollider>().enabled = false;
                 line.GetComponent<Glow>().ChangeToDashedLine();
 
-                meshGenerator.AddDashedLineMidpoints(midPoint);
+                meshGenerator.AddDashedLineMidpoints((startingPoint + endingPoint) / 2);
             }
                 
         }
@@ -221,7 +378,8 @@ public class PlayerControl : MonoBehaviour {
         //But this can be done by deleting the line after the previous unfolding finished.
 
         //Solution:Push the midPoint to an List, waiting to be processed.
-        WaitingLines.Add(midPoint);
+        WaitingLinesStartingPoint.Add(rmStartingPoint);
+        WaitingLinesEndingPoint.Add(rmEndingPoint);
     }
 
     public void Grading()
@@ -230,7 +388,10 @@ public class PlayerControl : MonoBehaviour {
         Debug.Log("Your grade is: " + grade);
         UserCanvas.SetActive(false);
 
-        if (grade == 1)
+        logtool.Submit(grade);
+        logtool.SaveLog();
+
+        if (grade == 100)
         {
             WinCanvas.SetActive(true);
             WinScoreManager.SetScore(grade);
@@ -248,6 +409,7 @@ public class PlayerControl : MonoBehaviour {
         float TotalGrade = 0;
         float CurrentGrade = 0;
 
+        path = path1 + meshGenerator.CurrentLevel + path2;
         StreamReader reader = new StreamReader(path, false);
         char[] delimiterChars = { ';' };
 
@@ -293,6 +455,7 @@ public class PlayerControl : MonoBehaviour {
 
     public void SaveResult()
     {
+        path = path1 + meshGenerator.CurrentLevel + path2;
         StreamWriter writer = new StreamWriter(path, false);
 
         int NumofFaces = meshGenerator.NumofFaces;
@@ -321,4 +484,19 @@ public class PlayerControl : MonoBehaviour {
         UserCanvas.SetActive(true);
     }
     
+    public void Proceed()
+    {
+        int currentLevel = meshGenerator.CurrentLevel;
+        if (FinalLevelofStage.Contains(currentLevel))
+        {
+            SceneManager.LoadScene("World Scene");
+        }
+        else
+        {
+            WinCanvas.SetActive(false);
+            UserCanvas.SetActive(true);
+            meshGenerator.ReGenerate(++currentLevel);
+        }
+    }
+
 }

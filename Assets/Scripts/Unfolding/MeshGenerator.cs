@@ -1,15 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using System.IO;
 using Container;
 
 public class MeshGenerator : MonoBehaviour {
+
+    public RawImage goalImage;
+    public LogTool logtool;
 
     MeshFilter mf;
     Mesh mesh;
 
     Data data;
     string JsonFilePath = "Assets/Scripts/Unfolding/Json/model.json";
+    public string path { get; private set; }
+    private string path1 = "Assets/Resources/Unfolding/_Results/Level";
+    private string path2 = ".png";
+
+    public Material[] MyMaterials = new Material[3];
+
     public int CurrentLevel {get; private set;}
 
     public Model model;
@@ -27,8 +38,10 @@ public class MeshGenerator : MonoBehaviour {
 
     //Vertices
     List<Vector3> vertices;
-    //Triangles
-    List<int> triangles;
+    //Triangles of 3 subMeshes
+    List<int> triangles0;
+    List<int> triangles1;
+    List<int> triangles2;
     //Normals
     List<Vector3> normals;
     //UVs
@@ -71,8 +84,11 @@ public class MeshGenerator : MonoBehaviour {
 
     // Use this for initialization
     void Start() {
+        gameObject.GetComponent<MeshRenderer>().materials = MyMaterials;
+
         mf = gameObject.GetComponent<MeshFilter>();
         mesh = new Mesh();
+        mesh.subMeshCount = MyMaterials.Length;
         mf.mesh = mesh;
 
         InitArrays();
@@ -85,7 +101,10 @@ public class MeshGenerator : MonoBehaviour {
         //Assign Arrays
         mesh.vertices = vertices.ToArray();
         mesh.normals = normals.ToArray();
-        mesh.triangles = triangles.ToArray();
+        mesh.SetTriangles(triangles0.ToArray(), 0);
+        mesh.SetTriangles(triangles1.ToArray(), 1);
+        mesh.SetTriangles(triangles2.ToArray(), 2);
+        mesh.uv = uvs.ToArray();
 
         CreateLines();    
     }
@@ -98,7 +117,9 @@ public class MeshGenerator : MonoBehaviour {
     private void InitArrays()
     {
         vertices = new List<Vector3>();
-        triangles = new List<int>();
+        triangles0 = new List<int>();
+        triangles1 = new List<int>();
+        triangles2 = new List<int>();
         normals = new List<Vector3>();
         uvs = new List<Vector2>();
 
@@ -140,17 +161,7 @@ public class MeshGenerator : MonoBehaviour {
 
                 player.unfolding = false;
                 smoothPassedTime = 0f;
-                UnfoldingFaces.Clear();
-                StartingVertices.Clear();
-                UnfoldingVertices.Clear();
-                StartingNormals.Clear();
-                UnfoldingNormals.Clear();
-                PivotPoints.Clear();
-
-                LinePivotPoints.Clear();
-                StartingLines.Clear();
-                EndingLines.Clear();
-                DashedLines.Clear();
+                ResetUnfoldingArrays();
             }
             else
             {
@@ -216,7 +227,7 @@ public class MeshGenerator : MonoBehaviour {
             Debug.LogError("Information of the model is missing!");
         }
         else {
-            NumofFaces = data.Faces[0];
+            NumofFaces = (int)data.Faces[0];
             int ptr = 1;
             int offset = 0;
             for(int i = 0; i < NumofFaces * 2; i++)
@@ -226,13 +237,15 @@ public class MeshGenerator : MonoBehaviour {
 
                 Face newFace = FaceInit();
 
-                int NumofVertices = data.Faces[ptr++];
-                int NumofTriangles = data.Faces[ptr++];
+                int NumofVertices = (int)data.Faces[ptr++];
+                int NumofTriangles = (int)data.Faces[ptr++];
                 Vector3 normal = new Vector3();
                 if (i < NumofFaces)
-                    normal = GetNormalByNum(data.Faces[ptr++]);
+                    normal = GetNormalByNum((int)data.Faces[ptr++]);
                 else
-                    normal = GetReverseNormalByNum(data.Faces[ptr++]);
+                    normal = GetReverseNormalByNum((int)data.Faces[ptr++]);
+
+                int submeshNum = (int)data.Faces[ptr++];
 
                 for (int j = 0; j < NumofVertices; j++)
                 {
@@ -244,30 +257,71 @@ public class MeshGenerator : MonoBehaviour {
 
                     newFace.normals.Add(normal);
                     normals.Add(normal);
+
+                    Vector2 uv = new Vector2(data.Faces[ptr++], data.Faces[ptr++]);
+                    uvs.Add(uv);
                 }
                 for(int k = 0; k < NumofTriangles; k++)
                 {
-                    int triangleNode1 = data.Faces[ptr++] + offset;
-                    int triangleNode2 = data.Faces[ptr++] + offset;
-                    int triangleNode3 = data.Faces[ptr++] + offset;
+                    int triangleNode1 = (int)data.Faces[ptr++] + offset;
+                    int triangleNode2 = (int)data.Faces[ptr++] + offset;
+                    int triangleNode3 = (int)data.Faces[ptr++] + offset;
 
                     if (i < NumofFaces)
                     {
                         newFace.triangles.Add(triangleNode1);
                         newFace.triangles.Add(triangleNode2);
                         newFace.triangles.Add(triangleNode3);
-                        triangles.Add(triangleNode1);
-                        triangles.Add(triangleNode2);
-                        triangles.Add(triangleNode3);
+                        if(submeshNum == 0)
+                        {
+                            triangles0.Add(triangleNode1);
+                            triangles0.Add(triangleNode2);
+                            triangles0.Add(triangleNode3);
+                        }
+                        else if (submeshNum == 1)
+                        {
+                            triangles1.Add(triangleNode1);
+                            triangles1.Add(triangleNode2);
+                            triangles1.Add(triangleNode3);
+                        }
+                        else if (submeshNum == 2)
+                        {
+                            triangles2.Add(triangleNode1);
+                            triangles2.Add(triangleNode2);
+                            triangles2.Add(triangleNode3);
+                        }
+                        else
+                        {
+                            Debug.LogWarning("The submesh number is wrong.");
+                        }
                     }
                     else
                     {
                         newFace.triangles.Add(triangleNode3);
                         newFace.triangles.Add(triangleNode2);
                         newFace.triangles.Add(triangleNode1);
-                        triangles.Add(triangleNode3);
-                        triangles.Add(triangleNode2);
-                        triangles.Add(triangleNode1);
+                        if (submeshNum == 0)
+                        {
+                            triangles0.Add(triangleNode3);
+                            triangles0.Add(triangleNode2);
+                            triangles0.Add(triangleNode1);
+                        }
+                        else if (submeshNum == 1)
+                        {
+                            triangles1.Add(triangleNode3);
+                            triangles1.Add(triangleNode2);
+                            triangles1.Add(triangleNode1);
+                        }
+                        else if (submeshNum == 2)
+                        {
+                            triangles2.Add(triangleNode3);
+                            triangles2.Add(triangleNode2);
+                            triangles2.Add(triangleNode1);
+                        }
+                        else
+                        {
+                            Debug.LogWarning("The submesh number is wrong.");
+                        }
                     }
                 }
                 newFace.offset = offset;
@@ -364,6 +418,50 @@ public class MeshGenerator : MonoBehaviour {
         }
     }
 
+    /// <summary>
+    /// When we're stepping back and wanting to recreate a deleted line.
+    /// </summary>
+    public void ReCreateLine(Vector3 startingPoint, Vector3 endingPoint)
+    {
+
+        GameObject currentLineObj = new GameObject();
+        currentLineObj.transform.parent = this.transform;
+        currentLineObj.name = "Line";
+        currentLineObj.tag = "Line";
+
+        LineRenderer currentRenderer = currentLineObj.AddComponent<LineRenderer>();
+        currentRenderer.textureMode = LineTextureMode.Tile;
+
+        //currentRenderer.sortingLayerName = "Foreground";
+
+        currentRenderer.material = LineMaterial;
+        currentRenderer.positionCount = vertexCount;
+        currentRenderer.startColor = Color.red;
+        currentRenderer.endColor = Color.red;
+        currentRenderer.startWidth = lineWidth;
+        currentRenderer.endWidth = lineWidth;
+
+        currentRenderer.SetPosition(0, startingPoint);
+        currentRenderer.SetPosition(1, endingPoint);
+
+        /*MeshCollider meshCollider = currentLineObj.AddComponent<MeshCollider>();
+        meshCollider.sharedMesh = mesh;*/
+        currentLineObj.AddComponent<Glow>();
+        currentLineObj.GetComponent<Glow>().originalMaterial = LineMaterial;
+        currentLineObj.GetComponent<Glow>().DashedLineMaterial = DashedLineMaterial;
+
+        BoxCollider boxCollider = currentLineObj.AddComponent<BoxCollider>();
+        float lineLength = Vector3.Distance(startingPoint, endingPoint);
+
+        //TODO: This is buggy because lines may not be vertical or horizontal.
+        if (startingPoint.x != endingPoint.x)
+            boxCollider.size = new Vector3(lineLength, 0.1f, 0.1f);
+        if (startingPoint.y != endingPoint.y)
+            boxCollider.size = new Vector3(0.1f, lineLength, 0.1f);
+        if (startingPoint.z != endingPoint.z)
+            boxCollider.size = new Vector3(0.1f, 0.1f, lineLength);
+    }
+
     Line LineInit(Vector3 _vertexA, Vector3 _vertexB)
     {
         Line currentLine = new Line(_vertexA, _vertexB);
@@ -374,7 +472,8 @@ public class MeshGenerator : MonoBehaviour {
         currentLineObj.tag = "Line";
 
         LineRenderer currentRenderer = currentLineObj.AddComponent<LineRenderer>();
-
+        currentRenderer.textureMode = LineTextureMode.Tile;
+        
         //currentRenderer.sortingLayerName = "Foreground";
 
         currentRenderer.material = LineMaterial;
@@ -461,6 +560,21 @@ public class MeshGenerator : MonoBehaviour {
     public Vector3 GetNormalofFace(int index)
     {
         return model.faces[index].normals[0];
+    }
+
+    private void ResetUnfoldingArrays()
+    {
+        UnfoldingFaces.Clear();
+        StartingVertices.Clear();
+        UnfoldingVertices.Clear();
+        StartingNormals.Clear();
+        UnfoldingNormals.Clear();
+        PivotPoints.Clear();
+
+        LinePivotPoints.Clear();
+        StartingLines.Clear();
+        EndingLines.Clear();
+        DashedLines.Clear();
     }
 
     public void StartUnfolding(int FaceIndex, Quaternion rotation, Vector3 _StartNormal, Vector3 _TargetNormal, Vector3 startingPoint, Vector3 endingPoint)
@@ -582,18 +696,54 @@ public class MeshGenerator : MonoBehaviour {
         //Assign Arrays
         mesh.vertices = vertices.ToArray();
         mesh.normals = normals.ToArray();
-        mesh.triangles = triangles.ToArray();
+        mesh.SetTriangles(triangles0.ToArray(), 0);
+        mesh.SetTriangles(triangles1.ToArray(), 1);
+        mesh.SetTriangles(triangles2.ToArray(), 2);
+        mesh.uv = uvs.ToArray();
 
         CreateLines();
+
+        // Reload a material uv image(Now we don't need this because we have an array of materials.)
+        //LoadMaterialByLevel(CurrentLevel);
+
+        // Reload a new goal image.
+        path = path1 + CurrentLevel + path2;
+        Texture2D newTexture = new Texture2D(250,125);
+        byte[] ImageBytes = File.ReadAllBytes(path);
+        newTexture.LoadImage(ImageBytes);
+
+        goalImage.texture = newTexture;
+
+        // Clear the previous log content.
+        logtool.ClearLog();
     }
+
+    /*private void LoadMaterialByLevel(int _level)
+    {
+        if (_level <= 2)
+            gameObject.GetComponent<MeshRenderer>().material = EasyLevelMaterial;
+        else
+            gameObject.GetComponent<MeshRenderer>().material = MiddleLevelMaterial;
+
+    }*/
 
     public void AddDashedLineMidpoints(Vector3 _Midpoint)
     {
         DashedLineMidpoints.Add(_Midpoint);
     }
 
+    public void DeleteDashedLineMidpoints(Vector3 _Midpoint)
+    {
+        DashedLineMidpoints.Remove(_Midpoint);
+    }
+
     public void AddDashedLineIndex(int index)
     {
         DashedLinesIndices.Add(index);
+    }
+
+    public void DeleteDashedLineIndex(int index)
+    {
+        DashedLinesIndices.Remove(index);
     }
 }
