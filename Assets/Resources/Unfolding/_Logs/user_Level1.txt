@@ -78,3 +78,11 @@ Type: ClickLine, Line: (0,0,4:4,0,4), Time: 8/24/2017 2:16:15 PM
 Type: ClickLine, Line: (4,0,0:4,4,0), Time: 8/24/2017 2:16:27 PM
 Type: ClickLine, Line: (0,0,0:4,0,0), Time: 8/24/2017 2:16:34 PM
 Type: Submit, Score: 100, Time: 8/24/2017 2:16:45 PM
+Type: ClickLine, Line: (0,0,0:0,4,0), Time: 8/24/2017 3:22:59 PM
+Type: ClickLine, Line: (0,0,0:0,0,4), Time: 8/24/2017 3:23:00 PM
+Type: ClickLine, Line: (0,0,4:0,4,4), Time: 8/24/2017 3:23:01 PM
+Type: ClickLine, Line: (4,0,0:4,4,0), Time: 8/24/2017 3:23:07 PM
+Type: ClickLine, Line: (4,0,4:4,4,4), Time: 8/24/2017 3:23:08 PM
+Type: ClickLine, Line: (0,0,0:4,0,0), Time: 8/24/2017 3:23:12 PM
+Type: ClickLine, Line: (0,0,4:4,0,4), Time: 8/24/2017 3:23:17 PM
+Type: Submit, Score: 100, Time: 8/24/2017 3:23:30 PM

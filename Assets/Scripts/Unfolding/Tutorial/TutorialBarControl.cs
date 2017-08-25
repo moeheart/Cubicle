@@ -96,11 +96,11 @@ public class TutorialBarControl : MonoBehaviour {
     {
         int level = 0;
 
-        if (_roomid == 9)
+        if (_roomid == 14)
             level = 1;
-        if (_roomid == 10)
+        if (_roomid == 15)
             level = 3;
-        if (_roomid == 11)
+        if (_roomid == 16)
             level = 5;
 
         return level;
