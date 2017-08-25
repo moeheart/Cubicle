@@ -61,6 +61,7 @@ public class RevSolidLog : MonoBehaviour {
 
 	void RecordInitialization(){
 		writer = new StreamWriter (logFilePath, true);
+		writer.WriteLine ("\n\n{0}\n",System.DateTime.Now.ToString());
 		writer.WriteLine ("recordNo\ttimeStamp\ttrialNum\tlevel\taction\tdetail\t\n");
 	}
 
