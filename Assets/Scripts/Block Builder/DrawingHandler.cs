@@ -27,6 +27,8 @@ public class DrawingHandler : MonoBehaviour {
 
 	private Dictionary<string, object> gameState;
 
+	public int[,] height {get; private set;}
+
 	// Use this for initialization
 	void Start () {
 
@@ -43,7 +45,7 @@ public class DrawingHandler : MonoBehaviour {
 
 		id = DataUtil.GetCurrentRoomId();
 
-		int[,] height = new int[BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.gridSize.z];
+		height = new int[BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.gridSize.z];
 		ParseJson(jsonFilePath, height, id);
 		Dictionary<IntVector3, bool> targetBlock = To3DMapping(height);
 		
