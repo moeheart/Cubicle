@@ -25,7 +25,7 @@ public class PostEffects : MonoBehaviour {
 	void Update () {
 		if (gameInfo.phaseNo >= 3 && gameInfo.isTargetFound) {
 			bscCamera.saturation = 0;
-			bscCamera.green = 0.26f;
+			bscCamera.green = 0.1f;
 		} else {
 			bscCamera.saturation = initialSaturation;
 			bscCamera.green = initialGreenValue;

@@ -55,11 +55,11 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	}
 
 	public static void BroadcastHits (){
-		totalHit.text = "Hits: "+hit.ToString();
+		totalHit.text = "Hits: "+hit.ToString()+"/"+RevSolidGameInfo.WinningCriterion.ToString();
 	}
 
 	public static void BroadcastFalseStrokeCount (){
-		falseCount.text = "Miss: "+falseStrokeCount.ToString ();
+		falseCount.text = "Miss: "+falseStrokeCount.ToString ()+"/"+RevSolidGameInfo.MaxFalseCount.ToString();
 	}
 
 	public static void ShowRetryButton(){

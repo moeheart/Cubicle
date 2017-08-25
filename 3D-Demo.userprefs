@@ -1,23 +1,24 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Revolution Solid\RevSolidLog.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Revolution Solid\Tutorial.cs">
     <Files>
-      <File FileName="Assets\Scripts\Revolution Solid\Section.cs" Line="1" Column="1" NotebookId="1" />
-      <File FileName="Assets\Scripts\Revolution Solid\RevSolidGameInfo.cs" Line="19" Column="31" NotebookId="1" />
-      <File FileName="Assets\Scripts\Revolution Solid\ActiveObject.cs" Line="92" Column="31" NotebookId="1" />
-      <File FileName="Assets\Scripts\Revolution Solid\EventManager.cs" Line="1" Column="1" NotebookId="1" />
-      <File FileName="Assets\Scripts\Revolution Solid\RevSolidUIControl.cs" Line="157" Column="1" NotebookId="1" />
-      <File FileName="Assets\Scripts\Revolution Solid\AxisDrawing.cs" Line="121" Column="21" NotebookId="1" />
-      <File FileName="Assets\Scripts\Revolution Solid\Tutorial.cs" Line="1" Column="1" NotebookId="1" />
-      <File FileName="Assets\Scripts\Revolution Solid\ActiveObjControl.cs" Line="40" Column="100" NotebookId="1" />
+      <File FileName="Assets\Scripts\Revolution Solid\Section.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Revolution Solid\RevSolidLog.cs" Line="34" Column="5" />
+      <File FileName="Assets\Scripts\Revolution Solid\AxisDrawing.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Json\0824.json" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\View Point\Generation.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Json\Puzzles.json" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\3D World\World.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Block Builder\DrawingHandler.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\3D World\TriggerDevice.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Cube Shift\UIControl.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Cube Shift\CubeGame.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Cube Shift\MouseAndKeyboard.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Cube Shift\PostEffects.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Revolution Solid\ActiveObjControl.cs" Line="127" Column="34" />
+      <File FileName="Assets\Scripts\Revolution Solid\ActiveObject.cs" Line="6" Column="26" />
+      <File FileName="Assets\Scripts\Revolution Solid\Tutorial.cs" Line="75" Column="44" />
     </Files>
-    <FloatingWindows>
-      <FloatingWindow WindowId="1" X="903" Y="183" Width="915" Height="747">
-        <Files>
-          <File FileName="Assets\Scripts\Revolution Solid\RevSolidLog.cs" Line="67" Column="25" />
-        </Files>
-      </FloatingWindow>
-    </FloatingWindows>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

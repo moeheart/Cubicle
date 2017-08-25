@@ -52,7 +52,7 @@ public static class PuzzleTypes {
 			SceneManager.LoadScene("CSG Scene", LoadSceneMode.Single);
 		}
 		if (type == PuzzleType.RevolutionSolid) {
- 			SceneManager.LoadScene("Revolution Solid Scene", LoadSceneMode.Single);
+			SceneManager.LoadScene("Revolution Solid Scene_"+DataUtil.GetCurrentRoomId().ToString(), LoadSceneMode.Single);
  		}
         if (type == PuzzleType.Unfolding)
         {

@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using MiniJSON;
+
 
 public class ActiveObjControl : MonoBehaviour {
 
@@ -17,15 +21,17 @@ public class ActiveObjControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake(){
-		CheckLevelAndAddScript();
+		CheckLevel();
+		AddScript (RevSolidGameInfo.GetLODByInt());
 	}
 
 	void OnEnable(){
-		EventManager.StartListening ("RecordReactionTime",ReactionTimeToLog);
+		
+		//EventManager.StartListening ("RecordReactionTime",ReactionTimeToLog);
 	}
 
 	void OnDisable(){
-		EventManager.StopListening ("RecordReactionTime",ReactionTimeToLog);
+		//EventManager.StopListening ("RecordReactionTime",ReactionTimeToLog);
 	}
 
 	void Start () {
@@ -36,12 +42,29 @@ public class ActiveObjControl : MonoBehaviour {
 
 	}
 
-	void CheckLevelAndAddScript(){
-		RevSolidGameInfo.levelOfDifficulty = (SceneManager.GetActiveScene().name == "Easy") ? 1.0f : 2.0f;
-		if (RevSolidGameInfo.GetLODByInt() == 1) {
+	void CheckLevel(){
+		RevSolidGameInfo.levelOfDifficulty = ParseJson();
+	}
+
+	int ParseJson(){
+		int roomId=DataUtil.GetCurrentRoomId();
+		string jsonFilePath = "Assets/Scripts/Json/Puzzles.json";
+
+		string jsonString = File.ReadAllText(jsonFilePath);
+		Dictionary<string, object> dict;
+		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
+		dict = (Dictionary<string, object>)dict[roomId.ToString()];
+
+		return System.Convert.ToInt32 (dict ["levelNum"]);
+
+	}
+
+	void AddScript(int level){
+		
+		if (level == 1) {
 			Camera.main.gameObject.AddComponent <Easy>();
 				
-		} else if (RevSolidGameInfo.GetLODByInt() == 2) {
+		} else if (level == 2) {
 			Camera.main.gameObject.AddComponent <Hard>();
 		}
 	}

@@ -48,14 +48,14 @@ public class UIControl : MonoBehaviour {
 			gameInfo.PauseGame ();
 			button.gameObject.SetActive (true);
 			btnText.text = "Proceed";
-			cubeHit.text = "Given several cubes, organized in 3*3 space, with a tree in one of them\n\n"+"Now please REMEMBER the position of each cube and the tree for later manipulation & recall";
+			cubeHit.text = "Given several cubes, organized in 3*3 space, with a {candy cane} in one of them\n\n"+"Now please REMEMBER the position of each cube and the candy for later manipulation & recall";
 			restartBtn.gameObject.SetActive (false);
 		}
 		else if(gameInfo.phaseNo == 1){
 			
 			button.gameObject.SetActive (true);
 			btnText.text = "Play";
-			cubeHit.text = "After you press [Play], cubes will begin shifting\n\n"+"Tree in one cube will travel to the nearest one with an adjoining face, "+"which will later be indicated by both being marked [GREEN]";
+			cubeHit.text = "After you press [Play], cubes will begin shifting\n\n"+"Candy in one cube will travel to the nearest one with an adjoining face, "+"both of which are later marked [GREEN]";
 			restartBtn.gameObject.SetActive (false);
 		}
 		else if(gameInfo.phaseNo == 2){
@@ -67,7 +67,7 @@ public class UIControl : MonoBehaviour {
 				gameInfo.target.SetActive (false);
 			}
 
-			cubeHit.text = "Now the tree is travelling between cubes";
+			cubeHit.text = "Now the candy is travelling between cubes";
 			restartBtn.gameObject.SetActive (false);
 		}
 		else if (gameInfo.phaseNo == 3) {
@@ -79,12 +79,12 @@ public class UIControl : MonoBehaviour {
 
 				if (!gameInfo.isTargetFound) {
 					gameInfo.isChooseEnabled = true;
-					cubeHit.text = "Now this is the same view as shown at beginning. Indicate the cube with tree by ONE CLICK on it";
+					cubeHit.text = "Now this is the same view as shown at beginning. Indicate the cube with candy by ONE CLICK on it";
 				}
 			}
 			if (gameInfo.isTargetFound) {
 				gameInfo.isChooseEnabled = false;
-				cubeHit.text = "You've found the tree!";
+				cubeHit.text = "You've found the candy!";
 				restartBtn.gameObject.SetActive (true);
 			}
 		}

@@ -8,9 +8,9 @@ public class RevSolidGameInfo : MonoBehaviour {
 	protected static int hit;
 	protected static int falseStrokeCount;
 	//private RevSolidUIControl uiController= new RevSolidUIControl();
-	const int MaxFalseCount=4;
+	public const int MaxFalseCount=6;
 	const int LearningThres = 3;
-	const int WinningCriterion = 12;
+	public const int WinningCriterion = 6;
 
 	public static float RecoverInterval=3.0f;
 	public static float MaxReactionTime=9999.0f;

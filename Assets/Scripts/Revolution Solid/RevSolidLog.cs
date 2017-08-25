@@ -31,7 +31,7 @@ public class RevSolidLog : MonoBehaviour {
 		EventManager.StartListening ("OnMouseDown",listener);
 		EventManager.StartListening ("OnMouseUp",RecordMouseUp);
 		EventManager.StartListening ("Grading",RecordGrading);
-		EventManager.StartListening ("RecordReactionTime",RecordReactionTime);
+		//EventManager.StartListening ("RecordReactionTime",RecordReactionTime);
 		EventManager.StartListening ("Retry",RecordRetry);
 		EventManager.StartListening ("EnableTutorial",RecordTutorialOn);
 		EventManager.StartListening ("DisableTutorial",RecordTutorialOff);
@@ -43,7 +43,7 @@ public class RevSolidLog : MonoBehaviour {
 		EventManager.StopListening ("OnMouseDown",listener);
 		EventManager.StopListening ("OnMouseUp",RecordMouseUp);
 		EventManager.StopListening ("Grading",RecordGrading);
-		EventManager.StopListening ("RecordReactionTime",RecordReactionTime);
+		//EventManager.StopListening ("RecordReactionTime",RecordReactionTime);
 		EventManager.StopListening ("Retry",RecordRetry);
 		EventManager.StopListening ("EnableTutorial",RecordTutorialOn);
 		EventManager.StopListening ("DisableTutorial",RecordTutorialOff);
@@ -66,6 +66,7 @@ public class RevSolidLog : MonoBehaviour {
 
 	void RecordMouseDown(){
 		FormulateResult ("mouseDown", "");
+		RecordReactionTime ();
 	} 
 
 	void RecordMouseUp(){

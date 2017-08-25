@@ -102,12 +102,90 @@
         "puzzle type": "Unfolding"
     },
     "17" : {
+        "position" : [4,0,0],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "none"
+    },
+    "18" : {
+        "position" : [4,0,0],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "none"
+    },
+    "19" : {
+        "position" : [4,0,0],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "none"
+    },
+    "20" : {
+        "position" : [4,0,0],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "none"
+    },
+    "21" : {
+        "position" : [4,0,0],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "none"
+    },
+    "22" : {
+        "position" : [4,0,0],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "none"
+    },
+    "23" : {
+        "position" : [4,0,0],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "none"
+    },
+    "24" : {
+        "position" : [4,0,0],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "none"
+    },
+    "25" : {
+        "position" : [4,0,0],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "none"
+    },
+    "26" : {
+        "position" : [4,0,0],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "none"
+    },
+    "27" : {
+        "position" : [4,0,0],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "none"
+    },
+    "28" : {
+        "position" : [4,0,0],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "none"
+    },
+    "29" : {
         "position" : [-1,0,0],
         "dimension": [ 1, 1, 1 ],
         "color": [ 0.2, 0.4, 0.6, 1 ],
         "puzzle type": "revolution solid"
     },
-    "18" : {
+	"30" : {
+        "position" : [-2,0,0],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "revolution solid"
+    },
+    "31" : {
         "position" : [-1,0,1],
         "dimension": [ 1, 1, 1 ],
         "color": [ 0.2, 0.4, 0.6, 1 ],
