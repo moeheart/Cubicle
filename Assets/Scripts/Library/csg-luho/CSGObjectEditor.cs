@@ -1,6 +1,8 @@
 using UnityEngine;
-using UnityEditor;
 using System.Collections;
+
+#if UNITY_EDITOR
+using UnityEditor;
 
 [CustomEditor(typeof(CSGObject))]
 public class CSGObjectEditor : Editor {
@@ -112,3 +114,4 @@ public class CSGObjectEditor : Editor {
 	}
 		
 }
+#endif

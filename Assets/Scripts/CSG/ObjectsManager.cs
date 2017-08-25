@@ -32,6 +32,7 @@ public class ObjectsManager : MonoBehaviour {
 		sceneObjs.Add(sphere);
 
 		targetObj = Instantiate(targetPrefab) as GameObject;
+		targetObj.name = "Target";
 		targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
 	}
 
@@ -41,8 +42,24 @@ public class ObjectsManager : MonoBehaviour {
 				CSGUtil.Subtract(opA.gameObject, opB.gameObject);
 				sceneObjs.Remove(opB);
 				Destroy(opB.gameObject);
+
+				//Need to set to default because this is no longer opA
+				opA.SetDefaultMaterial();
+				opA.GenerateBarycentric();
+				opA = null;
 			}
 		}
+
+		if (Input.GetMouseButtonDown(1)) {
+			opA.SetDefaultMaterial();
+			opB.SetDefaultMaterial();
+			opA = null;
+			opB = null;
+			selectedObj.OnDeselect();
+			selectedObj = null;
+		}
+
+		//Check whether we completed the game...
 		if (Input.GetMouseButtonDown(0)) {
 			if (sceneObjs.Count == 1) {
 				GameObject composite = sceneObjs[0].gameObject;
@@ -67,6 +84,9 @@ public class ObjectsManager : MonoBehaviour {
 	}
 
 	public void OnSceneObjClick(SceneObject obj) {
+		if (selectedObj == obj) {
+			return;
+		}
 		if (selectedObj) {
 			selectedObj.OnDeselect();
 		}
@@ -82,6 +102,16 @@ public class ObjectsManager : MonoBehaviour {
 			opA.SetDefaultMaterial();
 			opA = opB;
 			opB = obj;
+		}
+		UpdateMaterial();
+	}
+
+	private void UpdateMaterial() {
+		if (opA != null) {
+			opA.SetOpAMaterial();
+		}
+		if (opB != null) {
+			opB.SetOpBMaterial();
 		}
 	}
 

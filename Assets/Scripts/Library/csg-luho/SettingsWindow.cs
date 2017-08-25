@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+#if UNITY_EDITOR
 using UnityEditor;
 
 public class SettingsWindow : EditorWindow
@@ -26,3 +27,4 @@ public class SettingsWindow : EditorWindow
 		
 	}
 }
+#endif
