@@ -147,7 +147,7 @@ public class Model5 : MonoBehaviour {
 	}
 
 	public void InitializeLog(){
-		logObject.GetComponent<PlaneExplorationLog> ().RecordInitialization (trialNum, 2);
+		logObject.GetComponent<PlaneExplorationLog> ().RecordInitialization (trialNum, 5);
 		trialNum++;
 	}
 

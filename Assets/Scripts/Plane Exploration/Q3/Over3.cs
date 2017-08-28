@@ -12,6 +12,7 @@ public class Over3 : MonoBehaviour {
 	public GameObject isometricButton;
 
 	public GameObject logObject;
+	public GameObject target;
 
 	void Start () {
 		overText.text = "";
@@ -26,6 +27,7 @@ public class Over3 : MonoBehaviour {
 			overText.text = "Game Over!";
 			instructionText.text = "";
 			retryButton.SetActive (true);
+			target.SetActive (false);
 			isometricButton.SetActive (true);
 			logObject.GetComponent<PlaneExplorationLog> ().RecordResult (-1);
 		}
