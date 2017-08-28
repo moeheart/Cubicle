@@ -7,6 +7,7 @@ public class Retry2 : MonoBehaviour {
 
 	public GameObject canvas, instructionTextObject, resultTextObject, player, Top1, Top2, Right1, isoCamera, model;
 	public Text instructionText, resultText;
+	public GameObject target;
 
 	public void Click () {
 		Transform transform = canvas.transform;
@@ -18,20 +19,10 @@ public class Retry2 : MonoBehaviour {
 		instructionTextObject.SetActive (true);
 		resultTextObject.SetActive (true);
 
-		player.GetComponent<Player2> ().top1 = false;
-		player.GetComponent<Player2> ().top2 = false;
-		player.GetComponent<Player2> ().right1 = false;
+		target.SetActive (true);
 
-		Top1.SetActive (true);
-		Top1.GetComponent<M2Top1> ().collide = false;
-		Top2.SetActive (true);
-		Top2.GetComponent<M2Top2> ().collide = false;
-		Right1.SetActive (true);
-		Right1.GetComponent<M2Right1> ().collide = false;
-
-		instructionText.text = "Please use direction keys to explore every " +
-			"plane you can access. and press enter to confirm your exploration. " +
-			"Dropping is not allowed.";
+		instructionText.text = "Please use direction keys to orient the yellow " +
+			"square to the orange one. Dropping is not allowed.";
 		resultText.text = "";
 
 		player.SetActive (true);

@@ -25,7 +25,6 @@ public class ModelGeneration : MonoBehaviour {
 	void Awake () {
 
 		level = 0;
-		id = DataUtil.GetCurrentRoomId();
 
 		Initialize ();
 
@@ -33,6 +32,7 @@ public class ModelGeneration : MonoBehaviour {
 
 	public void Initialize(){
 
+		id = DataUtil.GetCurrentRoomId();
 		ParseJson(jsonFilePath, id, level);
 
 		selectedPoints = new List<Vector3> ();
@@ -49,6 +49,13 @@ public class ModelGeneration : MonoBehaviour {
 		string jsonString = File.ReadAllText(jsonFilePath);
 		Dictionary<string, object> dict;
 		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
+
+		// Debug.Log(roomId);
+		// foreach (KeyValuePair<string, object> pair in dict)  
+		// {  
+		// 	Debug.Log(pair.Key + " " + pair.Value);  
+		// }
+		
 		dict = (Dictionary<string, object>)dict[roomId.ToString()];
 
 		levelNum = System.Convert.ToInt32 (dict ["levelNum"]);
@@ -63,9 +70,6 @@ public class ModelGeneration : MonoBehaviour {
 			System.Convert.ToInt32 (dict ["baicSteps"]);
 		tarModelObject.GetComponent<TransformGeneration>().difficulty = 
 			System.Convert.ToInt32 (dict ["difficulty"]);
-
-
-
 
 	}
 

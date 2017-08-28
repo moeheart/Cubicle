@@ -61,20 +61,20 @@
     },
     "10" : {
         "position" : [2,0,3],
-        "dimension": [ 1, 1, 1 ],
-        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "dimension": [ 1, 1, 2 ],
+        "color": [ 0.9, 0.6, 0.5, 1 ],
         "puzzle type": "view point"
     },
     "11" : {
         "position" : [3,0,0],
         "dimension": [ 1, 1, 1 ],
-        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "color": [ 1, 0.8, 0.5, 1],
         "puzzle type": "plane exploration"
     },
     "12" : {
         "position" : [3,0,1],
         "dimension": [ 1, 1, 1 ],
-        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "color": [ 0.2, 0.3, 0.5, 1 ],
         "puzzle type": "transform limitation"
     },
     "13" : {
@@ -102,76 +102,76 @@
         "puzzle type": "Unfolding"
     },
     "17" : {
-        "position" : [40,0,0],
+        "position" : [2,-1,4],
         "dimension": [ 1, 1, 1 ],
-        "color": [ 0.2, 0.4, 0.6, 1 ],
-        "puzzle type": "none"
+        "color": [ 0.9, 0.6, 0.5, 1 ],
+        "puzzle type": "view point"
     },
-    "18" : {
-        "position" : [40,0,0],
+	"18" : {
+        "position" : [2,-1,5],
         "dimension": [ 1, 1, 1 ],
-        "color": [ 0.2, 0.4, 0.6, 1 ],
-        "puzzle type": "none"
+        "color": [ 0.9, 0.6, 0.5, 1 ],
+        "puzzle type": "view point"
     },
-    "19" : {
-        "position" : [40,0,0],
+	"19" : {
+        "position" : [3,0,-1],
         "dimension": [ 1, 1, 1 ],
-        "color": [ 0.2, 0.4, 0.6, 1 ],
-        "puzzle type": "none"
+        "color": [ 1, 0.8, 0.5, 1],
+        "puzzle type": "plane exploration"
     },
-    "20" : {
-        "position" : [40,0,0],
+	"20" : {
+        "position" : [4,0,1],
         "dimension": [ 1, 1, 1 ],
-        "color": [ 0.2, 0.4, 0.6, 1 ],
-        "puzzle type": "none"
+        "color": [ 0.2, 0.3, 0.5, 1 ],
+        "puzzle type": "transform limitation"
     },
-    "21" : {
-        "position" : [40,0,0],
+	"21" : {
+        "position" : [5,0,1],
         "dimension": [ 1, 1, 1 ],
-        "color": [ 0.2, 0.4, 0.6, 1 ],
-        "puzzle type": "none"
+        "color": [ 0.2, 0.3, 0.5, 1 ],
+        "puzzle type": "transform limitation"
     },
-    "22" : {
-        "position" : [40,0,0],
+	"22" : {
+        "position" : [6,0,1],
         "dimension": [ 1, 1, 1 ],
-        "color": [ 0.2, 0.4, 0.6, 1 ],
-        "puzzle type": "none"
+        "color": [ 0.2, 0.3, 0.5, 1 ],
+        "puzzle type": "transform limitation"
     },
-    "23" : {
-        "position" : [40,0,0],
+	"23" : {
+        "position" : [7,0,1],
         "dimension": [ 1, 1, 1 ],
-        "color": [ 0.2, 0.4, 0.6, 1 ],
-        "puzzle type": "none"
+        "color": [ 0.2, 0.3, 0.5, 1 ],
+        "puzzle type": "transform limitation"
     },
-    "24" : {
-        "position" : [40,0,0],
+	"24" : {
+        "position" : [4,0,-1],
         "dimension": [ 1, 1, 1 ],
-        "color": [ 0.2, 0.4, 0.6, 1 ],
-        "puzzle type": "none"
+        "color": [ 0.2, 0.3, 0.5, 1 ],
+        "puzzle type": "plane exploration"
     },
-    "25" : {
-        "position" : [40,0,0],
+	"25" : {
+        "position" : [5,0,-1],
         "dimension": [ 1, 1, 1 ],
-        "color": [ 0.2, 0.4, 0.6, 1 ],
-        "puzzle type": "none"
+        "color": [ 1, 0.8, 0.5, 1],
+        "puzzle type": "plane exploration"
     },
-    "26" : {
-        "position" : [40,0,0],
+	"26" : {
+        "position" : [6,0,-1],
         "dimension": [ 1, 1, 1 ],
-        "color": [ 0.2, 0.4, 0.6, 1 ],
-        "puzzle type": "none"
+        "color": [ 1, 0.8, 0.5, 1],
+        "puzzle type": "plane exploration"
     },
-    "27" : {
-        "position" : [40,0,0],
+	"27" : {
+        "position" : [7,0,-1],
         "dimension": [ 1, 1, 1 ],
-        "color": [ 0.2, 0.4, 0.6, 1 ],
-        "puzzle type": "none"
+        "color": [ 1, 0.8, 0.5, 1],
+        "puzzle type": "plane exploration"
     },
-    "28" : {
-        "position" : [40,0,0],
+	"28" : {
+        "position" : [8,0,-1],
         "dimension": [ 1, 1, 1 ],
-        "color": [ 0.2, 0.4, 0.6, 1 ],
-        "puzzle type": "none"
+        "color": [ 1, 0.8, 0.5, 1],
+        "puzzle type": "plane exploration"
     },
     "29" : {
         "position" : [-1,0,0],
@@ -190,5 +190,11 @@
         "dimension": [ 1, 1, 1 ],
         "color": [ 0.2, 0.4, 0.6, 1 ],
         "puzzle type": "cube shift"
+    },
+	"32" : {
+        "position" : [9,0,-1],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 1, 0.8, 0.5, 1],
+        "puzzle type": "plane exploration"
     }
 }

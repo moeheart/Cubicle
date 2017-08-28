@@ -1,3 +1,2 @@
 timestamp,operation
-8/23/2017 1:07:22 PM,RotY
-8/23/2017 1:07:23 PM,RotZ
+08/28/2017 11:13:46,SymXY
