@@ -21,6 +21,8 @@ public class ObjectsManager : MonoBehaviour {
 
 		SceneObject cube = Instantiate(CSGObjectPrefab) as SceneObject;
 		SceneObject sphere = Instantiate(CSGObjectPrefab) as SceneObject;
+		cube.name = "Cube";
+		sphere.name = "Sphere";
 		PrimitiveHelper.SetAsType(cube, PrimitiveType.Cube);
 		PrimitiveHelper.SetAsType(sphere, PrimitiveType.Sphere);
 		//GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);

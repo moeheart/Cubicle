@@ -3,11 +3,10 @@ using System.Collections;
 
 public class SceneObject : MonoBehaviour {
 
-	public bool isSelected {private get; set;}
-
-	private bool wireframe = false;
 	public Material wireframeMaterial;
+	public GameObject arrowPrefab;
 
+	private bool isSelected;
 	private Material myMaterial;
 
 	// Use this for initialization
@@ -80,6 +79,8 @@ public class SceneObject : MonoBehaviour {
 		this.GetComponent<MeshRenderer>().sharedMaterials 
 			= new Material[1] {myMaterial};
 		myMaterial.SetFloat("_Opacity", 0);
+		this.GetComponent<MeshCollider>().sharedMesh = GetComponent<MeshFilter>().sharedMesh;
+		GenerateControls();
 	}
 
 	public void OnMouseOver() {
@@ -90,7 +91,7 @@ public class SceneObject : MonoBehaviour {
 
 	public void OnSelect() {
 		//Debug.Log("Selected: " + this.name + "...!!!");
-		Debug.Log(this.name + " " + GetComponent<MeshFilter>().sharedMesh.bounds);
+		Debug.Log(this.name + " " + GetComponent<Collider>().bounds);
 		isSelected = true;
 	}
 
@@ -115,7 +116,9 @@ public class SceneObject : MonoBehaviour {
 	}
 
 	public void GenerateControls() {
-
+		Vector3 center = GetComponent<Renderer>().bounds.center;
+		Vector3 extent = GetComponent<Renderer>().bounds.extents;
+		
 	}
 
 	private void DisplayWireframe() {
