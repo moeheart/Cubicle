@@ -19,7 +19,7 @@ public class DrawingHandler : MonoBehaviour {
 	private Dictionary<Segment,LineType> targetFrontView;
 	private Dictionary<Segment,LineType> targetRightView;
 
-	private string jsonFilePath = "Assets/Scripts/Json/Puzzles.json";
+	private string jsonFilePath;
 
 	private string saveFilePath;
 
@@ -31,7 +31,7 @@ public class DrawingHandler : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		jsonFilePath = Application.streamingAssetsPath + "/Puzzles.json";
 		/*
 		saveFilePath = Path.Combine(Application.persistentDataPath, "game.dat");
 
