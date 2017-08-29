@@ -6,13 +6,17 @@ public class SceneObject : MonoBehaviour {
 	public bool isSelected {private get; set;}
 
 	private bool wireframe = false;
-	private Material wireframeMaterial;
+	public Material wireframeMaterial;
+
+	private Material myMaterial;
 
 	// Use this for initialization
 	void Start () {
 		GenerateBarycentric();
-		wireframeMaterial = this.GetComponent<MeshRenderer>().material;
-		wireframeMaterial.SetFloat("_Opacity", 0);
+		myMaterial = Instantiate(wireframeMaterial) as Material;
+		this.GetComponent<MeshRenderer>().sharedMaterial
+			= myMaterial;
+		myMaterial.SetFloat("_Opacity", 0);
 	}
 	
 	// Update is called once per frame
@@ -92,27 +96,29 @@ public class SceneObject : MonoBehaviour {
 
 	public void SetDefaultMaterial() {
 		HideWireframe();
-		this.GetComponent<MeshRenderer>().material.color = Color.black;
+		this.GetComponent<MeshRenderer>().sharedMaterials 
+			= new Material[1] {myMaterial};
+		myMaterial.color = Color.black;
 	}
 
 	public void SetOpAMaterial() {
 		//ToggleWireframe();
 		DisplayWireframe();
 		Debug.Log("setting opA material...!!!");
-		this.GetComponent<MeshRenderer>().material.color = Color.red;
+		myMaterial.color = Color.red;
 	}
 
 	public void SetOpBMaterial() {
 		DisplayWireframe();
-		this.GetComponent<MeshRenderer>().material.color = Color.green;
+		myMaterial.color = Color.green;
 	}
 
 	private void DisplayWireframe() {
-		wireframeMaterial.SetFloat("_Opacity", 1f);
+		myMaterial.SetFloat("_Opacity", 1f);
 	}
 
 	private void HideWireframe() {
-		wireframeMaterial.SetFloat("_Opacity", 0f);
+		myMaterial.SetFloat("_Opacity", 0f);
 	}
 
 	public void GenerateBarycentric()
