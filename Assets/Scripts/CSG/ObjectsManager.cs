@@ -171,6 +171,17 @@ public class ObjectsManager : MonoBehaviour {
 		selectedObj = null;
 	}
 
+	public void ResetScene() {
+		opA = null;
+		opB = null;
+		selectedObj = null;
+		foreach (SceneObject obj in sceneObjs) {
+			Destroy(obj.gameObject);
+		}
+		Destroy(targetObj);
+		LoadGameObjects();
+	}
+
 }
 
 /*public class ObjectsManager : MonoBehaviour {
