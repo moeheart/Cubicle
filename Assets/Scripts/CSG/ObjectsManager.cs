@@ -89,8 +89,7 @@ public class ObjectsManager : MonoBehaviour {
 			Destroy(opB.gameObject);
 
 			//Need to set to default because this is no longer opA
-			opA.SetDefaultMaterial();
-			opA.GenerateBarycentric();
+			opA.Init();
 			opA = null;
 		}
 	}
@@ -102,8 +101,7 @@ public class ObjectsManager : MonoBehaviour {
 			Destroy(opA.gameObject);
 
 			//Need to set to default because this is no longer opA
-			opB.SetDefaultMaterial();
-			opB.GenerateBarycentric();
+			opB.Init();
 			opB = null;
 		}
 	}
@@ -115,8 +113,7 @@ public class ObjectsManager : MonoBehaviour {
 			Destroy(opB.gameObject);
 
 			//Need to set to default because this is no longer opA
-			opA.SetDefaultMaterial();
-			opA.GenerateBarycentric();
+			opA.Init();
 			opA = null;
 		}
 	}
@@ -128,8 +125,7 @@ public class ObjectsManager : MonoBehaviour {
 			Destroy(opB.gameObject);
 
 			//Need to set to default because this is no longer opA
-			opA.SetDefaultMaterial();
-			opA.GenerateBarycentric();
+			opA.Init();
 			opA = null;
 		}
 	}

@@ -12,11 +12,7 @@ public class SceneObject : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		GenerateBarycentric();
-		myMaterial = Instantiate(wireframeMaterial) as Material;
-		this.GetComponent<MeshRenderer>().sharedMaterial
-			= myMaterial;
-		myMaterial.SetFloat("_Opacity", 0);
+		Init();
 	}
 	
 	// Update is called once per frame
@@ -78,6 +74,14 @@ public class SceneObject : MonoBehaviour {
 		}
 	}
 
+	public void Init() {
+		GenerateBarycentric();
+		myMaterial = Instantiate(wireframeMaterial) as Material;
+		this.GetComponent<MeshRenderer>().sharedMaterials 
+			= new Material[1] {myMaterial};
+		myMaterial.SetFloat("_Opacity", 0);
+	}
+
 	public void OnMouseOver() {
 		if (Input.GetMouseButtonDown(0)) {
 			CSGManager.objectsManager.OnSceneObjClick(this);
@@ -85,32 +89,33 @@ public class SceneObject : MonoBehaviour {
 	}
 
 	public void OnSelect() {
-		Debug.Log("Selected: " + this.name + "...!!!");
+		//Debug.Log("Selected: " + this.name + "...!!!");
+		Debug.Log(this.name + " " + GetComponent<MeshFilter>().sharedMesh.bounds);
 		isSelected = true;
 	}
 
 	public void OnDeselect() {
-		Debug.Log("Deselected: " + this.name + "...!!!");
+		//Debug.Log("Deselected: " + this.name + "...!!!");
 		isSelected = false;
 	}
 
 	public void SetDefaultMaterial() {
 		HideWireframe();
-		this.GetComponent<MeshRenderer>().sharedMaterials 
-			= new Material[1] {myMaterial};
 		myMaterial.color = Color.black;
 	}
 
 	public void SetOpAMaterial() {
-		//ToggleWireframe();
 		DisplayWireframe();
-		Debug.Log("setting opA material...!!!");
 		myMaterial.color = Color.red;
 	}
 
 	public void SetOpBMaterial() {
 		DisplayWireframe();
 		myMaterial.color = Color.green;
+	}
+
+	public void GenerateControls() {
+
 	}
 
 	private void DisplayWireframe() {
