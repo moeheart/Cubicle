@@ -15,10 +15,14 @@ public class BaseGrid : MonoBehaviour {
 
 	private GameObject DrawingHandler;
 	private bool isCompleted = false;
+	private int id;
+	private string logPath;
 
 	// Use this for initialization
 	void Start () {
+		id = DataUtil.GetCurrentRoomId();
 		DrawingHandler = GameObject.Find("Drawing Handler");
+		logPath = "Assets/Logs/Block Builder/Block Builder Log.txt";
 	}
 	
 	// Update is called once per frame
@@ -54,9 +58,35 @@ public class BaseGrid : MonoBehaviour {
 		}
 		else if (Input.GetKeyDown(KeyCode.W)) {
 			AddCubeToCoordinate(currentCoordinates);
+			GenerateLog(1, currentCoordinates);
 		}
 		else if (Input.GetKeyDown(KeyCode.S)) {
 			DeleteCubeFromCoordinate(currentCoordinates);
+			GenerateLog(-1, currentCoordinates);
+		}
+	}
+
+	private void GenerateLog(int op, IntVector2 currentCoordinates) {
+		BaseGridCell designatedCell = 
+			cells[currentCoordinates.x, currentCoordinates.z];
+		int heightAfterOp = designatedCell.height;
+		int[,] target = DrawingHandler.GetComponent<DrawingHandler>().height;
+		int targetHeight = target[currentCoordinates.x, currentCoordinates.z];
+		if (op == 1) {
+			if (heightAfterOp <= targetHeight) {
+				BlockBuilderLog.Log(logPath, id, "Correct Addition");
+			}
+			else {
+				BlockBuilderLog.Log(logPath, id, "Incorrect Addition");
+			}
+		}
+		else {
+			if (heightAfterOp >= targetHeight) {
+				BlockBuilderLog.Log(logPath, id, "Correct Deletion");
+			}
+			else {
+				BlockBuilderLog.Log(logPath, id, "Incorrect Deletion");
+			}
 		}
 	}
 

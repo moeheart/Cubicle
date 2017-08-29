@@ -8,13 +8,17 @@ public class ObjectsManager : MonoBehaviour {
 	public GameObject targetPrefab;
 	public Mesh targetMesh;
 	//public Material wireframeMaterial;
+	public Material targetMaterial;
+	//public Material wireframeMaterial;
 
-	private List<SceneObject> sceneObjs = new List<SceneObject>();
+	private List<SceneObject> sceneObjs;
 	private GameObject targetObj;
 	private SceneObject opA, opB;
 	private SceneObject selectedObj;
 
 	public void LoadGameObjects() {
+		sceneObjs = new List<SceneObject>();
+
 		SceneObject cube = Instantiate(CSGObjectPrefab) as SceneObject;
 		SceneObject sphere = Instantiate(CSGObjectPrefab) as SceneObject;
 		PrimitiveHelper.SetAsType(cube, PrimitiveType.Cube);
@@ -37,51 +41,10 @@ public class ObjectsManager : MonoBehaviour {
 	}
 
 	void Update() {
-		if (Input.GetKeyDown(KeyCode.Space)) {
-			if (opA && opB) {
-				CSGUtil.Subtract(opA.gameObject, opB.gameObject);
-				sceneObjs.Remove(opB);
-				Destroy(opB.gameObject);
 
-				//Need to set to default because this is no longer opA
-				opA.SetDefaultMaterial();
-				opA.GenerateBarycentric();
-				opA = null;
-			}
-		}
-
-		if (Input.GetMouseButtonDown(1)) {
-			opA.SetDefaultMaterial();
-			opB.SetDefaultMaterial();
-			opA = null;
-			opB = null;
-			selectedObj.OnDeselect();
-			selectedObj = null;
-		}
-
-		//Check whether we completed the game...
-		if (Input.GetMouseButtonDown(0)) {
-			if (sceneObjs.Count == 1) {
-				GameObject composite = sceneObjs[0].gameObject;
-				float compositeVolume = CSGUtil.VolumeOfMesh(composite);
-				float targetVolume = CSGUtil.VolumeOfMesh(targetObj);
-				//GameObject flagObj = Instantiate(composite) as GameObject;
-				CSGUtil.Union(targetObj, composite);
-				float unionVolume = CSGUtil.VolumeOfMesh(targetObj);
-				
-				Debug.Log(unionVolume + " " + targetVolume + " " + compositeVolume);
-				if ((unionVolume - targetVolume < 2e-2) && (unionVolume - compositeVolume < 2e-2)) {
-					Debug.Log(unionVolume + " " + targetVolume + " " + compositeVolume);
-					Debug.Log("You win...!!!");
-					Destroy(composite);
-					Destroy(targetObj);
-					return;
-				}
-				targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
-				targetObj.name = "Target";
-			}
-		}
 	}
+
+
 
 	public void OnSceneObjClick(SceneObject obj) {
 		if (selectedObj == obj) {
@@ -115,6 +78,109 @@ public class ObjectsManager : MonoBehaviour {
 		}
 	}
 
+
+
+
+
+	public void SubtractAB() {
+		if (opA && opB) {
+			CSGUtil.Subtract(opA.gameObject, opB.gameObject);
+			sceneObjs.Remove(opB);
+			Destroy(opB.gameObject);
+
+			//Need to set to default because this is no longer opA
+			opA.SetDefaultMaterial();
+			opA.GenerateBarycentric();
+			opA = null;
+		}
+	}
+
+	public void SubtractBA() {
+		if (opA && opB) {
+			CSGUtil.Subtract(opB.gameObject, opA.gameObject);
+			sceneObjs.Remove(opA);
+			Destroy(opA.gameObject);
+
+			//Need to set to default because this is no longer opA
+			opB.SetDefaultMaterial();
+			opB.GenerateBarycentric();
+			opB = null;
+		}
+	}
+
+	public void Intersect() {
+		if (opA && opB) {
+			CSGUtil.Intersect(opA.gameObject, opB.gameObject);
+			sceneObjs.Remove(opB);
+			Destroy(opB.gameObject);
+
+			//Need to set to default because this is no longer opA
+			opA.SetDefaultMaterial();
+			opA.GenerateBarycentric();
+			opA = null;
+		}
+	}
+
+	public void Union() {
+		if (opA && opB) {
+			CSGUtil.Union(opA.gameObject, opB.gameObject);
+			sceneObjs.Remove(opB);
+			Destroy(opB.gameObject);
+
+			//Need to set to default because this is no longer opA
+			opA.SetDefaultMaterial();
+			opA.GenerateBarycentric();
+			opA = null;
+		}
+	}
+
+	public void Check() {
+		if (sceneObjs.Count == 1) {
+			GameObject composite = sceneObjs[0].gameObject;
+			float compositeVolume = CSGUtil.VolumeOfMesh(composite);
+			float targetVolume = CSGUtil.VolumeOfMesh(targetObj);
+			//GameObject flagObj = Instantiate(composite) as GameObject;
+			CSGUtil.Union(targetObj, composite);
+			float unionVolume = CSGUtil.VolumeOfMesh(targetObj);
+			
+			Debug.Log(unionVolume + " " + targetVolume + " " + compositeVolume);
+			if ((unionVolume - targetVolume < 2e-2) && (unionVolume - compositeVolume < 2e-2)) {
+				Debug.Log(unionVolume + " " + targetVolume + " " + compositeVolume);
+				Debug.Log("You win...!!!");
+				Destroy(composite);
+				Destroy(targetObj);
+				return;
+			}
+			targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
+			targetObj.GetComponent<MeshRenderer>().materials
+				= new Material[] {targetMaterial};
+			targetObj.name = "Target";
+		}
+	}
+
+	public void DeselectAll() {
+		if (opA)
+			opA.SetDefaultMaterial();
+		if (opB)
+			opB.SetDefaultMaterial();
+		opA = null;
+		opB = null;
+
+		if (selectedObj)
+			selectedObj.OnDeselect();
+		selectedObj = null;
+	}
+
+	public void ResetScene() {
+		opA = null;
+		opB = null;
+		selectedObj = null;
+		foreach (SceneObject obj in sceneObjs) {
+			Destroy(obj.gameObject);
+		}
+		Destroy(targetObj);
+		LoadGameObjects();
+	}
 
 }
 

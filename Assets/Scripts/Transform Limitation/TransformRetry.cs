@@ -24,9 +24,10 @@ public class TransformRetry : MonoBehaviour {
 
 		startModel = startModelObject.GetComponent<ModelGeneration> ().model;
 
-		controllerObject.GetComponent<Controller>().restStep = 
-			targetModelObject.GetComponent<TransformGeneration> ().transNum 
-			+ controllerObject.GetComponent<Controller>().difficulty;
+		controllerObject.GetComponent<Controller> ().restStep = 
+			targetModelObject.GetComponent<TransformGeneration> ().transNum
+		+ controllerObject.GetComponent<Controller> ().difficulty
+		+ controllerObject.GetComponent<Controller> ().wrongTime / 3;
 		controllerObject.GetComponent<Controller> ().curModel = startModel;
 		controllerObject.GetComponent<Controller> ().lastModel = null;
 

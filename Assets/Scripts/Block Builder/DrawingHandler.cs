@@ -19,7 +19,7 @@ public class DrawingHandler : MonoBehaviour {
 	private Dictionary<Segment,LineType> targetFrontView;
 	private Dictionary<Segment,LineType> targetRightView;
 
-	private string jsonFilePath = "Assets/Scripts/Json/Puzzles.json";
+	private string jsonFilePath;
 
 	private string saveFilePath;
 
@@ -27,9 +27,11 @@ public class DrawingHandler : MonoBehaviour {
 
 	private Dictionary<string, object> gameState;
 
+	public int[,] height {get; private set;}
+
 	// Use this for initialization
 	void Start () {
-
+		jsonFilePath = Application.streamingAssetsPath + "/Puzzles.json";
 		/*
 		saveFilePath = Path.Combine(Application.persistentDataPath, "game.dat");
 
@@ -43,7 +45,7 @@ public class DrawingHandler : MonoBehaviour {
 
 		id = DataUtil.GetCurrentRoomId();
 
-		int[,] height = new int[BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.gridSize.z];
+		height = new int[BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.gridSize.z];
 		ParseJson(jsonFilePath, height, id);
 		Dictionary<IntVector3, bool> targetBlock = To3DMapping(height);
 		

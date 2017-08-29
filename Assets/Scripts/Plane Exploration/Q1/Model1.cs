@@ -21,6 +21,8 @@ public class Model1 : MonoBehaviour {
 	public GameObject logObject;
 	public int trialNum;
 
+	public GameObject target;
+
 	// define points
 	void Start () {
 
@@ -139,6 +141,7 @@ public class Model1 : MonoBehaviour {
 
 	public void InitializeLog(){
 		logObject.GetComponent<PlaneExplorationLog> ().RecordInitialization (trialNum, 1);
+		target.SetActive (true);
 		trialNum++;
 	}
 

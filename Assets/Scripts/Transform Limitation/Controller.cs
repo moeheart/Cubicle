@@ -38,6 +38,8 @@ public class Controller : MonoBehaviour {
 
 	private string method;
 
+	public int wrongTime;
+
 	void Start () {
 
 		Initialize ();
@@ -45,6 +47,7 @@ public class Controller : MonoBehaviour {
 	}
 
 	public void Initialize(){
+		wrongTime = 0;
 		curModel = startModel.GetComponent<ModelGeneration> ().model;
 
 		tarModel = targetModel.GetComponent<TransformGeneration> ().curModel;
@@ -53,6 +56,7 @@ public class Controller : MonoBehaviour {
 		difficulty = targetModel.GetComponent<TransformGeneration> ().difficulty;
 
 		restStep = targetModel.GetComponent<TransformGeneration> ().transNum + difficulty;
+		// Debug.Log(restStep);
 		text.text = " Rest Steps: " + restStep;
 
 		method = startModel.GetComponent<ModelGeneration> ().method;
@@ -400,6 +404,7 @@ public class Controller : MonoBehaviour {
 
 	void Over(){
 		text.text = "Game Over!";
+		wrongTime += 1;
 		controllerObject.SetActive(false);
 		notationController.SetActive(false);
 		retryButton.SetActive (true);

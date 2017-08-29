@@ -22,7 +22,6 @@ public class PlaneExplorationCameraController : MonoBehaviour {
 
 		transform.eulerAngles += new Vector3 (moveVertical, -moveHorizontal, 0) * rotSpeed;
 
-		print ("vertical: " + transform.eulerAngles.x.ToString () + " horizontal:" + transform.eulerAngles.y.ToString ());
 
 		/* mouse control */
 		// zoom out

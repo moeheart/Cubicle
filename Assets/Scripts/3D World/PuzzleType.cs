@@ -65,7 +65,7 @@ public static class PuzzleTypes {
 			SceneManager.LoadScene("View Point", LoadSceneMode.Single);
 		}
 		if (type == PuzzleType.PlaneExploration) {
-			SceneManager.LoadScene("Q1", LoadSceneMode.Single);
+			SceneManager.LoadScene("Plane Exploration", LoadSceneMode.Single);
 		}
 		if (type == PuzzleType.TransformLimitation) {
 			SceneManager.LoadScene("Transform Limitation", LoadSceneMode.Single);

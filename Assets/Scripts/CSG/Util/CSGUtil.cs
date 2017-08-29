@@ -6,16 +6,23 @@ public static class CSGUtil {
 
     public static void Subtract(GameObject a, GameObject b) {
         CSGObject obj = a.GetComponent<CSGObject>();
-        GameObject[] slaves = new GameObject[2] {a.gameObject,b.gameObject};
+        GameObject[] slaves = new GameObject[2] {a, b};
         obj.PerformCSG(CsgOperation.ECsgOperation.CsgOper_Subtractive, slaves);
         a.name = "(" + a.name + ") - (" + b.name + ")";
     }
 
     public static void Union(GameObject a, GameObject b) {
         CSGObject obj = a.GetComponent<CSGObject>();
-        GameObject[] slaves = new GameObject[2] {a.gameObject,b.gameObject};
+        GameObject[] slaves = new GameObject[2] {a ,b};
         obj.PerformCSG(CsgOperation.ECsgOperation.CsgOper_Additive, slaves);
         a.name = "(" + a.name + ") + (" + b.name + ")";
+    }
+
+    public static void Intersect(GameObject a, GameObject b) {
+        CSGObject obj = a.GetComponent<CSGObject>();
+        GameObject[] slaves = new GameObject[2] {a, b};
+        obj.PerformCSG(CsgOperation.ECsgOperation.CsgOper_Intersect, slaves);
+        a.name = "(" + a.name + ") x (" + b.name + ")"; 
     }
 
     /*public static GameObject Subtract(GameObject a, GameObject b, Material material = null) {
