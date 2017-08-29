@@ -16,6 +16,9 @@ public class PlayerControl : MonoBehaviour {
     public GameObject UserCanvas;
     LogTool logtool;
 
+    private Vector3 InitialPos;
+    private Quaternion InitialRot;
+
     private string path;
     private string path1 = "Assets/Resources/Unfolding/_Results/Level";
     private string path2 = ".txt";
@@ -40,6 +43,9 @@ public class PlayerControl : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
+        InitialPos = Camera.main.transform.position;
+        InitialRot = Camera.main.transform.rotation;
+
         //TargetPositions = new List<Vector3>();
         WinCanvas.SetActive(false);
         LoseCanvas.SetActive(false);
@@ -140,7 +146,7 @@ public class PlayerControl : MonoBehaviour {
                 }
                 else
                 {
-                    // TODO: We still need to consider the situation that unfolding happens one by one.
+                    // TODO: We still need to consider the situation that unfolding happens sequentially.
                 }
             }
             foldback = true;
@@ -161,10 +167,9 @@ public class PlayerControl : MonoBehaviour {
         meshGenerator.DeleteDashedLineIndex(FaceIndex);
 
         int TargetIndex = meshGenerator.GetTheOtherFaceIndex(rmMidPoint, FaceIndex);
-        // TODO: The current Normal is the same as the TargetNormal now.
+        // Probem: The current Normal is the same as the TargetNormal now.
+        // Solution: we define the TargetNormal by ourselves.
         Vector3 currentNormal = meshGenerator.GetNormalofFace(FaceIndex);
-
-        // Vector3 TargetNormal = meshGenerator.GetNormalofFace(TargetIndex);
 
         int NumOfConnectedFaces = meshGenerator.model.faces[FaceIndex].ConnectedFaces.ToArray().Length;
         for (int i = -1; i < NumOfConnectedFaces; i++)
@@ -482,6 +487,9 @@ public class PlayerControl : MonoBehaviour {
         WinCanvas.SetActive(false);
         LoseCanvas.SetActive(false);
         UserCanvas.SetActive(true);
+
+        Camera.main.transform.position = InitialPos;
+        Camera.main.transform.rotation = InitialRot;
     }
     
     public void Proceed()
