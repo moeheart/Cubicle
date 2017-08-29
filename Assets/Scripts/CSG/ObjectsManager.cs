@@ -41,31 +41,7 @@ public class ObjectsManager : MonoBehaviour {
 	}
 
 	void Update() {
-		if (Input.GetKeyDown(KeyCode.Space)) {
-			if (opA && opB) {
-				CSGUtil.Subtract(opA.gameObject, opB.gameObject);
-				sceneObjs.Remove(opB);
-				Destroy(opB.gameObject);
 
-				//Need to set to default because this is no longer opA
-				opA.SetDefaultMaterial();
-				opA.GenerateBarycentric();
-				opA = null;
-			}
-		}
-
-		if (Input.GetMouseButtonDown(1)) {
-			if (opA)
-				opA.SetDefaultMaterial();
-			if (opB)
-				opB.SetDefaultMaterial();
-			opA = null;
-			opB = null;
-
-			if (selectedObj)
-				selectedObj.OnDeselect();
-			selectedObj = null;
-		}
 	}
 
 
@@ -180,6 +156,19 @@ public class ObjectsManager : MonoBehaviour {
 				= new Material[] {targetMaterial};
 			targetObj.name = "Target";
 		}
+	}
+
+	public void DeselectAll() {
+		if (opA)
+			opA.SetDefaultMaterial();
+		if (opB)
+			opB.SetDefaultMaterial();
+		opA = null;
+		opB = null;
+
+		if (selectedObj)
+			selectedObj.OnDeselect();
+		selectedObj = null;
 	}
 
 }
