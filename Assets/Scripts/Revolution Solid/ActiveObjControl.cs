@@ -1,24 +1,37 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.Events;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using MiniJSON;
+
 
 public class ActiveObjControl : MonoBehaviour {
 
-	delegate void ObjectBehaviour(int objectIndex);
-	ObjectBehaviour objectBehaviour;
+	protected delegate void ObjectBehaviour(int objectIndex);
+	protected ObjectBehaviour objectBehaviour;
 
 	public static List<RevSolid> revSolids;
 	public static List<ActiveObject> activeObjects;
-	private static Vector3 midPos;
-	public static int MaxPolygonNum=12;
-	public static int MaxPanelNum=4;
-	static float forbiddenRadius=2.0f; 
-	static float PitfallWarningRadius=3.0f;
-	static float RecoverInterval=3.0f;
+	protected static Vector3 midPos=new Vector3(0,0,0);
+
+	public static string reactionTimeToLog;
 
 	// Use this for initialization
 	void Awake(){
-		midPos = GameObject.Find ("middle").transform.position;
+		CheckLevel();
+		AddScript (RevSolidGameInfo.GetLODByInt());
+	}
+
+	void OnEnable(){
+		
+		//EventManager.StartListening ("RecordReactionTime",ReactionTimeToLog);
+	}
+
+	void OnDisable(){
+		//EventManager.StopListening ("RecordReactionTime",ReactionTimeToLog);
 	}
 
 	void Start () {
@@ -27,38 +40,54 @@ public class ActiveObjControl : MonoBehaviour {
 		ActivateObjects ();
 		StartCoroutine("RecoverObjects");
 
-		//polygonBehaviour += FadeInOrOut;
-		objectBehaviour += Rotate;
-		objectBehaviour += Move;
-		objectBehaviour += Pitfall;
+	}
 
+	void CheckLevel(){
+		RevSolidGameInfo.levelOfDifficulty = ParseJson();
+	}
+
+	int ParseJson(){
+		int roomId=DataUtil.GetCurrentRoomId();
+		string jsonFilePath = "Assets/Scripts/Json/Puzzles.json";
+
+		string jsonString = File.ReadAllText(jsonFilePath);
+		Dictionary<string, object> dict;
+		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
+		dict = (Dictionary<string, object>)dict[roomId.ToString()];
+
+		return System.Convert.ToInt32 (dict ["levelNum"]);
+
+	}
+
+	void AddScript(int level){
+		
+		if (level == 1) {
+			Camera.main.gameObject.AddComponent <Easy>();
+				
+		} else if (level == 2) {
+			Camera.main.gameObject.AddComponent <Hard>();
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (objectBehaviour != null) {
-			for (int i = 0; i < activeObjects.Count; i++) {
-				objectBehaviour (i);
-				FadeInOrOut (i);
+		if (RevSolidGameInfo.GetLODByInt() == 1) {
+			for (int i = 0; i < RevSolidGameInfo.MaxPanelNum; i++) {
+				activeObjects[i].GetReactionTime ();
 			}
 		}
 	}
 		
 	void InitPolygon(){
 		revSolids = new List<RevSolid> ();//constructor
-		for (int i = 0; i < MaxPolygonNum; i++) {
-			if (i < MaxPanelNum) {
-				revSolids.Add (new RevSolid (i));
-			} else {
-				revSolids.Add (new RevSolid (i));
-			}
-			//yield return new WaitForSeconds (2);
+		for (int i = 0; i < RevSolidGameInfo.MaxPolygonNum; i++) {
+			revSolids.Add (new RevSolid (i));
 		}
 	}
 
 	void ActivateObjects(){
 		activeObjects = new List<ActiveObject> ();//constructor
-		for (int i = 0; i < MaxPanelNum; i++) {
+		for (int i=0;i <RevSolidGameInfo.MaxPanelNum;i++) {
 			activeObjects.Add (new ActiveObject (i,i));
 			//yield return new WaitForSeconds (2);
 		}
@@ -67,18 +96,18 @@ public class ActiveObjControl : MonoBehaviour {
 	IEnumerator RecoverObjects(){
 		while (true) {
 			//recover & shift sectionPanel-polygon correspondence
-			for(int i=0;i<MaxPanelNum;i++){
+			for(int i=0;i<RevSolidGameInfo.MaxPanelNum;i++){
 				if (activeObjects [i].isKilled == true) {
 					//replace with one of the polygons(that is currently not on screen
 					int k;
 					while(true){
-						k = Mathf.FloorToInt (Random.value * MaxPolygonNum);
+						k = Mathf.FloorToInt (Random.value * RevSolidGameInfo.MaxPolygonNum);
 						int j;
-						for (j = 0; j < MaxPanelNum; j++) {
+						for (j = 0; j < RevSolidGameInfo.MaxPanelNum; j++) {
 							if (activeObjects [j].polygonIndex == k)
 								break;//for
 						}
-						if (j == MaxPanelNum) {
+						if (j == RevSolidGameInfo.MaxPanelNum) {
 							break;//while
 						}
 					}
@@ -88,28 +117,26 @@ public class ActiveObjControl : MonoBehaviour {
 					Debug.Log (i);
 					Debug.Log ("+1");*/
 				}
-				yield return new WaitForSeconds (RecoverInterval);
+				yield return new WaitForSeconds (RevSolidGameInfo.RecoverInterval);
 			}
-			yield return new WaitForSeconds (RecoverInterval);
+			yield return new WaitForSeconds (RevSolidGameInfo.RecoverInterval);
 
 		}
 	}
-		
 
-	void Rotate(int objIndex){
+	public static bool WithinViewport(int objIndex){
+		return (Mathf.Abs (activeObjects [objIndex].gameObject.transform.position.x - midPos.x) <= 8
+			&& Mathf.Abs (activeObjects [objIndex].gameObject.transform.position.y - midPos.y) <= 5);
+	}
+
+
+	protected void Rotate(int objIndex){
 		if (activeObjects [objIndex].isKilled == false) {
 			activeObjects [objIndex].gameObject.transform.Rotate (0.5f, 0.5f, 0.5f);
 		}
 	}
 
-	void Move(int objIndex){
-		if (activeObjects [objIndex].isKilled == false && activeObjects [objIndex].gameObject.transform.position != midPos) {
-			activeObjects [objIndex].gameObject.transform.position=Vector3.MoveTowards(activeObjects [objIndex].gameObject.transform.position,midPos,Time.deltaTime*activeObjects[objIndex].speed);
-		}
-			
-	}
-
-	void FadeInOrOut(int objIndex){
+	protected void FadeInOrOut(int objIndex){
 		if (!activeObjects [objIndex].isKilled) {
 			activeObjects [objIndex].gameObject.GetComponent<MeshRenderer> ().material.SetFloat ("_AlphaScale",Mathf.Clamp(activeObjects [objIndex].alphaScale+=0.2f,0.0f,0.6f));
 		}
@@ -120,37 +147,14 @@ public class ActiveObjControl : MonoBehaviour {
 		}
 			
 	}
-
-	void Pitfall(int objIndex){
-		if (InCentralArea (objIndex)) {
-			activeObjects [objIndex].isKilled = true;
-		}
-	}
-
-	bool InCentralArea(int objIndex){
-		if (Distance2Center(objIndex) < forbiddenRadius) {
-			RevSolidGameInfo.Add2FalseStrokeCount (1);
-			RevSolidUIControl.RefreshBroadcasts ();
-			Tutorial.IndicateAnApproachingObject ();
-			return true;
-		}
-		else if(Distance2Center(objIndex) < PitfallWarningRadius){
-			Tutorial.IndicatePitfalls ();
-			return false;
-		}
-		else {
-			return false;
-		}
 		
+	public static void RecordReactionTimeWhenObjectKilled(float reactionTime){
+		reactionTimeToLog = reactionTime.ToString();
+		EventManager.TriggerEvent("RecordReactionTime");
 	}
 
-	public static bool WithinViewport(int objIndex){
-		return (Mathf.Abs (activeObjects [objIndex].gameObject.transform.position.x - midPos.x) <= 8
-		&& Mathf.Abs (activeObjects [objIndex].gameObject.transform.position.y - midPos.y) <= 5);
-	}
-
-	public static float Distance2Center(int objIndex){
-		return Vector3.Distance (activeObjects [objIndex].gameObject.transform.position, midPos);
+	static void ReactionTimeToLog(){
+		
 	}
 		
 }

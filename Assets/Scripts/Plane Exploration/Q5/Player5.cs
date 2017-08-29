@@ -22,6 +22,7 @@ public class Player5 : MonoBehaviour {
 	public GameObject exitButton;
 
 	public GameObject logObject;
+	public GameObject target;
 
 	void Start ()
 	{
@@ -71,26 +72,18 @@ public class Player5 : MonoBehaviour {
 			}
 		}
 
-		if (Input.GetButtonDown ("Submit")) {
-			if (top1 && top2 && front1 && curve1) {
-				panel.SetActive (true);
-				winText.text = "You Win!";
-				instructionText.text = "";
-				player.SetActive (false);
-				exitButton.SetActive (true);
-				isometricButton.SetActive (true);
-				DataUtil.UnlockCurrentRoom();
-				logObject.GetComponent<PlaneExplorationLog> ().RecordResult (1);
-			} else {
-				panel.SetActive (true);
-				winText.text = "Inadequate Exploration!";
-				instructionText.text = "";
-				player.SetActive (false);
-				retryButton.SetActive (true);
-				isometricButton.SetActive (true);
-				logObject.GetComponent<PlaneExplorationLog> ().RecordResult (0);
-			}
-		}
 
+	}
+
+	public void Win(){
+		panel.SetActive (true);
+		winText.text = "You Win!";
+		instructionText.text = "";
+		player.SetActive (false);
+		exitButton.SetActive (true);
+		isometricButton.SetActive (true);
+		DataUtil.UnlockCurrentRoom();
+		target.SetActive (false);
+		logObject.GetComponent<PlaneExplorationLog> ().RecordResult (1);
 	}
 }

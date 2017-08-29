@@ -52,7 +52,7 @@ public static class PuzzleTypes {
 			SceneManager.LoadScene("CSG Scene", LoadSceneMode.Single);
 		}
 		if (type == PuzzleType.RevolutionSolid) {
- 			SceneManager.LoadScene("Revolution Solid Scene", LoadSceneMode.Single);
+			SceneManager.LoadScene("Revolution Solid Scene_"+DataUtil.GetCurrentRoomId().ToString(), LoadSceneMode.Single);
  		}
         if (type == PuzzleType.Unfolding)
         {
@@ -65,7 +65,7 @@ public static class PuzzleTypes {
 			SceneManager.LoadScene("View Point", LoadSceneMode.Single);
 		}
 		if (type == PuzzleType.PlaneExploration) {
-			SceneManager.LoadScene("Q1", LoadSceneMode.Single);
+			SceneManager.LoadScene("Plane Exploration", LoadSceneMode.Single);
 		}
 		if (type == PuzzleType.TransformLimitation) {
 			SceneManager.LoadScene("Transform Limitation", LoadSceneMode.Single);

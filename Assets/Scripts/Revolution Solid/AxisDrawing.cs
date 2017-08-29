@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class AxisDrawing: ResponseProcessing {
 
@@ -11,22 +12,42 @@ public class AxisDrawing: ResponseProcessing {
 	public GameObject linePrefab;
 
 	protected List<Vector3> linePath;
+	public static string pathStringToLog;
 
 	private float alphaScale;
 
 	private Vector3 mousePos;
 
-	protected float sectionScale=0.2f;//depend on the gameObject empty
+	protected float sectionScale;
 
 	public static List<Section> sections;
 
-	void Awake(){
+	public static string lastGradingResult; 
 
+	void Awake(){
+		lastGradingResult = "";
 		isLineInstantiated = false;
 		InitSections ();
 		linePath = new List<Vector3> ();
+		if (RevSolidGameInfo.levelOfDifficulty <= 1) { 
+			//RevSolidGameInfo class might not have awaken, be careful when calling its functions
+			sectionScale = 0.3f/resizedScale;
+		}else if(RevSolidGameInfo.levelOfDifficulty <= 2){
+			sectionScale = 0.2f/resizedScale;
+		}
 	}
 
+	void OnEnable(){
+		EventManager.StartListening ("OnMouseDown",OnMouseDown);
+		EventManager.StartListening ("OnMouseUp",OnMouseUp);
+		EventManager.StartListening ("Grading",GradingResToLog);
+	}
+
+	void OnDisable(){
+		EventManager.StopListening ("OnMouseDown",OnMouseDown);
+		EventManager.StopListening ("OnMouseUp",OnMouseUp);
+		EventManager.StopListening ("Grading",GradingResToLog);
+	}
 	// Use this for initialization
 	void Start () {
 		StartCoroutine("RecordLinePath");
@@ -51,22 +72,15 @@ public class AxisDrawing: ResponseProcessing {
 	void FreeStrokeDrawingAndGrading(){
 		if (Input.GetMouseButtonDown (0)) {
 			//destroy existing one and instantiate new
-
-			if (isLineInstantiated==false) {
-				InitAxis ();
-			}
+			EventManager.TriggerEvent("OnMouseDown");
 		}
 
 		if (Input.GetMouseButton (0)) {
-			DrawAxis ();
+			OnGetMouse ();
 		}
 
 		if (Input.GetMouseButtonUp (0)) {
-			if (isLineInstantiated&&linePath.Count>0) {
-				DisplayScore (Grading(linePath));
-				DestroyAxis ();
-				linePath.Clear ();
-			}
+			EventManager.TriggerEvent("OnMouseUp");
 		}
 
 		if (isLineInstantiated) {
@@ -74,14 +88,50 @@ public class AxisDrawing: ResponseProcessing {
 		}
 	}
 
-	void DestroyAxis(){
+	void OnMouseDown(){
+		if (isLineInstantiated==false) {
+			InitAxis ();
+		}
+	}
+
+	void OnGetMouse(){
+		DrawAxis ();
+	}
+
+	void OnMouseUp(){
+		if (isLineInstantiated&&linePath.Count>0) {
+			DisplayScore (Grading(linePath));
+			DestroyFreeStroke ();
+		}
+	}
+
+	void DestroyFreeStroke(){
+		pathStringToLog = GetPathString (linePath);
+		DestroyAxisObject ();
+		linePath.Clear ();
+	}
+
+	string GetPathString(List<Vector3> linePath){
+		string pathString="";
+		for (int i = 0; i < linePath.Count; i++) {
+			pathString += linePath [i].x.ToString ();
+			pathString += " ";
+			pathString += linePath [i].y.ToString ();
+			pathString += ",";
+		}
+		return pathString;
+	}
+
+
+	void DestroyAxisObject(){
 		GameObject.Destroy (line.gameObject);
 		isLineInstantiated = false;
 	}
 
 	void InitAxis(){ 
 		line = GameObject.Instantiate (linePrefab, linePrefab.transform.position, transform.rotation).GetComponent<LineRenderer> ();
-		line.SetWidth (0.05f, 0.15f);
+		line.startWidth = 0.05f;
+		line.endWidth = 0.15f;
 		vertexCount = 0;
 		alphaScale = 1.0f;
 		isLineInstantiated = true;
@@ -110,43 +160,57 @@ public class AxisDrawing: ResponseProcessing {
 	void DisplayScore(int bestMatchCand){
 		switch(bestMatchCand) {
 		case -1:
-			RevSolidUIControl.BroadcastMessage("fantastic!");
+			RevSolidUIControl.BroadcastMsg("fantastic!");
 			break;
 		case 0:
-			RevSolidUIControl.BroadcastMessage("left edge is not the correct axis");
+			RevSolidUIControl.BroadcastMsg("left edge is not the correct axis");
 			break;
 		case 1:
-			RevSolidUIControl.BroadcastMessage("right edge is not the correct axis");
+			RevSolidUIControl.BroadcastMsg("right edge is not the correct axis");
 			break;
 		case 2:
-			RevSolidUIControl.BroadcastMessage("bottom edge is not the correct axis");
+			RevSolidUIControl.BroadcastMsg("bottom edge is not the correct axis");
 			break;
 		case 3:
-			RevSolidUIControl.BroadcastMessage("top edge is not the correct axis");
+			RevSolidUIControl.BroadcastMsg("top edge is not the correct axis");
 			break;
 		case 4:
-			RevSolidUIControl.BroadcastMessage("diagonal / is not the correct axis");
+			RevSolidUIControl.BroadcastMsg("diagonal / is not the correct axis");
 			break;
 		case 5:
-			RevSolidUIControl.BroadcastMessage("diagonal \\ is not the correct axis");
+			RevSolidUIControl.BroadcastMsg("diagonal \\ is not the correct axis");
 			break;
 		default:
-			RevSolidUIControl.BroadcastMessage("try again!");
+			RevSolidUIControl.BroadcastMsg("try again!");
 			break;
 		}
 	}
 
-	public static Sprite[] polygonSprites=new Sprite[ActiveObjControl.MaxPolygonNum];
+	public static Sprite[] polygonSprites=new Sprite[RevSolidGameInfo.MaxPolygonNum];
 	void InitSections(){
 		sections = new List<Section> ();//constructor
-		for(int i=0;i<ActiveObjControl.MaxPolygonNum;i++){
+		for(int i=0;i<RevSolidGameInfo.MaxPolygonNum;i++){
 			sections.Add(new Section(i,i));//bottomleft be origin
 		}
 	}
 
+	public static void ReloadSectionsWithCandidateAxes(){
+		for(int i=0;i<RevSolidGameInfo.MaxPolygonNum;i++){
+			sections[i].imgSprite=Resources.Load<Sprite> ("section"+i.ToString()+"_a");
+		}
+		for(int i=0;i<RevSolidGameInfo.MaxPanelNum;i++){
+			ActiveObjControl.activeObjects[i].ChangeSpriteAccordingToSolid();
+		}
+	}
 
-	//Grading methods
-
+	public static void RecoverOriginalSections(){
+		for(int i=0;i<RevSolidGameInfo.MaxPolygonNum;i++){
+			sections[i].imgSprite=Resources.Load<Sprite> ("section"+i.ToString());
+		}
+		for(int i=0;i<RevSolidGameInfo.MaxPanelNum;i++){
+			ActiveObjControl.activeObjects[i].ChangeSpriteAccordingToSolid();
+		}
+	}
 
 	public int BestMatchCandidate (List<Vector3> path,int panelIndex){
 		int bestMatchCandidateNo=-2;//refer to the correct one
@@ -160,18 +224,9 @@ public class AxisDrawing: ResponseProcessing {
 		if (maxConvolution >= 3) {
 			bestMatchCandidateNo = -1;
 		}
-		/*
-		Debug.Log ("-1");
-		Debug.Log (maxConvolution);
-		*/
 
 		for (int i = 0; i < 6; i ++) {
 			tempConvolution = Convolution(pathKernel,Section.candKernels[i]);
-			/*
-Debug.Log (i);
-			Debug.Log (tempConvolution);
-			*/
-
 			if (tempConvolution > maxConvolution) {
 				if (maxConvolution >= 1) {
 					maxConvolution = tempConvolution;
@@ -193,17 +248,18 @@ Debug.Log (i);
 		//transfrom into 550x550 resolution
 			
 		for (int i = 0; i < path.Count; i++) {
-
-			x =(path[i].x-(ActiveObjControl.activeObjects [panelIndex].image.transform.position.x-wx))/sectionScale+ Section.imgRes/2;
-			y =(path[i].y-(ActiveObjControl.activeObjects [panelIndex].image.transform.position.y-wy))/sectionScale+ Section.imgRes/2;
+			Vector3 panelPosRelativeToScreen = ActiveObjControl.activeObjects [panelIndex].image.transform.position + new Vector3 (-wx, -wy, 0);
+			x =(path[i].x-panelPosRelativeToScreen.x)/sectionScale+ Section.imgRes/2;
+			y =(path[i].y-panelPosRelativeToScreen.y)/sectionScale+ Section.imgRes/2;
+			//Debug.Log ((path[i].x-panelPosRelativeToScreen.x)/0.2f);
+			//Debug.Log ((path[i].y-panelPosRelativeToScreen.y)/0.2f);
 			x = Mathf.FloorToInt(x / 100);
 			y = Mathf.FloorToInt(y / 100);
-
 			if (x >= 0 && x<6&& y >= 0&&y<6) {//for cases where mousePos is out of image
 				pathKernel [(int)(y * 6 + x)] = 1;
 			}
 		}
-		
+
 	}
 
 	int Convolution(int[] kernel1,int[] kernel2){
@@ -229,33 +285,70 @@ Debug.Log (i);
 			return -2;
 		}
 
-		int panelIndex=0;//sectionIndex
-		//panel position 0-UR,1-UL,2-BL,3-BR
-		if (mid.x > -thres && mid.y > -thres) {
-			panelIndex = 0;
-		} else if (mid.x > -thres && mid.y < thres) {
-			panelIndex = 3;
-		}else if (mid.x < thres && mid.y > -thres) {
-			panelIndex = 1;
-		}else if (mid.x < thres && mid.y < thres) {
-			panelIndex = 2;
-		}
+		//sectionIndex
+		int panelIndex=IdentifyPanelIndexOfStroke(mid);
 		//Debug.Log (panelIndex);
 		int bestMatchCandNo=-2;
-		if (ActiveObjControl.activeObjects [sections[panelIndex].polygonIndex].isKilled == false) {
+		if (ActiveObjControl.activeObjects [panelIndex].isKilled == false) {
 			bestMatchCandNo = BestMatchCandidate (path, panelIndex);
 			if (bestMatchCandNo == -1) {
-				ActiveObjControl.activeObjects [sections [panelIndex].polygonIndex].isKilled = true;
-				ActiveObjControl.activeObjects [sections [panelIndex].polygonIndex].image.gameObject.SetActive (false);
 				RevSolidGameInfo.Add2TotalHit (1);
 				RevSolidUIControl.BroadcastHits ();
+				StartCoroutine (ShowAnswerAndDisableFormerQuestion(panelIndex));
 			} else {
 				RevSolidGameInfo.Add2FalseStrokeCount (1);
 				RevSolidUIControl.BroadcastFalseStrokeCount ();
 				Tutorial.IndicateCorrectAns (panelIndex);
 			}
 		}
+		GetGradingResult(ActiveObjControl.activeObjects[panelIndex].polygonIndex,panelIndex,bestMatchCandNo);
+		EventManager.TriggerEvent("Grading");
 		return bestMatchCandNo;
+	}
+
+	void GetGradingResult(int solidIndex,int panelIndex,int bmcNo){
+		lastGradingResult="";
+		lastGradingResult += lastGradingResult.ToString ();
+		lastGradingResult += " for solid ";
+		lastGradingResult += solidIndex;
+		lastGradingResult+=" on panelNo.";
+		lastGradingResult+= panelIndex;
+		lastGradingResult+= " is ";
+		lastGradingResult+= bmcNo;
+	}
+
+	void GradingResToLog(){
+		
+	}
+
+
+	IEnumerator ShowAnswerAndDisableFormerQuestion(int panelIndex){
+		Tutorial.IndicateAxisAndStroke (panelIndex);
+		yield return new WaitForSeconds (2.0f);
+
+		ActiveObjControl.activeObjects [sections [panelIndex].polygonIndex].isKilled = true;
+		ActiveObjControl.activeObjects [sections [panelIndex].polygonIndex].image.gameObject.SetActive (false);
+
+		Tutorial.CancelAnsIndication ();
+
+	}
+
+	int IdentifyPanelIndexOfStroke(Vector3 mid){
+		int panelIndex=0;
+
+		if (RevSolidGameInfo.GetLODByInt() == 2) {
+			//panel position 0-UR,1-UL,2-BL,3-BR
+			if (mid.x > -thres && mid.y > -thres) {
+				panelIndex = 0;
+			} else if (mid.x > -thres && mid.y < thres) {
+				panelIndex = 3;
+			} else if (mid.x < thres && mid.y > -thres) {
+				panelIndex = 1;
+			} else if (mid.x < thres && mid.y < thres) {
+				panelIndex = 2;
+			}
+		}
+		return panelIndex;
 	}
 		
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PostEffects : MonoBehaviour {
 
 	public BrightnessSaturationAndContrast bscCamera;
-	public Camera camera;
+	public Camera camera = new Camera();
 	public GameInfo gameInfo;
 	float initialSaturation;
 	float initialGreenValue;
@@ -25,7 +25,7 @@ public class PostEffects : MonoBehaviour {
 	void Update () {
 		if (gameInfo.phaseNo >= 3 && gameInfo.isTargetFound) {
 			bscCamera.saturation = 0;
-			bscCamera.green = 0.26f;
+			bscCamera.green = 0.1f;
 		} else {
 			bscCamera.saturation = initialSaturation;
 			bscCamera.green = initialGreenValue;

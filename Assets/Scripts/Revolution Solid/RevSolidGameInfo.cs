@@ -8,9 +8,16 @@ public class RevSolidGameInfo : MonoBehaviour {
 	protected static int hit;
 	protected static int falseStrokeCount;
 	//private RevSolidUIControl uiController= new RevSolidUIControl();
-	const int MaxFalseCount=4;
+	public const int MaxFalseCount=6;
 	const int LearningThres = 3;
-	const int WinningCriterion = 12;
+	public const int WinningCriterion = 6;
+
+	public static float RecoverInterval=3.0f;
+	public static float MaxReactionTime=9999.0f;
+	public static int MaxPolygonNum=12;
+	public static int MaxPanelNum;
+
+	public static float levelOfDifficulty;//(0.5,1)(1.5,2)
 
 	// Use this for initialization
 	void Awake () {
@@ -28,19 +35,18 @@ public class RevSolidGameInfo : MonoBehaviour {
 		return hit;
 	}
 
-	public static int Add2FalseStrokeCount (int scoreAdded){
+	public static void Add2FalseStrokeCount (int scoreAdded){
 		falseStrokeCount+=scoreAdded;
-		return falseStrokeCount;
 	}
 		
 	public static void CheckEndOfGame(){
 		
 		if (hit >= WinningCriterion) {
 			DataUtil.UnlockCurrentRoom();
-			RevSolidUIControl.BroadcastMessage ("CONGRATULATIONS you have unlocked this room. Press Q to quit, or continue enjoying your play.");
+			RevSolidUIControl.BroadcastMsg ("CONGRATULATIONS you have unlocked this room. Press Q to quit, or continue enjoying your play.");
 		}
 		if (hit < WinningCriterion && falseStrokeCount>=MaxFalseCount) {
-			RevSolidUIControl.BroadcastMessage ("You failed the game. Press RESTART to refill yourself with determination.");
+			RevSolidUIControl.BroadcastMsg ("You failed the game. Press RESTART to refill yourself with determination.");
 			Time.timeScale = 0;
 			RevSolidUIControl.ShowRetryButton ();
 		}
@@ -60,6 +66,9 @@ public class RevSolidGameInfo : MonoBehaviour {
 	public virtual void Retry(){
 		hit = 0;
 		falseStrokeCount = 0;
+	}
+	public static int GetLODByInt(){
+		return Mathf.CeilToInt(levelOfDifficulty);
 	}
 		
 }

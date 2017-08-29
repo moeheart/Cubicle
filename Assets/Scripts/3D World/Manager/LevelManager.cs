@@ -10,10 +10,12 @@ public class LevelManager : MonoBehaviour {
 	public World worldPrefab;
 
 	public static World worldInstance {get; private set;}
-	private const string levelJsonFilePath = "Assets/Scripts/Json/0824.json";
+	private string levelJsonFilePath;
 
 	// Use this for initialization
 	void Start () {
+		Debug.Log(Application.streamingAssetsPath);
+		levelJsonFilePath = Application.streamingAssetsPath + "/0824.json";
 		worldInstance = Instantiate(worldPrefab) as World;
 		worldInstance.GenerateWorld(levelJsonFilePath);
 		worldInstance.LoadData();

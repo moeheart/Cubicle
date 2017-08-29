@@ -9,7 +9,8 @@ using UnityEngine.SceneManagement;
 
 public class ViewPoint : MonoBehaviour {
 
-	public Camera cam;  
+	public Camera cam;
+	public GameObject topCam;
 	private float timeHit;
 
 	public Material chosenMaterial;
@@ -20,6 +21,7 @@ public class ViewPoint : MonoBehaviour {
 
 	private int selectedNum;
 	private int trueNum;
+	private float wrongTime;
 
 	public Text resultText;
 
@@ -31,6 +33,7 @@ public class ViewPoint : MonoBehaviour {
 
 	void Start(){
 
+		wrongTime = 0;
 		selectedNum = -1;
 		timeHit = 0.0f;
 		trueNum = mainCam.GetComponent<ViewPointCameraController> ().camDir;
@@ -40,7 +43,7 @@ public class ViewPoint : MonoBehaviour {
 
 	void Update()  
 	{  
-		
+
 		timeHit += Time.deltaTime;  
 		if (timeHit > 0.2f)  
 		{  
@@ -56,33 +59,41 @@ public class ViewPoint : MonoBehaviour {
 
 				if (isHit)  
 				{  
-//					print (hit.collider.gameObject.name.Substring(5));
+					//					print (hit.collider.gameObject.name.Substring(5));
 					try{
 
 						if(prePoint)
 							prePoint.GetComponent<Renderer>().material = normalMaterial;
-						
+
 						selectedNum = int.Parse(hit.collider.gameObject.name.Substring(5));
 						curPoint = hit.collider.gameObject;
 						curPoint.GetComponent<Renderer>().material = chosenMaterial;
 
-//						print(selectedNum);
+						//						print(selectedNum);
 
 						prePoint = hit.collider.gameObject;
+						print(selectedNum);
 
 					}catch{
 					}
 				}
-					
+
 			}
 
 			if (Input.GetButtonDown ("Submit")) {
-//				print (selectedNum == trueNum);
+				//				print (selectedNum == trueNum);
 				logObject.GetComponent<ViewPointLog> ().RecordResult (selectedNum, selectedNum == trueNum);
 				if (!(selectedNum == trueNum)) {
 					resultText.text = "Try Again!";
-					if (curPoint != null)
-						curPoint.SetActive (false);
+					wrongTime += 1;
+					if (curPoint != null) {
+						curPoint.GetComponent<Renderer> ().material = normalMaterial;
+						curPoint = null;
+						int rot = UnityEngine.Random.Range (1, 8);
+						Vector3 curAngle = topCam.transform.eulerAngles;
+						topCam.transform.eulerAngles = 
+							new Vector3 (curAngle.x, curAngle.y + rot * 45, curAngle.z);
+					}
 					solidsObject.GetComponent<Generation> ().InitializeRecord ();
 				}
 				else {
@@ -94,8 +105,12 @@ public class ViewPoint : MonoBehaviour {
 						solidsObject.GetComponent<Generation> ().level++;
 						solidsObject.GetComponent<Generation> ().Initialize ();
 						trueNum = mainCam.GetComponent<ViewPointCameraController> ().camDir;
+						if (curPoint != null)
+							curPoint.GetComponent<Renderer> ().material = normalMaterial;
 					} else {
-						resultText.text = "You Win!";
+						double pScore = Math.Pow ((100.0f - wrongTime) / 100.0f, 5);
+						double fScore = Math.Round (pScore * 100.0f, 0);
+						resultText.text = "Completed! Your score: " + fScore.ToString();
 						exitButton.SetActive (true);
 						DataUtil.UnlockCurrentRoom ();
 					}
@@ -107,6 +122,7 @@ public class ViewPoint : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Q)) {
 			SceneManager.LoadScene("World Scene");
 		}
-	}  
+	}
 }
+
 #endif

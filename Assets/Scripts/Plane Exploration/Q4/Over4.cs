@@ -12,6 +12,7 @@ public class Over4 : MonoBehaviour {
 	public GameObject isometricButton;
 
 	public GameObject logObject;
+	public GameObject target;
 
 	void Start () {
 		overText.text = "";
@@ -24,6 +25,7 @@ public class Over4 : MonoBehaviour {
 			other.gameObject.SetActive (false);
 			panel.SetActive (true);
 			overText.text = "Game Over!";
+			target.SetActive (false);
 			instructionText.text = "";
 			retryButton.SetActive (true);
 			isometricButton.SetActive (true);
