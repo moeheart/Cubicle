@@ -67,6 +67,12 @@ public class PlayerControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+        if (GameObject.FindGameObjectWithTag("Line") == null)
+        {
+            WaitingLinesStartingPoint.Clear();
+            WaitingLinesEndingPoint.Clear();
+            return;
+        }
         if (Input.GetKeyDown(KeyCode.Q))
         {
             SceneManager.LoadScene("World Scene");
@@ -504,6 +510,8 @@ public class PlayerControl : MonoBehaviour {
             WinCanvas.SetActive(false);
             UserCanvas.SetActive(true);
             meshGenerator.ReGenerate(++currentLevel);
+            // Camera.main.transform.position = InitialPos;
+            // Camera.main.transform.rotation = InitialRot;
         }
     }
 
