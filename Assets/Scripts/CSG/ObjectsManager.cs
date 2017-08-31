@@ -21,6 +21,8 @@ public class ObjectsManager : MonoBehaviour {
 
 		SceneObject cube = Instantiate(CSGObjectPrefab) as SceneObject;
 		SceneObject sphere = Instantiate(CSGObjectPrefab) as SceneObject;
+		cube.name = "Cube";
+		sphere.name = "Sphere";
 		PrimitiveHelper.SetAsType(cube, PrimitiveType.Cube);
 		PrimitiveHelper.SetAsType(sphere, PrimitiveType.Sphere);
 		//GameObject cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -89,8 +91,7 @@ public class ObjectsManager : MonoBehaviour {
 			Destroy(opB.gameObject);
 
 			//Need to set to default because this is no longer opA
-			opA.SetDefaultMaterial();
-			opA.GenerateBarycentric();
+			opA.Init();
 			opA = null;
 		}
 	}
@@ -102,8 +103,7 @@ public class ObjectsManager : MonoBehaviour {
 			Destroy(opA.gameObject);
 
 			//Need to set to default because this is no longer opA
-			opB.SetDefaultMaterial();
-			opB.GenerateBarycentric();
+			opB.Init();
 			opB = null;
 		}
 	}
@@ -115,8 +115,7 @@ public class ObjectsManager : MonoBehaviour {
 			Destroy(opB.gameObject);
 
 			//Need to set to default because this is no longer opA
-			opA.SetDefaultMaterial();
-			opA.GenerateBarycentric();
+			opA.Init();
 			opA = null;
 		}
 	}
@@ -128,8 +127,7 @@ public class ObjectsManager : MonoBehaviour {
 			Destroy(opB.gameObject);
 
 			//Need to set to default because this is no longer opA
-			opA.SetDefaultMaterial();
-			opA.GenerateBarycentric();
+			opA.Init();
 			opA = null;
 		}
 	}

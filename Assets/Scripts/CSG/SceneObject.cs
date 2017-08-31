@@ -3,20 +3,15 @@ using System.Collections;
 
 public class SceneObject : MonoBehaviour {
 
-	public bool isSelected {private get; set;}
-
-	private bool wireframe = false;
 	public Material wireframeMaterial;
+	public GameObject arrowPrefab;
 
+	private bool isSelected;
 	private Material myMaterial;
 
 	// Use this for initialization
 	void Start () {
-		GenerateBarycentric();
-		myMaterial = Instantiate(wireframeMaterial) as Material;
-		this.GetComponent<MeshRenderer>().sharedMaterial
-			= myMaterial;
-		myMaterial.SetFloat("_Opacity", 0);
+		Init();
 	}
 	
 	// Update is called once per frame
@@ -78,6 +73,16 @@ public class SceneObject : MonoBehaviour {
 		}
 	}
 
+	public void Init() {
+		GenerateBarycentric();
+		myMaterial = Instantiate(wireframeMaterial) as Material;
+		this.GetComponent<MeshRenderer>().sharedMaterials 
+			= new Material[1] {myMaterial};
+		myMaterial.SetFloat("_Opacity", 0);
+		this.GetComponent<MeshCollider>().sharedMesh = GetComponent<MeshFilter>().sharedMesh;
+		GenerateControls();
+	}
+
 	public void OnMouseOver() {
 		if (Input.GetMouseButtonDown(0)) {
 			CSGManager.objectsManager.OnSceneObjClick(this);
@@ -85,32 +90,35 @@ public class SceneObject : MonoBehaviour {
 	}
 
 	public void OnSelect() {
-		Debug.Log("Selected: " + this.name + "...!!!");
+		//Debug.Log("Selected: " + this.name + "...!!!");
+		Debug.Log(this.name + " " + GetComponent<Collider>().bounds);
 		isSelected = true;
 	}
 
 	public void OnDeselect() {
-		Debug.Log("Deselected: " + this.name + "...!!!");
+		//Debug.Log("Deselected: " + this.name + "...!!!");
 		isSelected = false;
 	}
 
 	public void SetDefaultMaterial() {
 		HideWireframe();
-		this.GetComponent<MeshRenderer>().sharedMaterials 
-			= new Material[1] {myMaterial};
 		myMaterial.color = Color.black;
 	}
 
 	public void SetOpAMaterial() {
-		//ToggleWireframe();
 		DisplayWireframe();
-		Debug.Log("setting opA material...!!!");
 		myMaterial.color = Color.red;
 	}
 
 	public void SetOpBMaterial() {
 		DisplayWireframe();
 		myMaterial.color = Color.green;
+	}
+
+	public void GenerateControls() {
+		Vector3 center = GetComponent<Renderer>().bounds.center;
+		Vector3 extent = GetComponent<Renderer>().bounds.extents;
+		
 	}
 
 	private void DisplayWireframe() {
