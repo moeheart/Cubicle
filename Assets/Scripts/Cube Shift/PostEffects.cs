@@ -23,7 +23,7 @@ public class PostEffects : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (gameInfo.phaseNo >= 3 && gameInfo.isTargetFound) {
+		if (gameInfo.phaseNo >= 3 && GameInfo.isTargetFound) {
 			bscCamera.saturation = 0;
 			bscCamera.green = 0.1f;
 		} else {

@@ -17,10 +17,7 @@ public class CubeGame : MonoBehaviour {
 	// Use this for initialization
 	void Awake(){
 		auxiliaryCubeTransform=this.transform;
-	}
 
-	void Start () {
-		
 		cube.InitializePos ();
 		cube.FindAdjoiningCubes ();
 
@@ -29,6 +26,11 @@ public class CubeGame : MonoBehaviour {
 		InstantiateCubes();
 
 		gameInfo.Init ();
+	}
+
+	void Start () {
+		
+
 
 	}
 
@@ -55,10 +57,10 @@ public class CubeGame : MonoBehaviour {
 			} else {
 				gameInfo.moves = 1;
 				if(gameInfo.phaseNo == 2){
-					if (gameInfo.travelPeriodNo == gameInfo.MaxTravelPeriodNo) {
+					if (GameInfo.travelPeriodNo == GameInfo.MaxTravelPeriodNo) {
 						gameInfo.phaseNo++;
 					} else {
-						gameInfo.travelPeriodNo++;
+						GameInfo.travelPeriodNo++;
 						gameInfo.UndoneShifts ();
 					}
 				}
@@ -88,8 +90,8 @@ public class CubeGame : MonoBehaviour {
 					gameInfo.beginTime = Time.realtimeSinceStartup;
 				}
 			} else {
-				if (!gameInfo.isTargetFound) 
-					gameInfo.reactTime = Time.realtimeSinceStartup - gameInfo.beginTime;
+				if (!GameInfo.isTargetFound) 
+					GameInfo.reactTime = Time.realtimeSinceStartup - gameInfo.beginTime;
 				//Time.time is inappropriate because frame freezes here
 			}
 
