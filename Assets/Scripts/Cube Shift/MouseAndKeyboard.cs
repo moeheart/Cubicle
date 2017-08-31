@@ -30,6 +30,8 @@ public class MouseAndKeyboard : MonoBehaviour {
 					gameInfo.target.SetActive(true);
 					gameInfo.isTargetFound = true;
 					//gameInfo.isChooseEnabled = false;
+					GameInfo.Add2Score();
+					UIControl.RefreshScore ();
 				}
 			}
 		}
@@ -37,7 +39,7 @@ public class MouseAndKeyboard : MonoBehaviour {
 	}
 
 	void CheckEndOfGame(float reactTime){
-		if (reactTime <= 1.0f) {
+		if (GameInfo.CheckIfWinningCriterionMet()) {
 			DataUtil.UnlockCurrentRoom();
 		}
 		if (Input.GetKeyDown(KeyCode.Q)) {

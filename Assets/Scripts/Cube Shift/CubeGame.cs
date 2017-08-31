@@ -17,10 +17,7 @@ public class CubeGame : MonoBehaviour {
 	// Use this for initialization
 	void Awake(){
 		auxiliaryCubeTransform=this.transform;
-	}
 
-	void Start () {
-		
 		cube.InitializePos ();
 		cube.FindAdjoiningCubes ();
 
@@ -29,6 +26,11 @@ public class CubeGame : MonoBehaviour {
 		InstantiateCubes();
 
 		gameInfo.Init ();
+	}
+
+	void Start () {
+		
+
 
 	}
 

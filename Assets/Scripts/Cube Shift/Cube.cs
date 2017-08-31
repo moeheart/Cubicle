@@ -6,7 +6,7 @@ public class Cube {
 
 	public GameInfo gameInfo=GameInfo.getInstance();
 
-	public int CubeNumber=3;//constant members in c# are best defined as static members of a class/struct
+	public int CubeNumber;//constant members in c# are best defined as static members of a class/struct
 	public const int MaxCubeNumber=5;
 	public GameObject[] cubes= new GameObject[MaxCubeNumber];
 	public GameObject[] trees= new GameObject[MaxCubeNumber];
@@ -31,7 +31,9 @@ public class Cube {
 	public adjoin[] adjoinCube;
 
 	private static Cube instance = new Cube ();
-	private Cube(){}
+	private Cube(){
+		CubeNumber = 4;
+	}
 	public static Cube getInstance(){
 		return instance;
 	}

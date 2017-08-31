@@ -48,7 +48,7 @@ public class ActiveObjControl : MonoBehaviour {
 
 	int ParseJson(){
 		int roomId=DataUtil.GetCurrentRoomId();
-		string jsonFilePath = "Assets/Scripts/Json/Puzzles.json";
+		string jsonFilePath = Path.Combine(Application.streamingAssetsPath, "Puzzles.json");
 
 		string jsonString = File.ReadAllText(jsonFilePath);
 		Dictionary<string, object> dict;

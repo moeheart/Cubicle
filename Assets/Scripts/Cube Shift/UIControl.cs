@@ -6,22 +6,26 @@ using UnityEngine.UI;
 public class UIControl : MonoBehaviour {
 
 	public GameInfo gameInfo=GameInfo.getInstance();
-	public Button button;
-	public Button restartBtn;
-	public Text btnText;
+	static Button button;
+	static Button restartBtn;
+	static Text btnText;
 
-	public Text cubeHit;
+	static Text cubeHit;
 
-	public Slider difficultySlider;
-	public Text difficulty;
+	static Slider difficultySlider;
+	static Text difficulty;
 
-	public Text reactTime;
+	static Text reactTime;
 
-	public Slider cubeNumberSlider;
-	public Text cubeNum;
+	static Slider cubeNumberSlider;
+	static Text cubeNum;
+
+	static Text score;
+
+	bool isParameterAlterable=true;
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		button = GameObject.Find ("Button").GetComponent<Button> ();
 		button.onClick.AddListener(OnClick);
 		restartBtn=GameObject.Find ("restartBtn").GetComponent<Button> ();
@@ -39,6 +43,17 @@ public class UIControl : MonoBehaviour {
 		cubeNumberSlider.onValueChanged.AddListener (delegate{CubeNumChangeCheck();});
 		cubeNum = cubeNumberSlider.transform.Find ("cubeNum").gameObject.GetComponent<Text> ();
 
+		score=GameObject.Find ("score").gameObject.GetComponent<Text> ();
+	}
+
+	void Start(){
+		if (gameInfo.CubeNumber == 3) {
+			isParameterAlterable = false;
+			difficultySlider.gameObject.SetActive (false);
+			difficulty.gameObject.SetActive (false);
+			cubeNumberSlider.gameObject.SetActive (false);
+			cubeNum.gameObject.SetActive (false);
+		}
 	}
 	
 	// Update is called once per frame
@@ -116,9 +131,15 @@ public class UIControl : MonoBehaviour {
 	}
 
 	void CubeNumChangeCheck(){
-		gameInfo.CubeNumber=(int)((cubeNumberSlider.value)*2+3);
+		gameInfo.CubeNumber=(int)((cubeNumberSlider.value)*2+4);
 		cubeNum.text = (gameInfo.CubeNumber).ToString()+ " cubes";
 	}
 
+	public static void RefreshScore(){
+		score.text = "SCORE "+GameInfo.score.ToString();
+		if (GameInfo.CheckIfWinningCriterionMet ()) {
+			score.text+="\nCongratulations! The next level is unlocked now. \nPress Q to go on with world exploration";
+		}
+	}
 
 }
