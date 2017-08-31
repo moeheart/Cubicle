@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class UIControl : MonoBehaviour {
@@ -24,6 +25,8 @@ public class UIControl : MonoBehaviour {
 
 	bool isParameterAlterable=true;
 
+
+
 	// Use this for initialization
 	void Awake () {
 		button = GameObject.Find ("Button").GetComponent<Button> ();
@@ -46,8 +49,21 @@ public class UIControl : MonoBehaviour {
 		score=GameObject.Find ("score").gameObject.GetComponent<Text> ();
 	}
 
+	void OnEnable(){
+		EventManager.StartListening ("OnProceedingTutorial",Proceed);
+		EventManager.StartListening ("OnShiftingStart",Play);
+		EventManager.StartListening ("OnRetry",Retry);
+		EventManager.StartListening ("OnGeneratingNewGame",Restart);
+	}
+	void OnDisable(){
+		EventManager.StopListening ("OnProceedingTutorial",Proceed);
+		EventManager.StopListening ("OnShiftingStart",Play);
+		EventManager.StopListening ("OnRetry",Retry);
+		EventManager.StopListening ("OnGeneratingNewGame",Restart);
+	}
+
 	void Start(){
-		if (gameInfo.CubeNumber == 3) {
+		if (GameInfo.CubeNumber == 3) {
 			isParameterAlterable = false;
 			difficultySlider.gameObject.SetActive (false);
 			difficulty.gameObject.SetActive (false);
@@ -92,47 +108,63 @@ public class UIControl : MonoBehaviour {
 				button.gameObject.SetActive (true);
 				btnText.text = "Retry";
 
-				if (!gameInfo.isTargetFound) {
+				if (!GameInfo.isTargetFound) {
 					gameInfo.isChooseEnabled = true;
 					cubeHit.text = "Now this is the same view as shown at beginning. Indicate the cube with candy by ONE CLICK on it";
 				}
 			}
-			if (gameInfo.isTargetFound) {
+			if (GameInfo.isTargetFound) {
 				gameInfo.isChooseEnabled = false;
 				cubeHit.text = "You've found the candy!";
 				restartBtn.gameObject.SetActive (true);
 			}
 		}
-		reactTime.text = gameInfo.reactTime.ToString ("##.000");
+		reactTime.text = GameInfo.reactTime.ToString ("##.000");
 	}
 
 	void OnClick(){
 		if (gameInfo.phaseNo == 0) {//Proceed
-			gameInfo.phaseNo++;
+			EventManager.TriggerEvent("OnProceedingTutorial");
 		}
 		else if (gameInfo.phaseNo == 1) {//play
-			gameInfo.ResumeGame ();
-			gameInfo.Play ();
+			EventManager.TriggerEvent("OnShiftingStart");
 		}
 		else if (gameInfo.phaseNo == 3) {//retry
-			gameInfo.Retry ();
+			EventManager.TriggerEvent("OnRetry");
 		}
 	}
 
+	void Proceed(){
+		gameInfo.phaseNo++;
+	}
+
+	void Play(){
+		gameInfo.ResumeGame ();
+		gameInfo.Play ();
+	}
+
+	void Retry(){
+		gameInfo.Retry ();
+	}
+
 	void ClickToRestart(){
+		EventManager.TriggerEvent("OnGeneratingNewGame");
+	}
+
+	void Restart(){
 		if (gameInfo.phaseNo == 3) {//restart
 			gameInfo.Restart ();
 		}
 	}
 
 	void DifficultyChangeCheck(){
-		gameInfo.MaxTravelPeriodNo=(int)((difficultySlider.value)*5+1);
-		difficulty.text = (gameInfo.MaxTravelPeriodNo).ToString()+ " shifting / trial";
+		GameInfo.MaxTravelPeriodNo=(int)((difficultySlider.value)*5+1);
+		difficulty.text = (GameInfo.MaxTravelPeriodNo).ToString()+ " shifting / trial";
 	}
 
 	void CubeNumChangeCheck(){
-		gameInfo.CubeNumber=(int)((cubeNumberSlider.value)*2+4);
-		cubeNum.text = (gameInfo.CubeNumber).ToString()+ " cubes";
+		GameInfo.CubeNumber=(int)((cubeNumberSlider.value)*2+4);
+		cubeNum.text = (GameInfo.CubeNumber).ToString()+ " cubes";
 	}
 
 	public static void RefreshScore(){

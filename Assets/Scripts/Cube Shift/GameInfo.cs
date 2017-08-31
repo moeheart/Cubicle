@@ -13,15 +13,15 @@ public class GameInfo
 
 	public int targetIdx;
 	public GameObject target;
-	public bool isTargetFound;
+	public static bool isTargetFound;
 	public bool isChooseEnabled;
 	public int moves;//1~3
 	public int phaseNo;//{Instructions,Travelling,Clicking};//0-"proceed",1-"play", 2-travelling, >=3-clicking
-	public int travelPeriodNo;
+	public static int travelPeriodNo;
 
 	//difficulty
-	public int MaxTravelPeriodNo;
-	public int CubeNumber;
+	public static int MaxTravelPeriodNo;
+	public static int CubeNumber;
 
 	public float lastUpdateTime,currTime;
 	public bool isMoving;
@@ -35,7 +35,7 @@ public class GameInfo
 
 	public bool hasPhase3Begun;
 	public float beginTime;
-	public float reactTime;
+	public static float reactTime;
 	public static float score;
 
 	static float WinningCriterion=1.0f;

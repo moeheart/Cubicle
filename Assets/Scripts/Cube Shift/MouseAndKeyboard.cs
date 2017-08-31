@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
@@ -8,7 +9,15 @@ public class MouseAndKeyboard : MonoBehaviour {
 
 	//Text cubeHit;
 	private GameInfo gameInfo=GameInfo.getInstance();
+	public static string hitCubeNum;
 
+	void OnEnable(){
+		EventManager.StartListening ("OnChoosing",OnChoosing);
+	}
+
+	void OnDisable(){
+		EventManager.StopListening ("OnChoosing",OnChoosing);
+	}
 	// Use this for initialization
 	void Start () {
 		//cubeHit = GameObject.Find ("cubeHit").GetComponent<Text> ();
@@ -18,24 +27,30 @@ public class MouseAndKeyboard : MonoBehaviour {
 	void Update () {
 		RaycastHit hit;
 		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-		if (Physics.Raycast (ray, out hit)) {
+		if (Physics.Raycast (ray, out hit)&&Input.GetMouseButtonDown(0)) {
 			if (gameInfo.isChooseEnabled) {
 				/*
 				if (hit.collider != null) {
 					cubeHit.text="Cube #" + hit.collider.name;
 				}
 				*/
-				if (hit.collider.name==gameInfo.targetIdx.ToString()&&Input.GetMouseButton(0)) {
-					//cubeHit.text+=" Correct";
-					gameInfo.target.SetActive(true);
-					gameInfo.isTargetFound = true;
-					//gameInfo.isChooseEnabled = false;
-					GameInfo.Add2Score();
-					UIControl.RefreshScore ();
-				}
+				hitCubeNum = hit.collider.name;
+				EventManager.TriggerEvent ("OnChoosing");
+
 			}
 		}
-		CheckEndOfGame (gameInfo.reactTime);
+		CheckEndOfGame (GameInfo.reactTime);
+	}
+
+	void OnChoosing(){
+		if (hitCubeNum==gameInfo.targetIdx.ToString()) {
+			//cubeHit.text+=" Correct";
+			gameInfo.target.SetActive(true);
+			GameInfo.isTargetFound = true;
+			//gameInfo.isChooseEnabled = false;
+			GameInfo.Add2Score();
+			UIControl.RefreshScore ();
+		}
 	}
 
 	void CheckEndOfGame(float reactTime){

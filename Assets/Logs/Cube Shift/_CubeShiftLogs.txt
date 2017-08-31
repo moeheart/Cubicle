@@ -1,0 +1,14 @@
+
+8/30/2017 11:51:46 PM
+
+recordNo	timeStamp	trialNum	level	action	detail	
+
+1	6.14583	0	click'Proceed'Btn		
+
+2	6.482136	0	startShifting		
+
+3	17.28814	0	choose	0.7287979, correct, 1	
+
+4	20.42784	0	retry		
+
+shift from  to World Scene
