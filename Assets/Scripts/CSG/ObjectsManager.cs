@@ -93,6 +93,9 @@ public class ObjectsManager : MonoBehaviour {
 			//Need to set to default because this is no longer opA
 			opA.Init();
 			opA = null;
+			opB = null;
+			selectedObj.OnDeselect();
+			selectedObj = null;
 		}
 	}
 
@@ -104,7 +107,10 @@ public class ObjectsManager : MonoBehaviour {
 
 			//Need to set to default because this is no longer opA
 			opB.Init();
+			opA = null;
 			opB = null;
+			selectedObj.OnDeselect();
+			selectedObj = null;
 		}
 	}
 
@@ -117,6 +123,9 @@ public class ObjectsManager : MonoBehaviour {
 			//Need to set to default because this is no longer opA
 			opA.Init();
 			opA = null;
+			opB = null;
+			selectedObj.OnDeselect();
+			selectedObj = null;
 		}
 	}
 
@@ -129,6 +138,9 @@ public class ObjectsManager : MonoBehaviour {
 			//Need to set to default because this is no longer opA
 			opA.Init();
 			opA = null;
+			opB = null;
+			selectedObj.OnDeselect();
+			selectedObj = null;
 		}
 	}
 
