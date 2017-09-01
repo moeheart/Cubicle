@@ -14,7 +14,7 @@ public class MeshGenerator : MonoBehaviour {
     Mesh mesh;
 
     Data data;
-    string JsonFilePath = "Assets/Scripts/Unfolding/Json/model.json";
+    // string JsonFilePath = "Assets/Scripts/Unfolding/Json/model.json";
     public string path { get; private set; }
     private string path1 = "Assets/Resources/Unfolding/_Results/Level";
     private string path2 = ".png";
@@ -93,7 +93,7 @@ public class MeshGenerator : MonoBehaviour {
 
         InitArrays();
 
-        CurrentLevel = 0;
+        CurrentLevel = 6;
         InitConstants(CurrentLevel);
 
         CreateModel();
@@ -111,7 +111,7 @@ public class MeshGenerator : MonoBehaviour {
 
     private void InitConstants(int _level)
     {
-        data = new Data(JsonFilePath, _level);
+        data = new Data(Path.Combine(Application.streamingAssetsPath, "Unfolding/model.json"), _level);
     }
 
     private void InitArrays()

@@ -8,14 +8,18 @@ using UnityEngine.SceneManagement;
 
 public class PlaneExplorationRedirect : MonoBehaviour {
 
-	private string jsonFilePath = "Assets/Scripts/Json/Puzzles.json";
+	private string jsonFilePath;
 	private int level;
 	private int id;
 
 	void Start () {
 
+		jsonFilePath = Path.Combine(Application.streamingAssetsPath,"Puzzles.json");
 		id = DataUtil.GetCurrentRoomId();
 		ParseJson(jsonFilePath, id);
+
+		Debug.Log(id);
+		Debug.Log(level);
 
 		switch (level) {
 		case 1:
@@ -47,7 +51,6 @@ public class PlaneExplorationRedirect : MonoBehaviour {
 		string jsonString = File.ReadAllText(jsonFilePath);
 		Dictionary<string, object> dict;
 		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
-//		print (roomId);
 		dict = (Dictionary<string, object>)dict[roomId.ToString()];
 
 		level = System.Convert.ToInt32 (dict ["level"]);

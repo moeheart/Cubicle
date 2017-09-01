@@ -31,7 +31,7 @@ public class DrawingHandler : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		jsonFilePath = Application.streamingAssetsPath + "/Puzzles.json";
+		jsonFilePath = Path.Combine(Application.streamingAssetsPath, "Puzzles.json");
 		/*
 		saveFilePath = Path.Combine(Application.persistentDataPath, "game.dat");
 

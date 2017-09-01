@@ -1,2 +1,7 @@
 timestamp,operation
+<<<<<<< HEAD
 8/31/2017 7:57:14 PM,SymYZ
+=======
+08/31/2017 21:10:54,RotX
+08/31/2017 21:10:56,RotY
+>>>>>>> upstream/master

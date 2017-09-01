@@ -25,7 +25,7 @@ public class Generation : MonoBehaviour {
 	private Vector4 box;
 
 	private int id;
-	private string jsonFilePath = "Assets/Scripts/Json/Puzzles.json";
+	private string jsonFilePath;
 
 	public GameObject logObject;
 
@@ -43,6 +43,8 @@ public class Generation : MonoBehaviour {
 	private int similarPos, dissimilarPos;
 
 	void Start () {
+
+		jsonFilePath = Path.Combine(Application.streamingAssetsPath,"Puzzles.json");
 
 		level = 0;
 		similarPos = -1;

@@ -3,11 +3,11 @@ Face 0 contains:
 Face 1 contains:
 8;3;
 Face 2 contains:
-3;0;4;9;9;
+3;0;9;4;4;
 Face 3 contains:
 1;2;
 Face 4 contains:
-7;2;
+7;2;2;
 Face 5 contains:
 6;
 Face 6 contains:
@@ -17,6 +17,6 @@ Face 7 contains:
 Face 8 contains:
 1;
 Face 9 contains:
-6;2;2;
+6;2;
 Face 10 contains:
 7;

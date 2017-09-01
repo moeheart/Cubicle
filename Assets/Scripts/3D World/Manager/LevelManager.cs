@@ -15,7 +15,7 @@ public class LevelManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Debug.Log(Application.streamingAssetsPath);
-		levelJsonFilePath = Application.streamingAssetsPath + "/0824.json";
+		levelJsonFilePath = Path.Combine(Application.streamingAssetsPath, "/0824.json");
 		worldInstance = Instantiate(worldPrefab) as World;
 		worldInstance.GenerateWorld(levelJsonFilePath);
 		worldInstance.LoadData();
@@ -25,6 +25,10 @@ public class LevelManager : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	
+	}
+
+	public void RestartGame() {
+		worldInstance.RestartGame();
 	}
 
 	/*public void SaveGameState() {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using MiniJSON;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.SceneManagement;
 
 public class World : MonoBehaviour {
 
@@ -487,6 +488,13 @@ public class World : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.P)) {
 			Debug.Log("Deleting file...!!!");
 			File.Delete(saveFilePath);
+			SceneManager.LoadScene("World Scene");
 		}
+	}
+
+	public void RestartGame() {
+		Debug.Log("Deleting file...!!!");
+		File.Delete(saveFilePath);
+		SceneManager.LoadScene("World Scene");
 	}
 }

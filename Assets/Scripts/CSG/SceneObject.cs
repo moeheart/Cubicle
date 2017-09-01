@@ -4,10 +4,12 @@ using System.Collections;
 public class SceneObject : MonoBehaviour {
 
 	public Material wireframeMaterial;
-	public GameObject arrowPrefab;
+	[SerializeField]
+	public ArrowControl[] arrowPrefabs;
 
 	private bool isSelected;
 	private Material myMaterial;
+	private ArrowControl[] arrows;
 
 	// Use this for initialization
 	void Start () {
@@ -93,11 +95,17 @@ public class SceneObject : MonoBehaviour {
 		//Debug.Log("Selected: " + this.name + "...!!!");
 		Debug.Log(this.name + " " + GetComponent<Collider>().bounds);
 		isSelected = true;
+		for (int i = 0; i < 6; ++i) {
+			arrows[i].gameObject.SetActive(false);
+		}
 	}
 
 	public void OnDeselect() {
 		//Debug.Log("Deselected: " + this.name + "...!!!");
 		isSelected = false;
+		for (int i = 0; i < 6; ++i) {
+			arrows[i].gameObject.SetActive(false);
+		}
 	}
 
 	public void SetDefaultMaterial() {
@@ -116,9 +124,52 @@ public class SceneObject : MonoBehaviour {
 	}
 
 	public void GenerateControls() {
-		Vector3 center = GetComponent<Renderer>().bounds.center;
-		Vector3 extent = GetComponent<Renderer>().bounds.extents;
-		
+		if (arrows != null) {
+			foreach (ArrowControl arrow in arrows) {
+				Destroy(arrow.gameObject);
+			}
+		}
+		else {
+			arrows = new ArrowControl[6];
+		}
+		//Vector3 center = GetComponent<Renderer>().bounds.center;
+		Vector3 extents = GetComponent<Renderer>().bounds.extents;
+		for (int i = 0; i < 6; ++i) {
+			arrows[i] = Instantiate(arrowPrefabs[i]) as ArrowControl;
+			arrows[i].transform.parent = this.transform;
+			arrows[i].gameObject.SetActive(false);
+		}
+		arrows[0].transform.localPosition = new Vector3(extents.x, 0, 0);
+		arrows[1].transform.localPosition = new Vector3(0, 0, extents.z);
+		arrows[2].transform.localPosition = new Vector3(-extents.x, 0, 0);
+		arrows[3].transform.localPosition = new Vector3(0, 0, -extents.z);
+		arrows[4].transform.localPosition = new Vector3(0, extents.y, 0);
+		arrows[5].transform.localPosition = new Vector3(0, -extents.y, 0);
+	}
+
+	public void MoveInDirection(ArrowDirection direction) {
+		switch (direction) {
+			case ArrowDirection.plusY: 
+				this.transform.localPosition += new Vector3(0,1,0);
+				break;
+			case ArrowDirection.minusY: 
+				this.transform.localPosition += new Vector3(0,-1,0);
+				break;
+
+			case ArrowDirection.plusX: 
+				this.transform.localPosition += new Vector3(1,0,0);
+				break;
+			case ArrowDirection.minusX: 
+				this.transform.localPosition += new Vector3(-1,0,0);
+				break;
+
+			case ArrowDirection.plusZ: 
+				this.transform.localPosition += new Vector3(0,0,1);
+				break;
+			case ArrowDirection.minusZ: 
+				this.transform.localPosition += new Vector3(0,0,-1);
+				break;
+		}
 	}
 
 	private void DisplayWireframe() {
