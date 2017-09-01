@@ -14,7 +14,7 @@ public class ObjectsManager : MonoBehaviour {
 	private List<SceneObject> sceneObjs;
 	private GameObject targetObj;
 	private SceneObject opA, opB;
-	private SceneObject selectedObj;
+	public SceneObject selectedObj {get; private set;}
 
 	public void LoadGameObjects() {
 		sceneObjs = new List<SceneObject>();
