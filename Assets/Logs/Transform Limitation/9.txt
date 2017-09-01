@@ -1,2 +1,3 @@
 timestamp,operation
-08/31/2017 11:12:16,SymXY
+08/31/2017 21:12:20,SymXY
+08/31/2017 21:12:22,SymXZ
