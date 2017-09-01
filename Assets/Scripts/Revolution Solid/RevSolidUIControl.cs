@@ -14,8 +14,10 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	private static Button responseBtn;
 	private static Button showAllBtn;
 	private static Text showAllSwitch;
+	private static Button freeStrokeTutBtn;
+	private static GameObject freeStrokeTut;
 	private static bool isCandidateAxesShown = false;
-	private static string defaultString = "Try drawing on the left panel\nrevolution axis of the solid";
+	public static string defaultString = "Indicate the axis\nby a free stroke";
 	// Use this for initialization
 	void Awake() {
 		broadcast= GameObject.Find ("Text").GetComponent<Text> ();
@@ -35,6 +37,13 @@ public class RevSolidUIControl : RevSolidGameInfo {
 		showAllBtn = GameObject.Find ("showAllBtn").GetComponent<Button> ();
 		showAllBtn.onClick.AddListener (CandidateAxesSwitch);
 		showAllSwitch=GameObject.Find ("showAllSwitch").GetComponent<Text> ();
+
+		freeStrokeTutBtn = GameObject.Find ("freeStrokeExp").GetComponent<Button> ();
+		freeStrokeTutBtn.onClick.AddListener (ShowFreeStrokeTutorial);
+		freeStrokeTut = GameObject.Find ("freeStrokeTutorial");
+		freeStrokeTut.SetActive (false);
+
+
 	}
 
 	void OnEnable(){
@@ -43,6 +52,17 @@ public class RevSolidUIControl : RevSolidGameInfo {
 
 	void OnDisable(){
 		EventManager.StopListening ("Retry",Retry);
+	}
+
+	void Start(){
+		StartCoroutine ("ShowDefaultMsg");
+	}
+		
+	IEnumerator ShowDefaultMsg(){
+		while (true) {
+			BroadcastMsg (defaultString);
+			yield return new WaitForSeconds (1.0f);
+		}
 	}
 
 	// Update is called once per frame
@@ -135,10 +155,10 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	static void CandidateAxesSwitch(){
 		isCandidateAxesShown = !isCandidateAxesShown;
 		if (isCandidateAxesShown) {
-			showAllSwitch.text = "OFF";
+			showAllSwitch.text = "Hide candidate axes";
 			ShowCandidateAxes ();
 		} else {
-			showAllSwitch.text = "ON";
+			showAllSwitch.text = "Show candidate axes";
 			HideCandidateAxes ();
 		}
 	}
@@ -151,6 +171,16 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	static void HideCandidateAxes(){
 		RevSolidGameInfo.levelOfDifficulty += 0.5f;
 		AxisDrawing.RecoverOriginalSections ();
+	}
+
+	void ShowFreeStrokeTutorial(){
+		StartCoroutine ("PlayFreeStrokeVideo");
+	}
+
+	IEnumerator PlayFreeStrokeVideo(){
+		freeStrokeTut.SetActive (true);
+		yield return new WaitForSeconds (5);
+		freeStrokeTut.SetActive (false);
 	}
 
 }

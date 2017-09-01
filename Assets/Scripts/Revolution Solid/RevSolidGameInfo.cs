@@ -43,7 +43,7 @@ public class RevSolidGameInfo : MonoBehaviour {
 		
 		if (hit >= WinningCriterion) {
 			DataUtil.UnlockCurrentRoom();
-			RevSolidUIControl.BroadcastMsg ("CONGRATULATIONS you have unlocked this room. Press Q to quit, or continue enjoying your play.");
+			RevSolidUIControl.defaultString = "CONGRATULATIONS you have unlocked this room. Press Q to quit, or continue enjoying your play.";
 		}
 		if (hit < WinningCriterion && falseStrokeCount>=MaxFalseCount) {
 			RevSolidUIControl.BroadcastMsg ("You failed the game. Press RESTART to refill yourself with determination.");

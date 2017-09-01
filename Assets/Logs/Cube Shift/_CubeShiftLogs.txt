@@ -12,3 +12,126 @@ recordNo	timeStamp	trialNum	level	action	detail
 4	20.42784	0	retry		
 
 shift from  to World Scene
+
+
+8/31/2017 8:20:40 PM
+
+recordNo	timeStamp	trialNum	level	action	detail	
+
+1	795.8135	0	click'Proceed'Btn		
+
+2	805.5034	0	startShifting		
+
+3	817.0798	0	choose	1.533081, correct, 1	
+
+4	823.9418	0	newGameGenerated	3, 1	
+
+5	828.2417	1	click'Proceed'Btn		
+
+6	828.764	1	startShifting		
+
+7	839.3621	1	choose	0.5560303, wrong, 1	
+
+8	840.1037	1	choose	1.297668, wrong, 1	
+
+9	840.5082	1	choose	1.701721, wrong, 1	
+
+10	840.7943	1	choose	1.98822, wrong, 1	
+
+11	841.047	1	choose	2.240906, wrong, 1	
+
+12	841.637	1	choose	2.830627, wrong, 1	
+
+13	841.8895	1	choose	3.083435, wrong, 1	
+
+14	842.5973	1	choose	3.791077, correct, 2	
+
+15	847.5858	1	newGameGenerated	3, 1	
+
+16	849.3938	2	click'Proceed'Btn		
+
+17	849.8824	2	startShifting		
+
+18	862.0675	2	choose	2.139587, correct, 1	
+
+19	864.4654	2	newGameGenerated	3, 1	
+
+20	868.9623	3	click'Proceed'Btn		
+
+21	869.5684	3	startShifting		
+
+22	880.6431	3	choose	1.019409, wrong, 2	
+
+23	881.1663	3	choose	1.542053, wrong, 3	
+
+24	881.5532	3	choose	1.929932, correct, 1	
+
+25	889.3477	3	newGameGenerated	3, 1	
+
+26	906.0463	4	click'Proceed'Btn		
+
+27	906.4508	4	startShifting		
+
+28	917.9935	4	choose	1.499268, correct, 1	
+
+29	919.2953	4	newGameGenerated	3, 1	
+
+30	920.7905	5	click'Proceed'Btn		
+
+31	921.2453	5	startShifting		
+
+32	932.4247	5	choose	1.129028, correct, 2	
+
+33	933.7097	5	newGameGenerated	3, 1	
+
+34	934.868	6	click'Proceed'Btn		
+
+35	935.542	6	startShifting		
+
+36	946.9156	6	choose	1.332764, correct, 1	
+
+37	949.0093	6	newGameGenerated	3, 1	
+
+shift from  to World Scene
+
+
+8/31/2017 8:24:36 PM
+
+recordNo	timeStamp	trialNum	level	action	detail	
+
+1	10.45713	0	click'Proceed'Btn		
+
+2	12.56238	0	startShifting		
+
+3	23.63539	0	choose	1.027411, correct, 3	
+
+4	24.97072	0	newGameGenerated	4, 1	
+
+5	26.76827	1	click'Proceed'Btn		
+
+6	27.94772	1	startShifting		
+
+7	39.25388	1	choose	1.264179, correct, 2	
+
+8	40.37862	1	newGameGenerated	4, 1	
+
+9	48.47882	2	click'Proceed'Btn		
+
+10	48.91696	2	startShifting		
+
+11	60.49765	2	choose	1.53289, correct, 2	
+
+12	62.60886	2	newGameGenerated	4, 1	
+
+13	64.03597	3	click'Proceed'Btn		
+
+14	64.64255	3	startShifting		
+
+shift from  to World Scene
+
+
+8/31/2017 11:46:34 PM
+
+recordNo	timeStamp	trialNum	level	action	detail	
+
+shift from  to World Scene
