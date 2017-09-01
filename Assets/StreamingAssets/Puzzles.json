@@ -291,23 +291,23 @@
   },
 	"24": {
         "type": "plane exploration",
-		"level": 2
+		"level": 3
   },
 	"25": {
         "type": "plane exploration",
-		"level":3
+		"level":4
     },
 	"26": {
         "type": "plane exploration",
-		"level":4
+		"level":5
     },
 	"27": {
         "type": "plane exploration",
-		"level":5
+		"level":6
     },
 	"28": {
         "type": "plane exploration",
-		"level":6
+		"level":7
     },
 	"29": {
 		"type" :  "revolution solid",
@@ -318,7 +318,7 @@
 		"levelNum":2
 	},
 	"31": {
-		"type" :  "cube shift"
+		"type" :  "cube shift",
 		"shiftNumPerTrial":1,
 		"cubeNum":3
 	},
