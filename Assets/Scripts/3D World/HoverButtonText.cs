@@ -9,7 +9,6 @@ public class HoverButtonText : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		HideInstructions();
 	}
 	
 	// Update is called once per frame
@@ -17,19 +16,8 @@ public class HoverButtonText : MonoBehaviour {
 		
 	}
 
-	public void OnMouseOver() {
-		ShowInstructions();
-	}
-
-	public void OnMouseExit() {
-		HideInstructions();
-	}
-
 	public void ShowInstructions() {
 		instructionText.enabled = !instructionText.enabled;
 	}
 
-	public void HideInstructions() {
-		instructionText.enabled = false;
-	}
 }
