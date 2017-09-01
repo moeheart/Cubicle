@@ -93,7 +93,7 @@ public class MeshGenerator : MonoBehaviour {
 
         InitArrays();
 
-        CurrentLevel = 0;
+        CurrentLevel = 6;
         InitConstants(CurrentLevel);
 
         CreateModel();
