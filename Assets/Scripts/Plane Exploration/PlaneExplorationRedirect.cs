@@ -8,12 +8,13 @@ using UnityEngine.SceneManagement;
 
 public class PlaneExplorationRedirect : MonoBehaviour {
 
-	private string jsonFilePath = "Assets/Scripts/Json/Puzzles.json";
+	private string jsonFilePath;
 	private int level;
 	private int id;
 
 	void Start () {
 
+		jsonFilePath = Path.Combine(Application.streamingAssetsPath,"Puzzles.json");
 		id = DataUtil.GetCurrentRoomId();
 		ParseJson(jsonFilePath, id);
 
