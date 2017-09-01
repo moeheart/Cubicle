@@ -18,6 +18,9 @@ public class PlaneExplorationRedirect : MonoBehaviour {
 		id = DataUtil.GetCurrentRoomId();
 		ParseJson(jsonFilePath, id);
 
+		Debug.Log(id);
+		Debug.Log(level);
+
 		switch (level) {
 		case 1:
 			SceneManager.LoadScene ("Q1", LoadSceneMode.Single);
@@ -48,7 +51,6 @@ public class PlaneExplorationRedirect : MonoBehaviour {
 		string jsonString = File.ReadAllText(jsonFilePath);
 		Dictionary<string, object> dict;
 		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
-//		print (roomId);
 		dict = (Dictionary<string, object>)dict[roomId.ToString()];
 
 		level = System.Convert.ToInt32 (dict ["level"]);
