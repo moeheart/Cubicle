@@ -1,6 +1,10 @@
 ﻿//using System;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
+using MiniJSON;
 
 public class GameInfo
 {
@@ -9,14 +13,15 @@ public class GameInfo
 
 	public int targetIdx;
 	public GameObject target;
-	public bool isTargetFound;
+	public static bool isTargetFound;
 	public bool isChooseEnabled;
 	public int moves;//1~3
 	public int phaseNo;//{Instructions,Travelling,Clicking};//0-"proceed",1-"play", 2-travelling, >=3-clicking
-	public int travelPeriodNo;
+	public static int travelPeriodNo;
+
 	//difficulty
-	public int MaxTravelPeriodNo=1;
-	public int CubeNumber=3;
+	public static int MaxTravelPeriodNo;
+	public static int CubeNumber;
 
 	public float lastUpdateTime,currTime;
 	public bool isMoving;
@@ -30,18 +35,23 @@ public class GameInfo
 
 	public bool hasPhase3Begun;
 	public float beginTime;
-	public float reactTime;
-	public int score;
+	public static float reactTime;
+	public static float score;
+
+	static float WinningCriterion=1.0f;
 
 	//单例模式
 	private static GameInfo instance = new GameInfo ();
-	private GameInfo(){}
+	private GameInfo(){
+		score = 0;
+	}
 	public static GameInfo getInstance(){
 		return instance;
 	}
 
 	public void Init(){
 		//initialize GameInfo records
+		CheckLevel();
 
 		isTargetFound = false;
 		isChooseEnabled = false;
@@ -126,4 +136,34 @@ public class GameInfo
 			}
 		}
 	}
+
+	void CheckLevel(){
+		MaxTravelPeriodNo = ParseJson("shiftNumPerTrial");
+		CubeNumber = ParseJson ("cubeNum");
+	}
+
+	public static int ParseJson(string lineTitle){
+		int roomId=DataUtil.GetCurrentRoomId();
+		string jsonFilePath = Path.Combine(Application.streamingAssetsPath, "Puzzles.json");
+
+		string jsonString = File.ReadAllText(jsonFilePath);
+		Dictionary<string, object> dict;
+		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
+		dict = (Dictionary<string, object>)dict[roomId.ToString()];
+
+		return System.Convert.ToInt32 (dict [lineTitle]);
+	}
+
+	public static void Add2Score(){
+		score+=1.0f;
+	}
+
+	public static bool CheckIfWinningCriterionMet(){
+		if (score > WinningCriterion) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+		
 }

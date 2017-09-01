@@ -61,6 +61,7 @@ public class RevSolidLog : MonoBehaviour {
 
 	void RecordInitialization(){
 		writer = new StreamWriter (logFilePath, true);
+		writer.WriteLine ("\n\n{0}\n",System.DateTime.Now.ToString());
 		writer.WriteLine ("recordNo\ttimeStamp\ttrialNum\tlevel\taction\tdetail\t\n");
 	}
 
@@ -96,10 +97,10 @@ public class RevSolidLog : MonoBehaviour {
 
 	void FormulateResult(string action,string detail){ 
 		recordNo++;
-		writer.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t\n",recordNo,Time.time,trialNum,RevSolidGameInfo.levelOfDifficulty,action,detail);
+		writer.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t\n",recordNo,Time.realtimeSinceStartup,trialNum,RevSolidGameInfo.levelOfDifficulty,action,detail);
 	}
 
-	public void AddToTrialNum(){
+	void AddToTrialNum(){
 		trialNum++;
 	}
 

@@ -19,12 +19,13 @@ public class ModelGeneration : MonoBehaviour {
 	private int id;
 	public int levelNum;
 	public int level;
-	private string jsonFilePath = "Assets/Scripts/Json/Puzzles.json";
+	private string jsonFilePath;
 	public string method;
 
 	void Awake () {
 
 		level = 0;
+		jsonFilePath = Path.Combine(Application.streamingAssetsPath,"Puzzles.json");
 
 		Initialize ();
 

@@ -318,7 +318,9 @@
 		"levelNum":2
 	},
 	"31": {
-		"type" :  "cube shift"
+		"type" :  "cube shift",
+		"shiftNumPerTrial":1,
+		"cubeNum":3
 	},
 	"32": {
         "type": "plane exploration",
