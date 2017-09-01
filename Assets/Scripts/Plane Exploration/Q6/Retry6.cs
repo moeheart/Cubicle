@@ -20,8 +20,9 @@ public class Retry6 : MonoBehaviour {
 		resultTextObject.SetActive (true);
 		target.SetActive (true);
 
-		instructionText.text = "Please use direction keys to orient the yellow " +
-			"square to the orange one. Dropping is not allowed.";
+		instructionText.text = "Please use direction keys to orient the yellow" + 
+		"square on the top view and make it access the orange one.\n" +
+		"Falling leads to game over.";
 		resultText.text = "";
 
 		player.SetActive (true);
