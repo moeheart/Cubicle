@@ -5,14 +5,14 @@ using UnityEngine;
 public class ResponseProcessing : MonoBehaviour {
 	protected static float wx, wy;
 	protected static float resizedScale=1;
-	/*
-	static float originalHeight;
-	static float originalWidth;
-	*/
+
+	//static float originalHeight;
+	//static float originalWidth;
+
 
 	// Use this for initialization
 	void Awake(){
-		//originalHeight=600;
+		//originalHeight=475;
 		//originalWidth=800;
 	}
 	void Start () {
@@ -30,6 +30,6 @@ public class ResponseProcessing : MonoBehaviour {
 			wx = Camera.main.pixelRect.center.x;
 			wy = Camera.main.pixelRect.center.y;
 		}
-		//resizedScale=(Camera.main.pixelHeight/Camera.main.pixelWidth<9/16)?(Camera.main.pixelHeight/originalHeight):(Camera.main.pixelWidth/originalWidth);
+		//resizedScale=Camera.main.pixelWidth/originalWidth;
 	}
 }

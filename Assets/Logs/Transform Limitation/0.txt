@@ -1,4 +1,7 @@
 timestamp,operation
+<<<<<<< HEAD
+8/31/2017 7:57:05 PM,SymXZ
+=======
 08/31/2017 21:10:02,RotX
 08/31/2017 21:10:04,Undo
 08/31/2017 21:10:09,RotZ
@@ -12,3 +15,4 @@ timestamp,operation
 08/31/2017 21:10:28,RotZ
 08/31/2017 21:10:37,RotY
 08/31/2017 21:10:37,RotY
+>>>>>>> upstream/master

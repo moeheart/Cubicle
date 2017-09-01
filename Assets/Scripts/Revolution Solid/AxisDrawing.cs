@@ -31,9 +31,9 @@ public class AxisDrawing: ResponseProcessing {
 		linePath = new List<Vector3> ();
 		if (RevSolidGameInfo.levelOfDifficulty <= 1) { 
 			//RevSolidGameInfo class might not have awaken, be careful when calling its functions
-			sectionScale = 0.3f/resizedScale;
+			sectionScale = 0.5f/resizedScale;
 		}else if(RevSolidGameInfo.levelOfDifficulty <= 2){
-			sectionScale = 0.2f/resizedScale;
+			sectionScale = 0.5f/resizedScale;
 		}
 	}
 
