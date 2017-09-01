@@ -491,4 +491,10 @@ public class World : MonoBehaviour {
 			SceneManager.LoadScene("World Scene");
 		}
 	}
+
+	public void RestartGame() {
+		Debug.Log("Deleting file...!!!");
+		File.Delete(saveFilePath);
+		SceneManager.LoadScene("World Scene");
+	}
 }

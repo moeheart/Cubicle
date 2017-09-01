@@ -27,6 +27,10 @@ public class LevelManager : MonoBehaviour {
 	
 	}
 
+	public void RestartGame() {
+		worldInstance.RestartGame();
+	}
+
 	/*public void SaveGameState() {
 		//TODO
 		Dictionary<string, object> gameState = new Dictionary<string, object>();
