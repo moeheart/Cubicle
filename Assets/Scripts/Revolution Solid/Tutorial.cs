@@ -44,7 +44,7 @@ public class Tutorial : MonoBehaviour {
 			if (RevSolidGameInfo.CheckIfPlayerLearned () == true) {
 				EventManager.TriggerEvent("DisableTutorial");
 			}
-			yield return new WaitForSeconds (10);
+			yield return new WaitForSeconds (20);
 		}
 	}
 
@@ -103,10 +103,10 @@ public class Tutorial : MonoBehaviour {
 	IEnumerator FreeStrokeAnimation(int panel){
 		//for (int i = 0; i < 3; i++) {
 		yield return new WaitForSeconds (2.0f);
-			for (int j = 0; j < 8; j++) {
-				ActiveObjControl.activeObjects [panel].UseTutorialSpriteMatchingSolid (j);
-				yield return new WaitForSeconds (0.15f);
-			}
+		for (int j = 0; j < 8; j++) {
+			ActiveObjControl.activeObjects [panel].UseTutorialSpriteMatchingSolid (j);
+			yield return new WaitForSeconds (0.15f);
+		}
 		//}
 	}
 		

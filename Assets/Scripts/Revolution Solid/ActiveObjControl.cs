@@ -38,7 +38,8 @@ public class ActiveObjControl : MonoBehaviour {
 
 		InitPolygon ();
 		ActivateObjects ();
-		StartCoroutine("RecoverObjects");
+		//RecoverObjects();
+		StartCoroutine ("GenerateInitialObjects");
 
 	}
 
@@ -93,38 +94,42 @@ public class ActiveObjControl : MonoBehaviour {
 		}
 	}
 
-	IEnumerator RecoverObjects(){
-		while (true) {
-			//recover & shift sectionPanel-polygon correspondence
-			for (int i = 0; i < RevSolidGameInfo.MaxPanelNum; i++) {
-				if (activeObjects [i].isKilled == true) {
-					//replace with one of the polygons(that is currently not on screen
-					int k;
-					while (true) {
-						k = Mathf.FloorToInt (Random.value * RevSolidGameInfo.MaxPolygonNum);
-						int j;
-						for (j = 0; j < RevSolidGameInfo.MaxPanelNum; j++) {
-							if (activeObjects [j].polygonIndex == k)
-								break;//for
-						}
-						if (j == RevSolidGameInfo.MaxPanelNum) {
-							break;//while
-						}
+	IEnumerator GenerateInitialObjects(){
+		for (int i = 0; i < RevSolidGameInfo.MaxPanelNum; i++) {
+			RecoverObjects ();
+			yield return new WaitForSeconds (RevSolidGameInfo.RecoverInterval);
+		}
+	}
+
+	public void RecoverObjects(){
+		//recover & shift sectionPanel-polygon correspondence
+		for (int i = 0; i < RevSolidGameInfo.MaxPanelNum; i++) {
+			if (activeObjects [i].isKilled == true) {
+				
+				//replace with one of the polygons(that is currently not on screen
+				int k;
+				while (true) {
+					k = Mathf.FloorToInt (Random.value * RevSolidGameInfo.MaxPolygonNum);
+					int j;
+					for (j = 0; j < RevSolidGameInfo.MaxPanelNum; j++) {
+						if (activeObjects [j].polygonIndex == k)
+							break;//for
 					}
-					activeObjects [i].polygonIndex = k;
-					activeObjects [i].Refresh ();
-					RevSolidGameInfo.polygonGenerationCount++;
-					if (!RevSolidGameInfo.IfNoviceGuideEnds ()) {
-						Tutorial.IndicateCorrectAns (i);
-					} 
-					if (RevSolidGameInfo.WhenNoviceGuideEnds ()) {
-						StartCoroutine (this.GetComponent<RevSolidUIControl> ().ShowStartGamePanel ());
+					if (j == RevSolidGameInfo.MaxPanelNum) {
+						break;//while
 					}
 				}
-				yield return new WaitForSeconds (RevSolidGameInfo.RecoverInterval);
+				activeObjects [i].polygonIndex = k;
+				RevSolidGameInfo.polygonGenerationCount++;
+				if (!RevSolidGameInfo.IfNoviceGuideEnds ()) {
+					Tutorial.IndicateCorrectAns (i);
+				} 
+				if (RevSolidGameInfo.WhenNoviceGuideEnds ()) {
+					StartCoroutine (this.GetComponent<RevSolidUIControl> ().ShowStartGamePanel ());
+				}
+				activeObjects [i].Refresh ();
+				break;
 			}
-			yield return new WaitForSeconds (RevSolidGameInfo.RecoverInterval);
-
 		}
 	}
 

@@ -58,7 +58,7 @@ public class RevSolidGameInfo : MonoBehaviour {
 			SceneManager.LoadScene("World Scene");
 		}
 	}
-
+	 
 	public static bool IfNoviceGuideEnds(){
 		return hit >= GuidingTrialNum;
 	}

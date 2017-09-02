@@ -41,6 +41,13 @@ public class RevSolidUIControl : RevSolidGameInfo {
 		showAllSwitch=GameObject.Find ("showAllSwitch").GetComponent<Text> ();
 
 		gameStartPanel = GameObject.Find ("gameStartPanel");
+
+		checkMarks=new GameObject[4];
+		for (int i = 0; i < RevSolidGameInfo.MaxPanelNum; i++) {
+
+			checkMarks[i] = GameObject.Find ("checkMark_"+i.ToString());
+			checkMarks[i].SetActive (false);
+		}
 	}
 
 	void OnEnable(){
@@ -52,12 +59,7 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	}
 
 	void Start(){
-		checkMarks=new GameObject[4];
-		for (int i = 0; i < RevSolidGameInfo.MaxPanelNum; i++) {
 
-			checkMarks[i] = GameObject.Find ("checkMark_"+i.ToString());
-			checkMarks[i].SetActive (false);
-		}
 
 		StartCoroutine ("ShowDefaultMsg");
 	}
@@ -183,8 +185,10 @@ public class RevSolidUIControl : RevSolidGameInfo {
 
 	IEnumerator DisplayCheckMarkFor2Scs(int panelIndex){
 		checkMarks[panelIndex].SetActive (true);
+		//ActiveObjControl.activeObjects [panelIndex].image.gameObject.GetComponent<MeshRenderer> ().material.SetFloat ("_AlphaScale",0.0f);
 		yield return new WaitForSeconds (2.0f);
 		checkMarks[panelIndex].SetActive (false);
+		//ActiveObjControl.activeObjects [panelIndex].image.gameObject.GetComponent<MeshRenderer> ().material.SetFloat ("_AlphaScale",1.0f);
 	}
 
 	public IEnumerator ShowStartGamePanel (){

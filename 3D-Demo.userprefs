@@ -2,21 +2,13 @@
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Revolution Solid\Tutorial.cs">
     <Files>
-      <File FileName="Assets\Scripts\Revolution Solid\Tutorial.cs" Line="105" Column="37" />
-      <File FileName="Assets\Scripts\Revolution Solid\RevSolidGameInfo.cs" Line="19" Column="20" />
-      <File FileName="Assets\Scripts\Revolution Solid\RevSolidUIControl.cs" Line="61" Column="3" />
-      <File FileName="Assets\Scripts\Revolution Solid\ActiveObject.cs" Line="51" Column="21" />
-      <File FileName="Assets\Scripts\Revolution Solid\Section.cs" Line="22" Column="2" />
-      <File FileName="Assets\Scripts\Revolution Solid\AxisDrawing.cs" Line="300" Column="49" />
-      <File FileName="Assets\Scripts\Cube Shift\Navigation.cs" Line="17" Column="22" />
-      <File FileName="Assets\Scripts\Cube Shift\UIControl.cs" Line="26" Column="1" />
-      <File FileName="Assets\Scripts\Revolution Solid\ActiveObjControl.cs" Line="129" Column="3" />
-      <File FileName="Assets\Scripts\Revolution Solid\RevSolidLog.cs" Line="100" Column="1" />
-      <File FileName="Assets\Scripts\Revolution Solid\Easy.cs" Line="8" Column="3" />
+      <File FileName="Assets\Scripts\Revolution Solid\Tutorial.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore />
+    <BreakpointStore>
+      <Breakpoint file="D:\Study\summer_intern\3D-Demo\3D-Demo\3D-Demo\Assets\Scripts\Cube Shift\UIControl.cs" line="26" column="1" />
+    </BreakpointStore>
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>
