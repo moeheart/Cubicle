@@ -49,6 +49,7 @@ public class ActiveObject {
 
 		alphaScale = 1.0f;
 		GetRefreshTime ();
+		
 	}
 
 	void GetRefreshTime (){
@@ -111,8 +112,8 @@ public class ActiveObject {
 		image.sprite = AxisDrawing.sections [polygonIndex].imgSprite;
 	}
 
-	public void UseTutorialSpriteMatchingSolid(){
-		image.sprite = AxisDrawing.sections [polygonIndex].tutorialSprite;
+	public void UseTutorialSpriteMatchingSolid(int frameIdx){
+		image.sprite = AxisDrawing.sections [polygonIndex].tutorialSprite[frameIdx];
 	}
 
 }

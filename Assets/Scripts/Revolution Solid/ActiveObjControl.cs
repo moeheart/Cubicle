@@ -96,11 +96,11 @@ public class ActiveObjControl : MonoBehaviour {
 	IEnumerator RecoverObjects(){
 		while (true) {
 			//recover & shift sectionPanel-polygon correspondence
-			for(int i=0;i<RevSolidGameInfo.MaxPanelNum;i++){
+			for (int i = 0; i < RevSolidGameInfo.MaxPanelNum; i++) {
 				if (activeObjects [i].isKilled == true) {
 					//replace with one of the polygons(that is currently not on screen
 					int k;
-					while(true){
+					while (true) {
 						k = Mathf.FloorToInt (Random.value * RevSolidGameInfo.MaxPolygonNum);
 						int j;
 						for (j = 0; j < RevSolidGameInfo.MaxPanelNum; j++) {
@@ -113,20 +113,19 @@ public class ActiveObjControl : MonoBehaviour {
 					}
 					activeObjects [i].polygonIndex = k;
 					activeObjects [i].Refresh ();
-					/*
-					Debug.Log (i);
-					Debug.Log ("+1");*/
+					RevSolidGameInfo.polygonGenerationCount++;
+					if (!RevSolidGameInfo.IfNoviceGuideEnds ()) {
+						Tutorial.IndicateCorrectAns (i);
+					} 
+					if (RevSolidGameInfo.WhenNoviceGuideEnds ()) {
+						StartCoroutine (this.GetComponent<RevSolidUIControl> ().ShowStartGamePanel ());
+					}
 				}
 				yield return new WaitForSeconds (RevSolidGameInfo.RecoverInterval);
 			}
 			yield return new WaitForSeconds (RevSolidGameInfo.RecoverInterval);
 
 		}
-	}
-
-	public static bool WithinViewport(int objIndex){
-		return (Mathf.Abs (activeObjects [objIndex].gameObject.transform.position.x - midPos.x) <= 8
-			&& Mathf.Abs (activeObjects [objIndex].gameObject.transform.position.y - midPos.y) <= 5);
 	}
 
 

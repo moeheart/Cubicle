@@ -50,7 +50,9 @@ public class AxisDrawing: ResponseProcessing {
 	}
 	// Use this for initialization
 	void Start () {
+		linePrefab = Resources.Load ("linePrefab") as GameObject;
 		StartCoroutine("RecordLinePath");
+
 	}
 
 	
@@ -160,7 +162,7 @@ public class AxisDrawing: ResponseProcessing {
 	void DisplayScore(int bestMatchCand){
 		switch(bestMatchCand) {
 		case -1:
-			RevSolidUIControl.BroadcastMsg("fantastic!");
+			RevSolidUIControl.BroadcastMsg ("fantastic!");
 			break;
 		case 0:
 			RevSolidUIControl.BroadcastMsg("left edge is not the correct axis");
@@ -295,6 +297,7 @@ public class AxisDrawing: ResponseProcessing {
 				RevSolidGameInfo.Add2TotalHit (1);
 				RevSolidUIControl.BroadcastHits ();
 				StartCoroutine (ShowAnswerAndDisableFormerQuestion(panelIndex));
+				this.GetComponent<RevSolidUIControl>().ShowCheckMark (panelIndex);
 			} else {
 				RevSolidGameInfo.Add2FalseStrokeCount (1);
 				RevSolidUIControl.BroadcastFalseStrokeCount ();
@@ -323,10 +326,10 @@ public class AxisDrawing: ResponseProcessing {
 
 
 	IEnumerator ShowAnswerAndDisableFormerQuestion(int panelIndex){
-		Tutorial.IndicateAxisAndStroke (panelIndex);
-		yield return new WaitForSeconds (2.0f);
-
+		//yield return new WaitForSeconds (1.0f);
+		//this.GetComponent<Tutorial>().IndicateAxisAndStroke (panelIndex);
 		ActiveObjControl.activeObjects [sections [panelIndex].polygonIndex].isKilled = true;
+		yield return new WaitForSeconds (2.0f);
 		ActiveObjControl.activeObjects [sections [panelIndex].polygonIndex].image.gameObject.SetActive (false);
 
 		Tutorial.CancelAnsIndication ();
