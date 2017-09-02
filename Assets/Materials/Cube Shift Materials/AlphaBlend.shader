@@ -12,7 +12,6 @@ Shader "Custom/AlphaBlendMat" {
 		Pass{
 			Tags{"LightMode" = "ForwardBase"}//前向渲染路径
 
-			ZWrite off
 			Blend SrcAlpha OneMinusSrcAlpha
 
 		CGPROGRAM

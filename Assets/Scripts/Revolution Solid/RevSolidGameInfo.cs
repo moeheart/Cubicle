@@ -13,7 +13,7 @@ public class RevSolidGameInfo : MonoBehaviour {
 	const int LearningThres = 6;
 	public const int WinningCriterion = 8;
 
-	public static float RecoverInterval=3.0f;
+	public static float RecoverInterval=7.0f;
 	public static float MaxReactionTime=9999.0f;
 	public static int MaxPolygonNum=12;
 	public static int MaxPanelNum;

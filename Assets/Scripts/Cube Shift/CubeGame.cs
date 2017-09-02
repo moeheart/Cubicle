@@ -176,7 +176,7 @@ public class CubeGame : MonoBehaviour {
 		//set target
 		gameInfo.targetIdx = Mathf.CeilToInt (cube.CubeNumber*Random.Range(0.01f,1.0f))-1;
 		gameInfo.UpdateTarget (gameInfo.targetIdx);
-		gameInfo.target.SetActive (true);
+		GameInfo.SetTargetVisible ();
 	}
 
 	void DestroyCubes(){

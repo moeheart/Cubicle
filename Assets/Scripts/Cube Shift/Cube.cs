@@ -13,6 +13,7 @@ public class Cube {
 	public Vector3[] pos = new Vector3[MaxCubeNumber];
 	public Vector3[] shiftedPos = new Vector3[MaxCubeNumber * 3];
 	public int[] posParams= new int[9 * MaxCubeNumber]; //fixed size buffer fields may only be members of structs
+	Vector3 modelPivotOffset=new Vector3(-0.054f,-0.021f,-0.041f);//measured manually
 	//if new every round, a stackoverflow may be caused
 	public bool isPosDuplicate=true;
 	public bool notWithinCube=true;
@@ -101,7 +102,17 @@ public class Cube {
 
 			} while(isPosDuplicate || notWithinCube);//while(isPosDuplicate);
 		}
+			
+		AddOffsetToGeneratedPositions();
+	}
 
+	void AddOffsetToGeneratedPositions(){
+		for (int i = 0; i < CubeNumber; i++) {
+			pos[i]+=modelPivotOffset;
+			for (int k = 0; k < 3; k++) {
+				shiftedPos [i * 3 + k] += modelPivotOffset;
+			}
+		}
 	}
 
 	public void FindAdjoiningCubes(){
