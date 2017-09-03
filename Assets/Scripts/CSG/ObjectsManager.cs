@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using MiniJSON;
-using UnityEditor;
 
 public class ObjectsManager : MonoBehaviour {
 	public SceneObject CSGObjectPrefab;
@@ -234,7 +233,8 @@ public class ObjectsManager : MonoBehaviour {
 		string assetPath = Path.Combine(Application.streamingAssetsPath, targetName);
 		targetObj = Instantiate(targetPrefab) as GameObject;
 		targetObj.name = "Target";
-		targetMesh = (Mesh)AssetDatabase.LoadAssetAtPath(assetPath, typeof(Mesh));
+		Debug.Log(assetPath);
+		targetMesh = Resources.Load(targetName) as Mesh;
 		targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
 	}
 
