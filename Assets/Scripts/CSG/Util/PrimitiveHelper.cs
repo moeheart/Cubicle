@@ -42,4 +42,17 @@
 		 sceneObj.GetComponent<MeshFilter>().sharedMesh = mesh;
 		 sceneObj.GetComponent<MeshCollider>().sharedMesh = mesh;
 	 }
+
+     public static PrimitiveType ToType(string str) {
+         if (str == "cube") {
+             return PrimitiveType.Cube;
+         }
+         if (str == "sphere") {
+             return PrimitiveType.Sphere;
+         }
+         if (str == "cylinder") {
+             return PrimitiveType.Cylinder;
+         }
+         return PrimitiveType.Cube;
+     }
  }

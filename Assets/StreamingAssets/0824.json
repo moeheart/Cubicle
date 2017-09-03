@@ -202,5 +202,17 @@
         "dimension": [ 1, 1, 1 ],
         "color": [ 0.2, 0.4, 0.6, 1 ],
         "puzzle type": "cube shift"
+    },
+    "34" : {
+        "position" : [4,0,2],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "CSG"
+    },
+    "35" : {
+        "position" : [4,0,3],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "CSG"
     }
 }
