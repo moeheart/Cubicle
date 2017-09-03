@@ -170,3 +170,45 @@ shift from  to World Scene
 recordNo	timeStamp	trialNum	level	action	detail	
 
 shift from  to World Scene
+
+
+9/3/2017 12:18:19 PM
+
+recordNo	timeStamp	trialNum	level	action	detail	
+
+1	2.923834	0	click'Proceed'Btn		
+
+2	3.364619	0	startShifting		
+
+3	14.09963	0	choose	0.6739454, correct, 2	
+
+4	14.95499	0	newGameGenerated	3, 1	
+
+5	15.99571	1	click'Proceed'Btn		
+
+6	16.32348	1	startShifting		
+
+7	26.8349	1	choose	0.460825, correct, 0	
+
+shift from  to World Scene
+
+
+9/3/2017 12:23:06 PM
+
+recordNo	timeStamp	trialNum	level	action	detail	
+
+shift from  to World Scene
+
+
+9/3/2017 12:24:13 PM
+
+recordNo	timeStamp	trialNum	level	action	detail	
+
+shift from  to World Scene
+
+
+9/3/2017 12:24:29 PM
+
+recordNo	timeStamp	trialNum	level	action	detail	
+
+shift from  to World Scene

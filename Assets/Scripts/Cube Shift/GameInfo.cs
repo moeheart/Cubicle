@@ -26,7 +26,7 @@ public class GameInfo
 	public float lastUpdateTime,currTime;
 	public bool isMoving;
 	public const float stillDuration = 1.0f;
-	public const float shiftDuration = 1.0f;
+	public const float shiftDuration = 2.0f;
 
 	public bool[] isShiftDone=new bool[Cube.MaxCubeNumber*3];
 

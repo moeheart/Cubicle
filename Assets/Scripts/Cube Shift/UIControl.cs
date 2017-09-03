@@ -84,14 +84,14 @@ public class UIControl : MonoBehaviour {
 			gameInfo.PauseGame ();
 			button.gameObject.SetActive (true);
 			btnText.text = "Proceed";
-			msgText.text = "Welcome! What is ahead of you is quite like a cups-and-ball Shell Game. ";
+			msgText.text = "Welcome! What is ahead of you is quite like a cups-and-ball Shell Game. Your goal is to find the flushed emoji little face";
 			restartCanvas.SetActive (false);
 		}
 		else if(gameInfo.phaseNo == 1){
 			
 			button.gameObject.SetActive (true);
 			btnText.text = "Play";
-			msgText.text = "After you press [Play], several identical cubes will begin shifting.\n"+"Later you will be asked where the candy is.";
+			msgText.text = "After you press [Play], several identical cubes (one topped with a flushed face) will begin shifting.";
 			restartCanvas.SetActive (false);
 		}
 		else if(gameInfo.phaseNo == 2){
@@ -103,7 +103,7 @@ public class UIControl : MonoBehaviour {
 				//GameInfo.SetTargetInvisible ();
 			}
 
-			msgText.text = "Now the candy is travelling between cubes";
+			msgText.text = "The face may travel between cubes at some points.";
 			restartCanvas.SetActive (false);
 		}
 		else if (gameInfo.phaseNo == 3) {
@@ -116,13 +116,14 @@ public class UIControl : MonoBehaviour {
 				if (!GameInfo.isTargetFound) {
 					GameInfo.SetTargetInvisible ();
 					gameInfo.isChooseEnabled = true;
-					msgText.text = "Now this is the SAME VIEW AS IN THE BEGINNING. Indicate the cube with candy by ONE CLICK on it, or press[WATCH AGAIN] if you forget.";
+					msgText.text = "Where is the face?Indicate by ONE CLICK at a cube.\n* Now this is the SAME VIEW AS IN THE BEGINNING.";
 				}
 			}
 			if (GameInfo.isTargetFound) {
 				gameInfo.isChooseEnabled = false;
-				msgText.text = "You've found the candy!";
+				msgText.text = "You've found it!";
 				restartCanvas.SetActive (true);
+
 			}
 		}
 		reactTime.text = GameInfo.reactTime.ToString ("##.000");
@@ -176,7 +177,9 @@ public class UIControl : MonoBehaviour {
 	public static void RefreshScore(){
 		score.text = "SCORE "+GameInfo.score.ToString();
 		if (GameInfo.CheckIfWinningCriterionMet ()) {
-			popUpMessage.text="Congratulations! The next level is unlocked now. Press Q to go on with world exploration";
+			popUpMessage.text = "Congratulations! The next level is unlocked now. Press Q to go on with world exploration";
+		} else {
+			popUpMessage.text="Or [WATCH AGAIN] to understand better.";
 		}
 	}
 
