@@ -1,12 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.IO;
+using MiniJSON;
 
 public class ObjectsManager : MonoBehaviour {
 	public SceneObject CSGObjectPrefab;
 	//public SceneObject CSGCube, CSGSphere, CSGCylinder;
 	public GameObject targetPrefab;
-	public Mesh targetMesh;
+	//public Mesh targetMesh;
 	//public Material wireframeMaterial;
 	public Material targetMaterial;
 	//public Material wireframeMaterial;
@@ -15,11 +17,16 @@ public class ObjectsManager : MonoBehaviour {
 	private GameObject targetObj;
 	private SceneObject opA, opB;
 	public SceneObject selectedObj {get; private set;}
+	private Mesh targetMesh;
 
 	public void LoadGameObjects() {
 		sceneObjs = new List<SceneObject>();
 
-		SceneObject cube = Instantiate(CSGObjectPrefab) as SceneObject;
+		string jsonPath = Path.Combine(Application.streamingAssetsPath, "Puzzles.json");
+		int id = DataUtil.GetCurrentRoomId();
+		ParseJson(jsonPath, id);
+
+		/*SceneObject cube = Instantiate(CSGObjectPrefab) as SceneObject;
 		SceneObject sphere = Instantiate(CSGObjectPrefab) as SceneObject;
 		cube.name = "Cube";
 		sphere.name = "Sphere";
@@ -35,11 +42,11 @@ public class ObjectsManager : MonoBehaviour {
 		sphere.transform.localPosition = new Vector3(-2,-2,0);
 		sphere.transform.localScale = new Vector3(1.3f, 1.3f, 1.3f);
 		sceneObjs.Add(cube);
-		sceneObjs.Add(sphere);
+		sceneObjs.Add(sphere);*/
 
-		targetObj = Instantiate(targetPrefab) as GameObject;
-		targetObj.name = "Target";
-		targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
+		//targetObj = Instantiate(targetPrefab) as GameObject;
+		//targetObj.name = "Target";
+		//targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
 	}
 
 	void Update() {
@@ -159,6 +166,7 @@ public class ObjectsManager : MonoBehaviour {
 				Debug.Log("You win...!!!");
 				Destroy(composite);
 				Destroy(targetObj);
+				DataUtil.UnlockCurrentRoom();
 				return;
 			}
 			targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
@@ -190,6 +198,44 @@ public class ObjectsManager : MonoBehaviour {
 		}
 		Destroy(targetObj);
 		LoadGameObjects();
+	}
+
+	private void ParseJson(string jsonPath, int roomId) {
+		string jsonString = File.ReadAllText(jsonPath);
+		Dictionary<string, object> dict;
+		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
+		dict = (Dictionary<string, object>)dict[roomId.ToString()];
+
+		Dictionary<string, object> objects = (Dictionary<string, object>)dict["objects"];
+		foreach (KeyValuePair<string, object> jsonObj in objects) {
+			Dictionary<string, object> value = (Dictionary<string,object>)jsonObj.Value;
+			SceneObject obj = Instantiate(CSGObjectPrefab) as SceneObject;
+			obj.name = jsonObj.Key;
+			PrimitiveHelper.SetAsType(obj, PrimitiveHelper.ToType((string)value["type"]));
+			if (value.ContainsKey("pos")) {
+				List<object> pos = (List<object>)value["pos"];
+				float x = System.Convert.ToSingle(pos[0]);
+				float y = System.Convert.ToSingle(pos[1]);
+				float z = System.Convert.ToSingle(pos[2]);
+				obj.transform.localPosition = new Vector3(x, y, z);
+			}
+			if (value.ContainsKey("scale")) {
+				List<object> pos = (List<object>)value["scale"];
+				float x = System.Convert.ToSingle(pos[0]);
+				float y = System.Convert.ToSingle(pos[1]);
+				float z = System.Convert.ToSingle(pos[2]);
+				obj.transform.localScale = new Vector3(x, y, z);
+			}
+			sceneObjs.Add(obj);
+		}
+
+		string targetName = Path.Combine("CSG", (string)dict["target"]);
+		string assetPath = Path.Combine(Application.streamingAssetsPath, targetName);
+		targetObj = Instantiate(targetPrefab) as GameObject;
+		targetObj.name = "Target";
+		Debug.Log(assetPath);
+		targetMesh = Resources.Load(targetName) as Mesh;
+		targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
 	}
 
 }

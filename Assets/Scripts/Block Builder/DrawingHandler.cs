@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using MiniJSON;
-using System.Runtime.Serialization.Formatters.Binary;
 
 public class DrawingHandler : MonoBehaviour {
 
