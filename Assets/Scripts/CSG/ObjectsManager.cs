@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 using MiniJSON;
 
@@ -12,11 +13,13 @@ public class ObjectsManager : MonoBehaviour {
 	//public Material wireframeMaterial;
 	public Material targetMaterial;
 	//public Material wireframeMaterial;
+	public Text levelCompleteText;
 
 	private List<SceneObject> sceneObjs;
 	private GameObject targetObj;
 	private SceneObject opA, opB;
 	public SceneObject selectedObj {get; private set;}
+
 	private Mesh targetMesh;
 
 	private int id;
@@ -54,6 +57,7 @@ public class ObjectsManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		levelCompleteText.gameObject.SetActive(false);
 		id = DataUtil.GetCurrentRoomId();
 		logPath = "Assets/Logs/CSG/CSG Log.txt";
 	}
@@ -179,6 +183,7 @@ public class ObjectsManager : MonoBehaviour {
 				//Debug.Log(unionVolume + " " + targetVolume + " " + compositeVolume);
 				//Debug.Log("You win...!!!");
 				CSGLog.Log(logPath, id, "Completed...!!!");
+				levelCompleteText.gameObject.SetActive(true);
 				Destroy(composite);
 				Destroy(targetObj);
 				DataUtil.UnlockCurrentRoom();
@@ -243,16 +248,33 @@ public class ObjectsManager : MonoBehaviour {
 				float z = System.Convert.ToSingle(pos[2]);
 				obj.transform.localScale = new Vector3(x, y, z);
 			}
+			if (value.ContainsKey("direction")) {
+				if ((string)value["direction"] == "X") {
+					obj.transform.Rotate(90,0,0);
+				}
+				if ((string)value["direction"] == "Z") {
+					obj.transform.Rotate(0,0,90);
+				}
+			}
 			sceneObjs.Add(obj);
 		}
 
-		string targetName = Path.Combine("CSG", (string)dict["target"]);
+		Dictionary<string, object> targetDict = (Dictionary<string, object>)dict["target"];
+		string targetName = Path.Combine("CSG", (string)targetDict["name"]);
 		string assetPath = Path.Combine(Application.streamingAssetsPath, targetName);
 		targetObj = Instantiate(targetPrefab) as GameObject;
 		targetObj.name = "Target";
 		//Debug.Log(assetPath);
 		targetMesh = Resources.Load(targetName) as Mesh;
 		targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
+		if (targetDict.ContainsKey("scale")) {
+			List<object> pos = (List<object>)targetDict["scale"];
+			float x = System.Convert.ToSingle(pos[0]);
+			float y = System.Convert.ToSingle(pos[1]);
+			float z = System.Convert.ToSingle(pos[2]);
+			targetObj.transform.localScale = new Vector3(x, y, z);
+		}
+	
 	}
 
 }

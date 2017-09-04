@@ -7,3 +7,14 @@
 13: A-B
 13: Check failed
 13: Completed...!!!
+34: A*B
+34: A+B
+34: A-B
+34: A-B
+34: Completed...!!!
+34: A-B
+34: Completed...!!!
+13: A-B
+13: Completed...!!!
+34: A-B
+34: Completed...!!!
