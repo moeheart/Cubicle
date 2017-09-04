@@ -73,6 +73,12 @@ public class FPSInput : MonoBehaviour {
 				}
 			}
 		}
+
+		//TODO
+		if (Input.GetButton("Jump")) {
+			_vertSpeed = jumpSpeed;
+		}
+
 		movement.y = _vertSpeed;
 		
 		
