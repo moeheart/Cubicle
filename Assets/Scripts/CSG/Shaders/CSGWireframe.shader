@@ -3,11 +3,12 @@
  * http://codeflow.org/entries/2012/aug/02/easy-wireframe-display-with-barycentric-coordinates/
  */
 
-Shader "Custom/Wireframe"
+Shader "Custom/CSGWireframe"
 {
   Properties {
     _MainTex ("Texture", 2D) = "white" {}
-	_Color ("Wire Color", Color) = (0,0,0,1)
+  _Color ("Main Color", Color) = (0,0,0,1)
+	_WireColor ("Wire Color", Color) = (0,0,0,1)
 	_Thickness ("Wire Thickness", Range(0, 1)) = .5
 	_Opacity ("Wire Opacity", Range (0, 1)) = .8
   }
@@ -23,6 +24,7 @@ Shader "Custom/Wireframe"
 
     sampler2D _MainTex;
     fixed4 _Color;
+    fixed4 _WireColor;
     float _Thickness;
     float _Opacity;
 
@@ -40,11 +42,13 @@ Shader "Custom/Wireframe"
 
     void surf (Input IN, inout SurfaceOutput o) {
 
-    	fixed4 tex = tex2D(_MainTex, IN.uv_MainTex);
-        fixed4 c = lerp( _Color, tex, edgeFactor(IN.color) );
+    	fixed4 tex = tex2D(_MainTex, IN.uv_MainTex) * _Color;
+        fixed4 c = lerp( _WireColor, tex, edgeFactor(IN.color) );
         c = lerp(tex, c, _Opacity);
 
         o.Albedo = c.rgb;
+
+
     }
     ENDCG
   }

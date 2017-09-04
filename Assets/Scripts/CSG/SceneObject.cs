@@ -110,7 +110,7 @@ public class SceneObject : MonoBehaviour {
 
 	public void SetDefaultMaterial() {
 		HideWireframe();
-		myMaterial.color = Color.black;
+		myMaterial.color = Color.white;
 	}
 
 	public void SetOpAMaterial() {
