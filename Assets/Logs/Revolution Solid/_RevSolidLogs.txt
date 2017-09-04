@@ -567,3 +567,10 @@ recordNo	timeStamp	trialNum	level	action	detail
 34	62.18543	8	1	tutorialDisabled		
 
 shift from  to World Scene
+
+
+09/04/2017 14:51:41
+
+recordNo	timeStamp	trialNum	level	action	detail	
+
+shift from  to World Scene
