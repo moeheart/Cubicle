@@ -57,7 +57,7 @@ public class ObjectsManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		levelCompleteText.gameObject.SetActive(false);
+		levelCompleteText.enabled = false;
 		id = DataUtil.GetCurrentRoomId();
 		logPath = "Assets/Logs/CSG/CSG Log.txt";
 	}
@@ -179,11 +179,11 @@ public class ObjectsManager : MonoBehaviour {
 			float unionVolume = CSGUtil.VolumeOfMesh(targetObj);
 			
 			//Debug.Log(unionVolume + " " + targetVolume + " " + compositeVolume);
-			if ((unionVolume - targetVolume < 2e-2) && (unionVolume - compositeVolume < 2e-2)) {
+			if ((unionVolume - targetVolume < 1e-3) && (unionVolume - compositeVolume < 1e-3)) {
 				//Debug.Log(unionVolume + " " + targetVolume + " " + compositeVolume);
 				//Debug.Log("You win...!!!");
 				CSGLog.Log(logPath, id, "Completed...!!!");
-				levelCompleteText.gameObject.SetActive(true);
+				levelCompleteText.enabled = true;
 				Destroy(composite);
 				Destroy(targetObj);
 				DataUtil.UnlockCurrentRoom();
