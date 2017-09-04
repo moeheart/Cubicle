@@ -121,7 +121,7 @@ public class Tutorial : MonoBehaviour {
 
 	public static void IndicateKeyUsage(){
 		if (isTutorialModeOn) {
-			RevSolidUIControl.SetTutorialMessage ("Press SPACE key anytime to freeze solid.");
+			RevSolidUIControl.SetTutorialMessage ("[WASD] - rotate solid |  [SPACE] - freeze rotation");
 		}
 	}
 }

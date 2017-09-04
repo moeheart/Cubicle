@@ -45,7 +45,7 @@ public class ActiveObject {
 		isKilled = false;
 		gameObject = ActiveObjControl.revSolids [polygonIndex].gameObject;
 
-		SetPosAndSpeed ();
+		SetPosRotAndSpeed ();
 
 		alphaScale = 1.0f;
 		GetRefreshTime ();
@@ -87,12 +87,13 @@ public class ActiveObject {
 		}
 	}
 
-	void SetPosAndSpeed(){
+	void SetPosRotAndSpeed(){
 		if (RevSolidGameInfo.GetLODByInt() == 1) {
 			this.SetFixedPosition ();
 		} else if (RevSolidGameInfo.GetLODByInt() == 2) {
 			this.RegeneratePositionAndSpeed();
 		}
+		SetRotation ();
 	}
 
 	void SetFixedPosition (){
@@ -106,6 +107,10 @@ public class ActiveObject {
 		initialPos = Hard.GenPosAccordingToPanelIndex(panelIndex);
 		speed = Hard.GenRandomSpeed ();
 		gameObject.transform.position = initialPos;
+	}
+
+	void SetRotation(){
+		gameObject.transform.rotation = Quaternion.Euler(-45.0f,0,0);
 	}
 
 	public void ChangeSpriteAccordingToSolid(){
