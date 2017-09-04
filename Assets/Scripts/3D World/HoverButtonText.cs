@@ -16,7 +16,7 @@ public class HoverButtonText : MonoBehaviour {
 		
 	}
 
-	public void ShowInstructions() {
+	public void ToggleInstructions() {
 		instructionText.enabled = !instructionText.enabled;
 	}
 

@@ -569,6 +569,7 @@ recordNo	timeStamp	trialNum	level	action	detail
 shift from  to World Scene
 
 
+<<<<<<< HEAD
 9/1/2017 8:55:22 PM
 
 recordNo	timeStamp	trialNum	level	action	detail	
@@ -1254,4 +1255,10 @@ recordNo	timeStamp	trialNum	level	action	detail
 
 50	109.1917	12	1	grading	 for solid 10 on panelNo.0 is -1	
 
+=======
+09/04/2017 14:51:41
+
+recordNo	timeStamp	trialNum	level	action	detail	
+
+>>>>>>> upstream/master
 shift from  to World Scene
