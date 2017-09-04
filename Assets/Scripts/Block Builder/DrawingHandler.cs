@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using MiniJSON;
+using UnityEngine.UI;
 
 public class DrawingHandler : MonoBehaviour {
 
@@ -13,6 +14,7 @@ public class DrawingHandler : MonoBehaviour {
 	public GameObject currentFrontViewPanel;
 	public GameObject targetRightViewPanel;
 	public GameObject currentRightViewPanel;
+	public Text levelCompleteText;
 
 	private Dictionary<Segment,LineType> targetTopView;
 	private Dictionary<Segment,LineType> targetFrontView;
@@ -30,6 +32,7 @@ public class DrawingHandler : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		levelCompleteText.enabled = false;
 		jsonFilePath = Path.Combine(Application.streamingAssetsPath, "Puzzles.json");
 		/*
 		saveFilePath = Path.Combine(Application.persistentDataPath, "game.dat");
@@ -93,6 +96,7 @@ public class DrawingHandler : MonoBehaviour {
 
 		if (isTopViewCorrect && isFrontViewCorrect && isRightViewCorrect) {
 			BlockBuilderManager.OnComplete();
+			levelCompleteText.enabled = true;
 			//TODO
 			//Unlock this room!
 			//To unlock this room, we only need to store this id in the savefile

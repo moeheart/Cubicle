@@ -123,19 +123,20 @@
     },
 	"13": {
 		"type": "CSG",
-		"objects": 
-			{
-				"Cube": {
-					"pos": [-2,2,0],
-					"type": "cube"
-				},
-				"Sphere": {
-					"pos": [-2,-2,0],
-					"scale": [1.3,1.3,1.3],
-					"type": "sphere"
-				}
+		"objects": {
+			"Cube": {
+				"pos": [-2,2,0],
+				"type": "cube"
 			},
-		"target":  "Cube - Sphere x 1.3"
+			"Sphere": {
+				"pos": [-2,-2,0],
+				"scale": [1.3,1.3,1.3],
+				"type": "sphere"
+			}
+		},
+		"target":  {
+			"name": "Cube - Sphere x 1.3"
+		}
 		
 	},
 	"14": {
@@ -346,12 +347,44 @@
 		"cubeNum":4
 	},
 	"34": {
-		"type": "CSG"
+		"type": "CSG",
+		"objects": {
+			"Cylinder": {
+				"pos": [-2,-2,0],
+				"scale": [1.5,1.5,1.5],
+				"direction": "Y",
+				"type": "cylinder"
+			},
+			"Sphere": {
+				"pos": [2,-2,0],
+				"scale": [2,2,2],
+				"type": "sphere"
+			}
+		},
+		"target":  {
+			"name": "sphx2 - cylx1.5",
+			"scale": [2,2,2]
+		}
 	},
 	"35": {
-		"type": "CSG"
-	},
-	"36": {
-		"type": "CSG"
+		"type": "CSG",
+		"objects": {
+			"Cube": {
+				"pos": [2,2,0],
+				"type": "cube"
+			},
+			"Sphere": {
+				"pos": [-2.5,-2.5,0.5],
+				"scale": [1,1,1],
+				"type": "sphere"
+			},
+			"Cube1": {
+				"pos": [2,-2,0],
+				"type": "cube"
+			}
+		},
+		"target":  {
+			"name": "cube + cube - sph"
+		}
 	}
 }

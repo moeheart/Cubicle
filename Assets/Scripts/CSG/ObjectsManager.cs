@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using System.IO;
 using MiniJSON;
 
@@ -12,12 +13,17 @@ public class ObjectsManager : MonoBehaviour {
 	//public Material wireframeMaterial;
 	public Material targetMaterial;
 	//public Material wireframeMaterial;
+	public Text levelCompleteText;
 
 	private List<SceneObject> sceneObjs;
 	private GameObject targetObj;
 	private SceneObject opA, opB;
 	public SceneObject selectedObj {get; private set;}
+
 	private Mesh targetMesh;
+
+	private int id;
+	private string logPath;
 
 	public void LoadGameObjects() {
 		sceneObjs = new List<SceneObject>();
@@ -47,6 +53,13 @@ public class ObjectsManager : MonoBehaviour {
 		//targetObj = Instantiate(targetPrefab) as GameObject;
 		//targetObj.name = "Target";
 		//targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
+	}
+
+	// Use this for initialization
+	void Start () {
+		levelCompleteText.enabled = false;
+		id = DataUtil.GetCurrentRoomId();
+		logPath = "Assets/Logs/CSG/CSG Log.txt";
 	}
 
 	void Update() {
@@ -88,9 +101,6 @@ public class ObjectsManager : MonoBehaviour {
 	}
 
 
-
-
-
 	public void SubtractAB() {
 		if (opA && opB) {
 			CSGUtil.Subtract(opA.gameObject, opB.gameObject);
@@ -103,6 +113,8 @@ public class ObjectsManager : MonoBehaviour {
 			opB = null;
 			selectedObj.OnDeselect();
 			selectedObj = null;
+			
+			CSGLog.Log(logPath, id, "A-B");
 		}
 	}
 
@@ -118,6 +130,8 @@ public class ObjectsManager : MonoBehaviour {
 			opB = null;
 			selectedObj.OnDeselect();
 			selectedObj = null;
+
+			CSGLog.Log(logPath, id, "B-A");
 		}
 	}
 
@@ -133,6 +147,8 @@ public class ObjectsManager : MonoBehaviour {
 			opB = null;
 			selectedObj.OnDeselect();
 			selectedObj = null;
+
+			CSGLog.Log(logPath, id, "A*B");
 		}
 	}
 
@@ -148,6 +164,8 @@ public class ObjectsManager : MonoBehaviour {
 			opB = null;
 			selectedObj.OnDeselect();
 			selectedObj = null;
+
+			CSGLog.Log(logPath, id, "A+B");
 		}
 	}
 
@@ -160,15 +178,18 @@ public class ObjectsManager : MonoBehaviour {
 			CSGUtil.Union(targetObj, composite);
 			float unionVolume = CSGUtil.VolumeOfMesh(targetObj);
 			
-			Debug.Log(unionVolume + " " + targetVolume + " " + compositeVolume);
-			if ((unionVolume - targetVolume < 2e-2) && (unionVolume - compositeVolume < 2e-2)) {
-				Debug.Log(unionVolume + " " + targetVolume + " " + compositeVolume);
-				Debug.Log("You win...!!!");
+			//Debug.Log(unionVolume + " " + targetVolume + " " + compositeVolume);
+			if ((unionVolume - targetVolume < 1e-3) && (unionVolume - compositeVolume < 1e-3)) {
+				//Debug.Log(unionVolume + " " + targetVolume + " " + compositeVolume);
+				//Debug.Log("You win...!!!");
+				CSGLog.Log(logPath, id, "Completed...!!!");
+				levelCompleteText.enabled = true;
 				Destroy(composite);
 				Destroy(targetObj);
 				DataUtil.UnlockCurrentRoom();
 				return;
 			}
+			CSGLog.Log(logPath, id, "Check failed");
 			targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
 			targetObj.GetComponent<MeshRenderer>().materials
 				= new Material[] {targetMaterial};
@@ -198,6 +219,7 @@ public class ObjectsManager : MonoBehaviour {
 		}
 		Destroy(targetObj);
 		LoadGameObjects();
+		CSGLog.Log(logPath, id, "Reset");
 	}
 
 	private void ParseJson(string jsonPath, int roomId) {
@@ -226,16 +248,33 @@ public class ObjectsManager : MonoBehaviour {
 				float z = System.Convert.ToSingle(pos[2]);
 				obj.transform.localScale = new Vector3(x, y, z);
 			}
+			if (value.ContainsKey("direction")) {
+				if ((string)value["direction"] == "X") {
+					obj.transform.Rotate(90,0,0);
+				}
+				if ((string)value["direction"] == "Z") {
+					obj.transform.Rotate(0,0,90);
+				}
+			}
 			sceneObjs.Add(obj);
 		}
 
-		string targetName = Path.Combine("CSG", (string)dict["target"]);
+		Dictionary<string, object> targetDict = (Dictionary<string, object>)dict["target"];
+		string targetName = Path.Combine("CSG", (string)targetDict["name"]);
 		string assetPath = Path.Combine(Application.streamingAssetsPath, targetName);
 		targetObj = Instantiate(targetPrefab) as GameObject;
 		targetObj.name = "Target";
-		Debug.Log(assetPath);
+		//Debug.Log(assetPath);
 		targetMesh = Resources.Load(targetName) as Mesh;
 		targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
+		if (targetDict.ContainsKey("scale")) {
+			List<object> pos = (List<object>)targetDict["scale"];
+			float x = System.Convert.ToSingle(pos[0]);
+			float y = System.Convert.ToSingle(pos[1]);
+			float z = System.Convert.ToSingle(pos[2]);
+			targetObj.transform.localScale = new Vector3(x, y, z);
+		}
+	
 	}
 
 }
