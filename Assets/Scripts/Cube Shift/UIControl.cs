@@ -75,6 +75,7 @@ public class UIControl : MonoBehaviour {
 			cubeNumberSlider.gameObject.SetActive (false);
 			cubeNum.gameObject.SetActive (false);
 		}
+
 	}
 	
 	// Update is called once per frame

@@ -101,8 +101,10 @@ public class GameInfo
 	}
 		
 	public void PauseGame(){
-		Time.timeScale = 0;
+		if(!Input.GetKey(KeyCode.Q))
+			Time.timeScale = 0;
 	}
+
 	public void PauseAtFirstMove(){
 		moves = 1;
 		PauseGame ();

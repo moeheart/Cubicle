@@ -58,7 +58,9 @@ public class MouseAndKeyboard : MonoBehaviour {
 			DataUtil.UnlockCurrentRoom();
 		}
 		if (Input.GetKeyDown(KeyCode.Q)) {
+			Time.timeScale = 1;
 			SceneManager.LoadScene("World Scene");
+
 		}
 	}
 }
