@@ -49,3 +49,4 @@
 35: A+B
 35: B-A
 35: Completed...!!!
+35: Reset
