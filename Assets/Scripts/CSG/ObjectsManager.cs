@@ -19,6 +19,9 @@ public class ObjectsManager : MonoBehaviour {
 	public SceneObject selectedObj {get; private set;}
 	private Mesh targetMesh;
 
+	private int id;
+	private string logPath;
+
 	public void LoadGameObjects() {
 		sceneObjs = new List<SceneObject>();
 
@@ -47,6 +50,12 @@ public class ObjectsManager : MonoBehaviour {
 		//targetObj = Instantiate(targetPrefab) as GameObject;
 		//targetObj.name = "Target";
 		//targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
+	}
+
+	// Use this for initialization
+	void Start () {
+		id = DataUtil.GetCurrentRoomId();
+		logPath = "Assets/Logs/CSG/CSG Log.txt";
 	}
 
 	void Update() {
@@ -88,9 +97,6 @@ public class ObjectsManager : MonoBehaviour {
 	}
 
 
-
-
-
 	public void SubtractAB() {
 		if (opA && opB) {
 			CSGUtil.Subtract(opA.gameObject, opB.gameObject);
@@ -103,6 +109,8 @@ public class ObjectsManager : MonoBehaviour {
 			opB = null;
 			selectedObj.OnDeselect();
 			selectedObj = null;
+			
+			CSGLog.Log(logPath, id, "A-B");
 		}
 	}
 
@@ -118,6 +126,8 @@ public class ObjectsManager : MonoBehaviour {
 			opB = null;
 			selectedObj.OnDeselect();
 			selectedObj = null;
+
+			CSGLog.Log(logPath, id, "B-A");
 		}
 	}
 
@@ -133,6 +143,8 @@ public class ObjectsManager : MonoBehaviour {
 			opB = null;
 			selectedObj.OnDeselect();
 			selectedObj = null;
+
+			CSGLog.Log(logPath, id, "A*B");
 		}
 	}
 
@@ -148,6 +160,8 @@ public class ObjectsManager : MonoBehaviour {
 			opB = null;
 			selectedObj.OnDeselect();
 			selectedObj = null;
+
+			CSGLog.Log(logPath, id, "A+B");
 		}
 	}
 
@@ -160,15 +174,17 @@ public class ObjectsManager : MonoBehaviour {
 			CSGUtil.Union(targetObj, composite);
 			float unionVolume = CSGUtil.VolumeOfMesh(targetObj);
 			
-			Debug.Log(unionVolume + " " + targetVolume + " " + compositeVolume);
+			//Debug.Log(unionVolume + " " + targetVolume + " " + compositeVolume);
 			if ((unionVolume - targetVolume < 2e-2) && (unionVolume - compositeVolume < 2e-2)) {
-				Debug.Log(unionVolume + " " + targetVolume + " " + compositeVolume);
-				Debug.Log("You win...!!!");
+				//Debug.Log(unionVolume + " " + targetVolume + " " + compositeVolume);
+				//Debug.Log("You win...!!!");
+				CSGLog.Log(logPath, id, "Completed...!!!");
 				Destroy(composite);
 				Destroy(targetObj);
 				DataUtil.UnlockCurrentRoom();
 				return;
 			}
+			CSGLog.Log(logPath, id, "Check failed");
 			targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
 			targetObj.GetComponent<MeshRenderer>().materials
 				= new Material[] {targetMaterial};
@@ -198,6 +214,7 @@ public class ObjectsManager : MonoBehaviour {
 		}
 		Destroy(targetObj);
 		LoadGameObjects();
+		CSGLog.Log(logPath, id, "Reset");
 	}
 
 	private void ParseJson(string jsonPath, int roomId) {
@@ -233,7 +250,7 @@ public class ObjectsManager : MonoBehaviour {
 		string assetPath = Path.Combine(Application.streamingAssetsPath, targetName);
 		targetObj = Instantiate(targetPrefab) as GameObject;
 		targetObj.name = "Target";
-		Debug.Log(assetPath);
+		//Debug.Log(assetPath);
 		targetMesh = Resources.Load(targetName) as Mesh;
 		targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
 	}
