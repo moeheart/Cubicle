@@ -145,3 +145,4 @@ Type: ClickLine, Line: (0,0,4:4,0,4), Time: 8/31/2017 8:35:35 PM
 Type: ClickLine, Line: (4,0,4:4,4,4), Time: 8/31/2017 8:35:38 PM
 Type: ClickLine, Line: (0,0,4:0,4,4), Time: 8/31/2017 8:35:41 PM
 Type: Submit, Score: 83, Time: 8/31/2017 8:36:03 PM
+Type: Submit, Score: 0, Time: 9/5/2017 5:14:44 PM
