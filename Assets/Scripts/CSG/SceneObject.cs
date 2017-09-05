@@ -9,7 +9,7 @@ public class SceneObject : MonoBehaviour {
 
 	private bool isSelected;
 	private Material myMaterial;
-	private ArrowControl[] arrows;
+	//private ArrowControl[] arrows;
 
 	// Use this for initialization
 	void Start () {
@@ -82,7 +82,7 @@ public class SceneObject : MonoBehaviour {
 			= new Material[1] {myMaterial};
 		myMaterial.SetFloat("_Opacity", 0);
 		this.GetComponent<MeshCollider>().sharedMesh = GetComponent<MeshFilter>().sharedMesh;
-		GenerateControls();
+		//GenerateControls();
 	}
 
 	public void OnMouseOver() {
@@ -93,24 +93,17 @@ public class SceneObject : MonoBehaviour {
 
 	public void OnSelect() {
 		//Debug.Log("Selected: " + this.name + "...!!!");
-		Debug.Log(this.name + " " + GetComponent<Collider>().bounds);
 		isSelected = true;
-		for (int i = 0; i < 6; ++i) {
-			arrows[i].gameObject.SetActive(false);
-		}
 	}
 
 	public void OnDeselect() {
 		//Debug.Log("Deselected: " + this.name + "...!!!");
 		isSelected = false;
-		for (int i = 0; i < 6; ++i) {
-			arrows[i].gameObject.SetActive(false);
-		}
 	}
 
 	public void SetDefaultMaterial() {
 		HideWireframe();
-		myMaterial.color = Color.black;
+		myMaterial.color = Color.white;
 	}
 
 	public void SetOpAMaterial() {
@@ -123,7 +116,7 @@ public class SceneObject : MonoBehaviour {
 		myMaterial.color = Color.green;
 	}
 
-	public void GenerateControls() {
+	/*public void GenerateControls() {
 		if (arrows != null) {
 			foreach (ArrowControl arrow in arrows) {
 				Destroy(arrow.gameObject);
@@ -145,7 +138,7 @@ public class SceneObject : MonoBehaviour {
 		arrows[3].transform.localPosition = new Vector3(0, 0, -extents.z);
 		arrows[4].transform.localPosition = new Vector3(0, extents.y, 0);
 		arrows[5].transform.localPosition = new Vector3(0, -extents.y, 0);
-	}
+	}*/
 
 	public void MoveInDirection(ArrowDirection direction) {
 		switch (direction) {

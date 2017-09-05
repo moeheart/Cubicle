@@ -32,7 +32,7 @@ public class Cube {
 
 	private static Cube instance = new Cube ();
 	private Cube(){
-		CubeNumber = 4;
+		CubeNumber = 3;
 	}
 	public static Cube getInstance(){
 		return instance;

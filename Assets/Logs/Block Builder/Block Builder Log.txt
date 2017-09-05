@@ -128,8 +128,16 @@
 3: Incorrect Addition
 3: Correct Deletion
 3: Incorrect Deletion
+<<<<<<< HEAD
+1: Correct Deletion
 1: Incorrect Addition
 1: Incorrect Addition
+1: Correct Deletion
+1: Correct Deletion
+=======
+1: Incorrect Addition
+1: Incorrect Addition
+>>>>>>> upstream/master
 1: Incorrect Addition
 1: Incorrect Addition
 1: Incorrect Addition
@@ -137,6 +145,12 @@
 1: Correct Deletion
 1: Correct Deletion
 1: Correct Deletion
+<<<<<<< HEAD
+1: Incorrect Addition
+1: Incorrect Addition
+1: Correct Deletion
+=======
+>>>>>>> upstream/master
 1: Correct Deletion
 1: Correct Addition
 2: Correct Addition
@@ -150,6 +164,11 @@
 3: Correct Addition
 3: Correct Addition
 3: Correct Addition
+<<<<<<< HEAD
+3: Correct Addition
+3: Incorrect Deletion
+3: Incorrect Deletion
+=======
 3: Incorrect Deletion
 3: Incorrect Deletion
 3: Incorrect Deletion
@@ -167,6 +186,23 @@
 3: Correct Addition
 3: Incorrect Deletion
 3: Correct Addition
+>>>>>>> upstream/master
+3: Incorrect Deletion
+3: Incorrect Deletion
+3: Correct Addition
+3: Correct Addition
+<<<<<<< HEAD
+3: Correct Addition
+3: Incorrect Addition
+3: Correct Deletion
+3: Correct Addition
+3: Incorrect Deletion
+3: Incorrect Deletion
+3: Incorrect Deletion
+3: Incorrect Deletion
+3: Incorrect Deletion
+3: Incorrect Deletion
+=======
 3: Incorrect Deletion
 3: Incorrect Deletion
 3: Correct Addition
@@ -174,8 +210,6 @@
 3: Incorrect Deletion
 3: Incorrect Deletion
 3: Correct Addition
-3: Correct Addition
-3: Incorrect Deletion
 3: Incorrect Deletion
 3: Correct Addition
 3: Incorrect Deletion
@@ -184,16 +218,27 @@
 3: Correct Addition
 3: Incorrect Deletion
 3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+>>>>>>> upstream/master
+3: Incorrect Deletion
 3: Incorrect Deletion
 3: Correct Addition
 3: Correct Addition
+<<<<<<< HEAD
+3: Incorrect Addition
 3: Correct Addition
 3: Correct Addition
-3: Correct Addition
+3: Incorrect Addition
+3: Incorrect Deletion
+3: Correct Deletion
 3: Incorrect Deletion
 3: Incorrect Deletion
-3: Correct Addition
-3: Correct Addition
+3: Incorrect Deletion
+3: Incorrect Deletion
+=======
 3: Incorrect Deletion
 3: Incorrect Deletion
 3: Incorrect Deletion
@@ -212,10 +257,21 @@
 3: Incorrect Deletion
 3: Incorrect Deletion
 3: Incorrect Addition
+>>>>>>> upstream/master
 3: Correct Deletion
 3: Incorrect Deletion
 3: Incorrect Deletion
 3: Incorrect Deletion
+<<<<<<< HEAD
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+=======
 3: Incorrect Deletion
 3: Correct Addition
 3: Incorrect Deletion
@@ -233,12 +289,38 @@
 3: Correct Addition
 3: Incorrect Deletion
 3: Incorrect Deletion
+>>>>>>> upstream/master
 3: Correct Addition
 3: Correct Addition
 3: Correct Addition
 3: Correct Addition
 3: Correct Addition
 3: Correct Addition
+<<<<<<< HEAD
+3: Correct Addition
+3: Incorrect Addition
+3: Incorrect Addition
+3: Incorrect Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Incorrect Addition
+3: Correct Deletion
+3: Correct Deletion
+3: Correct Deletion
+3: Correct Deletion
+4: Incorrect Addition
+4: Incorrect Addition
+4: Correct Addition
+4: Correct Addition
+4: Incorrect Addition
+4: Correct Addition
+4: Correct Addition
+4: Correct Addition
+4: Correct Addition
+4: Correct Addition
+4: Incorrect Addition
+=======
 3: Incorrect Deletion
 3: Correct Addition
 3: Correct Addition
@@ -256,11 +338,34 @@
 4: Incorrect Deletion
 4: Correct Addition
 4: Incorrect Deletion
+>>>>>>> upstream/master
 4: Correct Addition
 4: Correct Addition
 4: Correct Addition
 4: Correct Addition
 4: Correct Addition
+<<<<<<< HEAD
+4: Incorrect Addition
+4: Correct Deletion
+4: Correct Deletion
+4: Correct Deletion
+4: Correct Addition
+4: Incorrect Addition
+4: Correct Deletion
+4: Correct Deletion
+4: Incorrect Addition
+4: Incorrect Deletion
+4: Correct Addition
+4: Incorrect Addition
+4: Correct Addition
+4: Incorrect Deletion
+4: Correct Addition
+4: Correct Deletion
+4: Correct Addition
+4: Correct Addition
+4: Correct Deletion
+4: Correct Deletion
+=======
 4: Correct Addition
 4: Incorrect Addition
 4: Correct Deletion
@@ -274,10 +379,29 @@
 4: Correct Addition
 4: Correct Addition
 4: Correct Addition
+>>>>>>> upstream/master
 4: Correct Addition
 4: Correct Addition
 5: Correct Addition
 5: Incorrect Addition
+<<<<<<< HEAD
+5: Incorrect Addition
+5: Correct Addition
+5: Correct Addition
+5: Incorrect Addition
+5: Incorrect Addition
+5: Correct Addition
+5: Correct Addition
+5: Correct Addition
+5: Incorrect Addition
+5: Incorrect Addition
+5: Correct Deletion
+5: Correct Deletion
+5: Correct Deletion
+5: Correct Addition
+5: Correct Addition
+5: Correct Addition
+=======
 5: Correct Deletion
 5: Correct Addition
 5: Correct Addition
@@ -289,19 +413,38 @@
 5: Correct Addition
 5: Incorrect Deletion
 5: Correct Addition
+>>>>>>> upstream/master
 5: Correct Addition
 5: Correct Addition
 5: Correct Addition
 5: Correct Addition
 5: Correct Addition
+<<<<<<< HEAD
+5: Incorrect Addition
+5: Incorrect Addition
+5: Correct Addition
+5: Correct Addition
+5: Correct Addition
+5: Incorrect Addition
+5: Incorrect Addition
+5: Correct Deletion
+5: Correct Deletion
+=======
+5: Correct Addition
+5: Correct Addition
+5: Correct Addition
+>>>>>>> upstream/master
 5: Correct Addition
 5: Correct Addition
 5: Correct Addition
 5: Correct Addition
 5: Correct Addition
-5: Correct Addition
-5: Correct Addition
-5: Correct Addition
+<<<<<<< HEAD
+5: Incorrect Deletion
+5: Incorrect Deletion
+5: Incorrect Deletion
+5: Incorrect Deletion
+=======
 5: Correct Addition
 5: Correct Addition
 5: Correct Addition
@@ -441,11 +584,27 @@
 5: Correct Addition
 5: Correct Addition
 5: Correct Addition
+>>>>>>> upstream/master
 5: Correct Addition
 5: Correct Addition
 5: Correct Addition
 5: Correct Addition
 5: Incorrect Addition
+<<<<<<< HEAD
+5: Correct Deletion
+5: Correct Deletion
+5: Incorrect Addition
+5: Incorrect Deletion
+5: Correct Addition
+5: Correct Deletion
+5: Correct Deletion
+5: Correct Deletion
+5: Correct Deletion
+5: Correct Deletion
+5: Incorrect Addition
+5: Correct Deletion
+5: Correct Addition
+=======
 5: Correct Addition
 5: Correct Deletion
 5: Correct Addition
@@ -571,3 +730,55 @@
 9: Correct Addition
 9: Correct Addition
 9: Correct Addition
+>>>>>>> upstream/master
+1: Correct Addition
+1: Correct Addition
+1: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+2: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition
+3: Correct Addition

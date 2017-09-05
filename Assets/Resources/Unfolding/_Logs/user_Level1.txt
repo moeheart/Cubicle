@@ -86,6 +86,7 @@ Type: ClickLine, Line: (4,0,4:4,4,4), Time: 8/24/2017 3:23:08 PM
 Type: ClickLine, Line: (0,0,0:4,0,0), Time: 8/24/2017 3:23:12 PM
 Type: ClickLine, Line: (0,0,4:4,0,4), Time: 8/24/2017 3:23:17 PM
 Type: Submit, Score: 100, Time: 8/24/2017 3:23:30 PM
+<<<<<<< HEAD
 Type: ClickLine, Line: (0,0,0:0,0,4), Time: 8/25/2017 9:35:14 AM
 Type: ClickLine, Line: (0,0,4:0,4,4), Time: 8/25/2017 9:35:16 AM
 Type: Stepback, Line: (0,0,4:0,4,4), Time: 8/25/2017 9:35:17 AM
@@ -134,3 +135,13 @@ Type: ClickLine, Line: (4,0,0:4,4,0), Time: 8/30/2017 4:23:35 PM
 Type: ClickLine, Line: (4,0,4:4,4,4), Time: 8/30/2017 4:23:41 PM
 Type: ClickLine, Line: (0,0,4:4,0,4), Time: 8/30/2017 4:23:43 PM
 Type: Submit, Score: 100, Time: 8/30/2017 4:24:03 PM
+=======
+Type: ClickLine, Line: (0,0,0:4,0,0), Time: 8/31/2017 8:35:00 PM
+Type: ClickLine, Line: (0,0,0:0,4,0), Time: 8/31/2017 8:35:02 PM
+Type: ClickLine, Line: (4,0,0:4,4,0), Time: 8/31/2017 8:35:04 PM
+Type: ClickLine, Line: (0,0,0:0,0,4), Time: 8/31/2017 8:35:16 PM
+Type: Stepback, Line: (0,0,0:0,0,4), Time: 8/31/2017 8:35:26 PM
+Type: ClickLine, Line: (0,0,4:4,0,4), Time: 8/31/2017 8:35:35 PM
+Type: ClickLine, Line: (4,0,4:4,4,4), Time: 8/31/2017 8:35:38 PM
+Type: ClickLine, Line: (0,0,4:0,4,4), Time: 8/31/2017 8:35:41 PM
+Type: Submit, Score: 83, Time: 8/31/2017 8:36:03 PM
