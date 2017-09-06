@@ -117,7 +117,8 @@
 		        "blockNum": 3,
 				"baicSteps": 3,
 				"difficulty": 12,
-				"method": "rs"
+				"method": "rs",
+                "tutorial":"true"
 				}
 			}
     },
