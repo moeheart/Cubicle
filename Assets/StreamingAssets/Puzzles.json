@@ -356,7 +356,7 @@
 				"type": "cylinder"
 			},
 			"Sphere": {
-				"pos": [2,-2,0],
+				"pos": [2,1,0],
 				"scale": [2,2,2],
 				"type": "sphere"
 			}

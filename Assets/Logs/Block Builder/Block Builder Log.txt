@@ -782,3 +782,14 @@
 3: Correct Addition
 3: Correct Addition
 3: Correct Addition
+1: Incorrect Addition
+1: Correct Addition
+1: Incorrect Addition
+1: Incorrect Addition
+1: Incorrect Addition
+1: Incorrect Addition
+1: Correct Deletion
+1: Correct Deletion
+1: Correct Deletion
+1: Correct Deletion
+1: Correct Deletion
