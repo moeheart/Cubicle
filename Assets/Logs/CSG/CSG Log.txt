@@ -62,3 +62,15 @@
 35: A+B
 35: B-A
 35: Completed...!!!
+13: B-A
+13: Completed...!!!
+34: B-A
+34: Completed...!!!
+35: B-A
+35: A+B
+35: Check failed
+35: Check failed
+35: Reset
+35: A+B
+35: A-B
+35: Completed...!!!

@@ -40,8 +40,6 @@ public class RevSolidUIControl : RevSolidGameInfo {
 		showAllBtn.onClick.AddListener (CandidateAxesSwitch);
 		showAllSwitch=GameObject.Find ("showAllSwitch").GetComponent<Text> ();
 
-		gameStartPanel = GameObject.Find ("gameStartPanel");
-
 		checkMarks=new GameObject[4];
 		for (int i = 0; i < RevSolidGameInfo.MaxPanelNum; i++) {
 
@@ -189,6 +187,10 @@ public class RevSolidUIControl : RevSolidGameInfo {
 		yield return new WaitForSeconds (2.0f);
 		checkMarks[panelIndex].SetActive (false);
 		//ActiveObjControl.activeObjects [panelIndex].image.gameObject.GetComponent<MeshRenderer> ().material.SetFloat ("_AlphaScale",1.0f);
+	}
+
+	public static void FindStartGamePanel(){
+		gameStartPanel = GameObject.Find ("gameStartPanel");
 	}
 
 	public IEnumerator ShowStartGamePanel (){

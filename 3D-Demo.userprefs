@@ -1,17 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Revolution Solid\Tutorial.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Cube Shift\CubeLog.cs">
     <Files>
-      <File FileName="Assets\Scripts\Cube Shift\GameInfo.cs" Line="105" Column="4" />
-      <File FileName="Assets\Scripts\Cube Shift\Cube.cs" Line="105" Column="3" />
-      <File FileName="Assets\Scripts\Cube Shift\UIControl.cs" Line="85" Column="26" />
-      <File FileName="Assets\Scripts\Revolution Solid\ActiveObjControl.cs" Line="157" Column="50" />
-      <File FileName="Assets\Scripts\Cube Shift\MouseAndKeyboard.cs" Line="30" Column="69" />
-      <File FileName="Assets\Scripts\Revolution Solid\Easy.cs" Line="12" Column="22" />
-      <File FileName="Assets\Scripts\Revolution Solid\Hard.cs" Line="14" Column="22" />
-      <File FileName="Assets\Scripts\Revolution Solid\ActiveObject.cs" Line="96" Column="18" />
-      <File FileName="Assets\Scripts\Revolution Solid\RevSolidUIControl.cs" Line="95" Column="39" />
-      <File FileName="Assets\Scripts\Revolution Solid\Tutorial.cs" Line="124" Column="93" />
+      <File FileName="Assets\Scripts\Revolution Solid\RevSolidGameInfo.cs" Line="24" Column="2" />
+      <File FileName="Assets\Scripts\Revolution Solid\RevSolidLog.cs" Line="48" Column="3" />
+      <File FileName="Assets\Scripts\Cube Shift\MouseAndKeyboard.cs" Line="15" Column="26" />
+      <File FileName="Assets\Scripts\Revolution Solid\EventManager.cs" Line="42" Column="21" />
+      <File FileName="Assets\Scripts\Cube Shift\CubeLog.cs" Line="97" Column="19" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

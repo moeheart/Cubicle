@@ -32,6 +32,7 @@ public class CubeLog : MonoBehaviour {
 		EventManager.StartListening ("OnChoosing",RecordChoosing);
 		EventManager.StartListening ("OnGeneratingNewGame",RecordGeneratingNewGame);
 		EventManager.StartListening ("OnRetry",RecordRetry);
+		EventManager.StartListening ("Qdown",CommitResult);
 	}
 
 	void OnDisable(){
@@ -41,12 +42,12 @@ public class CubeLog : MonoBehaviour {
 		EventManager.StopListening ("OnChoosing",RecordChoosing);
 		EventManager.StopListening ("OnGeneratingNewGame",RecordGeneratingNewGame);
 		EventManager.StopListening ("OnRetry",RecordRetry);
+		EventManager.StopListening ("Qdown",CommitResult);
 
 	}
 
 	void Start(){
 		RecordInitialization ();
-		SceneManager.activeSceneChanged += CommitResult;
 	}
 
 	void Update(){
@@ -91,8 +92,8 @@ public class CubeLog : MonoBehaviour {
 		trialNum++;
 	}
 
-	void CommitResult(Scene scene1,Scene scene2){
-		writer.WriteLine("shift from {0} to {1}",scene1.name, scene2.name);
+	void CommitResult(){
+		writer.WriteLine("press Q");
 		writer.Close ();
 	}
 }
