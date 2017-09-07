@@ -8,7 +8,7 @@ public class FPSInput : MonoBehaviour {
 	public float walkingSpeed = 6.0f;
 	public float jumpSpeed = 15.0f;
 	public float gravity = -9.8f;
-	public float terminalVelocity = -10.0f;
+	public float terminalVelocity = -20.0f;
 	public float minFall = -1.5f;
 
 	private float _vertSpeed;
