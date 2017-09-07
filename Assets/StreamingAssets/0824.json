@@ -214,5 +214,71 @@
         "dimension": [ 1, 1, 1 ],
         "color": [ 0.2, 0.4, 0.6, 1 ],
         "puzzle type": "CSG"
+    },
+    "36" : {
+        "position": [-1,0,4],
+        "dimension": [1,1,1],
+        "color": [1,1,0,1],
+        "puzzle type": "block builder"
+    },
+    "37" : {
+        "position": [-2,0,4],
+        "dimension": [1,1,1],
+        "color": [1,1,0,1],
+        "puzzle type": "block builder"
+    },
+    "38" : {
+        "position": [-3,0,4],
+        "dimension": [1,1,1],
+        "color": [1,1,0,1],
+        "puzzle type": "block builder"
+    },
+    "39" : {
+        "position": [-4,0,4],
+        "dimension": [1,1,1],
+        "color": [1,1,0,1],
+        "puzzle type": "block builder"
+    },
+    "40" : {
+        "position": [-5,0,4],
+        "dimension": [1,1,1],
+        "color": [1,1,0,1],
+        "puzzle type": "block builder"
+    },
+    "41" : {
+        "position": [-6,0,4],
+        "dimension": [1,1,1],
+        "color": [1,1,0,1],
+        "puzzle type": "block builder"
+    },
+    "42" : {
+        "position": [-4,0,5],
+        "dimension": [1,1,1],
+        "color": [1,1,0,1],
+        "puzzle type": "block builder"
+    },
+    "43" : {
+        "position": [-4,0,6],
+        "dimension": [1,1,1],
+        "color": [1,1,0,1],
+        "puzzle type": "block builder"
+    },
+    "44" : {
+        "position": [-4,0,7],
+        "dimension": [1,1,1],
+        "color": [1,1,0,1],
+        "puzzle type": "block builder"
+    },
+    "45" : {
+        "position": [-5,0,7],
+        "dimension": [1,1,1],
+        "color": [1,1,0,1],
+        "puzzle type": "block builder"
+    },
+    "46" : {
+        "position": [-6,0,7],
+        "dimension": [1,1,1],
+        "color": [1,1,0,1],
+        "puzzle type": "block builder"
     }
 }
