@@ -43,6 +43,9 @@ public class PlaneExplorationRedirect : MonoBehaviour {
 		case 7:
 			SceneManager.LoadScene("Q7", LoadSceneMode.Single);
 			break;
+		case 8:
+			SceneManager.LoadScene("Q8", LoadSceneMode.Single);
+			break;
 		}
 	}
 

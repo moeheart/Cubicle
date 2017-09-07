@@ -1,3 +1,1 @@
 timestamp,operation
-09/01/2017 18:53:25,RotY
-09/01/2017 18:53:25,RotY
