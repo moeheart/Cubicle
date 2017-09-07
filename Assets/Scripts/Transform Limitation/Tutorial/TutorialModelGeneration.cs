@@ -3,40 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.IO;
-using System;
 using MiniJSON;
 using System.Runtime.Serialization.Formatters.Binary;
 
-
-public class ModelGeneration : MonoBehaviour {
+public class TutorialModelGeneration : MonoBehaviour {
 
 	public Dictionary<Vector3, bool> model;
 	public int blockNum;
 	public GameObject block;
 	public GameObject container;
-	public GameObject tarModelObject;
+	// public GameObject tarModelObject;
 
 	private List<Vector3> selectedPoints;
-
-	private int id;
-	public int levelNum;
-	public int level;
-	private string jsonFilePath;
-	public string method;
+	
 
 	void Awake () {
-
-		level = 0;
-		jsonFilePath = Path.Combine(Application.streamingAssetsPath,"Puzzles.json");
-
-		Initialize ();
-
-	}
-
-	public void Initialize(){
-
-		id = DataUtil.GetCurrentRoomId();
-		ParseJson(jsonFilePath, id, level);
 
 		selectedPoints = new List<Vector3> ();
 
@@ -44,46 +25,9 @@ public class ModelGeneration : MonoBehaviour {
 		InitializeModel ();
 		GenerateModel ();
 		RenderModel ();
-		
-	}
-
-	private void ParseJson(string jsonFilePath, int roomId, int level) {
-		
-		string jsonString = File.ReadAllText(jsonFilePath);
-		Dictionary<string, object> dict;
-		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
-
-		// Debug.Log(roomId);
-		// foreach (KeyValuePair<string, object> pair in dict)  
-		// {  
-		// 	Debug.Log(pair.Key + " " + pair.Value);  
-		// }
-		
-		dict = (Dictionary<string, object>)dict[roomId.ToString()];
-
-		levelNum = System.Convert.ToInt32 (dict ["levelNum"]);
-
-		dict = (Dictionary<string, object>)dict["levels"];
-		dict = (Dictionary<string, object>)dict[level.ToString()];
-
-		try
-		{
-			bool tutorial = System.Convert.ToBoolean(dict ["tutorial"]);
-			if(tutorial)
-				SceneManager.LoadScene ("Transform Limitation Tutorial");
-				}
-		catch(Exception e){
-			}
-
-		blockNum = System.Convert.ToInt32 (dict ["blockNum"]);
-		method = System.Convert.ToString (dict ["method"]);
-
-		tarModelObject.GetComponent<TransformGeneration>().transNum = 
-			System.Convert.ToInt32 (dict ["baicSteps"]);
-		tarModelObject.GetComponent<TransformGeneration>().difficulty = 
-			System.Convert.ToInt32 (dict ["difficulty"]);
 
 	}
+
 
 	void CheckBlockNum() {
 		
@@ -112,7 +56,7 @@ public class ModelGeneration : MonoBehaviour {
 
 		// modelling start point
 
-		int startPointIndex = UnityEngine.Random.Range (0, 27);
+		int startPointIndex = Random.Range (0, 27);
 
 		x = startPointIndex % 3 - 1;
 		startPointIndex = (startPointIndex - startPointIndex % 3) / 3;
@@ -137,8 +81,8 @@ public class ModelGeneration : MonoBehaviour {
 
 		for (int i = 0; i < blockNum - 1; i++) { 
 
-			int nextPointIndex = UnityEngine.Random.Range (0, 6);
-			Vector3 fromPoint = selectedPoints [UnityEngine.Random.Range (0, selectedPoints.Count)]; 
+			int nextPointIndex = Random.Range (0, 6);
+			Vector3 fromPoint = selectedPoints [Random.Range (0, selectedPoints.Count)]; 
 			// select a start point randomly to prevent endless loop
 
 			x = fromPoint [0];

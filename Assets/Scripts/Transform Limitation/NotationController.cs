@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class NotationController : MonoBehaviour {
 
@@ -52,7 +53,14 @@ public class NotationController : MonoBehaviour {
 				curObject.GetComponent<Renderer> ().material = highlightMaterial;
 
 				string operation = curObject.name;
+				try
+				{
 				curModel = GetComponentInParent<Controller> ().curModel;
+				}
+				catch(Exception e){
+				curModel = GetComponentInParent<TutorialController> ().curModel;
+				}
+
 
 				if (operation.Equals ("X Axis")) {
 					xArrow.SetActive (true);
