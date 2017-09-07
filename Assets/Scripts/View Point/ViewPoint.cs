@@ -81,7 +81,7 @@ public class ViewPoint : MonoBehaviour {
 
 			}
 
-			if (Input.GetButtonDown ("Submit")) {
+			if (Input.GetKeyDown(KeyCode.Return)) {
 				//				print (selectedNum == trueNum);
 				logObject.GetComponent<ViewPointLog> ().RecordResult (selectedNum, selectedNum == trueNum);
 				if (!(selectedNum == trueNum)) {
