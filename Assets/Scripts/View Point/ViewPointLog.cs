@@ -7,7 +7,7 @@ using System.Text;
 
 public class ViewPointLog : MonoBehaviour {
 
-	private string logIdPath = "Assets/Logs/View Point/_IdLog.txt";
+	// private string logIdPath = "Assets/Logs/View Point/_IdLog.txt";
 	private string logFilePath = "Assets/Logs/View Point/_ViewPointLogs.txt";
 
 	/* timestamp,trial_num,model_num,view_point,
@@ -25,12 +25,12 @@ public class ViewPointLog : MonoBehaviour {
 
 	public void RecordInitialization(int trial_num, int model_num, int view_point, string model){
 
-		// get id
-		FileStream _fs = new FileStream(logIdPath, FileMode.Open, FileAccess.Read);
+		// // get id
+		// FileStream _fs = new FileStream(logIdPath, FileMode.Open, FileAccess.Read);
 
-		id = (uint)(_fs.ReadByte ());
-		_fs.Close();
-		_fs.Dispose();
+		// id = (uint)(_fs.ReadByte ());
+		// _fs.Close();
+		// _fs.Dispose();
 
 		// get filestream
 		fs = new FileStream(logFilePath, FileMode.Append, FileAccess.Write);
@@ -40,7 +40,10 @@ public class ViewPointLog : MonoBehaviour {
 		startTime = System.DateTime.Now;
 
 		// initialize log
-		logString = "\n" + id.ToString () + "," + startTime + "," + trial_num.ToString () + "," + model_num.ToString () +
+		// logString = "\n" + id.ToString () + "," + startTime + "," + trial_num.ToString () + "," + model_num.ToString () +
+		// "," + view_point.ToString () + "," + model;
+
+		logString = "\n" + startTime + "," + trial_num.ToString () + "," + model_num.ToString () +
 		"," + view_point.ToString () + "," + model;
 	}
 
@@ -64,12 +67,12 @@ public class ViewPointLog : MonoBehaviour {
 		fs.Close();
 		fs.Dispose();
 
-		// update id
-		FileStream _fs = new FileStream(logIdPath, FileMode.Open, FileAccess.Write);
+		// // update id
+		// FileStream _fs = new FileStream(logIdPath, FileMode.Open, FileAccess.Write);
 
-		_fs.WriteByte ((byte)(id + 1));
-		_fs.Close();
-		_fs.Dispose();
+		// _fs.WriteByte ((byte)(id + 1));
+		// _fs.Close();
+		// _fs.Dispose();
 	}
 
 }

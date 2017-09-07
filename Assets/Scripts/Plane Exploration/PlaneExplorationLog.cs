@@ -28,12 +28,12 @@ public class PlaneExplorationLog : MonoBehaviour {
 
 	public void RecordInitialization(int trial_num, int level){
 
-		// get id
-		FileStream _fs = new FileStream(logIdPath, FileMode.Open, FileAccess.Read);
+		// // get id
+		// FileStream _fs = new FileStream(logIdPath, FileMode.Open, FileAccess.Read);
 
-		id = (uint)(_fs.ReadByte ());
-		_fs.Close();
-		_fs.Dispose();
+		// id = (uint)(_fs.ReadByte ());
+		// _fs.Close();
+		// _fs.Dispose();
 
 		// get filestream
 		fs = new FileStream(logFilePath, FileMode.Append, FileAccess.Write);
@@ -44,10 +44,12 @@ public class PlaneExplorationLog : MonoBehaviour {
 		lastTime = System.DateTime.Now;
 
 		// initialize log
-		logString = "\n" + id.ToString () + "," + startTime + "," + trial_num.ToString () + "," + level.ToString() + ",";
+		// logString = "\n" + id.ToString () + "," + startTime + "," + trial_num.ToString () + "," + level.ToString() + ",";
+		logString = "\n" + startTime.ToString("yyyyMMddHHmmssms") + "," + trial_num.ToString () + "," + level.ToString() + ",";
 
 		// initialize detail log file
-		string detailFileName = logDetailPath + id.ToString() + ".txt";
+		// string detailFileName = logDetailPath + id.ToString() + ".txt";
+		string detailFileName = logDetailPath + startTime.ToString("yyyyMMddHHmmssms") + ".txt";
 		fsDetail = new FileStream(detailFileName, FileMode.Create, FileAccess.Write);
 		string detailInitialization = "timestamp,x_operation,z_operation,position";
 		byte[] map = Encoding .UTF8.GetBytes(detailInitialization.ToString());
@@ -61,7 +63,7 @@ public class PlaneExplorationLog : MonoBehaviour {
 		System.DateTime curTime = System.DateTime.Now;
 
 		if ((curTime-lastTime).TotalSeconds >= 0.5) {
-			string detail = "\n" + curTime + "," + x_operation.ToString () + "," + z_operation.ToString () + "," + position;
+			string detail = "\n" + curTime.ToString("yyyyMMddHHmmssms") + "," + x_operation.ToString () + "," + z_operation.ToString () + "," + position;
 			byte[] map = Encoding.UTF8.GetBytes (detail.ToString ());
 			fsDetail.Write (map, 0, map.Length);
 			lastTime = curTime;
@@ -73,7 +75,7 @@ public class PlaneExplorationLog : MonoBehaviour {
 	public void RecordResult(int result){ // -1:die 0:inadequate 1:right 
 
 		System.DateTime curTime = System.DateTime.Now;
-		logString += (curTime-startTime).ToString() + "," + result.ToString ();
+		logString += (curTime-startTime).ToString() + "," + result.ToString();
 
 		CommitResult ();
 
@@ -94,11 +96,11 @@ public class PlaneExplorationLog : MonoBehaviour {
 		fsDetail.Close();
 		fsDetail.Dispose ();
 
-		// update id
-		FileStream _fs = new FileStream(logIdPath, FileMode.Open, FileAccess.Write);
+		// // update id
+		// FileStream _fs = new FileStream(logIdPath, FileMode.Open, FileAccess.Write);
 
-		_fs.WriteByte ((byte)(id + 1));
-		_fs.Close();
-		_fs.Dispose();
+		// _fs.WriteByte ((byte)(id + 1));
+		// _fs.Close();
+		// _fs.Dispose();
 	}
 }

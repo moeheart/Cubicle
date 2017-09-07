@@ -30,6 +30,8 @@ public class PlaneExplorationWin : MonoBehaviour {
 				other.gameObject.GetComponent<Player6> ().Win ();
 			else if (sceneName == "Q7")
 				other.gameObject.GetComponent<Player7> ().Win ();
+			else if (sceneName == "Q8")
+				other.gameObject.GetComponent<Player8> ().Win ();
 			else
 				;
 		}
