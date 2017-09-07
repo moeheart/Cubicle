@@ -9,7 +9,7 @@ using System.Text;
 
 public class RevSolidLog : MonoBehaviour {
 
-	private static string logFilePath = @"Assets/Logs/Revolution Solid/_RevSolidLogs.txt";
+	private static string logFilePath;
 
 	private static int recordNo;
 	private static int trialNum;
@@ -31,11 +31,10 @@ public class RevSolidLog : MonoBehaviour {
 		EventManager.StartListening ("OnMouseDown",listener);
 		EventManager.StartListening ("OnMouseUp",RecordMouseUp);
 		EventManager.StartListening ("Grading",RecordGrading);
-		//EventManager.StartListening ("RecordReactionTime",RecordReactionTime);
 		EventManager.StartListening ("Retry",RecordRetry);
 		EventManager.StartListening ("EnableTutorial",RecordTutorialOn);
 		EventManager.StartListening ("DisableTutorial",RecordTutorialOff);
-
+		EventManager.StartListening ("Qdown",CommitResult);
 	}
 
 	void OnDisable(){
@@ -43,20 +42,27 @@ public class RevSolidLog : MonoBehaviour {
 		EventManager.StopListening ("OnMouseDown",listener);
 		EventManager.StopListening ("OnMouseUp",RecordMouseUp);
 		EventManager.StopListening ("Grading",RecordGrading);
-		//EventManager.StopListening ("RecordReactionTime",RecordReactionTime);
 		EventManager.StopListening ("Retry",RecordRetry);
 		EventManager.StopListening ("EnableTutorial",RecordTutorialOn);
 		EventManager.StopListening ("DisableTutorial",RecordTutorialOff);
-
+		EventManager.StopListening ("Qdown",CommitResult);
 	}
 
 	void Start(){
+		GenerateLogFilePath ();
 		RecordInitialization ();
-		SceneManager.activeSceneChanged += CommitResult;
 	}
 
 	void Update(){
 		
+	}
+
+	void GenerateLogFilePath(){
+		int id = 0;
+		do {
+			id++;
+			logFilePath = @"Assets/Logs/Revolution Solid/_RevSolidLogs" + id + ".txt";
+		} while(File.Exists (logFilePath));
 	}
 
 	void RecordInitialization(){
@@ -104,8 +110,8 @@ public class RevSolidLog : MonoBehaviour {
 		trialNum++;
 	}
 
-	void CommitResult(Scene scene1,Scene scene2){
-		writer.WriteLine("shift from {0} to {1}",scene1.name, scene2.name);
+	void CommitResult(){
+		writer.WriteLine("press Q");
 		writer.Close ();
 	}
 }

@@ -13,10 +13,13 @@ public class MouseAndKeyboard : MonoBehaviour {
 
 	void OnEnable(){
 		EventManager.StartListening ("OnChoosing",OnChoosing);
+		EventManager.StartListening ("Qdown",GoBackToWorld);
+
 	}
 
 	void OnDisable(){
 		EventManager.StopListening ("OnChoosing",OnChoosing);
+		EventManager.StopListening ("Qdown",GoBackToWorld);
 	}
 	// Use this for initialization
 	void Start () {
@@ -58,9 +61,13 @@ public class MouseAndKeyboard : MonoBehaviour {
 			DataUtil.UnlockCurrentRoom();
 		}
 		if (Input.GetKeyDown(KeyCode.Q)) {
-			Time.timeScale = 1;
-			SceneManager.LoadScene("World Scene");
+			EventManager.TriggerEvent ("Qdown");
 
 		}
+	}
+
+	void GoBackToWorld(){
+		Time.timeScale = 1;
+		SceneManager.LoadScene("World Scene");
 	}
 }

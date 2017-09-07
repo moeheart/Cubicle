@@ -19,6 +19,7 @@ public class ActiveObjControl : MonoBehaviour {
 
 	public static string reactionTimeToLog;
 
+	static GameObject gameObjectJustHit;
 	// Use this for initialization
 	void Awake(){
 		CheckLevel();
@@ -38,6 +39,7 @@ public class ActiveObjControl : MonoBehaviour {
 		InitPolygon ();
 		ActivateObjects ();
 		StartCoroutine ("GenerateInitialObjects");
+		gameObjectJustHit=activeObjects[0].gameObject;
 
 	}
 
@@ -130,7 +132,7 @@ public class ActiveObjControl : MonoBehaviour {
 			}
 		}
 	}
-
+		
 	protected void Rotate(int objIndex){
 		if (activeObjects [objIndex].isKilled == false) {
 			//activeObjects [objIndex].gameObject.transform.Rotate (0.5f, 0.5f, 0.5f);
@@ -138,24 +140,24 @@ public class ActiveObjControl : MonoBehaviour {
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
 			//Vector3 originalEulerAngleRotation = new Vector3(0,0,0);
 			if (Physics.Raycast (ray, out hit)) {
-				
-				if (Input.GetKey (KeyCode.W) || Input.GetKey (KeyCode.UpArrow)) {
-					
-					hit.collider.gameObject.transform.Rotate (new Vector3 (1.0f, 0, 0));
+				gameObjectJustHit = hit.collider.gameObject;
+			}
+			if (Input.GetKey (KeyCode.W) || Input.GetKey (KeyCode.UpArrow)) {
 
-				} else if (Input.GetKey (KeyCode.S) || Input.GetKey (KeyCode.DownArrow)) {
-					
-					hit.collider.gameObject.transform.Rotate (new Vector3 (-1.0f, 0, 0));
+				gameObjectJustHit.transform.Rotate (new Vector3 (1.0f, 0, 0));
 
-				} else if (Input.GetKey (KeyCode.A) || Input.GetKey (KeyCode.LeftArrow)) {
-					hit.collider.gameObject.transform.Rotate (new Vector3 (0, 1.0f, 0));
+			} else if (Input.GetKey (KeyCode.S) || Input.GetKey (KeyCode.DownArrow)) {
 
-				} else if (Input.GetKey (KeyCode.D) || Input.GetKey (KeyCode.RightArrow)) {
-					hit.collider.gameObject.transform.Rotate (new Vector3 (0, -1.0f, 0));
+				gameObjectJustHit.transform.Rotate (new Vector3 (-1.0f, 0, 0));
 
-				}else {
-					SlapBack (hit.collider.gameObject.transform);
-				}
+			} else if (Input.GetKey (KeyCode.A) || Input.GetKey (KeyCode.LeftArrow)) {
+				gameObjectJustHit.transform.Rotate (new Vector3 (0, 1.0f, 0));
+
+			} else if (Input.GetKey (KeyCode.D) || Input.GetKey (KeyCode.RightArrow)) {
+				gameObjectJustHit.transform.Rotate (new Vector3 (0, -1.0f, 0));
+
+			}else {
+				SlapBack (gameObjectJustHit.transform);
 			}
 		}
 	}
@@ -180,10 +182,6 @@ public class ActiveObjControl : MonoBehaviour {
 	public static void RecordReactionTimeWhenObjectKilled(float reactionTime){
 		reactionTimeToLog = reactionTime.ToString();
 		EventManager.TriggerEvent("RecordReactionTime");
-	}
-
-	static void ReactionTimeToLog(){
-		
 	}
 		
 }

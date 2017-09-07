@@ -8,6 +8,8 @@ public class Hard : ActiveObjControl {
 	static float PitfallWarningRadius=3.0f;
 	void Awake(){
 		RevSolidGameInfo.MaxPanelNum=4;
+		RevSolidGameInfo.InitializeHit ();
+		RevSolidUIControl.FindStartGamePanel ();
 	}
 	// Use this for initialization
 	void Start () {

@@ -24,9 +24,21 @@ public class RevSolidGameInfo : MonoBehaviour {
 
 	// Use this for initialization
 	void Awake () {
-		hit = 0;
+		InitializeHit ();
 		falseStrokeCount = 0;
 		polygonGenerationCount = 0;
+	}
+
+	void OnEnable(){
+		EventManager.StartListening ("Qdown",GoBackToWorld);
+	}
+
+	void OnDisable(){
+		EventManager.StopListening ("Qdown",GoBackToWorld);
+	}
+
+	public static void InitializeHit(){
+		hit = 0;
 	}
 	
 	// Update is called once per frame
@@ -55,8 +67,13 @@ public class RevSolidGameInfo : MonoBehaviour {
 			RevSolidUIControl.ShowRetryButton ();
 		}
 		if (Input.GetKeyDown(KeyCode.Q)) {
-			SceneManager.LoadScene("World Scene");
+			EventManager.TriggerEvent ("Qdown");
+
 		}
+	}
+
+	void GoBackToWorld(){
+		SceneManager.LoadScene("World Scene");
 	}
 	 
 	public static bool IfNoviceGuideEnds(){

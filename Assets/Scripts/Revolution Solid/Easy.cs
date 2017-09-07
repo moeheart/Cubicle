@@ -6,6 +6,8 @@ public class Easy : ActiveObjControl {
 
 	void Awake(){
 		RevSolidGameInfo.MaxPanelNum=1;
+		RevSolidGameInfo.InitializeHit ();
+		RevSolidUIControl.FindStartGamePanel ();
 	}
 	// Use this for initialization
 	void Start () {

@@ -354,3 +354,17 @@ shift from  to World Scene
 recordNo	timeStamp	trialNum	level	action	detail	
 
 shift from  to World Scene
+
+
+9/7/2017 11:24:57 AM
+
+recordNo	timeStamp	trialNum	level	action	detail	
+
+press Q
+
+
+9/7/2017 11:25:00 AM
+
+recordNo	timeStamp	trialNum	level	action	detail	
+
+press Q
