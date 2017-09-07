@@ -20,6 +20,14 @@ public class LevelManager : MonoBehaviour {
 		worldInstance.GenerateWorld(levelJsonFilePath);
 		worldInstance.LoadData();
 		//worldInstance.SaveData();
+
+		Directory.CreateDirectory("Assets/Logs/CSG");
+		Directory.CreateDirectory("Assets/Logs/Block Builder");
+		Directory.CreateDirectory("Assets/Logs/View Point");
+		Directory.CreateDirectory("Assets/Logs/Transform Limitation");
+		Directory.CreateDirectory("Assets/Logs/Plane Exploration");
+		Directory.CreateDirectory("Assets/Logs/Revolution Solid");
+		Directory.CreateDirectory("Assets/Logs/Cube Shift");
 	}
 	
 	// Update is called once per frame
