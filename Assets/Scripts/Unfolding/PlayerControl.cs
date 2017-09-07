@@ -494,8 +494,8 @@ public class PlayerControl : MonoBehaviour {
         LoseCanvas.SetActive(false);
         UserCanvas.SetActive(true);
 
-        Camera.main.transform.position = InitialPos;
-        Camera.main.transform.rotation = InitialRot;
+        // Camera.main.transform.position = InitialPos;
+        // Camera.main.transform.rotation = InitialRot;
     }
     
     public void Proceed()
