@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Section:MonoBehaviour {
 
 	public Sprite imgSprite;
-	public Sprite tutorialSprite;
+	public Sprite[] tutorialSprite = new Sprite[8];
 	public int panelIndex;
 	public int polygonIndex;
 	public static int[][] axisKernels;
@@ -26,9 +26,10 @@ public class Section:MonoBehaviour {
 		InitCandidateKernels ();
 	}
 	public Section(int newPanelIndex,int corresPolygonIndex){
-		imgSprite = Resources.Load<Sprite> ("section"+corresPolygonIndex.ToString());//Find ("section"+newPanelIndex.ToString()).GetComponent<Image>().sprite;
-		tutorialSprite = Resources.Load<Sprite> ("section"+corresPolygonIndex.ToString()+"_t");//Find ("section"+newPanelIndex.ToString()+"_t").GetComponent<Image>().sprite;
-
+		imgSprite = Resources.Load<Sprite> ("section"+corresPolygonIndex.ToString());
+		for (int i=0;i<8;i++){
+			tutorialSprite[i] = Resources.Load<Sprite> ("section"+corresPolygonIndex.ToString()+"_t"+i.ToString());
+		}
 		panelIndex = newPanelIndex;
 		polygonIndex = corresPolygonIndex;
 	}

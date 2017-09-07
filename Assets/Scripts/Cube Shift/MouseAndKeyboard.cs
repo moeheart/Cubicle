@@ -45,7 +45,7 @@ public class MouseAndKeyboard : MonoBehaviour {
 	void OnChoosing(){
 		if (hitCubeNum==gameInfo.targetIdx.ToString()) {
 			//cubeHit.text+=" Correct";
-			gameInfo.target.SetActive(true);
+			GameInfo.SetTargetVisible();
 			GameInfo.isTargetFound = true;
 			//gameInfo.isChooseEnabled = false;
 			GameInfo.Add2Score();
@@ -58,7 +58,9 @@ public class MouseAndKeyboard : MonoBehaviour {
 			DataUtil.UnlockCurrentRoom();
 		}
 		if (Input.GetKeyDown(KeyCode.Q)) {
+			Time.timeScale = 1;
 			SceneManager.LoadScene("World Scene");
+
 		}
 	}
 }

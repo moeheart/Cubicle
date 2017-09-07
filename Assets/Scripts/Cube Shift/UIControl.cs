@@ -9,9 +9,10 @@ public class UIControl : MonoBehaviour {
 	public GameInfo gameInfo=GameInfo.getInstance();
 	static Button button;
 	static Button restartBtn;
+	static GameObject restartCanvas;
 	static Text btnText;
 
-	static Text cubeHit;
+	static Text msgText;
 
 	static Slider difficultySlider;
 	static Text difficulty;
@@ -25,7 +26,7 @@ public class UIControl : MonoBehaviour {
 
 	bool isParameterAlterable=true;
 
-
+	static Text popUpMessage;
 
 	// Use this for initialization
 	void Awake () {
@@ -33,8 +34,12 @@ public class UIControl : MonoBehaviour {
 		button.onClick.AddListener(OnClick);
 		restartBtn=GameObject.Find ("restartBtn").GetComponent<Button> ();
 		restartBtn.onClick.AddListener(ClickToRestart);
+		restartCanvas = GameObject.Find ("restartCanvas");
+		popUpMessage = GameObject.Find ("popUpMessage").GetComponent<Text> ();
+
+
 		btnText = GameObject.Find ("btnText").GetComponent<Text> ();
-		cubeHit = GameObject.Find ("cubeHit").GetComponent<Text> ();
+		msgText = GameObject.Find ("msgText").GetComponent<Text> ();
 
 		difficultySlider = GameObject.Find ("difficultySlider").GetComponent<Slider> ();
 		difficultySlider.onValueChanged.AddListener (delegate{DifficultyChangeCheck();});
@@ -70,6 +75,7 @@ public class UIControl : MonoBehaviour {
 			cubeNumberSlider.gameObject.SetActive (false);
 			cubeNum.gameObject.SetActive (false);
 		}
+
 	}
 	
 	// Update is called once per frame
@@ -79,15 +85,15 @@ public class UIControl : MonoBehaviour {
 			gameInfo.PauseGame ();
 			button.gameObject.SetActive (true);
 			btnText.text = "Proceed";
-			cubeHit.text = "Given several cubes, organized in 3*3 space, with a {candy cane} in one of them\n\n"+"Now please REMEMBER the position of each cube and the candy for later manipulation & recall";
-			restartBtn.gameObject.SetActive (false);
+			msgText.text = "Welcome! What is ahead of you is quite like a cups-and-ball Shell Game. Your goal is to find the flushed emoji little face";
+			restartCanvas.SetActive (false);
 		}
 		else if(gameInfo.phaseNo == 1){
 			
 			button.gameObject.SetActive (true);
 			btnText.text = "Play";
-			cubeHit.text = "After you press [Play], cubes will begin shifting\n\n"+"Candy in one cube will travel to the nearest one with an adjoining face, "+"both of which are later marked [GREEN]";
-			restartBtn.gameObject.SetActive (false);
+			msgText.text = "After you press [Play], several identical cubes (one topped with a flushed face) will begin shifting.";
+			restartCanvas.SetActive (false);
 		}
 		else if(gameInfo.phaseNo == 2){
 			
@@ -95,28 +101,30 @@ public class UIControl : MonoBehaviour {
 				button.gameObject.SetActive (false);
 			}
 			else if (gameInfo.moves == 2) {
-				gameInfo.target.SetActive (false);
+				//GameInfo.SetTargetInvisible ();
 			}
 
-			cubeHit.text = "Now the candy is travelling between cubes";
-			restartBtn.gameObject.SetActive (false);
+			msgText.text = "The face may travel between cubes at some points.";
+			restartCanvas.SetActive (false);
 		}
 		else if (gameInfo.phaseNo == 3) {
 			if (gameInfo.moves == 3) {
 				gameInfo.PauseAtFirstMove ();
 
 				button.gameObject.SetActive (true);
-				btnText.text = "Retry";
+				btnText.text = "WATCH AGAIN";
 
 				if (!GameInfo.isTargetFound) {
+					GameInfo.SetTargetInvisible ();
 					gameInfo.isChooseEnabled = true;
-					cubeHit.text = "Now this is the same view as shown at beginning. Indicate the cube with candy by ONE CLICK on it";
+					msgText.text = "Where is the face?Indicate by ONE CLICK at a cube.\n* Now this is the SAME VIEW AS IN THE BEGINNING.";
 				}
 			}
 			if (GameInfo.isTargetFound) {
 				gameInfo.isChooseEnabled = false;
-				cubeHit.text = "You've found the candy!";
-				restartBtn.gameObject.SetActive (true);
+				msgText.text = "You've found it!";
+				restartCanvas.SetActive (true);
+
 			}
 		}
 		reactTime.text = GameInfo.reactTime.ToString ("##.000");
@@ -170,7 +178,9 @@ public class UIControl : MonoBehaviour {
 	public static void RefreshScore(){
 		score.text = "SCORE "+GameInfo.score.ToString();
 		if (GameInfo.CheckIfWinningCriterionMet ()) {
-			score.text+="\nCongratulations! The next level is unlocked now. \nPress Q to go on with world exploration";
+			popUpMessage.text = "Congratulations! The next level is unlocked now. Press Q to go on with world exploration";
+		} else {
+			popUpMessage.text="Or [WATCH AGAIN] to understand better.";
 		}
 	}
 

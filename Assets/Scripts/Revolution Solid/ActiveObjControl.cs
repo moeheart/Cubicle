@@ -26,19 +26,18 @@ public class ActiveObjControl : MonoBehaviour {
 	}
 
 	void OnEnable(){
-		
-		//EventManager.StartListening ("RecordReactionTime",ReactionTimeToLog);
+
 	}
 
 	void OnDisable(){
-		//EventManager.StopListening ("RecordReactionTime",ReactionTimeToLog);
+
 	}
 
 	void Start () {
 
 		InitPolygon ();
 		ActivateObjects ();
-		StartCoroutine("RecoverObjects");
+		StartCoroutine ("GenerateInitialObjects");
 
 	}
 
@@ -93,47 +92,77 @@ public class ActiveObjControl : MonoBehaviour {
 		}
 	}
 
-	IEnumerator RecoverObjects(){
-		while (true) {
-			//recover & shift sectionPanel-polygon correspondence
-			for(int i=0;i<RevSolidGameInfo.MaxPanelNum;i++){
-				if (activeObjects [i].isKilled == true) {
-					//replace with one of the polygons(that is currently not on screen
-					int k;
-					while(true){
-						k = Mathf.FloorToInt (Random.value * RevSolidGameInfo.MaxPolygonNum);
-						int j;
-						for (j = 0; j < RevSolidGameInfo.MaxPanelNum; j++) {
-							if (activeObjects [j].polygonIndex == k)
-								break;//for
-						}
-						if (j == RevSolidGameInfo.MaxPanelNum) {
-							break;//while
-						}
-					}
-					activeObjects [i].polygonIndex = k;
-					activeObjects [i].Refresh ();
-					/*
-					Debug.Log (i);
-					Debug.Log ("+1");*/
-				}
-				yield return new WaitForSeconds (RevSolidGameInfo.RecoverInterval);
-			}
+	IEnumerator GenerateInitialObjects(){
+		for (int i = 0; i < RevSolidGameInfo.MaxPanelNum; i++) {
+			RecoverObjects ();
 			yield return new WaitForSeconds (RevSolidGameInfo.RecoverInterval);
-
 		}
 	}
 
-	public static bool WithinViewport(int objIndex){
-		return (Mathf.Abs (activeObjects [objIndex].gameObject.transform.position.x - midPos.x) <= 8
-			&& Mathf.Abs (activeObjects [objIndex].gameObject.transform.position.y - midPos.y) <= 5);
+	public void RecoverObjects(){
+		//recover & shift sectionPanel-polygon correspondence
+		for (int i = 0; i < RevSolidGameInfo.MaxPanelNum; i++) {
+			if (activeObjects [i].isKilled == true) {
+				
+				//replace with one of the polygons(that is currently not on screen
+				int k;
+				while (true) {
+					k = Mathf.FloorToInt (Random.value * RevSolidGameInfo.MaxPolygonNum);
+					int j;
+					for (j = 0; j < RevSolidGameInfo.MaxPanelNum; j++) {
+						if (activeObjects [j].polygonIndex == k)
+							break;//for
+					}
+					if (j == RevSolidGameInfo.MaxPanelNum) {
+						break;//while
+					}
+				}
+				activeObjects [i].polygonIndex = k;
+				RevSolidGameInfo.polygonGenerationCount++;
+				if (!RevSolidGameInfo.IfNoviceGuideEnds ()) {
+					Tutorial.IndicateCorrectAns (i);
+				} 
+				if (RevSolidGameInfo.WhenNoviceGuideEnds ()) {
+					StartCoroutine (this.GetComponent<RevSolidUIControl> ().ShowStartGamePanel ());
+				}
+				activeObjects [i].Refresh ();
+				break;
+			}
+		}
 	}
-
 
 	protected void Rotate(int objIndex){
 		if (activeObjects [objIndex].isKilled == false) {
-			activeObjects [objIndex].gameObject.transform.Rotate (0.5f, 0.5f, 0.5f);
+			//activeObjects [objIndex].gameObject.transform.Rotate (0.5f, 0.5f, 0.5f);
+			RaycastHit hit;
+			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+			//Vector3 originalEulerAngleRotation = new Vector3(0,0,0);
+			if (Physics.Raycast (ray, out hit)) {
+				
+				if (Input.GetKey (KeyCode.W) || Input.GetKey (KeyCode.UpArrow)) {
+					
+					hit.collider.gameObject.transform.Rotate (new Vector3 (1.0f, 0, 0));
+
+				} else if (Input.GetKey (KeyCode.S) || Input.GetKey (KeyCode.DownArrow)) {
+					
+					hit.collider.gameObject.transform.Rotate (new Vector3 (-1.0f, 0, 0));
+
+				} else if (Input.GetKey (KeyCode.A) || Input.GetKey (KeyCode.LeftArrow)) {
+					hit.collider.gameObject.transform.Rotate (new Vector3 (0, 1.0f, 0));
+
+				} else if (Input.GetKey (KeyCode.D) || Input.GetKey (KeyCode.RightArrow)) {
+					hit.collider.gameObject.transform.Rotate (new Vector3 (0, -1.0f, 0));
+
+				}else {
+					SlapBack (hit.collider.gameObject.transform);
+				}
+			}
 		}
+	}
+
+	void SlapBack(Transform transform){
+		transform.rotation = Quaternion.Lerp(transform.rotation,Quaternion.Euler(-45.0f,0,0),0.2f);
+
 	}
 
 	protected void FadeInOrOut(int objIndex){

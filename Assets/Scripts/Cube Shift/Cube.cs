@@ -13,6 +13,7 @@ public class Cube {
 	public Vector3[] pos = new Vector3[MaxCubeNumber];
 	public Vector3[] shiftedPos = new Vector3[MaxCubeNumber * 3];
 	public int[] posParams= new int[9 * MaxCubeNumber]; //fixed size buffer fields may only be members of structs
+	public static Vector3 coordOffset=new Vector3(-8.0f,-6.0f,-8.0f);//measured manually
 	//if new every round, a stackoverflow may be caused
 	public bool isPosDuplicate=true;
 	public bool notWithinCube=true;

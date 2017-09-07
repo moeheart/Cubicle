@@ -16,8 +16,10 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	private static Text showAllSwitch;
 	private static Button freeStrokeTutBtn;
 	private static GameObject freeStrokeTut;
+	private static GameObject[] checkMarks;
+	private static GameObject gameStartPanel;
 	private static bool isCandidateAxesShown = false;
-	public static string defaultString = "Indicate the axis\nby a free stroke";
+	public static string defaultString = "";
 	// Use this for initialization
 	void Awake() {
 		broadcast= GameObject.Find ("Text").GetComponent<Text> ();
@@ -38,12 +40,14 @@ public class RevSolidUIControl : RevSolidGameInfo {
 		showAllBtn.onClick.AddListener (CandidateAxesSwitch);
 		showAllSwitch=GameObject.Find ("showAllSwitch").GetComponent<Text> ();
 
-		freeStrokeTutBtn = GameObject.Find ("freeStrokeExp").GetComponent<Button> ();
-		freeStrokeTutBtn.onClick.AddListener (ShowFreeStrokeTutorial);
-		freeStrokeTut = GameObject.Find ("freeStrokeTutorial");
-		freeStrokeTut.SetActive (false);
+		gameStartPanel = GameObject.Find ("gameStartPanel");
 
+		checkMarks=new GameObject[4];
+		for (int i = 0; i < RevSolidGameInfo.MaxPanelNum; i++) {
 
+			checkMarks[i] = GameObject.Find ("checkMark_"+i.ToString());
+			checkMarks[i].SetActive (false);
+		}
 	}
 
 	void OnEnable(){
@@ -55,13 +59,15 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	}
 
 	void Start(){
+
+
 		StartCoroutine ("ShowDefaultMsg");
 	}
 		
 	IEnumerator ShowDefaultMsg(){
 		while (true) {
 			BroadcastMsg (defaultString);
-			yield return new WaitForSeconds (1.0f);
+			yield return new WaitForSeconds (3.0f);
 		}
 	}
 
@@ -107,7 +113,7 @@ public class RevSolidUIControl : RevSolidGameInfo {
 		HideRetryButton ();
 		BroadcastMsg (defaultString);
 		RefreshBroadcasts ();
-		Time.timeScale = 1;
+		//Time.timeScale = 1;
 
 	}
 
@@ -125,7 +131,7 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	}
 
 	void ConfirmTutorialAndResume(){
-		Time.timeScale = 1;
+		//Time.timeScale = 1;
 		HideResponseButton ();
 		SetTutorialMessage ("");
 		Tutorial.CancelAnsIndication ();
@@ -173,14 +179,36 @@ public class RevSolidUIControl : RevSolidGameInfo {
 		AxisDrawing.RecoverOriginalSections ();
 	}
 
-	void ShowFreeStrokeTutorial(){
-		StartCoroutine ("PlayFreeStrokeVideo");
+	public void ShowCheckMark (int panelIndex){
+		StartCoroutine (this.DisplayCheckMarkFor2Scs(panelIndex));
 	}
 
-	IEnumerator PlayFreeStrokeVideo(){
-		freeStrokeTut.SetActive (true);
-		yield return new WaitForSeconds (5);
-		freeStrokeTut.SetActive (false);
+	IEnumerator DisplayCheckMarkFor2Scs(int panelIndex){
+		checkMarks[panelIndex].SetActive (true);
+		//ActiveObjControl.activeObjects [panelIndex].image.gameObject.GetComponent<MeshRenderer> ().material.SetFloat ("_AlphaScale",0.0f);
+		yield return new WaitForSeconds (2.0f);
+		checkMarks[panelIndex].SetActive (false);
+		//ActiveObjControl.activeObjects [panelIndex].image.gameObject.GetComponent<MeshRenderer> ().material.SetFloat ("_AlphaScale",1.0f);
+	}
+
+	public IEnumerator ShowStartGamePanel (){
+		if (GameObject.Find ("gameStartPanel")) {
+			float rate = 0.01f;
+			for (int i = 0; i < 10; i++) {
+				gameStartPanel.transform.Translate (new Vector3 (0, -10.0f, 0));
+				rate -= 0.005f;
+				yield return new WaitForSeconds (rate);
+			}
+			yield return new WaitForSeconds (2.0f);
+			for (int i = 0; i < 10; i++) {
+				gameStartPanel.transform.Translate (new Vector3 (0, 10.0f, 0));
+				rate += 0.005f;
+				yield return new WaitForSeconds (rate);
+			}
+			GameObject.Destroy (gameStartPanel);
+		} else {
+			yield return null;
+		}
 	}
 
 }

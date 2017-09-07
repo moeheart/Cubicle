@@ -75,7 +75,7 @@ public class CubeGame : MonoBehaviour {
 		if (gameInfo.isMoving==true) {
 			for (int i = 0; i < cube.CubeNumber; i++) {
 				//cube.cubes [i].transform.SetPositionAndRotation(Vector3.Lerp(cube.shiftedPos[i*3+((gameInfo.moves-2)<0?2:(gameInfo.moves-2))],cube.shiftedPos[i*3+gameInfo.moves-1],(gameInfo.currTime-gameInfo.lastUpdateTime)/GameInfo.shiftDuration),Quaternion.identity);
-				cube.cubes[i].transform.localPosition=auxiliaryCubeTransform.InverseTransformPoint(Vector3.Lerp(cube.shiftedPos[i*3+((gameInfo.moves-2)<0?2:(gameInfo.moves-2))],cube.shiftedPos[i*3+gameInfo.moves-1],(gameInfo.currTime-gameInfo.lastUpdateTime)/GameInfo.shiftDuration));
+				cube.cubes[i].transform.position=auxiliaryCubeTransform.TransformPoint(Vector3.Lerp(cube.shiftedPos[i*3+((gameInfo.moves-2)<0?2:(gameInfo.moves-2))],cube.shiftedPos[i*3+gameInfo.moves-1],(gameInfo.currTime-gameInfo.lastUpdateTime)/GameInfo.shiftDuration)+Cube.coordOffset);
 			}
 		}
 
@@ -176,7 +176,7 @@ public class CubeGame : MonoBehaviour {
 		//set target
 		gameInfo.targetIdx = Mathf.CeilToInt (cube.CubeNumber*Random.Range(0.01f,1.0f))-1;
 		gameInfo.UpdateTarget (gameInfo.targetIdx);
-		gameInfo.target.SetActive (true);
+		GameInfo.SetTargetVisible ();
 	}
 
 	void DestroyCubes(){

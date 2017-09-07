@@ -35,15 +35,16 @@ public class Tutorial : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+		
 	}
 
 	IEnumerator AutoDisableTutorial(){
 		while (true) {
+
 			if (RevSolidGameInfo.CheckIfPlayerLearned () == true) {
 				EventManager.TriggerEvent("DisableTutorial");
 			}
-			yield return new WaitForSeconds (10);
+			yield return new WaitForSeconds (20);
 		}
 	}
 
@@ -59,11 +60,11 @@ public class Tutorial : MonoBehaviour {
 
 	public static void IndicateAnApproachingObject (){
 		if(isTutorialModeOn){
-			Time.timeScale = 0;
+			//Time.timeScale = 0;
 			RevSolidUIControl.SetTutorialMessage("AS YOU MAY NOTICE \n\n" +
 				"Every solid approaching your window center, are formed by revolution of a shape here.\n\n"+
 				"1. Observe each solid & the shape it revolutes by,\n2. Draw on the shape the corresponding revolution axis in your mind");
-			RevSolidUIControl.ShowResponseButton ();
+			//RevSolidUIControl.ShowResponseButton ();
 		}
 	}
 
@@ -72,12 +73,9 @@ public class Tutorial : MonoBehaviour {
 			RevSolidUIControl.SetTutorialMessage ("Still need tutorial?");
 			RevSolidUIControl.ShowResponseButton ();
 		}
-		if (isTutorialModeOn && ActiveObjControl.WithinViewport (panel)) {
-			Time.timeScale = 0;
-			RevSolidUIControl.SetTutorialMessage("Here we show the revolution axis and corresponding stroke. Try it yourself!");
-			IndicateAxisAndStroke (panel);
-			RevSolidUIControl.ShowResponseButton ();
-
+		if (isTutorialModeOn){
+			RevSolidUIControl.SetTutorialMessage("Draw the revolution axis with your mouse");
+			GameObject.Find("Canvas1").GetComponent<Tutorial>().IndicateAxisAndStroke (panel);
 		}
 	}
 
@@ -90,7 +88,7 @@ public class Tutorial : MonoBehaviour {
 		}
 	}
 
-	public static void IndicateAxisAndStroke (int panel){
+	public void IndicateAxisAndStroke (int panel){
 		GameObject tempAxis;
 		tempAxis = Instantiate (axisPrefab, ActiveObjControl.activeObjects [panel].gameObject.transform);
 		tempAxis.name = "axis";
@@ -99,21 +97,31 @@ public class Tutorial : MonoBehaviour {
 			tempAxis.transform.localPosition= new Vector3(0,0,0.035f);
 		}
 
-		ActiveObjControl.activeObjects [panel].UseTutorialSpriteMatchingSolid ();
+		StartCoroutine(FreeStrokeAnimation(panel));
+	}
+
+	IEnumerator FreeStrokeAnimation(int panel){
+		//for (int i = 0; i < 3; i++) {
+		yield return new WaitForSeconds (2.0f);
+		for (int j = 0; j < 8; j++) {
+			ActiveObjControl.activeObjects [panel].UseTutorialSpriteMatchingSolid (j);
+			yield return new WaitForSeconds (0.15f);
+		}
+		//}
 	}
 		
 	public static void IndicatePitfalls (){
 		if (isTutorialModeOn&&isPitfallWarningDone==false) {
-			Time.timeScale = 0;
+			//Time.timeScale = 0;
 			RevSolidUIControl.SetTutorialMessage("Watch out. Once a solid enter the ring in the middle, you will lose your point.");
-			RevSolidUIControl.ShowResponseButton ();
+			//RevSolidUIControl.ShowResponseButton ();
 			isPitfallWarningDone = true;
 		}
 	}
 
 	public static void IndicateKeyUsage(){
 		if (isTutorialModeOn) {
-			RevSolidUIControl.SetTutorialMessage ("Press SPACE key anytime to freeze solid.");
+			RevSolidUIControl.SetTutorialMessage ("[WASD] - rotate solid |  [SPACE] - freeze rotation");
 		}
 	}
 }

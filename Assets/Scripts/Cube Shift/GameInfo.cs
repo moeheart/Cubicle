@@ -12,7 +12,7 @@ public class GameInfo
 	public Cube cube=Cube.getInstance();
 
 	public int targetIdx;
-	public GameObject target;
+	public static GameObject target;
 	public static bool isTargetFound;
 	public bool isChooseEnabled;
 	public int moves;//1~3
@@ -26,7 +26,7 @@ public class GameInfo
 	public float lastUpdateTime,currTime;
 	public bool isMoving;
 	public const float stillDuration = 1.0f;
-	public const float shiftDuration = 1.0f;
+	public const float shiftDuration = 2.0f;
 
 	public bool[] isShiftDone=new bool[Cube.MaxCubeNumber*3];
 
@@ -40,10 +40,12 @@ public class GameInfo
 
 	static float WinningCriterion=1.0f;
 
+	public static bool isTutorialModeOn;
 	//单例模式
 	private static GameInfo instance = new GameInfo ();
 	private GameInfo(){
 		score = 0;
+		isTutorialModeOn = true;
 	}
 	public static GameInfo getInstance(){
 		return instance;
@@ -68,6 +70,7 @@ public class GameInfo
 		needDestroyCubes=true;
 		needReInstantiate = true;
 	
+		SetTargetVisible ();
 	}
 
 	public void Play(){
@@ -87,7 +90,6 @@ public class GameInfo
 		needDestroyCubes=false;
 		//no need to instantiate new cubes
 		needReInstantiate=false;
-
 	}
 
 	public void Restart(){//Only referenced when 3 cubes already exist
@@ -99,8 +101,10 @@ public class GameInfo
 	}
 		
 	public void PauseGame(){
-		Time.timeScale = 0;
+		if(!Input.GetKey(KeyCode.Q))
+			Time.timeScale = 0;
 	}
+
 	public void PauseAtFirstMove(){
 		moves = 1;
 		PauseGame ();
@@ -113,20 +117,23 @@ public class GameInfo
 		//SetAllTreeVisible ();
 		target = cube.trees [targetIdx];
 		SetAllTreeInvisible ();
-	}
-
-	/*
-	void SetAllTreeVisible(){
-		for (int i = 0; i < cube.CubeNumber; i++) {
-			cube.trees[i].SetActive(true);
+		if (isTutorialModeOn) {
+			SetTargetVisible ();
 		}
 	}
-	*/
 
 	void SetAllTreeInvisible(){
 		for (int i = 0; i < cube.CubeNumber; i++) {
 			cube.trees[i].SetActive(false);
 		}
+	}
+
+	public static void SetTargetVisible(){
+		target.SetActive(true);
+	}
+
+	public static void SetTargetInvisible(){
+		target.SetActive(false);
 	}
 
 	public void UndoneShifts(){
