@@ -101,7 +101,7 @@ public class ViewPoint : MonoBehaviour {
 					int level = solidsObject.GetComponent<Generation> ().level;
 					int levelNum = solidsObject.GetComponent<Generation> ().levelNum;
 					if (level < levelNum - 1) {
-						resultText.text = "Try Next!";
+						resultText.text = "Correct! Try Next!";
 						mainCam.GetComponent<ViewPointCameraController> ().GenerateDir ();
 						solidsObject.GetComponent<Generation> ().level++;
 						solidsObject.GetComponent<Generation> ().Initialize ();
