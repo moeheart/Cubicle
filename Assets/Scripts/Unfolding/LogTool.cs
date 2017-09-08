@@ -9,7 +9,7 @@ public class LogTool : MonoBehaviour {
     public MeshGenerator meshgenerator;
     string content = "";
     string filePath;
-    string path1 = "Assets/Resources/Unfolding/_Logs/user_Level";
+    string path1 = "Assets/Logs/Unfolding/user_Level";
     string path2 = ".txt";
 
     /// <summary>

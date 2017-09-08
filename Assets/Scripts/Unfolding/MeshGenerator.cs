@@ -83,7 +83,12 @@ public class MeshGenerator : MonoBehaviour {
     public int NumofFaces = 0;
 
     // Use this for initialization
-    void Start() {
+    void Start() { Init(); }
+
+    // void OnEnable() { Init(); }
+
+    void Init()
+    {
         gameObject.GetComponent<MeshRenderer>().materials = MyMaterials;
 
         mf = gameObject.GetComponent<MeshFilter>();
@@ -93,7 +98,6 @@ public class MeshGenerator : MonoBehaviour {
 
         InitArrays();
 
-        CurrentLevel = 0;
         InitConstants(CurrentLevel);
 
         CreateModel();
@@ -106,7 +110,7 @@ public class MeshGenerator : MonoBehaviour {
         mesh.SetTriangles(triangles2.ToArray(), 2);
         mesh.uv = uvs.ToArray();
 
-        CreateLines();    
+        CreateLines();
     }
 
     private void InitConstants(int _level)
@@ -686,22 +690,9 @@ public class MeshGenerator : MonoBehaviour {
             Destroy(line);
         }
 
-        InitArrays();
-
         CurrentLevel = _level;
-        InitConstants(_level);
 
-        CreateModel();
-
-        //Assign Arrays
-        mesh.vertices = vertices.ToArray();
-        mesh.normals = normals.ToArray();
-        mesh.SetTriangles(triangles0.ToArray(), 0);
-        mesh.SetTriangles(triangles1.ToArray(), 1);
-        mesh.SetTriangles(triangles2.ToArray(), 2);
-        mesh.uv = uvs.ToArray();
-
-        CreateLines();
+        Init();
 
         // Reload a material uv image(Now we don't need this because we have an array of materials.)
         //LoadMaterialByLevel(CurrentLevel);
