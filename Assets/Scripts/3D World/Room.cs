@@ -52,7 +52,8 @@ public class Room : MonoBehaviour {
 		trigger = Instantiate(triggerPrefabs[(int)puzzleType]) as TriggerDevice;
 		trigger.transform.parent = this.transform;
 		trigger.transform.localPosition = new Vector3(this.size.x/2, 
-			1.50f + trigger.gameObject.GetComponent<BoxCollider>().center.y, this.size.z/2);
+			1.0f + trigger.gameObject.GetComponent<Collider>().bounds.extents.y, 
+			this.size.z/2);
 		trigger.thisRoom = this;
 	}
 
