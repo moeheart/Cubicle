@@ -59,7 +59,7 @@ public class ObjectsManager : MonoBehaviour {
 	void Start () {
 		levelCompleteText.enabled = false;
 		id = DataUtil.GetCurrentRoomId();
-		logPath = "Assets/Logs/CSG/CSG Log.txt";
+		logPath = Path.Combine(Application.persistentDataPath, "Logs/CSG/CSG.txt");
 	}
 
 	void Update() {

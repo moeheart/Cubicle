@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 
 public class BaseGrid : MonoBehaviour {
 
@@ -22,7 +23,7 @@ public class BaseGrid : MonoBehaviour {
 	void Start () {
 		id = DataUtil.GetCurrentRoomId();
 		DrawingHandler = GameObject.Find("Drawing Handler");
-		logPath = "Assets/Logs/Block Builder/Block Builder Log.txt";
+		logPath = Path.Combine(Application.persistentDataPath, "Logs/Block Builder/Block Builder.txt");
 	}
 	
 	// Update is called once per frame
