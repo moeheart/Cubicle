@@ -1,7 +1,0 @@
-Type: Submit, Score: 0, Time: 8/24/2017 1:54:00 PM
-Type: ClickLine, Line: (0,2,1:1,2,1), Time: 8/30/2017 4:25:36 PM
-Type: ClickLine, Line: (0,2,0:0,2,1), Time: 8/30/2017 4:25:37 PM
-Type: ClickLine, Line: (1,2,0:1,2,1), Time: 8/30/2017 4:25:38 PM
-Type: Stepback, Line: (1,2,0:1,2,1), Time: 8/30/2017 4:25:43 PM
-Type: ClickLine, Line: (0,2,0:1,2,0), Time: 8/30/2017 4:25:48 PM
-Type: Submit, Score: 10, Time: 8/30/2017 4:25:51 PM

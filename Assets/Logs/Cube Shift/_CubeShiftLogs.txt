@@ -1,370 +1,82 @@
 
-8/30/2017 11:51:46 PM
 
-recordNo	timeStamp	trialNum	level	action	detail	
-
-1	6.14583	0	click'Proceed'Btn		
-
-2	6.482136	0	startShifting		
-
-3	17.28814	0	choose	0.7287979, correct, 1	
-
-4	20.42784	0	retry		
-
-shift from  to World Scene
-
-
-8/31/2017 8:20:40 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-1	795.8135	0	click'Proceed'Btn		
-
-2	805.5034	0	startShifting		
-
-3	817.0798	0	choose	1.533081, correct, 1	
-
-4	823.9418	0	newGameGenerated	3, 1	
-
-5	828.2417	1	click'Proceed'Btn		
-
-6	828.764	1	startShifting		
-
-7	839.3621	1	choose	0.5560303, wrong, 1	
-
-8	840.1037	1	choose	1.297668, wrong, 1	
-
-9	840.5082	1	choose	1.701721, wrong, 1	
-
-10	840.7943	1	choose	1.98822, wrong, 1	
-
-11	841.047	1	choose	2.240906, wrong, 1	
-
-12	841.637	1	choose	2.830627, wrong, 1	
-
-13	841.8895	1	choose	3.083435, wrong, 1	
-
-14	842.5973	1	choose	3.791077, correct, 2	
-
-15	847.5858	1	newGameGenerated	3, 1	
-
-16	849.3938	2	click'Proceed'Btn		
-
-17	849.8824	2	startShifting		
-
-18	862.0675	2	choose	2.139587, correct, 1	
-
-19	864.4654	2	newGameGenerated	3, 1	
-
-20	868.9623	3	click'Proceed'Btn		
-
-21	869.5684	3	startShifting		
-
-22	880.6431	3	choose	1.019409, wrong, 2	
-
-23	881.1663	3	choose	1.542053, wrong, 3	
-
-24	881.5532	3	choose	1.929932, correct, 1	
-
-25	889.3477	3	newGameGenerated	3, 1	
-
-26	906.0463	4	click'Proceed'Btn		
-
-27	906.4508	4	startShifting		
-
-28	917.9935	4	choose	1.499268, correct, 1	
-
-29	919.2953	4	newGameGenerated	3, 1	
-
-30	920.7905	5	click'Proceed'Btn		
-
-31	921.2453	5	startShifting		
-
-32	932.4247	5	choose	1.129028, correct, 2	
-
-33	933.7097	5	newGameGenerated	3, 1	
-
-34	934.868	6	click'Proceed'Btn		
-
-35	935.542	6	startShifting		
-
-36	946.9156	6	choose	1.332764, correct, 1	
-
-37	949.0093	6	newGameGenerated	3, 1	
-
-shift from  to World Scene
-
-
-8/31/2017 8:24:36 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-1	10.45713	0	click'Proceed'Btn		
-
-2	12.56238	0	startShifting		
-
-3	23.63539	0	choose	1.027411, correct, 3	
-
-4	24.97072	0	newGameGenerated	4, 1	
-
-5	26.76827	1	click'Proceed'Btn		
-
-6	27.94772	1	startShifting		
-
-7	39.25388	1	choose	1.264179, correct, 2	
-
-8	40.37862	1	newGameGenerated	4, 1	
-
-9	48.47882	2	click'Proceed'Btn		
-
-10	48.91696	2	startShifting		
-
-11	60.49765	2	choose	1.53289, correct, 2	
-
-12	62.60886	2	newGameGenerated	4, 1	
-
-13	64.03597	3	click'Proceed'Btn		
-
-14	64.64255	3	startShifting		
-
-shift from  to World Scene
-
-
-8/31/2017 11:46:34 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-shift from  to World Scene
-
-
-9/2/2017 5:07:06 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-1	3.396937	0	click'Proceed'Btn		
-
-2	3.968823	0	startShifting		
-
-3	14.67173	0	choose	0.6571512, correct, 2	
-
-4	15.96499	0	newGameGenerated	3, 1	
-
-5	17.27386	1	click'Proceed'Btn		
-
-6	17.61104	1	startShifting		
-
-7	28.71944	1	choose	1.06374, correct, 1	
-
-shift from  to World Scene
-
-
-9/2/2017 5:07:53 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-shift from  to World Scene
-
-
-9/2/2017 5:10:19 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-shift from  to World Scene
-
-
-9/3/2017 12:18:19 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-1	2.923834	0	click'Proceed'Btn		
-
-2	3.364619	0	startShifting		
-
-3	14.09963	0	choose	0.6739454, correct, 2	
-
-4	14.95499	0	newGameGenerated	3, 1	
-
-5	15.99571	1	click'Proceed'Btn		
-
-6	16.32348	1	startShifting		
-
-7	26.8349	1	choose	0.460825, correct, 0	
-
-shift from  to World Scene
-
-
-9/3/2017 12:23:06 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-shift from  to World Scene
-
-
-9/3/2017 12:24:13 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-shift from  to World Scene
-
-
-9/3/2017 12:24:29 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-shift from  to World Scene
-
-
-9/4/2017 3:15:01 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-1	9.562083	0	click'Proceed'Btn		
-
-2	10.11752	0	startShifting		
-
-3	25.59874	0	choose	0.4209328, correct, 0	
-
-4	27.65751	0	newGameGenerated	3, 1	
-
-5	28.45597	1	click'Proceed'Btn		
-
-6	28.74237	1	startShifting		
-
-7	44.65683	1	choose	0.8421288, correct, 1	
-
-8	46.92064	1	retry		
-
-shift from  to World Scene
-
-
-9/4/2017 3:19:14 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-shift from  to World Scene
-
-
-9/4/2017 3:20:59 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-shift from  to World Scene
-
-
-9/4/2017 3:21:12 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-shift from  to World Scene
-
-
-9/4/2017 3:22:00 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-shift from  to World Scene
-
-
-9/4/2017 3:24:13 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-
-
-9/4/2017 3:30:07 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-shift from  to World Scene
-
-
-9/4/2017 3:31:20 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-shift from  to World Scene
-
-
-9/4/2017 3:33:00 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-shift from  to World Scene
-
-
-9/4/2017 3:34:49 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-shift from  to World Scene
-
-
-9/4/2017 3:35:08 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-1	2.949335	0	click'Proceed'Btn		
-
-2	3.50466	0	startShifting		
-
-shift from  to World Scene
-
-
-9/4/2017 3:36:30 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-shift from  to World Scene
-
-
-9/4/2017 3:37:42 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-1	6.059836	0	click'Proceed'Btn		
-
-2	6.581418	0	startShifting		
-
-shift from  to World Scene
-
-
-9/4/2017 3:42:51 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-shift from  to World Scene
-
-
-9/4/2017 3:43:30 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-shift from  to World Scene
-
-
-9/4/2017 3:45:35 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-shift from  to World Scene
-
-
-9/4/2017 3:47:09 PM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-shift from  to World Scene
-
-
-9/7/2017 11:24:57 AM
+9/8/2017 9:17:08 AM
 
 recordNo	timeStamp	trialNum	level	action	detail	
 
 press Q
 
 
-9/7/2017 11:25:00 AM
+9/8/2017 9:19:06 AM
 
 recordNo	timeStamp	trialNum	level	action	detail	
+
+press Q
+
+
+9/8/2017 9:19:51 AM
+
+recordNo	timeStamp	trialNum	level	action	detail	
+
+1	449.1259	0	click'Proceed'Btn		
+
+2	455.5684	0	startShifting		
+
+3	475.424	0	choose	4.794556, wrong, 1	
+
+4	476.9882	0	retry		
+
+5	484.2104	1	click'Proceed'Btn		
+
+6	494.7309	1	startShifting		
+
+7	522.2681	1	choose	2.422607, correct, 2	
+
+8	536.5643	1	newGameGenerated	3, 1	
+
+9	542.2762	2	click'Proceed'Btn		
+
+10	543.7177	2	startShifting		
+
+11	560.9609	2	choose	2.167358, correct, 0	
+
+12	571.7133	2	retry		
+
+press Q
+
+
+9/8/2017 9:22:06 AM
+
+recordNo	timeStamp	trialNum	level	action	detail	
+
+1	584.1671	0	click'Proceed'Btn		
+
+2	586.2453	0	startShifting		
+
+3	602.8542	0	choose	1.384949, wrong, 2	
+
+4	603.6394	0	choose	2.173584, wrong, 2	
+
+5	604.1409	0	choose	2.67395, wrong, 2	
+
+6	604.3311	0	choose	2.865967, wrong, 2	
+
+7	604.496	0	choose	3.027893, wrong, 2	
+
+8	604.6755	0	choose	3.209717, wrong, 2	
+
+9	605.0862	0	choose	3.617249, wrong, 2	
+
+10	605.278	0	choose	3.8125, wrong, 2	
+
+11	605.6991	0	choose	4.232239, correct, 0	
+
+12	624.2278	0	newGameGenerated	4, 1	
+
+13	626.0056	1	click'Proceed'Btn		
+
+14	626.9266	1	startShifting		
+
+15	643.9971	1	choose	1.891174, correct, 4	
 
 press Q

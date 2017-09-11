@@ -22,6 +22,9 @@ public class PlaneExplorationRedirect : MonoBehaviour {
 		Debug.Log(level);
 
 		switch (level) {
+		case 0:
+			SceneManager.LoadScene ("Q0", LoadSceneMode.Single);
+			break;
 		case 1:
 			SceneManager.LoadScene ("Q1", LoadSceneMode.Single);
 			break;
