@@ -36,6 +36,7 @@ public class ModelGeneration : MonoBehaviour {
 	public void Initialize(){
 
 		id = DataUtil.GetCurrentRoomId();
+		print(id);
 		ParseJson(jsonFilePath, id, level);
 
 		selectedPoints = new List<Vector3> ();
