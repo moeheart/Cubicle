@@ -1,3 +1,0 @@
-timestamp,operation
-09/04/2017 14:51:59,RotY
-09/04/2017 14:52:00,SymXY

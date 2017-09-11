@@ -1,8 +1,0 @@
-Type: ClickLine, Line: (0,0,0:0,4,0), Time: 9/8/2017 11:14:20 AM
-Type: ClickLine, Line: (0,0,0:0,0,4), Time: 9/8/2017 11:14:23 AM
-Type: ClickLine, Line: (0,0,4:0,4,4), Time: 9/8/2017 11:14:25 AM
-Type: ClickLine, Line: (0,4,0:4,4,0), Time: 9/8/2017 11:14:33 AM
-Type: ClickLine, Line: (0,0,0:4,0,0), Time: 9/8/2017 11:14:34 AM
-Type: ClickLine, Line: (0,4,4:4,4,4), Time: 9/8/2017 11:14:40 AM
-Type: ClickLine, Line: (4,0,4:4,4,4), Time: 9/8/2017 11:14:54 AM
-Type: Submit, Score: 100, Time: 9/8/2017 11:15:02 AM

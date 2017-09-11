@@ -1,2 +1,0 @@
-timestamp,operation
-201709072027132713,RotZ

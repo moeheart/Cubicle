@@ -1,2 +1,0 @@
-timestamp,operation
-201709080952365236,RotY

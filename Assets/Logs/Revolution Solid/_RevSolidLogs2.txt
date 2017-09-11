@@ -1,7 +1,0 @@
-
-
-9/8/2017 9:18:29 AM
-
-recordNo	timeStamp	trialNum	level	action	detail	
-
-press Q

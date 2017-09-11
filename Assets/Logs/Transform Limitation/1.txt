@@ -1,3 +1,0 @@
-timestamp,operation
-09/06/2017 17:00:38,RotZ
-09/06/2017 17:00:38,RotX

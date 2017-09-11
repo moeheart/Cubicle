@@ -1,2 +1,0 @@
-timestamp,operation
-201709080953585358,SymXY
