@@ -138,10 +138,10 @@
         "puzzle type": "transform limitation"
     },
     "23" : {
-        "position" : [2,0,-5],
+        "position" : [9,0,0],
         "dimension": [ 1, 1, 1 ],
-        "color": [ 0.2, 0.3, 0.5, 1 ],
-        "puzzle type": "transform limitation"
+        "color": [ 1, 0.8, 0.5, 1],
+        "puzzle type": "plane exploration"
     },
     "24" : {
         "position" : [5,0,0],
@@ -280,11 +280,5 @@
         "dimension": [1,1,1],
         "color": [1,1,0,1],
         "puzzle type": "block builder"
-    },
-    "47" : {
-        "position" : [9,0,0],
-        "dimension": [ 1, 1, 1 ],
-        "color": [ 1, 0.8, 0.5, 1],
-        "puzzle type": "plane exploration"
     }
 }
