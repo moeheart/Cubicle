@@ -8,7 +8,7 @@ public class Isometric0 : MonoBehaviour {
 	public GameObject isoCamera;
 
 	public Text resultText;
-	public GameObject panel, retryButton, isometricButton, isoRetryButton, projectionButton;
+	public GameObject panel, retryButton, isometricButton, isoRetryButton, projectionButton, tutObject;
 	public void Click () {
 
 		isoCamera.SetActive(true);
@@ -21,5 +21,6 @@ public class Isometric0 : MonoBehaviour {
 		isoRetryButton.SetActive (true);
 		projectionButton.SetActive (true);
 
+		tutObject.GetComponent<TutorialStage> ().TutNext ();
 	}
 }

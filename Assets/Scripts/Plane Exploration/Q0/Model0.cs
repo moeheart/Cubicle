@@ -20,9 +20,6 @@ public class Model0 : MonoBehaviour {
 	private LineRenderer lineRenderer;
 	private int lineLength1, lineLength2, lineLength3;
 
-
-	public int trialNum;
-
 	public GameObject deadTrigger;
 
 	private int modelStage;

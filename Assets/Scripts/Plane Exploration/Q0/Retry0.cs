@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Retry0 : MonoBehaviour {
 
-	public GameObject canvas, player, isoCamera,tutPanel, tutObject, target;
+	public GameObject canvas, player, isoCamera,tutPanel, tutObject, target, hintCamera;
 	public Text resultText;
 
 
@@ -19,13 +19,15 @@ public class Retry0 : MonoBehaviour {
 
 		resultText.gameObject.SetActive(true);
 		resultText.text = "";
-		
+
+		hintCamera.SetActive (true);
 		tutPanel.SetActive (true);
 		target.SetActive(true);
 		player.SetActive (true);
 		player.transform.position = new Vector3 (0.5f, 2.04f, 0.5f);
 
-		tutObject.GetComponent<TutorialStage>().TutBefore();
+		tutObject.GetComponent<TutorialStage> ().tutStage = 6;
+		tutObject.GetComponent<TutorialStage> ().UpdateModelStage ();
 
 		isoCamera.SetActive (false);
 	}

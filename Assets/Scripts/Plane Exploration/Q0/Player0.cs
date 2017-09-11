@@ -13,11 +13,7 @@ public class Player0 : MonoBehaviour {
 	
 
 	public Text winText;
-	public GameObject panel;
-	public GameObject player;
-	public GameObject retryButton;
-	public GameObject isometricButton;
-	public GameObject target;
+	public GameObject panel, player, retryButton, isometricButton, target, tutObject;
 
 	private int modelStage;
 
@@ -38,7 +34,7 @@ public class Player0 : MonoBehaviour {
 	{
 		float moveHorizontal = Input.GetAxis ("Horizontal");
 		float moveVertical = Input.GetAxis ("Vertical");
-
+		modelStage = tutObject.GetComponent<TutorialStage> ().modelStage;
 		
 		if (transform.position.x - speed * moveVertical >= edge / 2
 			&& transform.position.x - speed * moveVertical <= 2 - edge / 2
