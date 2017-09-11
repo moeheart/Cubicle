@@ -25,6 +25,12 @@ public class LevelManager : MonoBehaviour {
 
 		Directory.CreateDirectory(Path.Combine(logPath, "CSG"));
 		Directory.CreateDirectory(Path.Combine(logPath, "Block Builder"));
+		Directory.CreateDirectory(Path.Combine(logPath, "View Point"));
+		Directory.CreateDirectory(Path.Combine(logPath, "Transform Limitation"));
+		Directory.CreateDirectory(Path.Combine(logPath, "Plane Exploration"));
+		Directory.CreateDirectory(Path.Combine(logPath, "Revolution Solid"));
+		Directory.CreateDirectory(Path.Combine(logPath, "Cube Shift"));
+		Directory.CreateDirectory(Path.Combine(logPath, "Unfolding"));
 
 		/*Directory.CreateDirectory("Assets/Logs/CSG");
 		Directory.CreateDirectory("Assets/Logs/Block Builder");

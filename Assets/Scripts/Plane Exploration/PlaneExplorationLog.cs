@@ -28,6 +28,10 @@ public class PlaneExplorationLog : MonoBehaviour {
 
 	public void RecordInitialization(int trial_num, int level){
 
+		logDetailPath = Path.Combine(Application.persistentDataPath, "Logs/Plane Exploration/");
+		logFilePath = Path.Combine(logDetailPath, "_PlaneExplorationLogs.txt");
+		logIdPath = Path.Combine(logDetailPath, "_IdLog.txt");
+
 		// // get id
 		// FileStream _fs = new FileStream(logIdPath, FileMode.Open, FileAccess.Read);
 

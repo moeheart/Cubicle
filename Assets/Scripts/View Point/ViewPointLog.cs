@@ -25,6 +25,8 @@ public class ViewPointLog : MonoBehaviour {
 
 	public void RecordInitialization(int trial_num, int model_num, int view_point, string model){
 
+		logFilePath = Path.Combine(Application.persistentDataPath, "Logs/View Point/_ViewPointLogs.txt");
+
 		// // get id
 		// FileStream _fs = new FileStream(logIdPath, FileMode.Open, FileAccess.Read);
 

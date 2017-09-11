@@ -17,6 +17,7 @@ public class CubeLog : MonoBehaviour {
 	void Awake(){
 		recordNo = 0;
 		trialNum = 0;
+		logFilePath = Path.Combine(Application.persistentDataPath, "Logs/Cube Shift/_CubeShiftLogs.txt");
 	}
 
 	void OnEnable(){
