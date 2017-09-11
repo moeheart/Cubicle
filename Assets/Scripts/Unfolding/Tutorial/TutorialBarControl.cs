@@ -10,7 +10,6 @@ public class TutorialBarControl : MonoBehaviour {
     public MeshGenerator meshgenerator;
     public GameObject gameObj;
     public GameObject GoalImage;
-    public GameObject SkipButton;
     public GameObject[] Texts = new GameObject[5];
 
     public int TotalPageNum = 5;
@@ -62,34 +61,38 @@ public class TutorialBarControl : MonoBehaviour {
         Texts[previousPageNum - 1].SetActive(false);
         Texts[CurrentPageNum - 1].SetActive(true);
 
-        // Texting session.
+        // Welcomint session.
         if(CurrentPageNum == MinPageNum)
         {
             gameObj.SetActive(false);
-            GoalImage.SetActive(false);
+        }
+        // Moving session
+        if(CurrentPageNum == MinPageNum + 1)
+        {
+            if(previousPageNum - CurrentPageNum < 0)
+                gameObj.SetActive(true);
+        }
+        // Practicing session
+        if(CurrentPageNum == MinPageNum + 2)
+        {
+            if(previousPageNum - CurrentPageNum > 0)
+                GoalImage.SetActive(false);
         }
         // Unfolding session.
-        else if(CurrentPageNum == TotalPageNum - 1)
+        if(CurrentPageNum == MinPageNum + 3)
         {
-            gameObj.SetActive(true);
+            if (previousPageNum - CurrentPageNum > 0)
+                gameObj.SetActive(true);
             meshgenerator.ReGenerate(0);
             GoalImage.SetActive(true);
         }
-        else if (CurrentPageNum == TotalPageNum)
+        // Last session.
+        if(CurrentPageNum == MinPageNum + 4)
         {
             gameObj.SetActive(false);
             GoalImage.SetActive(false);
             StartCoroutine("WaitAndJump");
         }
-        // Practice session.
-        else
-        {
-            gameObj.SetActive(true);
-            GoalImage.SetActive(false);
-            SkipButton.SetActive(true);
-        }
-        
-
     }
 
     private int GetLevelByRoomid(int _roomid)

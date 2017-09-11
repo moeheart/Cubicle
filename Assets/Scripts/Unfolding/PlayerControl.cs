@@ -488,6 +488,9 @@ public class PlayerControl : MonoBehaviour {
 
     public void Replay()
     {
+        WaitingLinesStartingPoint.Clear();
+        WaitingLinesEndingPoint.Clear();
+
         meshGenerator.ReGenerate(meshGenerator.CurrentLevel);
 
         WinCanvas.SetActive(false);
@@ -500,6 +503,9 @@ public class PlayerControl : MonoBehaviour {
     
     public void Proceed()
     {
+        WaitingLinesStartingPoint.Clear();
+        WaitingLinesEndingPoint.Clear();
+
         int currentLevel = meshGenerator.CurrentLevel;
         if (FinalLevelofStage.Contains(currentLevel))
         {

@@ -1,0 +1,3 @@
+timestamp,operation
+20170908095609569,RotZ
+201709080956125612,RotY

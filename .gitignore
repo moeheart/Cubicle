@@ -2,7 +2,12 @@
 /Temp/
 /.vscode/
 /obj/
+/Assets/Logs/
 *.sln
 *.csproj
 *.DS_Store
 .vs/
+
+Assets/Logs/Cube Shift.meta
+
+*.meta
