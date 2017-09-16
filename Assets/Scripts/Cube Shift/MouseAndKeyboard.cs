@@ -46,13 +46,15 @@ public class MouseAndKeyboard : MonoBehaviour {
 	}
 
 	void OnChoosing(){
-		if (hitCubeNum==gameInfo.targetIdx.ToString()) {
+		if (hitCubeNum == gameInfo.targetIdx.ToString ()) {
 			//cubeHit.text+=" Correct";
-			GameInfo.SetTargetVisible();
+			GameInfo.SetTargetVisible ();
 			GameInfo.isTargetFound = true;
 			//gameInfo.isChooseEnabled = false;
-			GameInfo.Add2Score();
+			GameInfo.Add2Score ();
 			UIControl.RefreshScore ();
+		} else {
+			UIControl.ErrorMessage();
 		}
 	}
 

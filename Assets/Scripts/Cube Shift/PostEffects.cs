@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PostEffects : MonoBehaviour {
 
-	public BrightnessSaturationAndContrast bscCamera;
+	public static BrightnessSaturationAndContrast bscCamera;
 	public Camera camera = new Camera();
 	public GameInfo gameInfo;
 	float initialSaturation;
@@ -23,12 +23,11 @@ public class PostEffects : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (gameInfo.phaseNo >= 3 && GameInfo.isTargetFound) {
-			bscCamera.saturation = 0;
-			bscCamera.green = 0.1f;
-		} else {
-			bscCamera.saturation = initialSaturation;
-			bscCamera.green = initialGreenValue;
-		}
+		
+	}
+
+	public static void GreyTheScreen(){
+		bscCamera.saturation = 0;
+		bscCamera.green = 0.1f;
 	}
 }

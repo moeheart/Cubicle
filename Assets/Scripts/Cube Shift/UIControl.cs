@@ -85,14 +85,14 @@ public class UIControl : MonoBehaviour {
 			gameInfo.PauseGame ();
 			button.gameObject.SetActive (true);
 			btnText.text = "Proceed";
-			msgText.text = "Welcome! What is ahead of you is quite like a cups-and-ball Shell Game. Your goal is to find the flushed emoji little face";
+			msgText.text = "Welcome! Your goal is to find the flushed emoji face, after the cubes shift their location for "+((GameInfo.MaxTravelPeriodNo+1)*3-1).ToString()+" times and return to this initial configuration.";
 			restartCanvas.SetActive (false);
 		}
 		else if(gameInfo.phaseNo == 1){
 			
 			button.gameObject.SetActive (true);
 			btnText.text = "Play";
-			msgText.text = "After you press [Play], several identical cubes (one topped with a flushed face) will begin shifting.";
+			msgText.text = "After you press [Play], cubes below (one topped with a flushed emoji) begin to shift.";
 			restartCanvas.SetActive (false);
 		}
 		else if(gameInfo.phaseNo == 2){
@@ -104,7 +104,7 @@ public class UIControl : MonoBehaviour {
 				//GameInfo.SetTargetInvisible ();
 			}
 
-			msgText.text = "The face may travel between cubes at some points.";
+			msgText.text = "The emoji may trasit to a face-adjoining cube at some points.";
 			restartCanvas.SetActive (false);
 		}
 		else if (gameInfo.phaseNo == 3) {
@@ -112,12 +112,12 @@ public class UIControl : MonoBehaviour {
 				gameInfo.PauseAtFirstMove ();
 
 				button.gameObject.SetActive (true);
-				btnText.text = "WATCH AGAIN";
+				btnText.text = "PLAY AGAIN";
 
 				if (!GameInfo.isTargetFound) {
 					GameInfo.SetTargetInvisible ();
 					gameInfo.isChooseEnabled = true;
-					msgText.text = "Where is the face?Indicate by ONE CLICK at a cube.\n* Now this is the SAME VIEW AS IN THE BEGINNING.";
+					msgText.text = "Where is the face?Indicate by ONE CLICK at a cube.\n* Now this is the SAME CONFIGRATION AS IN THE BEGINNING.";
 				}
 			}
 			if (GameInfo.isTargetFound) {
@@ -167,7 +167,7 @@ public class UIControl : MonoBehaviour {
 
 	void DifficultyChangeCheck(){
 		GameInfo.MaxTravelPeriodNo=(int)((difficultySlider.value)*5+1);
-		difficulty.text = (GameInfo.MaxTravelPeriodNo).ToString()+ " shifting / trial";
+		difficulty.text = ((GameInfo.MaxTravelPeriodNo+1)*3-1).ToString()+ " shifting";
 	}
 
 	void CubeNumChangeCheck(){
@@ -178,10 +178,14 @@ public class UIControl : MonoBehaviour {
 	public static void RefreshScore(){
 		score.text = "SCORE "+GameInfo.score.ToString();
 		if (GameInfo.CheckIfWinningCriterionMet ()) {
-			popUpMessage.text = "Congratulations! The next level is unlocked now. Press Q to go on with world exploration";
+			popUpMessage.text = "You win! The next level is unlocked now. Press Q to go on with world exploration";
 		} else {
-			popUpMessage.text="Or [WATCH AGAIN] to understand better.";
+			popUpMessage.text="You win!\nStart a new game or [PLAY AGAIN].";
 		}
+	}
+
+	public static void ErrorMessage(){
+		msgText.text = "Not here!";
 	}
 
 }

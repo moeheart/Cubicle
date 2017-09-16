@@ -30,6 +30,8 @@ public class Tutorial : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		DisplayInitialInstructions ();
+		Tutorial.IndicateKeyUsage ();
 		StartCoroutine ("AutoDisableTutorial");
 	}
 	
@@ -46,6 +48,11 @@ public class Tutorial : MonoBehaviour {
 			}
 			yield return new WaitForSeconds (20);
 		}
+	}
+
+	static void DisplayInitialInstructions(){
+		Time.timeScale = 0;
+		RevSolidUIControl.EnableInitialInstructionPanel ();
 	}
 
 	public static void EnableTutorial (){
@@ -74,7 +81,7 @@ public class Tutorial : MonoBehaviour {
 			RevSolidUIControl.ShowResponseButton ();
 		}
 		if (isTutorialModeOn){
-			RevSolidUIControl.SetTutorialMessage("Draw the revolution axis with your mouse");
+			//RevSolidUIControl.SetTutorialMessage("Draw the revolution axis with your mouse");
 			GameObject.Find("Canvas1").GetComponent<Tutorial>().IndicateAxisAndStroke (panel);
 		}
 	}
@@ -120,8 +127,11 @@ public class Tutorial : MonoBehaviour {
 	}
 
 	public static void IndicateKeyUsage(){
-		if (isTutorialModeOn) {
-			RevSolidUIControl.SetTutorialMessage ("[WASD] - rotate solid |  [SPACE] - freeze rotation");
+		if (RevSolidGameInfo.MaxPanelNum == 1) {
+			RevSolidUIControl.SetTutorialMessage ("hover mouse on solid once & [WASD] - rotate solid |  [SPACE] - freeze rotation");
+		}
+		else {//4
+			RevSolidUIControl.SetTutorialMessage ("hover mouse on solid once & [WASD] - rotate solid");
 		}
 	}
 }
