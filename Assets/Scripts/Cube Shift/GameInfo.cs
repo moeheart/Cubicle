@@ -151,9 +151,9 @@ public class GameInfo
 		CubeNumber = ParseJson ("cubeNum");
 	}
 
-	public static int ParseJson(string lineTitle){
+	int ParseJson(string lineTitle){
 		int roomId=DataUtil.GetCurrentRoomId();
-		string jsonFilePath = Path.Combine(Application.streamingAssetsPath, "Puzzles.json");
+		string jsonFilePath = Path.Combine(Application.streamingAssetsPath, Configurations.jsonFilename);
 
 		string jsonString = File.ReadAllText(jsonFilePath);
 		Dictionary<string, object> dict;

@@ -13,7 +13,7 @@ public class RevSolidGameInfo : MonoBehaviour {
 	const int LearningThres = 6;
 	public const int WinningCriterion = 8;
 
-	public static float RecoverInterval=7.0f;
+	public static float RecoverInterval=5.0f;
 	public static float MaxReactionTime=9999.0f;
 	public static int MaxPolygonNum=12;
 	public static int MaxPanelNum;
@@ -59,15 +59,14 @@ public class RevSolidGameInfo : MonoBehaviour {
 		
 		if (hit >= WinningCriterion) {
 			DataUtil.UnlockCurrentRoom();
-			RevSolidUIControl.defaultString = "CONGRATULATIONS you have unlocked this room. Press Q to quit, or continue enjoying your play.";
+			RevSolidUIControl.defaultString = "You have unlocked this room! Press Q to quit.";
 		}
 
 		if (hit < WinningCriterion) {
 			RevSolidUIControl.defaultString = "";
 			if (falseStrokeCount >= MaxFalseCount) {
-				RevSolidUIControl.BroadcastMsg ("You failed the game. Press RESTART to refill yourself with determination.");
 				Time.timeScale = 0;
-				RevSolidUIControl.ShowRetryButton ();
+				RevSolidUIControl.ShowRetry ();
 			}
 		}
 

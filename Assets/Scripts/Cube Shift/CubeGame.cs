@@ -101,10 +101,11 @@ public class CubeGame : MonoBehaviour {
 		}
 	}
 
-	public Material adjoinCubeMat;
+	Material[] adjoinCubeMat=new Material[5];
 	Material[] normalCubeMat=new Material[5];
 	Component[] childrenMat;
 	public Material mat0, mat1, mat2, mat3, mat4;
+	public Material adjmat0, adjmat1, adjmat2, adjmat3, adjmat4;
 
 	public void AssignMaterials(){
 		//assign different material
@@ -113,6 +114,12 @@ public class CubeGame : MonoBehaviour {
 		normalCubeMat [2] = mat2;
 		normalCubeMat [3] = mat3;
 		normalCubeMat [4] = mat4;
+
+		adjoinCubeMat [0] = adjmat0;
+		adjoinCubeMat [1] = adjmat1;
+		adjoinCubeMat [2] = adjmat2;
+		adjoinCubeMat [3] = adjmat3;
+		adjoinCubeMat [4] = adjmat4;
 	}
 
 	public void MarkConnectionsNShiftTarget(int moves){
@@ -127,8 +134,9 @@ public class CubeGame : MonoBehaviour {
 						if(i==gameInfo.targetIdx&&gameInfo.isShiftDone[i*3+moves-1]==false){
 
 							//change material
-							ChangeMaterial(i,adjoinCubeMat);
-							ChangeMaterial(cube.adjoinCube [i * 3 + moves - 1].idx[j],adjoinCubeMat);
+							ChangeMaterial(i,adjoinCubeMat[i]);
+							int t = cube.adjoinCube [i * 3 + moves - 1].idx [j];
+							ChangeMaterial(t,adjoinCubeMat[t]);
 
 							//shift target
 							gameInfo.targetIdx=cube.adjoinCube [i * 3 + moves - 1].idx[j];

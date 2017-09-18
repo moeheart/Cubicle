@@ -19,7 +19,8 @@ public class ActiveObjControl : MonoBehaviour {
 
 	public static string reactionTimeToLog;
 
-	static GameObject gameObjectJustHit;
+	public static GameObject gameObjectJustHit;
+
 	// Use this for initialization
 	void Awake(){
 		CheckLevel();
@@ -44,19 +45,19 @@ public class ActiveObjControl : MonoBehaviour {
 	}
 
 	void CheckLevel(){
-		RevSolidGameInfo.levelOfDifficulty = ParseJson();
+		RevSolidGameInfo.levelOfDifficulty = ParseJson("levelNum");
 	}
 
-	int ParseJson(){
+	int ParseJson(string lineTitle){
 		int roomId=DataUtil.GetCurrentRoomId();
-		string jsonFilePath = Path.Combine(Application.streamingAssetsPath, "Puzzles.json");
+		string jsonFilePath = Path.Combine(Application.streamingAssetsPath, Configurations.jsonFilename);
 
 		string jsonString = File.ReadAllText(jsonFilePath);
 		Dictionary<string, object> dict;
 		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
 		dict = (Dictionary<string, object>)dict[roomId.ToString()];
 
-		return System.Convert.ToInt32 (dict ["levelNum"]);
+		return System.Convert.ToInt32 (dict [lineTitle]);
 
 	}
 
@@ -133,15 +134,20 @@ public class ActiveObjControl : MonoBehaviour {
 		}
 	}
 		
-	protected void Rotate(int objIndex){
+	protected void RaycastHit(int objIndex){
 		if (activeObjects [objIndex].isKilled == false) {
-			//activeObjects [objIndex].gameObject.transform.Rotate (0.5f, 0.5f, 0.5f);
 			RaycastHit hit;
 			Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-			//Vector3 originalEulerAngleRotation = new Vector3(0,0,0);
 			if (Physics.Raycast (ray, out hit)) {
 				gameObjectJustHit = hit.collider.gameObject;
 			}
+		}
+	}
+
+	protected void Rotate(int objIndex){
+		if (activeObjects [objIndex].isKilled == false) {
+
+
 			if (Input.GetKey (KeyCode.W) || Input.GetKey (KeyCode.UpArrow)) {
 
 				gameObjectJustHit.transform.Rotate (new Vector3 (1.0f, 0, 0));

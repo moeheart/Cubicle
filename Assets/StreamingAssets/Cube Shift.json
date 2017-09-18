@@ -1,0 +1,26 @@
+﻿{
+    "0" : {
+        "position": [0, 0 ,0],
+        "dimension": [3, 3, 3],
+        "color": [1, 0.8, 1, 1],
+        "puzzle type": "none"
+    },
+    "1" : {
+        "position" : [-1,0,2],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "cube shift",
+
+        "shiftNumPerTrial":1,
+		"cubeNum":3
+    },
+    "2" : {
+        "position" : [-2,0,2],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "cube shift",
+
+        "shiftNumPerTrial":1,
+		"cubeNum":4
+    }
+}
