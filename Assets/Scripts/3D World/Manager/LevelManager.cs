@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using MiniJSON;
 using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour {
 
@@ -15,7 +16,7 @@ public class LevelManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		Debug.Log(Application.streamingAssetsPath);
-		levelJsonFilePath = Path.Combine(Application.streamingAssetsPath, "0824.json");
+		levelJsonFilePath = Path.Combine(Application.streamingAssetsPath, Configurations.jsonFilename);
 		worldInstance = Instantiate(worldPrefab) as World;
 		worldInstance.GenerateWorld(levelJsonFilePath);
 		worldInstance.LoadData();
@@ -48,6 +49,10 @@ public class LevelManager : MonoBehaviour {
 
 	public void RestartGame() {
 		worldInstance.RestartGame();
+	}
+
+	public void ExitToStartScene() {
+		SceneManager.LoadScene("Start Scene", LoadSceneMode.Single);
 	}
 
 	/*public void SaveGameState() {

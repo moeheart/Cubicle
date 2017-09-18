@@ -33,7 +33,7 @@ public class DrawingHandler : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		levelCompleteText.enabled = false;
-		jsonFilePath = Path.Combine(Application.streamingAssetsPath, "Puzzles.json");
+		jsonFilePath = Path.Combine(Application.streamingAssetsPath, Configurations.jsonFilename);
 		/*
 		saveFilePath = Path.Combine(Application.persistentDataPath, "game.dat");
 

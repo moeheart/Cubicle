@@ -31,7 +31,7 @@ public class World : MonoBehaviour {
 	private Dictionary<string, object> gameState;
 
 	public void GenerateWorld(string jsonFilePath) {
-		saveFilePath = Path.Combine(Application.persistentDataPath, "game.dat");
+		saveFilePath = Path.Combine(Application.persistentDataPath, Configurations.saveFilename);
 		string jsonString = File.ReadAllText(jsonFilePath);
 		ParseJsonString(jsonString);
 		//rooms[0].OnCompleteRoomObjective();

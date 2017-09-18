@@ -7,7 +7,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 public static class DataUtil {
 
 	private static Dictionary<string, object> GetCurrentGameState() {
-		string saveFilePath = Path.Combine(Application.persistentDataPath, "game.dat");
+		string saveFilePath = Path.Combine(Application.persistentDataPath, Configurations.saveFilename);
 		//Get the id
 		BinaryFormatter formatter = new BinaryFormatter();
 		FileStream stream = File.Open(saveFilePath, FileMode.Open);
@@ -22,7 +22,7 @@ public static class DataUtil {
 	}
 
 	public static void UnlockCurrentRoom() {
-		string saveFilePath = Path.Combine(Application.persistentDataPath, "game.dat");
+		string saveFilePath = Path.Combine(Application.persistentDataPath, Configurations.saveFilename);
 		Dictionary<string, object> gameState = GetCurrentGameState();
 		((List<int>) gameState["unlocked rooms"]).Add((int)gameState["current room id"]);
 		FileStream stream = File.Create(saveFilePath);
