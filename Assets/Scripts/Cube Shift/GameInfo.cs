@@ -33,19 +33,25 @@ public class GameInfo
 	public bool needDestroyCubes;
 	public bool needReInstantiate;
 
+	public static int levelNum;
 	public bool hasPhase3Begun;
 	public float beginTime;
 	public static float reactTime;
 	public static float score;
+	public static int stoppingMove;
+	public static int leastRetryNum;
+	public static int retryNum;
 
-	static float WinningCriterion=1.0f;
+	public static float WinningCriterion=5.0f;
 
 	public static bool isTutorialModeOn;
+
 	//单例模式
 	private static GameInfo instance = new GameInfo ();
 	private GameInfo(){
 		score = 0;
 		isTutorialModeOn = true;
+		retryNum = 0;
 	}
 	public static GameInfo getInstance(){
 		return instance;
@@ -85,6 +91,7 @@ public class GameInfo
 	}
 
 	public void Retry(){
+		retryNum ++;
 		Init ();
 		//no need to destroy old cubes
 		needDestroyCubes=false;
@@ -94,6 +101,7 @@ public class GameInfo
 
 	public void Restart(){//Only referenced when 3 cubes already exist
 
+		retryNum = 0;
 		cube.CubeNumber = CubeNumber;
 		cube.InitializePos ();
 		cube.FindAdjoiningCubes ();
@@ -145,10 +153,13 @@ public class GameInfo
 	}
 
 	void CheckLevel(){
+		levelNum=ParseJson ("levelNum");
+		leastRetryNum = ParseJson ("leastRetryNum");
 		if (MaxTravelPeriodNo <= 1) {
 			MaxTravelPeriodNo = ParseJson ("shiftNumPerTrial");
 		}
 		CubeNumber = ParseJson ("cubeNum");
+		stoppingMove = ParseJson ("stoppingMove");
 	}
 
 	int ParseJson(string lineTitle){

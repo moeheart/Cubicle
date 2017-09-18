@@ -85,14 +85,18 @@ public class UIControl : MonoBehaviour {
 			gameInfo.PauseGame ();
 			button.gameObject.SetActive (true);
 			btnText.text = "Proceed";
-			msgText.text = "Welcome! Your goal is to find the flushed emoji face, after the cubes shift their location for "+((GameInfo.MaxTravelPeriodNo+1)*3-1).ToString()+" times and return to this initial configuration.";
+			if (GameInfo.levelNum == 1) {
+				msgText.text = "Welcome! Your goal is to find the flushed emoji face, after the cubes shift their location for " + (GameInfo.MaxTravelPeriodNo * 3 + GameInfo.stoppingMove -1).ToString () + " times and return to this initial configuration.";
+			}else if(GameInfo.levelNum >=2){
+				msgText.text = "Welcome! Your goal still is to find the flushed emoji face, but cubes will shift "+ (GameInfo.stoppingMove-1).ToString()+" step further, before they flash back to this initial configuration.";
+			}
 			restartCanvas.SetActive (false);
 		}
 		else if(gameInfo.phaseNo == 1){
 			
 			button.gameObject.SetActive (true);
 			btnText.text = "Play";
-			msgText.text = "After you press [Play], cubes below (one topped with a flushed emoji) begin to shift. The emoji may trasit to a face-adjoining cube at some point.";
+			msgText.text = "After you press [Play], cubes below (one topped with a flushed emoji) begin to shift. The emoji trasits to face-adjoining cubes.";
 			restartCanvas.SetActive (false);
 		}
 		else if(gameInfo.phaseNo == 2){
@@ -107,7 +111,7 @@ public class UIControl : MonoBehaviour {
 			restartCanvas.SetActive (false);
 		}
 		else if (gameInfo.phaseNo == 3) {
-			if (gameInfo.moves == 3) {
+			if (gameInfo.moves == GameInfo.stoppingMove) {
 				gameInfo.PauseAtFirstMove ();
 
 				button.gameObject.SetActive (true);
@@ -153,9 +157,13 @@ public class UIControl : MonoBehaviour {
 	void Retry(){
 		gameInfo.Retry ();
 	}
-
+		
 	void ClickToRestart(){
-		EventManager.TriggerEvent("OnGeneratingNewGame");
+		if (GameInfo.retryNum >= GameInfo.leastRetryNum) {
+			EventManager.TriggerEvent ("OnGeneratingNewGame");
+		} else {
+			EventManager.TriggerEvent ("OnRetry");
+		}
 	}
 
 	void Restart(){
@@ -175,7 +183,7 @@ public class UIControl : MonoBehaviour {
 	}
 
 	public static void RefreshScore(){
-		score.text = "SCORE "+GameInfo.score.ToString();
+		score.text = "SCORE "+GameInfo.score.ToString()+"/"+GameInfo.WinningCriterion.ToString();
 		if (GameInfo.CheckIfWinningCriterionMet ()) {
 			popUpMessage.text = "You win! The next level is unlocked now. Press Q to go on with world exploration";
 		} else {
