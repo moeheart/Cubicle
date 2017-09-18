@@ -210,7 +210,10 @@ public class RevSolidUIControl : RevSolidGameInfo {
 		if (GameObject.Find ("gameStartPanel")) {
 			float rate = 0.01f;
 			for (int i = 0; i < 10; i++) {
-				gameStartPanel.transform.Translate (new Vector3 (0, -10.0f, 0));
+				if (GameObject.Find ("gameStartPanel"))
+					gameStartPanel.transform.Translate (new Vector3 (0, -10.0f, 0));
+				else
+					yield return null;
 				rate -= 0.005f;
 				yield return new WaitForSeconds (rate);
 			}

@@ -65,7 +65,7 @@ public class RevSolidGameInfo : MonoBehaviour {
 		if (hit < WinningCriterion) {
 			RevSolidUIControl.defaultString = "";
 			if (falseStrokeCount >= MaxFalseCount) {
-				RevSolidUIControl.BroadcastMsg ("You failed the game. Press RESTART to refill yourself with determination.");
+				RevSolidUIControl.BroadcastMsg ("You failed the game. Press [Retry] to refill yourself with determination.");
 				Time.timeScale = 0;
 				RevSolidUIControl.ShowRetryButton ();
 			}

@@ -44,19 +44,19 @@ public class ActiveObjControl : MonoBehaviour {
 	}
 
 	void CheckLevel(){
-		RevSolidGameInfo.levelOfDifficulty = ParseJson();
+		RevSolidGameInfo.levelOfDifficulty = ParseJson("levelNum");
 	}
 
-	int ParseJson(){
+	int ParseJson(string lineTitle){
 		int roomId=DataUtil.GetCurrentRoomId();
-		string jsonFilePath = Path.Combine(Application.streamingAssetsPath, "Puzzles.json");
+		string jsonFilePath = Path.Combine(Application.streamingAssetsPath, Configurations.jsonFilename);
 
 		string jsonString = File.ReadAllText(jsonFilePath);
 		Dictionary<string, object> dict;
 		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
 		dict = (Dictionary<string, object>)dict[roomId.ToString()];
 
-		return System.Convert.ToInt32 (dict ["levelNum"]);
+		return System.Convert.ToInt32 (dict [lineTitle]);
 
 	}
 
