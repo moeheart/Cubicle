@@ -19,9 +19,12 @@ public class World : MonoBehaviour {
 	public Door doorZY;
 	public Room roomPrefab;
 
-	private List<Room> rooms = new List<Room>();
+	//private List<Room> rooms = new List<Room>();
+	private Dictionary<int, Room> rooms = new Dictionary<int, Room>();
 	private GameObject player;
 	public int currentRoomId {private get; set;}
+
+	private Dictionary<IntVector2, Door> doors = new Dictionary<IntVector2, Door>();
 
 	private const float lengthPerUnit = Configurations.lengthPerUnit;
 	private const float borderThickness = Configurations.borderThickness;
@@ -35,11 +38,12 @@ public class World : MonoBehaviour {
 		string jsonString = File.ReadAllText(jsonFilePath);
 		ParseJsonString(jsonString);
 		//rooms[0].OnCompleteRoomObjective();
-		foreach (Room room in rooms) {
+		foreach (Room room in rooms.Values) {
 			room.AddTrigger();
-			if (room.puzzleType == PuzzleType.None) {
+			/*if (room.puzzleType == PuzzleType.None) {
 				room.OnCompleteRoomObjective();
-			}
+				Debug.Log("unlocked none....!!!!");
+			}*/
 		}
 		player = Instantiate(playerPrefab) as GameObject;
 		player.transform.position = new Vector3(10,10,10);
@@ -86,7 +90,7 @@ public class World : MonoBehaviour {
 
 			Room room = Instantiate(roomPrefab) as Room;
 			room.Initialize(roomId, position, dimension, color, puzzleType);
-			rooms.Insert(roomId, room);
+			rooms.Add(roomId, room);
 
 			BuildRoom(position, dimension, color);
 		}
@@ -101,6 +105,46 @@ public class World : MonoBehaviour {
 				int id2 = i;
 				Room room2 = rooms[id2];
 				BuildTunnel(room1, room2);
+			}
+		}
+
+		//The third run parses "doors to unlock"
+		foreach (KeyValuePair<string, object> entry in dict) {
+			int id = int.Parse(entry.Key);
+			Room room = rooms[id];
+			Dictionary<string, object> entryValueDict = (Dictionary<string,object>)entry.Value;
+			if (entryValueDict.ContainsKey("doors to unlock") == true) {
+				List<object> doorsToUnlock = ((List<object>) entryValueDict["doors to unlock"]);
+				room.doorsToUnlock = new List<Door>();
+				Debug.Log("newing..");
+				foreach (object objPair in doorsToUnlock) {
+					List<object> pair = (List<object>)objPair;
+					int r1 = System.Convert.ToInt32(pair[0]);
+					int r2 = System.Convert.ToInt32(pair[1]);
+					IntVector2 v1 = new IntVector2(r1,r2);
+					IntVector2 v2 = new IntVector2(r2,r1);
+					if (doors.ContainsKey(v1)) {
+						room.doorsToUnlock.Add(doors[v1]);
+					}
+					else if (doors.ContainsKey(v2)) {
+						room.doorsToUnlock.Add(doors[v2]);
+					}
+				}
+			}
+
+			if (entryValueDict.ContainsKey("unlock on start") == true) {
+				List<object> unlockOnStart = ((List<object>) entryValueDict["unlock on start"]);
+				foreach (object objR in unlockOnStart) {
+					int r = System.Convert.ToInt32(objR);
+					IntVector2 v1 = new IntVector2(id, r);
+					IntVector2 v2 = new IntVector2(r, id);
+					if (doors.ContainsKey(v1)) {
+						doors[v1].Unlock();
+					}
+					else if (doors.ContainsKey(v2)) {
+						doors[v2].Unlock();
+					}
+				}
 			}
 		}
 	}
@@ -335,6 +379,7 @@ public class World : MonoBehaviour {
 				entrance.transform.localScale = new Vector3(overlapDimension.x, 2, overlapDimension.z);
 				room1.AddDoor(entrance);
 				room2.AddDoor(entrance);
+				doors.Add(new IntVector2(room1.id, room2.id),entrance);
 				break;
 
 			case Direction.XY:
@@ -344,6 +389,7 @@ public class World : MonoBehaviour {
 				entrance.transform.localScale = new Vector3(overlapDimension.x, overlapDimension.z, 2);
 				room1.AddDoor(entrance);
 				room2.AddDoor(entrance);
+				doors.Add(new IntVector2(room1.id, room2.id),entrance);
 				break;
 
 			case Direction.ZY:
@@ -353,6 +399,7 @@ public class World : MonoBehaviour {
 				entrance.transform.localScale = new Vector3(overlapDimension.x, overlapDimension.z, 2);
 				room1.AddDoor(entrance);
 				room2.AddDoor(entrance);
+				doors.Add(new IntVector2(room1.id, room2.id),entrance);
 				break;
 		}
 	}

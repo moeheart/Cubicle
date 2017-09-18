@@ -210,7 +210,7 @@ public class MainMenu : MonoBehaviour {
 		string extensionName = ".asset";
 
 		string objName = Selection.activeGameObject.name;
-		Mesh m = Selection.activeGameObject.GetComponent<MeshFilter>().sharedMesh;
+		Mesh m = Instantiate(Selection.activeGameObject.GetComponent<MeshFilter>().sharedMesh) as Mesh;
 		AssetDatabase.CreateAsset(m, savePath + objName + extensionName);
 		AssetDatabase.SaveAssets();
 	}
