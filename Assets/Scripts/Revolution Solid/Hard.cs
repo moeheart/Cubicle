@@ -21,6 +21,7 @@ public class Hard : ActiveObjControl {
 	// Update is called once per frame
 	void Update () {
 		for (int i = 0; i < activeObjects.Count; i++) {
+			RaycastHit (i);
 			if (objectBehaviour != null) {
 				objectBehaviour (i);
 			}

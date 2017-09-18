@@ -92,7 +92,7 @@ public class UIControl : MonoBehaviour {
 			
 			button.gameObject.SetActive (true);
 			btnText.text = "Play";
-			msgText.text = "After you press [Play], cubes below (one topped with a flushed emoji) begin to shift.";
+			msgText.text = "After you press [Play], cubes below (one topped with a flushed emoji) begin to shift. The emoji may trasit to a face-adjoining cube at some point.";
 			restartCanvas.SetActive (false);
 		}
 		else if(gameInfo.phaseNo == 2){
@@ -103,8 +103,7 @@ public class UIControl : MonoBehaviour {
 			else if (gameInfo.moves == 2) {
 				//GameInfo.SetTargetInvisible ();
 			}
-
-			msgText.text = "The emoji may trasit to a face-adjoining cube at some points.";
+				
 			restartCanvas.SetActive (false);
 		}
 		else if (gameInfo.phaseNo == 3) {

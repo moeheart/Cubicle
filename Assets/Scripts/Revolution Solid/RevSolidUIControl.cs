@@ -23,6 +23,8 @@ public class RevSolidUIControl : RevSolidGameInfo {
 
 	public static GameObject initialInstructionPanel;
 	public static Button continueBtn;
+
+	public static GameObject losingPanel;
 	// Use this for initialization
 	void Awake() {
 		broadcast= GameObject.Find ("Text").GetComponent<Text> ();
@@ -30,7 +32,6 @@ public class RevSolidUIControl : RevSolidGameInfo {
 		falseCount=GameObject.Find ("miss").GetComponent<Text> ();
 
 		retryBtn = GameObject.Find ("retryBtn").GetComponent<Button> ();
-		HideButton (retryBtn);
 		retryBtn.onClick.AddListener (TriggerRetry);
 
 		responseBtn = GameObject.Find ("responseBtn").GetComponent<Button> ();
@@ -47,6 +48,8 @@ public class RevSolidUIControl : RevSolidGameInfo {
 		continueBtn = GameObject.Find ("continue").GetComponent<Button> ();
 		continueBtn.onClick.AddListener (DisableInitialInstructionPanel);
 
+		losingPanel = GameObject.Find ("losingPanel");
+		losingPanel.SetActive (false);
 	}
 
 	void OnEnable(){
@@ -99,12 +102,12 @@ public class RevSolidUIControl : RevSolidGameInfo {
 		falseCount.text = "Miss: "+falseStrokeCount.ToString ()+"/"+RevSolidGameInfo.MaxFalseCount.ToString();
 	}
 
-	public static void ShowRetryButton(){
-		ShowButton (retryBtn);
+	public static void ShowRetry(){
+		losingPanel.SetActive (true);
 	}
 
-	public static void HideRetryButton(){
-		HideButton (retryBtn);
+	public static void HideRetry(){
+		losingPanel.SetActive (false);
 	}
 
 	public static void ShowResponseButton(){
@@ -121,10 +124,10 @@ public class RevSolidUIControl : RevSolidGameInfo {
 
 	public override void Retry(){
 		base.Retry ();
-		HideRetryButton ();
+		HideRetry ();
 		BroadcastMsg (defaultString);
 		RefreshBroadcasts ();
-		//Time.timeScale = 1;
+		Time.timeScale = 1;
 
 	}
 

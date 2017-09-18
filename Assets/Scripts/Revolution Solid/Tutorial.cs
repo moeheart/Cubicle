@@ -95,6 +95,7 @@ public class Tutorial : MonoBehaviour {
 		}
 	}
 
+	private IEnumerator tutorialAnimationCoroutine;
 	public void IndicateAxisAndStroke (int panel){
 		GameObject tempAxis;
 		tempAxis = Instantiate (axisPrefab, ActiveObjControl.activeObjects [panel].gameObject.transform);
@@ -103,18 +104,20 @@ public class Tutorial : MonoBehaviour {
 		if (ActiveObjControl.activeObjects [panel].polygonIndex == 2) {
 			tempAxis.transform.localPosition= new Vector3(0,0,0.035f);
 		}
-
-		StartCoroutine(FreeStrokeAnimation(panel));
+			
+		tutorialAnimationCoroutine = FreeStrokeAnimation (panel);
+		StopCoroutine (tutorialAnimationCoroutine);
+		StartCoroutine(tutorialAnimationCoroutine);
 	}
 
 	IEnumerator FreeStrokeAnimation(int panel){
-		//for (int i = 0; i < 3; i++) {
-		yield return new WaitForSeconds (2.0f);
-		for (int j = 0; j < 8; j++) {
-			ActiveObjControl.activeObjects [panel].UseTutorialSpriteMatchingSolid (j);
-			yield return new WaitForSeconds (0.15f);
+		for (int i = 0; i < 4; i++) {
+			yield return new WaitForSeconds (2.0f);
+			for (int j = 0; j < 8; j++) {
+				ActiveObjControl.activeObjects [panel].UseTutorialSpriteMatchingSolid (j);
+				yield return new WaitForSeconds (0.15f);
+			}
 		}
-		//}
 	}
 		
 	public static void IndicatePitfalls (){
@@ -128,10 +131,10 @@ public class Tutorial : MonoBehaviour {
 
 	public static void IndicateKeyUsage(){
 		if (RevSolidGameInfo.MaxPanelNum == 1) {
-			RevSolidUIControl.SetTutorialMessage ("hover mouse on solid once & [WASD] - rotate solid |  [SPACE] - freeze rotation");
+			RevSolidUIControl.SetTutorialMessage ("[Hover mouse on solid once & WASD] - rotate solid | [SPACE] - freeze rotation");
 		}
 		else {//4
-			RevSolidUIControl.SetTutorialMessage ("hover mouse on solid once & [WASD] - rotate solid");
+			RevSolidUIControl.SetTutorialMessage ("[Hover mouse on solid once & WASD] - rotate solid");
 		}
 	}
 }
