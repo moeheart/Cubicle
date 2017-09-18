@@ -20,6 +20,9 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	private static GameObject gameStartPanel;
 	private static bool isCandidateAxesShown = false;
 	public static string defaultString = "";
+
+	public static GameObject initialInstructionPanel;
+	public static Button continueBtn;
 	// Use this for initialization
 	void Awake() {
 		broadcast= GameObject.Find ("Text").GetComponent<Text> ();
@@ -40,12 +43,10 @@ public class RevSolidUIControl : RevSolidGameInfo {
 		showAllBtn.onClick.AddListener (CandidateAxesSwitch);
 		showAllSwitch=GameObject.Find ("showAllSwitch").GetComponent<Text> ();
 
-		checkMarks=new GameObject[4];
-		for (int i = 0; i < RevSolidGameInfo.MaxPanelNum; i++) {
+		initialInstructionPanel = GameObject.Find ("initialInstructionPanel");
+		continueBtn = GameObject.Find ("continue").GetComponent<Button> ();
+		continueBtn.onClick.AddListener (DisableInitialInstructionPanel);
 
-			checkMarks[i] = GameObject.Find ("checkMark_"+i.ToString());
-			checkMarks[i].SetActive (false);
-		}
 	}
 
 	void OnEnable(){
@@ -57,8 +58,11 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	}
 
 	void Start(){
-
-
+		checkMarks=new GameObject[4];
+		for (int i = 0; i < RevSolidGameInfo.MaxPanelNum; i++) {//for MaxPanelNum defined in Awake()
+			checkMarks[i] = GameObject.Find ("checkMark_"+i.ToString());
+			checkMarks[i].SetActive (false);
+		}
 		StartCoroutine ("ShowDefaultMsg");
 	}
 		
@@ -72,6 +76,15 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	// Update is called once per frame
 	void Update () {
 		
+	}
+
+	public static void EnableInitialInstructionPanel(){
+		initialInstructionPanel.SetActive (true);
+	}
+	public static void DisableInitialInstructionPanel(){
+		Time.timeScale = 1;
+		initialInstructionPanel.SetActive (false);
+
 	}
 
 	public static void BroadcastMsg (string message){

@@ -157,13 +157,13 @@ public class ActiveObjControl : MonoBehaviour {
 				gameObjectJustHit.transform.Rotate (new Vector3 (0, -1.0f, 0));
 
 			}else {
-				SlapBack (gameObjectJustHit.transform);
+				SnapBack (gameObjectJustHit.transform);
 			}
 		}
 	}
 
-	void SlapBack(Transform transform){
-		transform.rotation = Quaternion.Lerp(transform.rotation,Quaternion.Euler(-45.0f,0,0),0.2f);
+	void SnapBack(Transform transform){
+		transform.rotation = Quaternion.Lerp(transform.rotation,Quaternion.Euler(-45.0f,0,0),0.01f);
 
 	}
 

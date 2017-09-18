@@ -78,6 +78,7 @@ public class RevSolidGameInfo : MonoBehaviour {
 	}
 
 	void GoBackToWorld(){
+		Time.timeScale = 1;
 		SceneManager.LoadScene("World Scene");
 	}
 	 

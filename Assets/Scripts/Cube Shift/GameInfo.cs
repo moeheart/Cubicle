@@ -25,8 +25,8 @@ public class GameInfo
 
 	public float lastUpdateTime,currTime;
 	public bool isMoving;
-	public const float stillDuration = 1.0f;
-	public const float shiftDuration = 2.0f;
+	public const float stillDuration = 0.4f;
+	public const float shiftDuration = 0.4f;
 
 	public bool[] isShiftDone=new bool[Cube.MaxCubeNumber*3];
 
@@ -145,7 +145,9 @@ public class GameInfo
 	}
 
 	void CheckLevel(){
-		MaxTravelPeriodNo = ParseJson("shiftNumPerTrial");
+		if (MaxTravelPeriodNo <= 1) {
+			MaxTravelPeriodNo = ParseJson ("shiftNumPerTrial");
+		}
 		CubeNumber = ParseJson ("cubeNum");
 	}
 

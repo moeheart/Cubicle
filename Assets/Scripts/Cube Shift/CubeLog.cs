@@ -8,7 +8,8 @@ using System.Text;
 
 public class CubeLog : MonoBehaviour {
 
-	private static string logFilePath = @"Assets/Logs/Cube Shift/_CubeShiftLogs.txt";
+	private static string logFilePath;
+
 
 	private static int recordNo;
 	private static int trialNum;
@@ -17,7 +18,6 @@ public class CubeLog : MonoBehaviour {
 	void Awake(){
 		recordNo = 0;
 		trialNum = 0;
-		logFilePath = Path.Combine(Application.persistentDataPath, "Logs/Cube Shift/_CubeShiftLogs.txt");
 	}
 
 	void OnEnable(){
@@ -48,7 +48,18 @@ public class CubeLog : MonoBehaviour {
 	}
 
 	void Start(){
+		GenerateFilePath ();
 		RecordInitialization ();
+	}
+
+	void GenerateFilePath(){
+		int id = 0;
+
+		string logDir = Application.persistentDataPath + "/Logs/Cube Shift/_CubeShiftLogs";
+		do {
+			id++;
+			logFilePath = logDir + id + ".txt";
+		} while(File.Exists (logFilePath));
 	}
 
 	void Update(){
