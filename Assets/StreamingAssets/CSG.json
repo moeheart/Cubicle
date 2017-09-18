@@ -4,8 +4,27 @@
         "dimension": [3, 3, 3],
         "color": [1, 0.8, 1, 1],
 		"puzzle type": "none",
-		"unlock on start": [1]
-    },
+		"unlock on start": [4]
+	},
+
+		
+	"4": {
+        "position" : [3,0,1],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+		"puzzle type": "CSG",
+
+		"objects": {
+			"Cube": {
+				"pos": [-1,0,0],
+				"type": "cube"
+			}
+		},
+		"target":  {
+			"name": "Cube"
+		}
+	},
+
     "1" : {
         "position" : [3,0,2],
         "dimension": [ 1, 1, 1 ],
@@ -75,5 +94,5 @@
 		"target":  {
 			"name": "cube + cube - sph"
 		}
-    }
+	}
 }

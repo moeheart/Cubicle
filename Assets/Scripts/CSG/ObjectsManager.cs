@@ -28,7 +28,7 @@ public class ObjectsManager : MonoBehaviour {
 	public void LoadGameObjects() {
 		sceneObjs = new List<SceneObject>();
 
-		string jsonPath = Path.Combine(Application.streamingAssetsPath, "Puzzles.json");
+		string jsonPath = Path.Combine(Application.streamingAssetsPath, Configurations.jsonFilename);
 		int id = DataUtil.GetCurrentRoomId();
 		ParseJson(jsonPath, id);
 
@@ -227,7 +227,7 @@ public class ObjectsManager : MonoBehaviour {
 		Dictionary<string, object> dict;
 		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
 		dict = (Dictionary<string, object>)dict[roomId.ToString()];
-
+		Debug.Log(roomId);
 		Dictionary<string, object> objects = (Dictionary<string, object>)dict["objects"];
 		foreach (KeyValuePair<string, object> jsonObj in objects) {
 			Dictionary<string, object> value = (Dictionary<string,object>)jsonObj.Value;
