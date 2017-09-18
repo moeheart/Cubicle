@@ -9,6 +9,7 @@
         "position": [0,0,3],
         "dimension": [1,1,1],
         "color": [1,1,0,1],
+        "doors to unlock": [[1,2]],
         "puzzle type": "block builder",
 
         "size": {

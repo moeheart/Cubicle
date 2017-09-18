@@ -23,6 +23,8 @@ public class World : MonoBehaviour {
 	private GameObject player;
 	public int currentRoomId {private get; set;}
 
+	private Dictionary<IntVector2, Door> doors = new Dictionary<IntVector2, Door>();
+
 	private const float lengthPerUnit = Configurations.lengthPerUnit;
 	private const float borderThickness = Configurations.borderThickness;
 
@@ -101,6 +103,31 @@ public class World : MonoBehaviour {
 				int id2 = i;
 				Room room2 = rooms[id2];
 				BuildTunnel(room1, room2);
+			}
+		}
+
+		//The third run parses "doors to unlock"
+		foreach (KeyValuePair<string, object> entry in dict) {
+			int id = int.Parse(entry.Key);
+			Room room = rooms[id];
+			Dictionary<string, object> entryValueDict = (Dictionary<string,object>)entry.Value;
+			if (entryValueDict.ContainsKey("doors to unlock") == false) {
+				continue;
+			}
+			List<object> doorsToUnlock = ((List<object>) entryValueDict["doors to unlock"]);
+			room.doorsToUnlock = new List<Door>();
+			foreach (object objPair in doorsToUnlock) {
+				List<object> pair = (List<object>)objPair;
+				int r1 = System.Convert.ToInt32(pair[0]);
+				int r2 = System.Convert.ToInt32(pair[1]);
+				IntVector2 v1 = new IntVector2(r1,r2);
+				IntVector2 v2 = new IntVector2(r2,r1);
+				if (doors.ContainsKey(v1)) {
+					room.doorsToUnlock.Add(doors[v1]);
+				}
+				else if (doors.ContainsKey(v2)) {
+					room.doorsToUnlock.Add(doors[v2]);
+				}
 			}
 		}
 	}
@@ -335,6 +362,7 @@ public class World : MonoBehaviour {
 				entrance.transform.localScale = new Vector3(overlapDimension.x, 2, overlapDimension.z);
 				room1.AddDoor(entrance);
 				room2.AddDoor(entrance);
+				doors.Add(new IntVector2(room1.id, room2.id),entrance);
 				break;
 
 			case Direction.XY:
@@ -344,6 +372,7 @@ public class World : MonoBehaviour {
 				entrance.transform.localScale = new Vector3(overlapDimension.x, overlapDimension.z, 2);
 				room1.AddDoor(entrance);
 				room2.AddDoor(entrance);
+				doors.Add(new IntVector2(room1.id, room2.id),entrance);
 				break;
 
 			case Direction.ZY:
@@ -353,6 +382,7 @@ public class World : MonoBehaviour {
 				entrance.transform.localScale = new Vector3(overlapDimension.x, overlapDimension.z, 2);
 				room1.AddDoor(entrance);
 				room2.AddDoor(entrance);
+				doors.Add(new IntVector2(room1.id, room2.id),entrance);
 				break;
 		}
 	}

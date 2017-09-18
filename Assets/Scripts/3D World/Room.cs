@@ -11,6 +11,7 @@ public class Room : MonoBehaviour {
 	public TriggerDevice[] triggerPrefabs;
 
 	public PuzzleType puzzleType;
+	public List<Door> doorsToUnlock;
 
 	private List<Door> doors = new List<Door>();
 	private TriggerDevice trigger;
@@ -40,8 +41,15 @@ public class Room : MonoBehaviour {
 
 	public void OnCompleteRoomObjective() {
 		isUnlocked = true;
-		foreach (Door door in doors) {
-			door.Unlock();
+		if (doorsToUnlock != null) {
+			foreach (Door door in doors) {
+				door.Unlock();
+			}
+		}
+		else {
+			foreach (Door door in doors) {
+				door.Unlock();
+			}
 		}
 	}
 
