@@ -27,7 +27,8 @@ public class ModelGeneration : MonoBehaviour {
 	void Awake () {
 
 		level = 0;
-		jsonFilePath = Path.Combine(Application.streamingAssetsPath,"Puzzles.json");
+//		jsonFilePath = Path.Combine(Application.streamingAssetsPath,"Puzzles.json");
+		jsonFilePath = Path.Combine(Application.streamingAssetsPath, Configurations.jsonFilename);
 
 		Initialize ();
 

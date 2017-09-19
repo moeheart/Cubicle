@@ -44,7 +44,8 @@ public class Generation : MonoBehaviour {
 
 	void Start () {
 
-		jsonFilePath = Path.Combine(Application.streamingAssetsPath,"Puzzles.json");
+//		jsonFilePath = Path.Combine(Application.streamingAssetsPath,"Puzzles.json");
+		jsonFilePath = Path.Combine(Application.streamingAssetsPath, Configurations.jsonFilename);
 
 		level = 0;
 		similarPos = -1;
