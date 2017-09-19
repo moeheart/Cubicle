@@ -16,7 +16,7 @@ public class MeshGenerator : MonoBehaviour {
     Data data;
     // string JsonFilePath = "Assets/Scripts/Unfolding/Json/model.json";
     public string path { get; private set; }
-    private string path1 = "Assets/Resources/Unfolding/_Results/Level";
+    private string path1 = "Unfolding/_Results/Level";
     private string path2 = ".png";
 
     public Material[] MyMaterials = new Material[3];
@@ -83,9 +83,7 @@ public class MeshGenerator : MonoBehaviour {
     public int NumofFaces = 0;
 
     // Use this for initialization
-    void Start() { Init(); }
-
-    // void OnEnable() { Init(); }
+    void Awake() { Init(); }
 
     void Init()
     {
@@ -698,6 +696,7 @@ public class MeshGenerator : MonoBehaviour {
         //LoadMaterialByLevel(CurrentLevel);
 
         // Reload a new goal image.
+        path1 = Path.Combine(Application.streamingAssetsPath, "Unfolding/_Results/Level");
         path = path1 + CurrentLevel + path2;
         Texture2D newTexture = new Texture2D(250,125);
         byte[] ImageBytes = File.ReadAllBytes(path);

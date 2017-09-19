@@ -56,20 +56,6 @@ public class CameraController : MonoBehaviour {
 
         xDeg = Vector3.Angle(Vector3.right, transform.right);
         yDeg = Vector3.Angle(Vector3.up, transform.up);
-
-        // First Update......
-        // affect the desired Zoom distance if we roll the scrollwheel
-        desiredDistance -= Input.GetAxis("Mouse ScrollWheel") * Time.deltaTime * zoomRate * Mathf.Abs(desiredDistance);
-        //clamp the zoom min/max
-        desiredDistance = Mathf.Clamp(desiredDistance, minDistance, maxDistance);
-        // For smoothing of the zoom, lerp distance
-        currentDistance = Mathf.Lerp(currentDistance, desiredDistance, Time.deltaTime * zoomDampening);
-
-        // calculate position based on the new currentDistance 
-        position = target.position - (rotation * Vector3.forward * currentDistance + targetOffset);
-        transform.position = position;
-
-        InitialPosition = transform.position;
     }
 
     /*
@@ -115,10 +101,5 @@ public class CameraController : MonoBehaviour {
         if (angle > 360)
             angle -= 360;
         return Mathf.Clamp(angle, min, max);
-    }
-
-    public void ResetCam()
-    {
-        transform.position = InitialPosition;
     }
 }

@@ -97,16 +97,7 @@ public class TutorialBarControl : MonoBehaviour {
 
     private int GetLevelByRoomid(int _roomid)
     {
-        int level = 0;
-
-        if (_roomid == 1)
-            level = 1;
-        if (_roomid == 2)
-            level = 3;
-        if (_roomid == 3)
-            level = 5;
-
-        return level;
+        return _roomid;
     }
 
     public void SkipTutorial()
