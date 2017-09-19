@@ -22,7 +22,7 @@ public class PlayerControl : MonoBehaviour {
     private string path1 = "Unfolding/_Results/Level";
     private string path2 = ".txt";
 
-    private List<int> FinalLevelofStage = new List<int> { 2, 4, 6 };
+    //private List<int> FinalLevelofStage = new List<int> { 2, 4, 6 };
 
     [HideInInspector]
     public bool unfolding = false;
@@ -402,6 +402,7 @@ public class PlayerControl : MonoBehaviour {
         {
             WinCanvas.SetActive(true);
             WinScoreManager.SetScore(grade);
+            // Unlock the next room.
             DataUtil.UnlockCurrentRoom();
         }
         else
@@ -506,7 +507,8 @@ public class PlayerControl : MonoBehaviour {
         WaitingLinesEndingPoint.Clear();
 
         int currentLevel = meshGenerator.CurrentLevel;
-        if (FinalLevelofStage.Contains(currentLevel))
+        SceneManager.LoadScene("World Scene");
+        /*if (FinalLevelofStage.Contains(currentLevel))
         {
             SceneManager.LoadScene("World Scene");
         }
@@ -517,7 +519,7 @@ public class PlayerControl : MonoBehaviour {
             meshGenerator.ReGenerate(++currentLevel);
 
             _CameraController.ResetCam();
-        }
+        }*/
     }
 
 }
