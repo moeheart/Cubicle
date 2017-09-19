@@ -83,9 +83,7 @@ public class MeshGenerator : MonoBehaviour {
     public int NumofFaces = 0;
 
     // Use this for initialization
-    void Start() { Init(); }
-
-    // void OnEnable() { Init(); }
+    void Awake() { Init(); }
 
     void Init()
     {

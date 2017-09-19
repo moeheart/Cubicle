@@ -16,8 +16,6 @@ public class PlayerControl : MonoBehaviour {
     public GameObject UserCanvas;
     LogTool logtool;
 
-    public CameraController _CameraController;
-
     private string path;
     private string path1 = "Unfolding/_Results/Level";
     private string path2 = ".txt";
@@ -389,6 +387,7 @@ public class PlayerControl : MonoBehaviour {
         WaitingLinesEndingPoint.Add(rmEndingPoint);
     }
 
+
     public void Grading()
     {
         int grade = CheckResult();
@@ -498,7 +497,6 @@ public class PlayerControl : MonoBehaviour {
         LoseCanvas.SetActive(false);
         UserCanvas.SetActive(true);
 
-        _CameraController.ResetCam();
     }
     
     public void Proceed()
@@ -517,8 +515,6 @@ public class PlayerControl : MonoBehaviour {
             WinCanvas.SetActive(false);
             UserCanvas.SetActive(true);
             meshGenerator.ReGenerate(++currentLevel);
-
-            _CameraController.ResetCam();
         }*/
     }
 
