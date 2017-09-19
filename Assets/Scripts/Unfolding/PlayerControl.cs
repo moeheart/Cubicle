@@ -16,8 +16,7 @@ public class PlayerControl : MonoBehaviour {
     public GameObject UserCanvas;
     LogTool logtool;
 
-    private Vector3 InitialPos;
-    private Quaternion InitialRot;
+    public CameraController _CameraController;
 
     private string path;
     private string path1 = "Assets/Resources/Unfolding/_Results/Level";
@@ -43,9 +42,6 @@ public class PlayerControl : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        InitialPos = Camera.main.transform.position;
-        InitialRot = Camera.main.transform.rotation;
-
         //TargetPositions = new List<Vector3>();
         WinCanvas.SetActive(false);
         LoseCanvas.SetActive(false);
@@ -497,8 +493,7 @@ public class PlayerControl : MonoBehaviour {
         LoseCanvas.SetActive(false);
         UserCanvas.SetActive(true);
 
-        // Camera.main.transform.position = InitialPos;
-        // Camera.main.transform.rotation = InitialRot;
+        _CameraController.ResetCam();
     }
     
     public void Proceed()
@@ -516,8 +511,8 @@ public class PlayerControl : MonoBehaviour {
             WinCanvas.SetActive(false);
             UserCanvas.SetActive(true);
             meshGenerator.ReGenerate(++currentLevel);
-            // Camera.main.transform.position = InitialPos;
-            // Camera.main.transform.rotation = InitialRot;
+
+            _CameraController.ResetCam();
         }
     }
 
