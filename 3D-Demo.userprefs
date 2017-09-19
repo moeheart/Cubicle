@@ -1,8 +1,13 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Revolution Solid\RevSolidGameInfo.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\StreamingAssets\Cube Shift.json">
     <Files>
-      <File FileName="Assets\Scripts\Revolution Solid\RevSolidGameInfo.cs" Line="104" Column="3" />
+      <File FileName="Assets\Scripts\Cube Shift\CubeGame.cs" Line="89" Column="27" />
+      <File FileName="Assets\StreamingAssets\Cube Shift.json" Line="38" Column="20" />
+      <File FileName="Assets\Scripts\Cube Shift\UIControl.cs" Line="91" Column="141" />
+      <File FileName="Assets\Scripts\Cube Shift\GameInfo.cs" Line="42" Column="20" />
+      <File FileName="Assets\StreamingAssets\Revolution Solid.json" Line="7" Column="7" />
+      <File FileName="Assets\Scripts\Cube Shift\CubeLog.cs" Line="81" Column="4" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

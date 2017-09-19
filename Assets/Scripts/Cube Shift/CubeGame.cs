@@ -14,6 +14,7 @@ public class CubeGame : MonoBehaviour {
 
 	private Transform auxiliaryCubeTransform;
 
+
 	// Use this for initialization
 	void Awake(){
 		auxiliaryCubeTransform=this.transform;
@@ -30,7 +31,6 @@ public class CubeGame : MonoBehaviour {
 
 	void Start () {
 		
-
 
 	}
 
@@ -85,7 +85,7 @@ public class CubeGame : MonoBehaviour {
 		} else if (gameInfo.phaseNo == 3) {
 			UndoMark ();
 			if (gameInfo.hasPhase3Begun == false) {
-				if (gameInfo.moves == 3) {
+				if (gameInfo.moves == GameInfo.stoppingMove) {//stops when move 1 finishes
 					gameInfo.hasPhase3Begun = true;
 					gameInfo.beginTime = Time.realtimeSinceStartup;
 				}

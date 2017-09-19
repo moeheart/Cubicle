@@ -16,8 +16,7 @@ public class CubeLog : MonoBehaviour {
 	StreamWriter writer;
 
 	void Awake(){
-		recordNo = 0;
-		trialNum = 0;
+		
 	}
 
 	void OnEnable(){
@@ -48,6 +47,9 @@ public class CubeLog : MonoBehaviour {
 	}
 
 	void Start(){
+		GameInfo.score = 0;
+		recordNo = 0;
+		trialNum = 0;
 		GenerateFilePath ();
 		RecordInitialization ();
 	}
@@ -74,11 +76,15 @@ public class CubeLog : MonoBehaviour {
 
 	void RecordChoosing(){
 		FormulateResult ("choose", GameInfo.reactTime.ToString()+", "+(GameInfo.isTargetFound?"correct":"wrong")+", "+MouseAndKeyboard.hitCubeNum);
+		if (GameInfo.isTargetFound) {
+			FormulateResult ("score", GameInfo.score.ToString ());
+		}
+
 	} 
 
 
 	void RecordGeneratingNewGame(){
-		FormulateResult ("newGameGenerated", GameInfo.CubeNumber.ToString()+", " + GameInfo.MaxTravelPeriodNo.ToString());
+		FormulateResult ("newGameGenerated", GameInfo.levelNum.ToString()+", " +GameInfo.CubeNumber.ToString()+", " + GameInfo.MaxTravelPeriodNo.ToString());
 		AddToTrialNum ();
 	}
 
