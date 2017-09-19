@@ -1,8 +1,15 @@
 fileFormatVersion: 2
+<<<<<<< HEAD
 guid: 9a935702deaa647e9a0c149bfbb320fa
 timeCreated: 1505791964
 licenseType: Pro
 DefaultImporter:
+=======
+guid: 04a6e649d5e0d904c8b9647b1936fa96
+timeCreated: 1501687480
+licenseType: Free
+TextScriptImporter:
+>>>>>>> Add Unfolding Button.
   userData: 
   assetBundleName: 
   assetBundleVariant: 
