@@ -14,7 +14,8 @@ public class PlaneExplorationRedirect : MonoBehaviour {
 
 	void Start () {
 
-		jsonFilePath = Path.Combine(Application.streamingAssetsPath,"Puzzles.json");
+//		jsonFilePath = Path.Combine(Application.streamingAssetsPath,"Puzzles.json");
+		jsonFilePath = Path.Combine(Application.streamingAssetsPath, Configurations.jsonFilename);
 		id = DataUtil.GetCurrentRoomId();
 		ParseJson(jsonFilePath, id);
 
