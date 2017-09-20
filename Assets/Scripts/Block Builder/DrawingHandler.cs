@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using MiniJSON;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DrawingHandler : MonoBehaviour {
 
@@ -65,6 +65,12 @@ public class DrawingHandler : MonoBehaviour {
 		Dictionary<string, object> dict;
 		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
 		dict = (Dictionary<string, object>)dict[roomId.ToString()];
+
+		if (dict.ContainsKey("isTutorial")) {
+			if (SceneManager.GetActiveScene().name != "Block Builder Tutorial Scene") {
+				SceneManager.LoadScene("Block Builder Tutorial Scene", LoadSceneMode.Single);
+			}
+		}
 
 		List<object> _2DList = ((List<object>) dict["height"]);
 		for (int i = 0; i < BlockBuilderConfigs.gridSize.x; ++i) {
