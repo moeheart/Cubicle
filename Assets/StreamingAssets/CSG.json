@@ -13,6 +13,7 @@
         "dimension": [ 1, 1, 1 ],
         "color": [ 0.2, 0.4, 0.6, 1 ],
 		"puzzle type": "CSG",
+		"isTutorial": true,
 
 		"objects": {
 			"Cube": {
