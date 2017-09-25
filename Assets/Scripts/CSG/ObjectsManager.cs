@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
 using MiniJSON;
+using UnityEngine.SceneManagement;
 
 public class ObjectsManager : MonoBehaviour {
 	public SceneObject CSGObjectPrefab;
@@ -228,6 +229,11 @@ public class ObjectsManager : MonoBehaviour {
 		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
 		dict = (Dictionary<string, object>)dict[roomId.ToString()];
 		Debug.Log(roomId);
+		if (dict.ContainsKey("isTutorial")) {
+			if (SceneManager.GetActiveScene().name != "CSG Tutorial Scene") {
+				SceneManager.LoadScene("CSG Tutorial Scene", LoadSceneMode.Single);
+			}
+		}
 		Dictionary<string, object> objects = (Dictionary<string, object>)dict["objects"];
 		foreach (KeyValuePair<string, object> jsonObj in objects) {
 			Dictionary<string, object> value = (Dictionary<string,object>)jsonObj.Value;

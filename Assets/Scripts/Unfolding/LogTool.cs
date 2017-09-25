@@ -51,7 +51,7 @@ public class LogTool : MonoBehaviour {
     /// </summary>
     public void SaveLog()
     {
-
+        
         path1 = Path.Combine(Application.persistentDataPath, "Logs/Unfolding/user_Level");
         filePath = path1 + meshgenerator.CurrentLevel + path2;
 

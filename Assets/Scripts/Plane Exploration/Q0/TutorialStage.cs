@@ -50,7 +50,7 @@ public class TutorialStage : MonoBehaviour {
 			arrows.SetActive (true);
 			break;
 		case 7:
-			tutText.text = "You cannot see the perspective view of the map in a real time. " +
+			tutText.text = "You cannot see the perspective view of the map in a real game. " +
 				"Yet every time you win or fail the game, you can " +
 				"click on “perspective” button to see it.";
 			hintCamera.gameObject.SetActive (false);

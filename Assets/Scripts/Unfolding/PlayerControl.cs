@@ -16,13 +16,11 @@ public class PlayerControl : MonoBehaviour {
     public GameObject UserCanvas;
     LogTool logtool;
 
-    public CameraController _CameraController;
-
     private string path;
-    private string path1 = "Assets/Resources/Unfolding/_Results/Level";
+    private string path1 = "Unfolding/_Results/Level";
     private string path2 = ".txt";
 
-    private List<int> FinalLevelofStage = new List<int> { 2, 4, 6 };
+    //private List<int> FinalLevelofStage = new List<int> { 2, 4, 6 };
 
     [HideInInspector]
     public bool unfolding = false;
@@ -58,7 +56,7 @@ public class PlayerControl : MonoBehaviour {
 
         logtool = GetComponent<LogTool>();
 
-        path = path1 + meshGenerator.CurrentLevel + path2;
+        
     }
 	
 	// Update is called once per frame
@@ -389,6 +387,7 @@ public class PlayerControl : MonoBehaviour {
         WaitingLinesEndingPoint.Add(rmEndingPoint);
     }
 
+
     public void Grading()
     {
         int grade = CheckResult();
@@ -402,6 +401,7 @@ public class PlayerControl : MonoBehaviour {
         {
             WinCanvas.SetActive(true);
             WinScoreManager.SetScore(grade);
+            // Unlock the next room.
             DataUtil.UnlockCurrentRoom();
         }
         else
@@ -413,10 +413,13 @@ public class PlayerControl : MonoBehaviour {
 
     private int CheckResult()
     {
+        path1 = Path.Combine(Application.streamingAssetsPath, "Unfolding/_Results/Level");
+        path = path1 + meshGenerator.CurrentLevel + path2;
+        Debug.Log(path);
+
         float TotalGrade = 0;
         float CurrentGrade = 0;
 
-        path = path1 + meshGenerator.CurrentLevel + path2;
         StreamReader reader = new StreamReader(path, false);
         char[] delimiterChars = { ';' };
 
@@ -462,8 +465,9 @@ public class PlayerControl : MonoBehaviour {
 
     public void SaveResult()
     {
-        path = path1 + meshGenerator.CurrentLevel + path2;
-        StreamWriter writer = new StreamWriter(path, false);
+        path1 = Path.Combine(Application.streamingAssetsPath, "Unfolding/_Results/Level");
+        string savePath = path1 + meshGenerator.CurrentLevel + path2;
+        StreamWriter writer = new StreamWriter(savePath, false);
 
         int NumofFaces = meshGenerator.NumofFaces;
         for (int i = 0; i < NumofFaces; i++)
@@ -493,7 +497,6 @@ public class PlayerControl : MonoBehaviour {
         LoseCanvas.SetActive(false);
         UserCanvas.SetActive(true);
 
-        _CameraController.ResetCam();
     }
     
     public void Proceed()
@@ -502,7 +505,8 @@ public class PlayerControl : MonoBehaviour {
         WaitingLinesEndingPoint.Clear();
 
         int currentLevel = meshGenerator.CurrentLevel;
-        if (FinalLevelofStage.Contains(currentLevel))
+        SceneManager.LoadScene("World Scene");
+        /*if (FinalLevelofStage.Contains(currentLevel))
         {
             SceneManager.LoadScene("World Scene");
         }
@@ -511,9 +515,7 @@ public class PlayerControl : MonoBehaviour {
             WinCanvas.SetActive(false);
             UserCanvas.SetActive(true);
             meshGenerator.ReGenerate(++currentLevel);
-
-            _CameraController.ResetCam();
-        }
+        }*/
     }
 
 }

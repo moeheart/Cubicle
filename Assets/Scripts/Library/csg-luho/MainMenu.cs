@@ -72,6 +72,36 @@ public class MainMenu : MonoBehaviour {
 			}
 		}
     }
+
+	[MenuItem ("CSG/Intersect")]
+    static void Intersect () {
+		
+		// we need at least two selected objects
+		if( Selection.gameObjects.Length > 1 )
+		{
+
+			CSGObject obj = Selection.activeGameObject.GetComponent<CSGObject>();	
+			
+			if( obj )
+			{
+				obj.PerformCSG(CsgOperation.ECsgOperation.CsgOper_Intersect, Selection.gameObjects);	
+			}
+			
+			
+			if( GlobalSettings.DeleteSlaves )
+			{
+				foreach( GameObject go in Selection.gameObjects )
+				{
+					// if we are not the active game object and are a CSG Object
+					if( Selection.activeGameObject != go && go.GetComponent<CSGObject>() )
+					{
+						GameObject.DestroyImmediate( go );
+					}
+				}
+				
+			}
+		}
+    }
 	
 	[MenuItem ("CSG/Add Component")]
 	static void AddComponent() {
