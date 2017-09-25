@@ -35,6 +35,8 @@ public class TransformLimitationLog : MonoBehaviour {
 
 	public void RecordInitialization(int trial_num, int block_num, int basic_step, int difficulty, string start_model, string target_model, string method){
 
+		print (Application.persistentDataPath);
+
 		logDetailPath = Path.Combine(Application.persistentDataPath, "Logs/Transform Limitation/");
 		logFilePath = Path.Combine(logDetailPath, "_TransformLimitationLogs.txt");
 		logIdPath = Path.Combine(logDetailPath, "_IdLog.txt");
