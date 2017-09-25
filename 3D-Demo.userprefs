@@ -1,21 +1,16 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-<<<<<<< HEAD
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Cube Shift\GameInfo.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Revolution Solid\RevSolidGameInfo.cs">
     <Files>
-      <File FileName="Assets\Scripts\Cube Shift\CubeGame.cs" Line="89" Column="27" />
-      <File FileName="Assets\StreamingAssets\Cube Shift.json" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Cube Shift\UIControl.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Cube Shift\GameInfo.cs" Line="182" Column="15" />
-      <File FileName="Assets\StreamingAssets\Revolution Solid.json" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Cube Shift\CubeLog.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Cube Shift\MouseAndKeyboard.cs" Line="62" Column="20" />
-=======
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Transform Limitation/TransformLimitationLog.cs">
-    <Files>
-      <File FileName="Assets/Scripts/Plane Exploration/Q0/TutorialStage.cs" Line="53" Column="81" />
-      <File FileName="Assets/Scripts/Transform Limitation/TransformLimitationLog.cs" Line="38" Column="39" />
->>>>>>> upstream/master
+      <File FileName="Assets\Scripts\Revolution Solid\RevSolidUIControl.cs" Line="73" Column="22" />
+      <File FileName="Assets\Scripts\Revolution Solid\ActiveObject.cs" Line="121" Column="18" />
+      <File FileName="Assets\Scripts\Revolution Solid\ActiveObjControl.cs" Line="125" Column="47" />
+      <File FileName="Assets\Scripts\Revolution Solid\Hard.cs" Line="48" Column="1" />
+      <File FileName="Assets\Scripts\Revolution Solid\ResponseProcessing.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Revolution Solid\RevSolidGameInfo.cs" Line="86" Column="52" />
+      <File FileName="Assets\Scripts\Revolution Solid\Tutorial.cs" Line="81" Column="5" />
+      <File FileName="Assets\Scripts\Revolution Solid\AxisDrawing.cs" Line="305" Column="14" />
+      <File FileName="Assets\Scripts\Cube Shift\GameInfo.cs" Line="128" Column="7" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
