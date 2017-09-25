@@ -8,7 +8,7 @@
 	},
 
 		
-	"4": {
+	"1": {
         "position" : [3,0,1],
         "dimension": [ 1, 1, 1 ],
         "color": [ 0.2, 0.4, 0.6, 1 ],
@@ -32,8 +32,8 @@
 
 	},
 
-    "1" : {
-        "position" : [3,0,2],
+    "2" : {
+        "position" : [4,0,1],
         "dimension": [ 1, 1, 1 ],
         "color": [ 0.2, 0.4, 0.6, 1 ],
         "puzzle type": "CSG",
@@ -48,8 +48,8 @@
 			"name": "Cube"
 		}
     },
-    "2" : {
-        "position" : [4,0,2],
+    "3" : {
+        "position" : [5,0,1],
         "dimension": [ 1, 1, 1 ],
         "color": [ 0.2, 0.4, 0.6, 1 ],
         "puzzle type": "CSG",
@@ -72,8 +72,8 @@
 			"scale": [2,2,2]
 		}
     },
-    "3" : {
-        "position" : [4,0,3],
+    "4" : {
+        "position" : [6,0,1],
         "dimension": [ 1, 1, 1 ],
         "color": [ 0.2, 0.4, 0.6, 1 ],
         "puzzle type": "CSG",
