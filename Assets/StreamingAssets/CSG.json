@@ -96,5 +96,33 @@
 		"target":  {
 			"name": "cube + cube - sph"
 		}
+	},
+	"5" : {
+        "position" : [7,0,1],
+        "dimension": [ 1, 1, 1 ],
+        "color": [ 0.2, 0.4, 0.6, 1 ],
+        "puzzle type": "CSG",
+
+        "objects": {
+			"Cube": {
+				"pos": [2,2,0],
+				"scale": [3,1,2],
+				"type": "cube"
+			},
+			"Cylinder0": {
+				"pos": [-2.5,-2.25,0],
+				"scale": [2,0.25,2],
+				"type": "cylinder"
+			},
+			"Cylinder1": {
+				"pos": [2.5,-1.75,0],
+				"scale": [1,0.25,1],
+				"type": "cylinder"
+			}
+		},
+		"target":  {
+			"name": "(Cyl + Cyl) x Cube",
+			"scale": [3,1,2]
+		}
 	}
 }
