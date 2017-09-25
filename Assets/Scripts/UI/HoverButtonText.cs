@@ -5,7 +5,9 @@ using UnityEngine.UI;
 
 public class HoverButtonText : MonoBehaviour {
 
-	public Text instructionText;
+	public GameObject instructionPanel;
+
+	private bool isActive = false;
 
 	// Use this for initialization
 	void Start () {
@@ -17,7 +19,8 @@ public class HoverButtonText : MonoBehaviour {
 	}
 
 	public void ToggleInstructions() {
-		instructionText.enabled = !instructionText.enabled;
+		isActive = !isActive;
+		instructionPanel.SetActive(isActive);
 	}
 
 }
