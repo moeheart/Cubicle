@@ -1,13 +1,14 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\StreamingAssets\Cube Shift.json">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Cube Shift\GameInfo.cs">
     <Files>
       <File FileName="Assets\Scripts\Cube Shift\CubeGame.cs" Line="89" Column="27" />
-      <File FileName="Assets\StreamingAssets\Cube Shift.json" Line="38" Column="20" />
-      <File FileName="Assets\Scripts\Cube Shift\UIControl.cs" Line="91" Column="141" />
-      <File FileName="Assets\Scripts\Cube Shift\GameInfo.cs" Line="42" Column="20" />
-      <File FileName="Assets\StreamingAssets\Revolution Solid.json" Line="7" Column="7" />
-      <File FileName="Assets\Scripts\Cube Shift\CubeLog.cs" Line="81" Column="4" />
+      <File FileName="Assets\StreamingAssets\Cube Shift.json" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Cube Shift\UIControl.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Cube Shift\GameInfo.cs" Line="182" Column="15" />
+      <File FileName="Assets\StreamingAssets\Revolution Solid.json" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Cube Shift\CubeLog.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\Cube Shift\MouseAndKeyboard.cs" Line="62" Column="20" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
