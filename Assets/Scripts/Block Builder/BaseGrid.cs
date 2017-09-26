@@ -58,23 +58,26 @@ public class BaseGrid : MonoBehaviour {
 			ChangeCurrentCoordinates(newCoordinates);
 		}
 		else if (Input.GetKeyDown(KeyCode.W)) {
-			AddCubeToCoordinate(currentCoordinates);
 			GenerateLog(1, currentCoordinates);
+			AddCubeToCoordinate(currentCoordinates);
 		}
 		else if (Input.GetKeyDown(KeyCode.S)) {
-			DeleteCubeFromCoordinate(currentCoordinates);
 			GenerateLog(-1, currentCoordinates);
+			DeleteCubeFromCoordinate(currentCoordinates);
 		}
 	}
 
 	private void GenerateLog(int op, IntVector2 currentCoordinates) {
+		if (DataUtil.IsUnlocked(id)) {
+			return;
+		}
 		BaseGridCell designatedCell = 
 			cells[currentCoordinates.x, currentCoordinates.z];
-		int heightAfterOp = designatedCell.height;
+		int heightBeforeOp = designatedCell.height;
 		int[,] target = DrawingHandler.GetComponent<DrawingHandler>().height;
 		int targetHeight = target[currentCoordinates.x, currentCoordinates.z];
 		if (op == 1) {
-			if (heightAfterOp <= targetHeight) {
+			if (heightBeforeOp < targetHeight) {
 				BlockBuilderLog.Log(logPath, id, "Correct Addition");
 			}
 			else {
@@ -82,7 +85,7 @@ public class BaseGrid : MonoBehaviour {
 			}
 		}
 		else {
-			if (heightAfterOp >= targetHeight) {
+			if (heightBeforeOp > targetHeight) {
 				BlockBuilderLog.Log(logPath, id, "Correct Deletion");
 			}
 			else {

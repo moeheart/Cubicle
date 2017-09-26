@@ -21,6 +21,11 @@ public static class DataUtil {
 		return id;
 	}
 
+	public static bool IsUnlocked(int id) {
+		Dictionary<string, object> gameState = GetCurrentGameState();
+		return ((List<int>) gameState["unlocked rooms"]).Contains(id);
+	}
+
 	public static void UnlockCurrentRoom() {
 		string saveFilePath = Path.Combine(Application.persistentDataPath, Configurations.saveFilename);
 		Dictionary<string, object> gameState = GetCurrentGameState();
