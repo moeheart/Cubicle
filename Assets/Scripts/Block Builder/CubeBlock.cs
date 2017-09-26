@@ -4,7 +4,7 @@ using System.Collections;
 public class CubeBlock : MonoBehaviour {
 
 	private Color defaultColor = new Color(1,1,1,0.8f);
-	private Color highlightColor = new Color(0,1,1,0.8f);
+	private Color highlightColor = new Color(.1f,.1f,.1f,0.5f);
 
 	// Use this for initialization
 	void Start () {
