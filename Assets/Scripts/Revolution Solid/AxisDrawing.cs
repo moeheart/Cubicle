@@ -61,8 +61,9 @@ public class AxisDrawing: ResponseProcessing {
 		OnResize ();
 
 		GetMousePosRelative2Screen ();
-
-		FreeStrokeDrawingAndGrading ();
+		if (!Tutorial.isInstructionPanelEnabled) {
+			FreeStrokeDrawingAndGrading ();
+		}
 	}
 
 	void GetMousePosRelative2Screen(){
@@ -305,12 +306,42 @@ public class AxisDrawing: ResponseProcessing {
 				Tutorial.IndicateCorrectAns (panelIndex);
 			}
 		}
-		GetGradingResult(ActiveObjControl.activeObjects[panelIndex].polygonIndex,panelIndex,bestMatchCandNo);
+
+		string bmcName;
+		switch(bestMatchCandNo) {
+		case -1:
+			bmcName = "correct";
+			break;
+		case 0:
+			bmcName = "left edge";
+			break;
+		case 1:
+			bmcName = "right edge";
+			break;
+		case 2:
+			bmcName = "bottom edge";
+			break;
+		case 3:
+			bmcName = "top edge";
+			break;
+		case 4:
+			bmcName = "diagonal /";
+			break;
+		case 5:
+			bmcName = "diagonal \\";
+			break;
+		default:
+			bmcName = "no match";
+			break;
+
+		}
+
+		GetGradingResult(ActiveObjControl.activeObjects[panelIndex].polygonIndex,panelIndex,bmcName);
 		EventManager.TriggerEvent("Grading");
 		return bestMatchCandNo;
 	}
 
-	void GetGradingResult(int solidIndex,int panelIndex,int bmcNo){
+	void GetGradingResult(int solidIndex,int panelIndex,string bmcName){
 		lastGradingResult="";
 		lastGradingResult += lastGradingResult.ToString ();
 		lastGradingResult += " for solid ";
@@ -318,7 +349,7 @@ public class AxisDrawing: ResponseProcessing {
 		lastGradingResult+=" on panelNo.";
 		lastGradingResult+= panelIndex;
 		lastGradingResult+= " is ";
-		lastGradingResult+= bmcNo;
+		lastGradingResult+= bmcName;
 	}
 
 	void GradingResToLog(){

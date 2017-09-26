@@ -87,15 +87,18 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	}
 
 	public static void EnableInitialInstructionPanel(){
+		Tutorial.isInstructionPanelEnabled = true;
 		Time.timeScale = 0;
+		TutorialTrigger ();
 		initialInstructionPanel.SetActive (true);
 	}
 
 	public void OnInitialInstructionDisabled(){
-		TutorialTrigger ();
+		Tutorial.isInstructionPanelEnabled = false;
+		EventManager.TriggerEvent ("DisableTutorial");
 		DisableInitialInstructionPanel ();
 	}
-	public static void DisableInitialInstructionPanel(){
+	void DisableInitialInstructionPanel(){
 		Time.timeScale = 1;
 		initialInstructionPanel.SetActive (false);
 
@@ -142,7 +145,7 @@ public class RevSolidUIControl : RevSolidGameInfo {
 
 	}
 
-	public void TutorialTrigger(){
+	public static void TutorialTrigger(){
 		EventManager.TriggerEvent ("EnableTutorial");
 	}
 

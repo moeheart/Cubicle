@@ -53,22 +53,17 @@ public class ActiveObject {
 	}
 
 	void GetRefreshTime (){
-		refreshTime = Time.time;
-	}
-
-	public void GetEndingTime(){
-		endingTime = Time.time;
-		GetReactionTime ();
+		refreshTime = Time.realtimeSinceStartup;
 	}
 
 	public void GetReactionTime(){
 		if (isKilled) {
-			endingTime = Time.time;
+			endingTime = Time.realtimeSinceStartup;
 			reactionTime = endingTime - refreshTime;
 			ActiveObjControl.RecordReactionTimeWhenObjectKilled (reactionTime);
 
 		} else {
-			reactionTime = Time.time - refreshTime;
+			reactionTime = Time.realtimeSinceStartup - refreshTime;
 
 			if (RevSolidGameInfo.GetLODByInt() == 1) {
 				RespondToReactionTime ();

@@ -9,9 +9,12 @@ public class Tutorial : MonoBehaviour {
 	static bool isPitfallWarningDone;//done once
 
 	public static GameObject axisPrefab;
+	public static bool isInstructionPanelEnabled;
 
 	void Awake(){
 		isPitfallWarningDone = false;
+
+		isInstructionPanelEnabled = true;
 
 		axisPrefab =Resources.Load ("axisPrefab") as GameObject;
 	}
@@ -44,7 +47,7 @@ public class Tutorial : MonoBehaviour {
 	}
 
 	public static void EnableTutorial (){
-		RevSolidGameInfo.polygonGenerationCountSinceLastTutorial = 0;
+		RevSolidGameInfo.indicationCountSinceLastTutorial = 0;
 		isPitfallWarningDone=false;
 		for(int i=0;i<RevSolidGameInfo.MaxPanelNum;i++){
 			Tutorial.IndicateCorrectAns (i);
@@ -53,12 +56,13 @@ public class Tutorial : MonoBehaviour {
 
 	public static void DisableTutorial(){
 		isPitfallWarningDone = true;
+
 	}
 
 	public static void IndicateCorrectAns (int panel){
 		if (!RevSolidGameInfo.IfNoviceGuideEnds ()) {
 			//RevSolidUIControl.SetTutorialMessage("Draw the revolution axis with your mouse");
-			RevSolidGameInfo.polygonGenerationCountSinceLastTutorial++;
+			RevSolidGameInfo.indicationCountSinceLastTutorial++;
 			GameObject.Find("Canvas1").GetComponent<Tutorial>().IndicateAxisAndStroke (panel);
 		}
 			

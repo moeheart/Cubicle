@@ -35,6 +35,7 @@ public class RevSolidLog : MonoBehaviour {
 		EventManager.StartListening ("EnableTutorial",RecordTutorialOn);
 		EventManager.StartListening ("DisableTutorial",RecordTutorialOff);
 		EventManager.StartListening ("Qdown",CommitResult);
+		EventManager.StartListening ("GenerateAnObject",RecordNewObjectGeneration);
 	}
 
 	void OnDisable(){
@@ -46,6 +47,7 @@ public class RevSolidLog : MonoBehaviour {
 		EventManager.StopListening ("EnableTutorial",RecordTutorialOn);
 		EventManager.StopListening ("DisableTutorial",RecordTutorialOff);
 		EventManager.StopListening ("Qdown",CommitResult);
+		EventManager.StopListening ("GenerateAnObject",RecordNewObjectGeneration);
 	}
 
 	void Start(){
@@ -71,7 +73,7 @@ public class RevSolidLog : MonoBehaviour {
 	void RecordInitialization(){
 		writer = new StreamWriter (logFilePath, true);
 		writer.WriteLine ("\n\n{0}\n",System.DateTime.Now.ToString());
-		writer.WriteLine ("recordNo\ttimeStamp\ttrialNum\tlevel\taction\tdetail\t\n");
+		writer.WriteLine ("recordNo,\ttimeStamp,\ttrialNum,\tlevel,\taction,\tdetail");
 	}
 
 	void RecordMouseDown(){
@@ -104,9 +106,13 @@ public class RevSolidLog : MonoBehaviour {
 		FormulateResult ("tutorialDisabled", "");
 	}
 
+	void RecordNewObjectGeneration(){
+		FormulateResult ("grading", ActiveObjControl.objGenerationInfo);
+	}
+
 	void FormulateResult(string action,string detail){ 
 		recordNo++;
-		writer.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t{5}\t\n",recordNo,Time.realtimeSinceStartup,trialNum,RevSolidGameInfo.levelOfDifficulty,action,detail);
+		writer.WriteLine("{0},\t{1},\t{2},\t{3},\t{4},\t{5}\t",recordNo,Time.realtimeSinceStartup,trialNum,RevSolidGameInfo.levelOfDifficulty,action,detail);
 	}
 
 	void AddToTrialNum(){
