@@ -28,6 +28,9 @@ public class UIControl : MonoBehaviour {
 
 	static Text popUpMessage;
 
+	static Button instruction;
+	static GameObject instructionImg;
+
 	// Use this for initialization
 	void Awake () {
 		button = GameObject.Find ("Button").GetComponent<Button> ();
@@ -52,6 +55,15 @@ public class UIControl : MonoBehaviour {
 		cubeNum = cubeNumberSlider.transform.Find ("cubeNum").gameObject.GetComponent<Text> ();
 
 		score=GameObject.Find ("score").gameObject.GetComponent<Text> ();
+
+		instruction = GameObject.Find ("instruction").GetComponent<Button>();
+		instruction.onClick.AddListener (switchOnInstruction);
+		if (GameInfo.levelNum == 1) {
+			instruction.gameObject.SetActive (false);
+		}
+
+		instructionImg = GameObject.Find ("instructionImage");
+		instructionImg.SetActive (false);
 	}
 
 	void OnEnable(){
@@ -86,9 +98,9 @@ public class UIControl : MonoBehaviour {
 			button.gameObject.SetActive (true);
 			btnText.text = "Proceed";
 			if (GameInfo.levelNum == 1) {
-				msgText.text = "Welcome! Your goal is to find the flushed emoji face, after the cubes shift their location for " + (GameInfo.MaxTravelPeriodNo * 3 + GameInfo.stoppingMove -1).ToString () + " times and return to this initial configuration.";
+				msgText.text = "Welcome! Your goal is to find the flushed emoji face, after the cubes shift their location for 3 times.";
 			}else if(GameInfo.levelNum >=2){
-				msgText.text = "Welcome! Your goal still is to find the flushed emoji face, but cubes will shift "+ (GameInfo.stoppingMove-1).ToString()+" step further, before they flash back to this initial configuration.";
+				msgText.text = "Welcome! Your goal is to find the flushed emoji face, after the cubes shift their location for " + (GameInfo.MaxTravelPeriodNo * 3 + GameInfo.stoppingMove -1).ToString () + " times and return to "+(GameInfo.stoppingMove -1).ToString()+"-step earlier configuration.";
 			}
 			restartCanvas.SetActive (false);
 		}
@@ -120,7 +132,11 @@ public class UIControl : MonoBehaviour {
 				if (!GameInfo.isTargetFound) {
 					GameInfo.SetTargetInvisible ();
 					gameInfo.isChooseEnabled = true;
-					msgText.text = "Where is the face?Indicate by ONE CLICK at a cube.\n* Now this is the SAME CONFIGRATION AS IN THE BEGINNING.";
+					if (GameInfo.levelNum >= 2) {
+						msgText.text = "Where is the emoji " + (GameInfo.stoppingMove - 1).ToString () + "-step earlier? \nIndicate by ONE CLICK at a cube.";
+					} else {
+						msgText.text = "Where is the emoji? \nIndicate by ONE CLICK at a cube.";
+					}
 				}
 			}
 			if (GameInfo.isTargetFound) {
@@ -193,6 +209,14 @@ public class UIControl : MonoBehaviour {
 
 	public static void ErrorMessage(){
 		msgText.text = "Not here!";
+	}
+
+	void switchOnInstruction(){
+		if (instructionImg.activeSelf) {
+			instructionImg.SetActive (false);
+		} else {
+			instructionImg.SetActive (true);
+		}
 	}
 
 }
