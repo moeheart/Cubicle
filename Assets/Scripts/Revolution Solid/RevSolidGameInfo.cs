@@ -9,8 +9,7 @@ public class RevSolidGameInfo : MonoBehaviour {
 	protected static int falseStrokeCount;
 	//private RevSolidUIControl uiController= new RevSolidUIControl();
 	public const int MaxFalseCount=8;
-	const int GuidingTrialNum = 4;
-	const int LearningThres = 6;
+	public static int GuidingTrialNum = 1;
 	public const int WinningCriterion = 8;
 
 	public static float RecoverInterval=5.0f;
@@ -19,6 +18,7 @@ public class RevSolidGameInfo : MonoBehaviour {
 	public static int MaxPanelNum;
 
 	public static int polygonGenerationCount;
+	public static int polygonGenerationCountSinceLastTutorial;
 
 	public static float levelOfDifficulty;//(0.5,1)(1.5,2)
 
@@ -27,6 +27,7 @@ public class RevSolidGameInfo : MonoBehaviour {
 		InitializeHit ();
 		falseStrokeCount = 0;
 		polygonGenerationCount = 0;
+		polygonGenerationCountSinceLastTutorial = 0;
 	}
 
 	void OnEnable(){
@@ -82,19 +83,11 @@ public class RevSolidGameInfo : MonoBehaviour {
 	}
 	 
 	public static bool IfNoviceGuideEnds(){
-		return hit >= GuidingTrialNum;
+		return polygonGenerationCountSinceLastTutorial >= GuidingTrialNum;
 	}
 
 	public static bool WhenNoviceGuideEnds(){
 		return polygonGenerationCount >= GuidingTrialNum && hit==GuidingTrialNum;
-	}
-
-	public static bool CheckIfPlayerLearned(){
-		return hit >= LearningThres;
-	}
-
-	public static bool CheckIfPlayerFailsMuch(){
-		return falseStrokeCount >= MaxFalseCount-2 && Tutorial.isTutorialModeOn == false;
 	}
 
 	public virtual void Retry(){

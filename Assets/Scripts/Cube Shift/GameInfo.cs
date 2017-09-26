@@ -179,7 +179,7 @@ public class GameInfo
 	}
 
 	public static bool CheckIfWinningCriterionMet(){
-		if (score > WinningCriterion) {
+		if (score >= WinningCriterion) {
 			return true;
 		} else {
 			return false;

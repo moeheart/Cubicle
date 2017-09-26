@@ -104,6 +104,7 @@ public class ActiveObjControl : MonoBehaviour {
 
 	public void RecoverObjects(){
 		//recover & shift sectionPanel-polygon correspondence
+
 		for (int i = 0; i < RevSolidGameInfo.MaxPanelNum; i++) {
 			if (activeObjects [i].isKilled == true) {
 				
@@ -122,9 +123,9 @@ public class ActiveObjControl : MonoBehaviour {
 				}
 				activeObjects [i].polygonIndex = k;
 				RevSolidGameInfo.polygonGenerationCount++;
-				if (!RevSolidGameInfo.IfNoviceGuideEnds ()) {
-					Tutorial.IndicateCorrectAns (i);
-				} 
+				Tutorial.IndicateCorrectAns (i);
+				
+
 				if (RevSolidGameInfo.WhenNoviceGuideEnds ()) {
 					StartCoroutine (this.GetComponent<RevSolidUIControl> ().ShowStartGamePanel ());
 				}
