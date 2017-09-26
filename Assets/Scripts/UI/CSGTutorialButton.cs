@@ -31,6 +31,9 @@ public class CSGTutorialButton : MonoBehaviour {
 		++index;
 		if (index < tutorialTexts.Length) {
 			tutorialTexts[index].enabled = true;
+			if (tutorialTexts[index].gameObject.GetComponent<TextFunc>() != null) {
+				tutorialTexts[index].gameObject.GetComponent<TextFunc>().OnActive();
+			}
 		}
 		else {
 			this.gameObject.SetActive(false);

@@ -32,7 +32,7 @@ public class ObjectsManager : MonoBehaviour {
 		string jsonPath = Path.Combine(Application.streamingAssetsPath, Configurations.jsonFilename);
 		int id = DataUtil.GetCurrentRoomId();
 		id = DataUtil.GetCurrentRoomId();
-		StartCoroutine(ParseJson(jsonPath, id));
+		ParseJson(jsonPath, id);
 
 		/*SceneObject cube = Instantiate(CSGObjectPrefab) as SceneObject;
 		SceneObject sphere = Instantiate(CSGObjectPrefab) as SceneObject;
@@ -224,12 +224,12 @@ public class ObjectsManager : MonoBehaviour {
 		CSGLog.Log(logPath, id, "Reset");
 	}
 
-	private IEnumerator ParseJson(string jsonPath, int roomId) {
+	private void ParseJson(string jsonPath, int roomId) {
 		string jsonString = File.ReadAllText(jsonPath);
 		Dictionary<string, object> dict;
 		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
 		dict = (Dictionary<string, object>)dict[roomId.ToString()];
-		Debug.Log(roomId);
+		//Debug.Log(roomId);
 		if (dict.ContainsKey("isTutorial")) {
 			if (SceneManager.GetActiveScene().name != "CSG Tutorial Scene") {
 				SceneManager.LoadScene("CSG Tutorial Scene", LoadSceneMode.Single);
@@ -251,8 +251,6 @@ public class ObjectsManager : MonoBehaviour {
 			float z = System.Convert.ToSingle(pos[2]);
 			targetObj.transform.localScale = new Vector3(x, y, z);
 		}
-
-		yield return new WaitForSeconds(0.5f);
 
 		Dictionary<string, object> objects = (Dictionary<string, object>)dict["objects"];
 		foreach (KeyValuePair<string, object> jsonObj in objects) {
@@ -285,6 +283,24 @@ public class ObjectsManager : MonoBehaviour {
 			sceneObjs.Add(obj);
 		}
 	
+	}
+
+	public void ToggleTarget() {
+		StartCoroutine(FlashGameObject(targetObj));
+	}
+
+	public void ToggleSceneObjects() {
+		foreach (SceneObject obj in sceneObjs) {
+			StartCoroutine(FlashGameObject(obj.gameObject));
+		}
+	}
+
+	public IEnumerator FlashGameObject(GameObject gameObject) {
+		for (int i = 0; i < 6; ++i) {
+			Debug.Log("Flashing.....!!");
+			gameObject.SetActive(!gameObject.activeInHierarchy);
+			yield return new WaitForSeconds(0.2f);
+		}
 	}
 
 }
