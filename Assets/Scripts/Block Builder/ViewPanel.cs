@@ -7,8 +7,7 @@ public class ViewPanel : MonoBehaviour {
 
 	public GameObject solidLine;
 
-	[SerializeField]
-	private float panelDisplayScale = 0.8f; //E.g., if this were set to 1, then a full display would fill up the whole panel
+	private float panelDisplayScale = 0.7f; //E.g., if this were set to 1, then a full display would fill up the whole panel
 
 	[SerializeField]
 	private ViewType viewType;

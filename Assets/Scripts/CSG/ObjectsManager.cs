@@ -31,7 +31,8 @@ public class ObjectsManager : MonoBehaviour {
 
 		string jsonPath = Path.Combine(Application.streamingAssetsPath, Configurations.jsonFilename);
 		int id = DataUtil.GetCurrentRoomId();
-		ParseJson(jsonPath, id);
+		id = DataUtil.GetCurrentRoomId();
+		StartCoroutine(ParseJson(jsonPath, id));
 
 		/*SceneObject cube = Instantiate(CSGObjectPrefab) as SceneObject;
 		SceneObject sphere = Instantiate(CSGObjectPrefab) as SceneObject;
@@ -59,7 +60,6 @@ public class ObjectsManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		levelCompleteText.enabled = false;
-		id = DataUtil.GetCurrentRoomId();
 		logPath = Path.Combine(Application.dataPath, "Logs/CSG/CSG.txt");
 	}
 
@@ -215,6 +215,7 @@ public class ObjectsManager : MonoBehaviour {
 		opA = null;
 		opB = null;
 		selectedObj = null;
+		StopAllCoroutines();
 		foreach (SceneObject obj in sceneObjs) {
 			Destroy(obj.gameObject);
 		}
@@ -223,7 +224,7 @@ public class ObjectsManager : MonoBehaviour {
 		CSGLog.Log(logPath, id, "Reset");
 	}
 
-	private void ParseJson(string jsonPath, int roomId) {
+	private IEnumerator ParseJson(string jsonPath, int roomId) {
 		string jsonString = File.ReadAllText(jsonPath);
 		Dictionary<string, object> dict;
 		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
@@ -234,6 +235,25 @@ public class ObjectsManager : MonoBehaviour {
 				SceneManager.LoadScene("CSG Tutorial Scene", LoadSceneMode.Single);
 			}
 		}
+
+		Dictionary<string, object> targetDict = (Dictionary<string, object>)dict["target"];
+		string targetName = Path.Combine("CSG", (string)targetDict["name"]);
+		string assetPath = Path.Combine(Application.streamingAssetsPath, targetName);
+		targetObj = Instantiate(targetPrefab) as GameObject;
+		targetObj.name = "Target";
+		//Debug.Log(assetPath);
+		targetMesh = Resources.Load(targetName) as Mesh;
+		targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
+		if (targetDict.ContainsKey("scale")) {
+			List<object> pos = (List<object>)targetDict["scale"];
+			float x = System.Convert.ToSingle(pos[0]);
+			float y = System.Convert.ToSingle(pos[1]);
+			float z = System.Convert.ToSingle(pos[2]);
+			targetObj.transform.localScale = new Vector3(x, y, z);
+		}
+
+		yield return new WaitForSeconds(0.5f);
+
 		Dictionary<string, object> objects = (Dictionary<string, object>)dict["objects"];
 		foreach (KeyValuePair<string, object> jsonObj in objects) {
 			Dictionary<string, object> value = (Dictionary<string,object>)jsonObj.Value;
@@ -263,22 +283,6 @@ public class ObjectsManager : MonoBehaviour {
 				}
 			}
 			sceneObjs.Add(obj);
-		}
-
-		Dictionary<string, object> targetDict = (Dictionary<string, object>)dict["target"];
-		string targetName = Path.Combine("CSG", (string)targetDict["name"]);
-		string assetPath = Path.Combine(Application.streamingAssetsPath, targetName);
-		targetObj = Instantiate(targetPrefab) as GameObject;
-		targetObj.name = "Target";
-		//Debug.Log(assetPath);
-		targetMesh = Resources.Load(targetName) as Mesh;
-		targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
-		if (targetDict.ContainsKey("scale")) {
-			List<object> pos = (List<object>)targetDict["scale"];
-			float x = System.Convert.ToSingle(pos[0]);
-			float y = System.Convert.ToSingle(pos[1]);
-			float z = System.Convert.ToSingle(pos[2]);
-			targetObj.transform.localScale = new Vector3(x, y, z);
 		}
 	
 	}
