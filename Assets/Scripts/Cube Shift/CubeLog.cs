@@ -103,7 +103,7 @@ public class CubeLog : MonoBehaviour {
 
 	void FormulateResult(string action,string detail){ 
 		recordNo++;
-		writer.WriteLine("{0},\t{1},\t{2},\t{3},\t{4}\n",recordNo,Time.realtimeSinceStartup,trialNum,action,detail);
+		writer.WriteLine("{0},\t{1},\t{2},\t{3},\t{4}\n",recordNo,Time.realtimeSinceStartup,trialNum,GameInfo.levelNum,action,detail);
 	}
 
 	void AddToTrialNum(){
