@@ -120,7 +120,7 @@ public class PlayerControl : MonoBehaviour {
 
     public void StepBack()
     {
-        if (!unfolding && !foldback)
+        if (!unfolding && !foldback && GameObject.FindGameObjectWithTag("Line") != null)
         {
             RecoverLineInfo(PreviousStartingPoint[0], PreviousEndingPoint[0]);
             meshGenerator.ReCreateLine(PreviousStartingPoint[0], PreviousEndingPoint[0]);

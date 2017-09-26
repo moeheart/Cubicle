@@ -62,7 +62,7 @@ public class RevSolidLog : MonoBehaviour {
 	void GenerateLogFilePath(){
 		int id = 0;
 
-		string logDir = Application.persistentDataPath + "/Logs/Revolution Solid/_RevSolidLogs";
+		string logDir = Application.dataPath + "/Logs/Revolution Solid/_RevSolidLogs";
 		do {
 			id++;
 			//logFilePath = @"Assets/Logs/Revolution Solid/_RevSolidLogs" + id + ".txt";

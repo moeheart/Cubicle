@@ -22,7 +22,7 @@ public class LevelManager : MonoBehaviour {
 		worldInstance.LoadData();
 		//worldInstance.SaveData();
 
-		string logPath = Path.Combine(Application.persistentDataPath, "Logs");
+		string logPath = Path.Combine(Application.dataPath, "Logs");
 
 		Directory.CreateDirectory(Path.Combine(logPath, "CSG"));
 		Directory.CreateDirectory(Path.Combine(logPath, "Block Builder"));

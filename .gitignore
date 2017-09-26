@@ -8,10 +8,4 @@
 *.DS_Store
 .vs/
 
-Assets/Logs/Cube Shift.meta
-
-Assets/Logs/Plane Exploration/_PlaneExplorationLogs.txt
-
-Assets/Logs/Transform Limitation/_TransformLimitationLogs.txt
-
-Assets/Logs/Transform Limitation/201709110958215821.txt.meta
+/Assets/Logs/

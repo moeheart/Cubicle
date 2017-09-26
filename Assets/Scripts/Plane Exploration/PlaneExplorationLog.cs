@@ -28,7 +28,7 @@ public class PlaneExplorationLog : MonoBehaviour {
 
 	public void RecordInitialization(int trial_num, int level){
 
-		logDetailPath = Path.Combine(Application.persistentDataPath, "Logs/Plane Exploration/");
+		logDetailPath = Path.Combine(Application.dataPath, "Logs/Plane Exploration/");
 		logFilePath = Path.Combine(logDetailPath, "_PlaneExplorationLogs.txt");
 		logIdPath = Path.Combine(logDetailPath, "_IdLog.txt");
 
