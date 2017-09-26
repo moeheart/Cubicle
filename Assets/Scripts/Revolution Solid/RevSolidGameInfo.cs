@@ -18,7 +18,7 @@ public class RevSolidGameInfo : MonoBehaviour {
 	public static int MaxPanelNum;
 
 	public static int polygonGenerationCount;
-	public static int polygonGenerationCountSinceLastTutorial;
+	public static int indicationCountSinceLastTutorial;
 
 	public static float levelOfDifficulty;//(0.5,1)(1.5,2)
 
@@ -27,7 +27,7 @@ public class RevSolidGameInfo : MonoBehaviour {
 		InitializeHit ();
 		falseStrokeCount = 0;
 		polygonGenerationCount = 0;
-		polygonGenerationCountSinceLastTutorial = 0;
+		indicationCountSinceLastTutorial = 0;
 	}
 
 	void OnEnable(){
@@ -83,7 +83,7 @@ public class RevSolidGameInfo : MonoBehaviour {
 	}
 	 
 	public static bool IfNoviceGuideEnds(){
-		return polygonGenerationCountSinceLastTutorial >= GuidingTrialNum;
+		return indicationCountSinceLastTutorial >= GuidingTrialNum;
 	}
 
 	public static bool WhenNoviceGuideEnds(){

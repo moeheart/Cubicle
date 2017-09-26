@@ -21,6 +21,8 @@ public class ActiveObjControl : MonoBehaviour {
 
 	public static GameObject gameObjectJustHit;
 
+	public static string objGenerationInfo;
+
 	// Use this for initialization
 	void Awake(){
 		CheckLevel();
@@ -123,6 +125,10 @@ public class ActiveObjControl : MonoBehaviour {
 				}
 				activeObjects [i].polygonIndex = k;
 				RevSolidGameInfo.polygonGenerationCount++;
+
+				RecordObjGenerationInfo (RevSolidGameInfo.polygonGenerationCount,k,i);
+				EventManager.TriggerEvent ("GenerateAnObject");
+
 				Tutorial.IndicateCorrectAns (i);
 				
 
@@ -133,6 +139,16 @@ public class ActiveObjControl : MonoBehaviour {
 				break;
 			}
 		}
+	}
+
+	static void RecordObjGenerationInfo(int totalCount, int solidNo,int panelNo){
+		objGenerationInfo = "#";
+		objGenerationInfo += totalCount.ToString();
+		objGenerationInfo+=". solid ";
+		objGenerationInfo+=solidNo.ToString();
+		objGenerationInfo+=" is generated on panel ";
+		objGenerationInfo+=panelNo.ToString();
+
 	}
 		
 	protected void RaycastHit(int objIndex){
@@ -188,7 +204,6 @@ public class ActiveObjControl : MonoBehaviour {
 		
 	public static void RecordReactionTimeWhenObjectKilled(float reactionTime){
 		reactionTimeToLog = reactionTime.ToString();
-		EventManager.TriggerEvent("RecordReactionTime");
 	}
 		
 }
