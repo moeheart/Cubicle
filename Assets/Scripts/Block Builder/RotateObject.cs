@@ -16,10 +16,10 @@ public class RotateObject : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-		if (Input.GetMouseButton(0) == false)
+		if (Input.GetMouseButton(2) == false)
 			SnapBack();
 
-		if (Input.GetMouseButton(0)) {
+		if (Input.GetMouseButton(2)) {
 			//Debug.Log("Dragging");
 			float rotX = Input.GetAxis("Mouse X") * rotateSpeed * Mathf.Deg2Rad;
 			float rotY = Input.GetAxis("Mouse Y") * rotateSpeed * Mathf.Deg2Rad;

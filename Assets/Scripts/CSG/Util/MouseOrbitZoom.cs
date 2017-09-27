@@ -79,7 +79,7 @@ public class MouseOrbitZoom : MonoBehaviour
             desiredDistance -= Input.GetAxis("Mouse Y") * Time.deltaTime * zoomRate*0.125f * Mathf.Abs(desiredDistance);
         }
         // If middle mouse and left alt are selected? ORBIT
-        else if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.LeftAlt))
+        else if (Input.GetMouseButton(2))
         {
             xDeg += Input.GetAxis("Mouse X") * xSpeed * 0.02f;
             yDeg -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;

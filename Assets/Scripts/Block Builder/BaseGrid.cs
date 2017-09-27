@@ -61,11 +61,11 @@ public class BaseGrid : MonoBehaviour {
 			newCoordinates.x--;
 			ChangeCurrentCoordinates(newCoordinates);
 		}
-		else if (Input.GetKeyDown(KeyCode.R)) {
+		else if (Input.GetKeyDown(KeyCode.R) || Input.GetMouseButtonDown(0)) {
 			GenerateLog(1, currentCoordinates);
 			AddCubeToCoordinate(currentCoordinates);
 		}
-		else if (Input.GetKeyDown(KeyCode.F)) {
+		else if (Input.GetKeyDown(KeyCode.F) || Input.GetMouseButtonDown(1)) {
 			GenerateLog(-1, currentCoordinates);
 			DeleteCubeFromCoordinate(currentCoordinates);
 		}
