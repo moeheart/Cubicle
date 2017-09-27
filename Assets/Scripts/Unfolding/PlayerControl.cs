@@ -69,6 +69,8 @@ public class PlayerControl : MonoBehaviour {
         }
         if (Input.GetKeyDown(KeyCode.Q))
         {
+            logtool.QuitGame();
+            logtool.SaveLog();
             SceneManager.LoadScene("World Scene");
         }
         if (!unfolding && WaitingLinesStartingPoint.ToArray().Length != 0)
@@ -488,6 +490,10 @@ public class PlayerControl : MonoBehaviour {
 
     public void Replay()
     {
+        // Save log before replaying.
+        logtool.Replay();
+        logtool.SaveLog();
+
         WaitingLinesStartingPoint.Clear();
         WaitingLinesEndingPoint.Clear();
 
@@ -501,6 +507,10 @@ public class PlayerControl : MonoBehaviour {
     
     public void Proceed()
     {
+        // Save log before proceeding.
+        logtool.QuitGame();
+        logtool.SaveLog();
+
         WaitingLinesStartingPoint.Clear();
         WaitingLinesEndingPoint.Clear();
 
