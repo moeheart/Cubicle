@@ -72,7 +72,7 @@ public class MouseOrbit : MonoBehaviour
     void LateUpdate()
     {
         //  If middle mouse and left alt are selected? ORBIT
-        if (Input.GetMouseButton(2))
+        if (Input.GetMouseButton(0) && Input.GetKey(KeyCode.LeftAlt))
         {
             xDeg += Input.GetAxis("Mouse X") * xSpeed * 0.02f;
             yDeg -= Input.GetAxis("Mouse Y") * ySpeed * 0.02f;
