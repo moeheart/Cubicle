@@ -26,6 +26,8 @@ public class ObjectsManager : MonoBehaviour {
 	private int id;
 	private string logPath;
 
+	public static float startTime {get; private set;}
+
 	public void LoadGameObjects() {
 		sceneObjs = new List<SceneObject>();
 
@@ -61,6 +63,7 @@ public class ObjectsManager : MonoBehaviour {
 	void Start () {
 		levelCompleteText.enabled = false;
 		logPath = Path.Combine(Application.dataPath, "Logs/CSG/CSG.txt");
+		startTime = Time.time;
 	}
 
 	void Update() {
