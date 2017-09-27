@@ -7,9 +7,9 @@ public static class BlockBuilderLog {
 
 	public static void Log(string path, int id, string log) {
 		if (!File.Exists(path)) {
-			File.AppendAllText(path, "roomID:  TimeSinceEnterRoom,  Action\n");
+			File.AppendAllText(path, "RoomID, PuzzleType:  TimeSinceEnterRoom,  Action\n");
 		}
 		float t = Time.time - BaseGrid.startTime;
-		File.AppendAllText(path, id + ": " + t + ", " +  log + "\n");
+		File.AppendAllText(path, id + ", Block Builder: " + t + ", " +  log + "\n");
 	}
 }
