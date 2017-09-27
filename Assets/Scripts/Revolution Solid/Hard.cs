@@ -45,7 +45,6 @@ public class Hard : ActiveObjControl {
 		if (Distance2Center(objIndex) < forbiddenRadius) {
 			RevSolidGameInfo.Add2FalseStrokeCount (1);
 			RevSolidUIControl.RefreshBroadcasts ();
-			Tutorial.IndicateAnApproachingObject ();
 			return true;
 		}
 		else if(Distance2Center(objIndex) < PitfallWarningRadius){

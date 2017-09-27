@@ -42,10 +42,10 @@ public class SceneObject : MonoBehaviour {
 			}
 
 			//The Z-axis
-			if (Input.GetKeyDown(KeyCode.Q)) {
+			if (Input.GetKeyDown(KeyCode.R)) {
 				this.transform.localPosition += new Vector3(0,0,1);
 			}
-			if (Input.GetKeyDown(KeyCode.E)) {
+			if (Input.GetKeyDown(KeyCode.F)) {
 				this.transform.localPosition += new Vector3(0,0,-1);
 			}
 

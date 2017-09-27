@@ -61,7 +61,7 @@ public class MeshGenerator : MonoBehaviour {
     /// <summary>
     /// The width of the line.
     /// </summary>
-    float lineWidth = 0.1f;
+    float lineWidth = 0.15f;
 
     public PlayerControl player;
 

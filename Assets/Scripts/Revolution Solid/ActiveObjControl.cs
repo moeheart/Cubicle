@@ -21,6 +21,8 @@ public class ActiveObjControl : MonoBehaviour {
 
 	public static GameObject gameObjectJustHit;
 
+	public static string objGenerationInfo;
+
 	// Use this for initialization
 	void Awake(){
 		CheckLevel();
@@ -104,6 +106,7 @@ public class ActiveObjControl : MonoBehaviour {
 
 	public void RecoverObjects(){
 		//recover & shift sectionPanel-polygon correspondence
+
 		for (int i = 0; i < RevSolidGameInfo.MaxPanelNum; i++) {
 			if (activeObjects [i].isKilled == true) {
 				
@@ -122,9 +125,13 @@ public class ActiveObjControl : MonoBehaviour {
 				}
 				activeObjects [i].polygonIndex = k;
 				RevSolidGameInfo.polygonGenerationCount++;
-				if (!RevSolidGameInfo.IfNoviceGuideEnds ()) {
-					Tutorial.IndicateCorrectAns (i);
-				} 
+
+				RecordObjGenerationInfo (RevSolidGameInfo.polygonGenerationCount,k,i);
+				EventManager.TriggerEvent ("GenerateAnObject");
+
+				Tutorial.IndicateCorrectAns (i);
+				
+
 				if (RevSolidGameInfo.WhenNoviceGuideEnds ()) {
 					StartCoroutine (this.GetComponent<RevSolidUIControl> ().ShowStartGamePanel ());
 				}
@@ -132,6 +139,16 @@ public class ActiveObjControl : MonoBehaviour {
 				break;
 			}
 		}
+	}
+
+	static void RecordObjGenerationInfo(int totalCount, int solidNo,int panelNo){
+		objGenerationInfo = "#";
+		objGenerationInfo += totalCount.ToString();
+		objGenerationInfo+=". solid ";
+		objGenerationInfo+=solidNo.ToString();
+		objGenerationInfo+=" is generated on panel ";
+		objGenerationInfo+=panelNo.ToString();
+
 	}
 		
 	protected void RaycastHit(int objIndex){
@@ -187,7 +204,6 @@ public class ActiveObjControl : MonoBehaviour {
 		
 	public static void RecordReactionTimeWhenObjectKilled(float reactionTime){
 		reactionTimeToLog = reactionTime.ToString();
-		EventManager.TriggerEvent("RecordReactionTime");
 	}
 		
 }

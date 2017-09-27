@@ -50,6 +50,20 @@ public class MouseOrbit : MonoBehaviour
  
         xDeg = Vector3.Angle(Vector3.right, transform.right );
         yDeg = Vector3.Angle(Vector3.up, transform.up );
+
+        xDeg += 1 * xSpeed * 0.02f;
+        yDeg -= -2 * ySpeed * 0.02f;
+        //Clamp the vertical axis for the orbit
+        yDeg = ClampAngle(yDeg, yMinLimit, yMaxLimit);
+        // set camera rotation 
+        desiredRotation = Quaternion.Euler(yDeg, xDeg, 0);
+        currentRotation = transform.rotation;
+
+        rotation = desiredRotation;
+        transform.rotation = rotation;
+        // calculate position based on the new currentDistance 
+        position = target.position - (rotation * Vector3.forward * currentDistance + targetOffset);
+        transform.position = position;
     }
  
     /*

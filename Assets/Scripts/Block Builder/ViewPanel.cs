@@ -7,8 +7,9 @@ public class ViewPanel : MonoBehaviour {
 
 	public GameObject solidLine;
 
-	[SerializeField]
-	private float panelDisplayScale = 0.8f; //E.g., if this were set to 1, then a full display would fill up the whole panel
+	public GameObject dashedLine;
+
+	private float panelDisplayScale = 0.7f; //E.g., if this were set to 1, then a full display would fill up the whole panel
 
 	[SerializeField]
 	private ViewType viewType;
@@ -92,16 +93,17 @@ public class ViewPanel : MonoBehaviour {
 		startPosition *= panelDisplayScale;
 		endPosition *= panelDisplayScale;
 
-		GameObject lineGameObject = Instantiate(solidLine) as GameObject;
+		GameObject lineGameObject = null;
+		if (lineType == LineType.SolidLine) {
+			lineGameObject = Instantiate(solidLine) as GameObject;
+		}
+		else if (lineType == LineType.DashedLine) {
+			lineGameObject = Instantiate(dashedLine) as GameObject;
+		}
 		lineGameObject.transform.SetParent(this.transform, false);
 		LineRenderer lineRenderer = lineGameObject.GetComponent<LineRenderer>();
 		lineRenderer.SetPosition(0, startPosition);
 		lineRenderer.SetPosition(1, endPosition);
-
-		if (lineType == LineType.DashedLine) {
-			float distance = Vector3.Distance(startPosition, endPosition);
-			lineRenderer.material.mainTextureScale = new Vector2(distance, 1);
-		}
 
 		lines.Add(lineGameObject);
 

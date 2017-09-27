@@ -22,9 +22,13 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	public static string defaultString = "";
 
 	public static GameObject initialInstructionPanel;
+	public static GameObject instruction2;
 	public static Button continueBtn;
 
 	public static GameObject losingPanel;
+
+	public static Button tutorialSwitch;
+
 	// Use this for initialization
 	void Awake() {
 		broadcast= GameObject.Find ("Text").GetComponent<Text> ();
@@ -34,10 +38,6 @@ public class RevSolidUIControl : RevSolidGameInfo {
 		retryBtn = GameObject.Find ("retryBtn").GetComponent<Button> ();
 		retryBtn.onClick.AddListener (TriggerRetry);
 
-		responseBtn = GameObject.Find ("responseBtn").GetComponent<Button> ();
-		HideButton (responseBtn);
-		responseBtn.onClick.AddListener (Respond);
-
 		tutorialText = GameObject.Find ("tutorialText").GetComponent<Text>();
 
 		showAllBtn = GameObject.Find ("showAllBtn").GetComponent<Button> ();
@@ -45,11 +45,15 @@ public class RevSolidUIControl : RevSolidGameInfo {
 		showAllSwitch=GameObject.Find ("showAllSwitch").GetComponent<Text> ();
 
 		initialInstructionPanel = GameObject.Find ("initialInstructionPanel");
+		instruction2 = GameObject.Find ("instruction2");
 		continueBtn = GameObject.Find ("continue").GetComponent<Button> ();
-		continueBtn.onClick.AddListener (DisableInitialInstructionPanel);
+		continueBtn.onClick.AddListener (OnInitialInstructionDisabled);
 
 		losingPanel = GameObject.Find ("losingPanel");
 		losingPanel.SetActive (false);
+
+		tutorialSwitch = GameObject.Find ("tutorialSwitch").GetComponent<Button>();
+		tutorialSwitch.onClick.AddListener (EnableInitialInstructionPanel);
 	}
 
 	void OnEnable(){
@@ -66,6 +70,7 @@ public class RevSolidUIControl : RevSolidGameInfo {
 			checkMarks[i] = GameObject.Find ("checkMark_"+i.ToString());
 			checkMarks[i].SetActive (false);
 		}
+		defaultString = "";
 		StartCoroutine ("ShowDefaultMsg");
 	}
 		
@@ -82,9 +87,18 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	}
 
 	public static void EnableInitialInstructionPanel(){
+		Tutorial.isInstructionPanelEnabled = true;
+		Time.timeScale = 0;
+		TutorialTrigger ();
 		initialInstructionPanel.SetActive (true);
 	}
-	public static void DisableInitialInstructionPanel(){
+
+	public void OnInitialInstructionDisabled(){
+		Tutorial.isInstructionPanelEnabled = false;
+		EventManager.TriggerEvent ("DisableTutorial");
+		DisableInitialInstructionPanel ();
+	}
+	void DisableInitialInstructionPanel(){
 		Time.timeScale = 1;
 		initialInstructionPanel.SetActive (false);
 
@@ -131,16 +145,7 @@ public class RevSolidUIControl : RevSolidGameInfo {
 
 	}
 
-	public void Respond(){
-		if (Tutorial.isTutorialModeOn) {
-			ConfirmTutorialAndResume ();
-		} else {
-			RequireTutorial ();
-			TutorialTrigger ();
-		}
-	}
-
-	public void TutorialTrigger(){
+	public static void TutorialTrigger(){
 		EventManager.TriggerEvent ("EnableTutorial");
 	}
 
@@ -149,10 +154,6 @@ public class RevSolidUIControl : RevSolidGameInfo {
 		HideResponseButton ();
 		SetTutorialMessage ("");
 		Tutorial.CancelAnsIndication ();
-	}
-
-	void RequireTutorial(){
-		ConfirmTutorialAndResume ();
 	}
 
 	public static void RefreshBroadcasts(){
@@ -194,13 +195,13 @@ public class RevSolidUIControl : RevSolidGameInfo {
 	}
 
 	public void ShowCheckMark (int panelIndex){
-		StartCoroutine (this.DisplayCheckMarkFor2Scs(panelIndex));
+		StartCoroutine (this.DisplayCheckMark(panelIndex));
 	}
 
-	IEnumerator DisplayCheckMarkFor2Scs(int panelIndex){
+	IEnumerator DisplayCheckMark(int panelIndex){
 		checkMarks[panelIndex].SetActive (true);
 		//ActiveObjControl.activeObjects [panelIndex].image.gameObject.GetComponent<MeshRenderer> ().material.SetFloat ("_AlphaScale",0.0f);
-		yield return new WaitForSeconds (2.0f);
+		yield return new WaitForSeconds (1.0f);
 		checkMarks[panelIndex].SetActive (false);
 		//ActiveObjControl.activeObjects [panelIndex].image.gameObject.GetComponent<MeshRenderer> ().material.SetFloat ("_AlphaScale",1.0f);
 	}

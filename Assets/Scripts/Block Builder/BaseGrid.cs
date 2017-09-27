@@ -19,11 +19,15 @@ public class BaseGrid : MonoBehaviour {
 	private int id;
 	private string logPath;
 
+	public static float startTime {get; private set;}
+
 	// Use this for initialization
 	void Start () {
 		id = DataUtil.GetCurrentRoomId();
 		DrawingHandler = GameObject.Find("Drawing Handler");
-		logPath = Path.Combine(Application.persistentDataPath, "Logs/Block Builder/Block Builder.txt");
+		logPath = Path.Combine(Application.dataPath, "Logs/Block Builder/Block Builder.txt");
+		startTime = Time.time;
+		BlockBuilderLog.Log(logPath, id, "Entered Level...!!!");
 	}
 	
 	// Update is called once per frame
@@ -37,44 +41,44 @@ public class BaseGrid : MonoBehaviour {
 			return;
 		}
 
-		if (Input.GetKeyDown(KeyCode.UpArrow)) {
+		if (Input.GetKeyDown(KeyCode.W)) {
 			IntVector2 newCoordinates = currentCoordinates;
 			newCoordinates.z++;
 			ChangeCurrentCoordinates(newCoordinates);
 		}
-		else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+		else if (Input.GetKeyDown(KeyCode.S)) {
 			IntVector2 newCoordinates = currentCoordinates;
 			newCoordinates.z--;
 			ChangeCurrentCoordinates(newCoordinates);
 		}
-		else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+		else if (Input.GetKeyDown(KeyCode.D)) {
 			IntVector2 newCoordinates = currentCoordinates;
 			newCoordinates.x++;
 			ChangeCurrentCoordinates(newCoordinates);
 		}
-		else if (Input.GetKeyDown(KeyCode.LeftArrow)){
+		else if (Input.GetKeyDown(KeyCode.A)){
 			IntVector2 newCoordinates = currentCoordinates;
 			newCoordinates.x--;
 			ChangeCurrentCoordinates(newCoordinates);
 		}
-		else if (Input.GetKeyDown(KeyCode.W)) {
-			AddCubeToCoordinate(currentCoordinates);
+		else if (Input.GetKeyDown(KeyCode.R)) {
 			GenerateLog(1, currentCoordinates);
+			AddCubeToCoordinate(currentCoordinates);
 		}
-		else if (Input.GetKeyDown(KeyCode.S)) {
-			DeleteCubeFromCoordinate(currentCoordinates);
+		else if (Input.GetKeyDown(KeyCode.F)) {
 			GenerateLog(-1, currentCoordinates);
+			DeleteCubeFromCoordinate(currentCoordinates);
 		}
 	}
 
 	private void GenerateLog(int op, IntVector2 currentCoordinates) {
 		BaseGridCell designatedCell = 
 			cells[currentCoordinates.x, currentCoordinates.z];
-		int heightAfterOp = designatedCell.height;
+		int heightBeforeOp = designatedCell.height;
 		int[,] target = DrawingHandler.GetComponent<DrawingHandler>().height;
 		int targetHeight = target[currentCoordinates.x, currentCoordinates.z];
 		if (op == 1) {
-			if (heightAfterOp <= targetHeight) {
+			if (heightBeforeOp < targetHeight) {
 				BlockBuilderLog.Log(logPath, id, "Correct Addition");
 			}
 			else {
@@ -82,7 +86,7 @@ public class BaseGrid : MonoBehaviour {
 			}
 		}
 		else {
-			if (heightAfterOp >= targetHeight) {
+			if (heightBeforeOp > targetHeight) {
 				BlockBuilderLog.Log(logPath, id, "Correct Deletion");
 			}
 			else {
@@ -105,6 +109,7 @@ public class BaseGrid : MonoBehaviour {
 
 	public void OnCompleteBlockBuilderPuzzle() {
 		isCompleted = true;
+		BlockBuilderLog.Log(logPath, id, "Completed Level...!!!");
 		UnhighlightCell(currentCoordinates);
 	}
 

@@ -57,7 +57,7 @@ public class CubeLog : MonoBehaviour {
 	void GenerateFilePath(){
 		int id = 0;
 
-		string logDir = Application.persistentDataPath + "/Logs/Cube Shift/_CubeShiftLogs";
+		string logDir = Application.dataPath + "/Logs/Cube Shift/_CubeShiftLogs";
 		do {
 			id++;
 			logFilePath = logDir + id + ".txt";
@@ -71,7 +71,7 @@ public class CubeLog : MonoBehaviour {
 	void RecordInitialization(){
 		writer = new StreamWriter (logFilePath, true);
 		writer.WriteLine ("\n\n{0}\n",System.DateTime.Now.ToString());
-		writer.WriteLine ("recordNo\ttimeStamp\ttrialNum\tlevel\taction\tdetail\t\n");
+		writer.WriteLine ("recordNo,\ttimeStamp,\ttrialNum,\tlevel,\taction,\tdetail,\t\n");
 	}
 
 	void RecordChoosing(){
@@ -103,7 +103,7 @@ public class CubeLog : MonoBehaviour {
 
 	void FormulateResult(string action,string detail){ 
 		recordNo++;
-		writer.WriteLine("{0}\t{1}\t{2}\t{3}\t{4}\t\n",recordNo,Time.realtimeSinceStartup,trialNum,action,detail);
+		writer.WriteLine("{0},\t{1},\t{2},\t{3},\t{4}\t",recordNo,Time.realtimeSinceStartup,trialNum,GameInfo.levelNum,action,detail);
 	}
 
 	void AddToTrialNum(){

@@ -33,6 +33,7 @@ public class Room : MonoBehaviour {
 		this.color = color;
 		this.puzzleType = puzzleType;
 		this.transform.position = position;
+		this.isUnlocked = false;
 	}
 
 	public void AddDoor(Door door) {
