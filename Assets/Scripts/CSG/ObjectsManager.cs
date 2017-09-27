@@ -35,6 +35,9 @@ public class ObjectsManager : MonoBehaviour {
 		int id = DataUtil.GetCurrentRoomId();
 		id = DataUtil.GetCurrentRoomId();
 		ParseJson(jsonPath, id);
+		logPath = Path.Combine(Application.dataPath, "Logs/CSG/CSG.txt");
+		startTime = Time.time;
+		CSGLog.Log(logPath, id, "Entered Level");
 
 		/*SceneObject cube = Instantiate(CSGObjectPrefab) as SceneObject;
 		SceneObject sphere = Instantiate(CSGObjectPrefab) as SceneObject;
@@ -62,8 +65,6 @@ public class ObjectsManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		levelCompleteText.enabled = false;
-		logPath = Path.Combine(Application.dataPath, "Logs/CSG/CSG.txt");
-		startTime = Time.time;
 	}
 
 	void Update() {
@@ -186,7 +187,7 @@ public class ObjectsManager : MonoBehaviour {
 			if ((unionVolume - targetVolume < 1e-3) && (unionVolume - compositeVolume < 1e-3)) {
 				//Debug.Log(unionVolume + " " + targetVolume + " " + compositeVolume);
 				//Debug.Log("You win...!!!");
-				CSGLog.Log(logPath, id, "Completed...!!!");
+				CSGLog.Log(logPath, id, "Completed Level...!!!");
 				levelCompleteText.enabled = true;
 				Destroy(composite);
 				Destroy(targetObj);

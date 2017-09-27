@@ -27,6 +27,7 @@ public class BaseGrid : MonoBehaviour {
 		DrawingHandler = GameObject.Find("Drawing Handler");
 		logPath = Path.Combine(Application.dataPath, "Logs/Block Builder/Block Builder.txt");
 		startTime = Time.time;
+		BlockBuilderLog.Log(logPath, id, "Entered Level...!!!");
 	}
 	
 	// Update is called once per frame
@@ -108,7 +109,7 @@ public class BaseGrid : MonoBehaviour {
 
 	public void OnCompleteBlockBuilderPuzzle() {
 		isCompleted = true;
-		BlockBuilderLog.Log(logPath, id, "Completed Level");
+		BlockBuilderLog.Log(logPath, id, "Completed Level...!!!");
 		UnhighlightCell(currentCoordinates);
 	}
 
