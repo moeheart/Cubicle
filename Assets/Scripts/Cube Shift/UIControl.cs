@@ -98,9 +98,9 @@ public class UIControl : MonoBehaviour {
 			button.gameObject.SetActive (true);
 			btnText.text = "Proceed";
 			if (GameInfo.levelNum == 1) {
-				msgText.text = "Welcome! Your goal is to find the flushed emoji face, after the cubes shift their location for 3 times.";
+				msgText.text = "Welcome! Your goal is to find which cube has the emoji face, after the cubes shift their location for 3 times.";
 			}else if(GameInfo.levelNum >=2){
-				msgText.text = "Welcome! Your goal is to find the flushed emoji face, after the cubes shift their location for " + (GameInfo.MaxTravelPeriodNo * 3 + GameInfo.stoppingMove -1).ToString () + " times and return to "+(GameInfo.stoppingMove -1).ToString()+"-step earlier configuration.";
+				msgText.text = "Welcome! Your goal is to find which cube has the emoji face, after the cubes shift their location for " + (GameInfo.MaxTravelPeriodNo * 3 + GameInfo.stoppingMove -1).ToString () + " times and return to "+(GameInfo.stoppingMove -1).ToString()+"-step earlier configuration.";
 			}
 			restartCanvas.SetActive (false);
 		}
@@ -108,7 +108,7 @@ public class UIControl : MonoBehaviour {
 			
 			button.gameObject.SetActive (true);
 			btnText.text = "Play";
-			msgText.text = "After you press [Play], cubes below (one topped with a flushed emoji) begin to shift. The emoji trasits to face-adjoining cubes.";
+			msgText.text = "After you press [Play], cubes below (one topped with an emoji) begin to shift. Emoji transits once two cubes are connected by a face.";
 			restartCanvas.SetActive (false);
 		}
 		else if(gameInfo.phaseNo == 2){

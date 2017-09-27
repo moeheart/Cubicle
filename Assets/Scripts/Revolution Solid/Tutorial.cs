@@ -117,10 +117,10 @@ if (GameObject.Find ("axis") != null) {
 
 	public static void IndicateKeyUsage(){
 		if (RevSolidGameInfo.MaxPanelNum == 1) {
-			RevSolidUIControl.SetTutorialMessage ("[Hover mouse on solid once & WASD] - rotate solid | [SPACE] - freeze rotation");
+			RevSolidUIControl.SetTutorialMessage ("[Hover cursor on solid once & use WASD] - rotate solid | [SPACE] - freeze rotation");
 		}
 		else {//4
-			RevSolidUIControl.SetTutorialMessage ("[Hover mouse on solid once & WASD] - rotate solid");
+			RevSolidUIControl.SetTutorialMessage ("[Hover cursor on solid once & use WASD] - rotate solid");
 		}
 	}
 }
