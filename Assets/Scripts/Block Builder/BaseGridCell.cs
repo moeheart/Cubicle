@@ -55,6 +55,7 @@ public class BaseGridCell : MonoBehaviour {
 		}
 		CubeBlock newCubeBlock = Instantiate(cubeBlockPrefab) as CubeBlock;
 		newCubeBlock.transform.parent = this.transform;
+		newCubeBlock.transform.localRotation = Quaternion.identity;
 		if (cubes.Count == 0) {
 			newCubeBlock.transform.localPosition = new Vector3(0f, .55f, 0f);
 		}

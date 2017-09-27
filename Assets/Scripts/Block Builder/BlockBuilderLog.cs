@@ -6,6 +6,10 @@ using System.IO;
 public static class BlockBuilderLog {
 
 	public static void Log(string path, int id, string log) {
-		File.AppendAllText(path, id + ": " + log + "\n");
+		if (!File.Exists(path)) {
+			File.AppendAllText(path, "RoomID, PuzzleType:  TimeSinceEnterRoom,  Action\n");
+		}
+		float t = Time.time - BaseGrid.startTime;
+		File.AppendAllText(path, id + ", Block Builder: " + t + ", " +  log + "\n");
 	}
 }

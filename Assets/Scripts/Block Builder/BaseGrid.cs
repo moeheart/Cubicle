@@ -19,11 +19,15 @@ public class BaseGrid : MonoBehaviour {
 	private int id;
 	private string logPath;
 
+	public static float startTime {get; private set;}
+
 	// Use this for initialization
 	void Start () {
 		id = DataUtil.GetCurrentRoomId();
 		DrawingHandler = GameObject.Find("Drawing Handler");
 		logPath = Path.Combine(Application.dataPath, "Logs/Block Builder/Block Builder.txt");
+		startTime = Time.time;
+		BlockBuilderLog.Log(logPath, id, "Entered Level...!!!");
 	}
 	
 	// Update is called once per frame
@@ -68,9 +72,6 @@ public class BaseGrid : MonoBehaviour {
 	}
 
 	private void GenerateLog(int op, IntVector2 currentCoordinates) {
-		if (DataUtil.IsUnlocked(id)) {
-			return;
-		}
 		BaseGridCell designatedCell = 
 			cells[currentCoordinates.x, currentCoordinates.z];
 		int heightBeforeOp = designatedCell.height;
@@ -108,6 +109,7 @@ public class BaseGrid : MonoBehaviour {
 
 	public void OnCompleteBlockBuilderPuzzle() {
 		isCompleted = true;
+		BlockBuilderLog.Log(logPath, id, "Completed Level...!!!");
 		UnhighlightCell(currentCoordinates);
 	}
 

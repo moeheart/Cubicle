@@ -26,12 +26,18 @@ public class ObjectsManager : MonoBehaviour {
 	private int id;
 	private string logPath;
 
+	public static float startTime {get; private set;}
+
 	public void LoadGameObjects() {
 		sceneObjs = new List<SceneObject>();
 
 		string jsonPath = Path.Combine(Application.streamingAssetsPath, Configurations.jsonFilename);
 		int id = DataUtil.GetCurrentRoomId();
+		id = DataUtil.GetCurrentRoomId();
 		ParseJson(jsonPath, id);
+		logPath = Path.Combine(Application.dataPath, "Logs/CSG/CSG.txt");
+		startTime = Time.time;
+		CSGLog.Log(logPath, id, "Entered Level");
 
 		/*SceneObject cube = Instantiate(CSGObjectPrefab) as SceneObject;
 		SceneObject sphere = Instantiate(CSGObjectPrefab) as SceneObject;
@@ -59,8 +65,6 @@ public class ObjectsManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		levelCompleteText.enabled = false;
-		id = DataUtil.GetCurrentRoomId();
-		logPath = Path.Combine(Application.dataPath, "Logs/CSG/CSG.txt");
 	}
 
 	void Update() {
@@ -183,7 +187,7 @@ public class ObjectsManager : MonoBehaviour {
 			if ((unionVolume - targetVolume < 1e-3) && (unionVolume - compositeVolume < 1e-3)) {
 				//Debug.Log(unionVolume + " " + targetVolume + " " + compositeVolume);
 				//Debug.Log("You win...!!!");
-				CSGLog.Log(logPath, id, "Completed...!!!");
+				CSGLog.Log(logPath, id, "Completed Level...!!!");
 				levelCompleteText.enabled = true;
 				Destroy(composite);
 				Destroy(targetObj);
@@ -215,6 +219,7 @@ public class ObjectsManager : MonoBehaviour {
 		opA = null;
 		opB = null;
 		selectedObj = null;
+		StopAllCoroutines();
 		foreach (SceneObject obj in sceneObjs) {
 			Destroy(obj.gameObject);
 		}
@@ -228,12 +233,29 @@ public class ObjectsManager : MonoBehaviour {
 		Dictionary<string, object> dict;
 		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
 		dict = (Dictionary<string, object>)dict[roomId.ToString()];
-		Debug.Log(roomId);
+		//Debug.Log(roomId);
 		if (dict.ContainsKey("isTutorial")) {
 			if (SceneManager.GetActiveScene().name != "CSG Tutorial Scene") {
 				SceneManager.LoadScene("CSG Tutorial Scene", LoadSceneMode.Single);
 			}
 		}
+
+		Dictionary<string, object> targetDict = (Dictionary<string, object>)dict["target"];
+		string targetName = Path.Combine("CSG", (string)targetDict["name"]);
+		string assetPath = Path.Combine(Application.streamingAssetsPath, targetName);
+		targetObj = Instantiate(targetPrefab) as GameObject;
+		targetObj.name = "Target";
+		//Debug.Log(assetPath);
+		targetMesh = Resources.Load(targetName) as Mesh;
+		targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
+		if (targetDict.ContainsKey("scale")) {
+			List<object> pos = (List<object>)targetDict["scale"];
+			float x = System.Convert.ToSingle(pos[0]);
+			float y = System.Convert.ToSingle(pos[1]);
+			float z = System.Convert.ToSingle(pos[2]);
+			targetObj.transform.localScale = new Vector3(x, y, z);
+		}
+
 		Dictionary<string, object> objects = (Dictionary<string, object>)dict["objects"];
 		foreach (KeyValuePair<string, object> jsonObj in objects) {
 			Dictionary<string, object> value = (Dictionary<string,object>)jsonObj.Value;
@@ -264,23 +286,25 @@ public class ObjectsManager : MonoBehaviour {
 			}
 			sceneObjs.Add(obj);
 		}
-
-		Dictionary<string, object> targetDict = (Dictionary<string, object>)dict["target"];
-		string targetName = Path.Combine("CSG", (string)targetDict["name"]);
-		string assetPath = Path.Combine(Application.streamingAssetsPath, targetName);
-		targetObj = Instantiate(targetPrefab) as GameObject;
-		targetObj.name = "Target";
-		//Debug.Log(assetPath);
-		targetMesh = Resources.Load(targetName) as Mesh;
-		targetObj.GetComponent<MeshFilter>().sharedMesh = Instantiate(targetMesh) as Mesh;
-		if (targetDict.ContainsKey("scale")) {
-			List<object> pos = (List<object>)targetDict["scale"];
-			float x = System.Convert.ToSingle(pos[0]);
-			float y = System.Convert.ToSingle(pos[1]);
-			float z = System.Convert.ToSingle(pos[2]);
-			targetObj.transform.localScale = new Vector3(x, y, z);
-		}
 	
+	}
+
+	public void ToggleTarget() {
+		StartCoroutine(FlashGameObject(targetObj));
+	}
+
+	public void ToggleSceneObjects() {
+		foreach (SceneObject obj in sceneObjs) {
+			StartCoroutine(FlashGameObject(obj.gameObject));
+		}
+	}
+
+	public IEnumerator FlashGameObject(GameObject gameObject) {
+		for (int i = 0; i < 6; ++i) {
+			Debug.Log("Flashing.....!!");
+			gameObject.SetActive(!gameObject.activeInHierarchy);
+			yield return new WaitForSeconds(0.2f);
+		}
 	}
 
 }
