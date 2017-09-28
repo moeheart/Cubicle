@@ -97,7 +97,13 @@ public class LogTool : MonoBehaviour {
     public void Replay()
     {
         content += "Replay\n";
-        // Reset the timer when replaying the game.
+    }
+
+    /// <summary>
+    /// Reset the Timer.
+    /// </summary>
+    public void ResetTimer()
+    {
         StartTime = Time.time;
     }
 }
