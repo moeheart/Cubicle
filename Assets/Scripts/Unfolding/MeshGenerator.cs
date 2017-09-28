@@ -61,11 +61,11 @@ public class MeshGenerator : MonoBehaviour {
     /// <summary>
     /// The width of the line.
     /// </summary>
-    float lineWidth = 0.15f;
+    float lineWidth = 0.2f;
 
     public PlayerControl player;
 
-    public float smoothTime = 5.0f;
+    public float smoothTime = 4.0f;
     private float smoothPassedTime = 0f;
 
     private List<int> UnfoldingFaces;
@@ -691,6 +691,7 @@ public class MeshGenerator : MonoBehaviour {
         CurrentLevel = _level;
 
         Init();
+        player.DSReset();
 
         // Reload a material uv image(Now we don't need this because we have an array of materials.)
         //LoadMaterialByLevel(CurrentLevel);
@@ -704,8 +705,9 @@ public class MeshGenerator : MonoBehaviour {
 
         goalImage.texture = newTexture;
 
-        // Clear the previous log content.
+        // Clear the previous log content and reset the timer.
         logtool.ClearLog();
+        logtool.ResetTimer();
     }
 
     /*private void LoadMaterialByLevel(int _level)

@@ -41,31 +41,31 @@ public class BaseGrid : MonoBehaviour {
 			return;
 		}
 
-		if (Input.GetKeyDown(KeyCode.UpArrow)) {
+		if (Input.GetKeyDown(KeyCode.W)) {
 			IntVector2 newCoordinates = currentCoordinates;
 			newCoordinates.z++;
 			ChangeCurrentCoordinates(newCoordinates);
 		}
-		else if (Input.GetKeyDown(KeyCode.DownArrow)) {
+		else if (Input.GetKeyDown(KeyCode.S)) {
 			IntVector2 newCoordinates = currentCoordinates;
 			newCoordinates.z--;
 			ChangeCurrentCoordinates(newCoordinates);
 		}
-		else if (Input.GetKeyDown(KeyCode.RightArrow)) {
+		else if (Input.GetKeyDown(KeyCode.D)) {
 			IntVector2 newCoordinates = currentCoordinates;
 			newCoordinates.x++;
 			ChangeCurrentCoordinates(newCoordinates);
 		}
-		else if (Input.GetKeyDown(KeyCode.LeftArrow)){
+		else if (Input.GetKeyDown(KeyCode.A)){
 			IntVector2 newCoordinates = currentCoordinates;
 			newCoordinates.x--;
 			ChangeCurrentCoordinates(newCoordinates);
 		}
-		else if (Input.GetKeyDown(KeyCode.W)) {
+		else if (Input.GetKeyDown(KeyCode.R)) {
 			GenerateLog(1, currentCoordinates);
 			AddCubeToCoordinate(currentCoordinates);
 		}
-		else if (Input.GetKeyDown(KeyCode.S)) {
+		else if (Input.GetKeyDown(KeyCode.F)) {
 			GenerateLog(-1, currentCoordinates);
 			DeleteCubeFromCoordinate(currentCoordinates);
 		}
