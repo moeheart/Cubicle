@@ -32,7 +32,6 @@ public class ObjectsManager : MonoBehaviour {
 		sceneObjs = new List<SceneObject>();
 
 		string jsonPath = Path.Combine(Application.streamingAssetsPath, Configurations.jsonFilename);
-		int id = DataUtil.GetCurrentRoomId();
 		id = DataUtil.GetCurrentRoomId();
 		ParseJson(jsonPath, id);
 		logPath = Path.Combine(Application.dataPath, "Logs/CSG/CSG.txt");
