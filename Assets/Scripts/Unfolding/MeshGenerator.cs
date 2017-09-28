@@ -691,6 +691,7 @@ public class MeshGenerator : MonoBehaviour {
         CurrentLevel = _level;
 
         Init();
+        player.DSReset();
 
         // Reload a material uv image(Now we don't need this because we have an array of materials.)
         //LoadMaterialByLevel(CurrentLevel);
