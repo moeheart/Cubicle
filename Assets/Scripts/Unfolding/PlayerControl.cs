@@ -36,14 +36,23 @@ public class PlayerControl : MonoBehaviour {
     List<bool> PreviousUnfoldingB;
     List<Vector3> PreviousStartingNormalA;
     List<Vector3> PreviousStartingNormalB;
-    bool foldback = false;
+    bool HasFoldedBack = false;
 
     // Use this for initialization
     void Start () {
         //TargetPositions = new List<Vector3>();
         WinCanvas.SetActive(false);
         LoseCanvas.SetActive(false);
+        // Initiation
+        DSInit();
+        logtool = GetComponent<LogTool>();
+    }
 
+    /// <summary>
+    /// Data structures initiation.
+    /// </summary>
+    private void DSInit()
+    {
         WaitingLinesStartingPoint = new List<Vector3>();
         WaitingLinesEndingPoint = new List<Vector3>();
 
@@ -53,10 +62,24 @@ public class PlayerControl : MonoBehaviour {
         PreviousUnfoldingB = new List<bool>();
         PreviousStartingNormalA = new List<Vector3>();
         PreviousStartingNormalB = new List<Vector3>();
+    }
 
-        logtool = GetComponent<LogTool>();
+    /// <summary>
+    /// Data structures reset when regenerating the model.
+    /// </summary>
+    public void DSReset()
+    {
+        WaitingLinesStartingPoint.Clear();
+        WaitingLinesEndingPoint.Clear();
 
-        
+        PreviousStartingPoint.Clear();
+        PreviousEndingPoint.Clear();
+        PreviousUnfoldingA.Clear();
+        PreviousUnfoldingB.Clear();
+        PreviousStartingNormalA.Clear();
+        PreviousStartingNormalB.Clear();
+
+        HasFoldedBack = false;
     }
 	
 	// Update is called once per frame
@@ -102,7 +125,7 @@ public class PlayerControl : MonoBehaviour {
 
                 Vector3 midPoint = (startingPoint + endingPoint) / 2;
 
-                foldback = false;
+                HasFoldedBack = false;
                 PreviousStartingPoint.Clear();
                 PreviousEndingPoint.Clear();
                 PreviousUnfoldingA.Clear();
@@ -122,16 +145,21 @@ public class PlayerControl : MonoBehaviour {
 
     public void StepBack()
     {
-        if (!unfolding && !foldback && GameObject.FindGameObjectWithTag("Line") != null)
+        /// Stepback(Undo) only happens when:
+        /// 1.There is no unfolding going on
+        /// 2.This is the first time of folding back.
+        /// 3.The Unfolding arry isn't empty.
+        if (!unfolding && !HasFoldedBack && PreviousUnfoldingA.ToArray().Length != 0)
         {
-            RecoverLineInfo(PreviousStartingPoint[0], PreviousEndingPoint[0]);
-            meshGenerator.ReCreateLine(PreviousStartingPoint[0], PreviousEndingPoint[0]);
-            logtool.LineRevert(PreviousStartingPoint[0], PreviousEndingPoint[0]);
-
+            // If an unfolding happened before, we need to fold back.
             if (PreviousUnfoldingA[0] || PreviousUnfoldingB[0])
             {
                 if (PreviousStartingPoint.ToArray().Length == 2)
                 {
+                    RecoverLineInfo(PreviousStartingPoint[0], PreviousEndingPoint[0]);
+                    meshGenerator.ReCreateLine(PreviousStartingPoint[0], PreviousEndingPoint[0]);
+                    logtool.LineRevert(PreviousStartingPoint[0], PreviousEndingPoint[0]);
+
                     RecoverLineInfo(PreviousStartingPoint[1], PreviousEndingPoint[1]);
                     if (PreviousUnfoldingA[0])
                     {
@@ -151,7 +179,14 @@ public class PlayerControl : MonoBehaviour {
                     // TODO: We still need to consider the situation that unfolding happens sequentially.
                 }
             }
-            foldback = true;
+            // If there is no unfolding happened before, then we only need to recreate the previous line.
+            else
+            {
+                RecoverLineInfo(PreviousStartingPoint[0], PreviousEndingPoint[0]);
+                meshGenerator.ReCreateLine(PreviousStartingPoint[0], PreviousEndingPoint[0]);
+                logtool.LineRevert(PreviousStartingPoint[0], PreviousEndingPoint[0]);
+            }
+            HasFoldedBack = true;
         }   
     }
 
