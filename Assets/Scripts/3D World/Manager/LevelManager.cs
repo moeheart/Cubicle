@@ -33,6 +33,18 @@ public class LevelManager : MonoBehaviour {
 		Directory.CreateDirectory(Path.Combine(logPath, "Cube Shift"));
 		Directory.CreateDirectory(Path.Combine(logPath, "Unfolding"));
 
+		string path = Path.Combine(logPath, Path.Combine("CSG", "CSG.txt"));
+		if (!File.Exists(path)) {
+			File.AppendAllText(path, "RoomID, PuzzleType:  TimeSinceGameStart, TimeSinceEnterLevel,  Action\n\n");
+		}
+		File.AppendAllText(path, "Game Start Time: " + System.DateTime.Now + "\n");
+
+		path = Path.Combine(logPath, Path.Combine("Block Builder", "Block Builder.txt"));
+		if (!File.Exists(path)) {
+			File.AppendAllText(path, "RoomID, PuzzleType:  TimeSinceGameStart, TimeSinceEnterLevel,  Action\n\n");
+		}
+		File.AppendAllText(path, "Game Start Time: " + System.DateTime.Now + "\n");
+
 		/*Directory.CreateDirectory("Assets/Logs/CSG");
 		Directory.CreateDirectory("Assets/Logs/Block Builder");
 		Directory.CreateDirectory("Assets/Logs/View Point");
