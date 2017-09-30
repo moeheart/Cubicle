@@ -1,2 +1,0 @@
-timestamp,operation
-201709110958255825,RotX

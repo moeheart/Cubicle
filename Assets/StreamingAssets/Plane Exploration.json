@@ -11,7 +11,7 @@
         "dimension": [ 1, 1, 1 ],
         "color": [ 1, 0.8, 0.5, 1],
         "puzzle type": "plane exploration",
-        "doors to unlock": [[1,2]],
+        "unlock on start": [2],
 
         "level": 0
     },
