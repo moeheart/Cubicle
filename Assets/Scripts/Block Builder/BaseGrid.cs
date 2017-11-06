@@ -25,7 +25,7 @@ public class BaseGrid : MonoBehaviour {
 	void Start () {
 		id = DataUtil.GetCurrentRoomId();
 		DrawingHandler = GameObject.Find("Drawing Handler");
-		logPath = Path.Combine(Application.dataPath, "Logs/Block Builder/Block Builder.txt");
+		logPath = Path.Combine(Application.persistentDataPath, "Logs/Block Builder/Block Builder.txt");
 		startTime = Time.time;
 		BlockBuilderLog.Log(logPath, id, "Entered Level...!!!");
 	}

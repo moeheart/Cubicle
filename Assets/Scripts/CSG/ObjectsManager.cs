@@ -34,7 +34,7 @@ public class ObjectsManager : MonoBehaviour {
 		string jsonPath = Path.Combine(Application.streamingAssetsPath, Configurations.jsonFilename);
 		id = DataUtil.GetCurrentRoomId();
 		ParseJson(jsonPath, id);
-		logPath = Path.Combine(Application.dataPath, "Logs/CSG/CSG.txt");
+		logPath = Path.Combine(Application.persistentDataPath, "Logs/CSG/CSG.txt");
 		startTime = Time.time;
 		CSGLog.Log(logPath, id, "Entered Level");
 

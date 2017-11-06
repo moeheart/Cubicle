@@ -57,7 +57,7 @@ public class CubeLog : MonoBehaviour {
 	void GenerateFilePath(){
 		int id = 0;
 
-		string logDir = Application.dataPath + "/Logs/Cube Shift/_CubeShiftLogs";
+		string logDir = Application.persistentDataPath + "/Logs/Cube Shift/_CubeShiftLogs";
 		do {
 			id++;
 			logFilePath = logDir + id + ".txt";
