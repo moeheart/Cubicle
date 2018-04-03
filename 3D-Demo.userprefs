@@ -1,20 +1,8 @@
-﻿<Properties StartupItem="Assembly-CSharp.csproj">
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\Cube Shift\CubeLog.cs">
+﻿<Properties StartupItem="3D-Demo.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\UI\UploadButton.cs">
     <Files>
-<<<<<<< HEAD
-      <File FileName="Assets\Scripts\Cube Shift\CubeGame.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Cube Shift\UIControl.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Revolution Solid\Tutorial.cs" Line="1" Column="1" />
-      <File FileName="Assets\Scripts\Cube Shift\CubeLog.cs" Line="42" Column="37" />
-      <File FileName="Assets\Scripts\Cube Shift\MouseAndKeyboard.cs" Line="41" Column="32" />
-=======
-
-      <File FileName="Assets/Scripts/Transform Limitation/ModelGeneration.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Plane Exploration/Q0/TutorialStage.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Transform Limitation/TransformLimitationLog.cs" Line="38" Column="42" />
-
->>>>>>> upstream/master
+      <File FileName="Assets\Scripts\UI\UploadButton.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

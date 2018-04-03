@@ -64,7 +64,7 @@ public class LogTool : MonoBehaviour {
     /// </summary>
     public void SaveLog()
     {
-        path1 = Path.Combine(Application.persistentDataPath, "Logs/Unfolding/user_Level");
+        //path1 = Path.Combine(Application.persistentDataPath, "Logs/Unfolding/user_Level");
         filePath = path1 + meshgenerator.CurrentLevel + path2;
 
         // Write some text to the text.txt file, but we don't need it in webGL.
