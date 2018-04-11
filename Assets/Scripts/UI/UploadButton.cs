@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
@@ -10,7 +11,7 @@ public class UploadButton : MonoBehaviour {
     public GameObject UploadPanel;
     public GameObject BackButton;
 
-    private string path = "Assets/Logs/Unfolding/user_Level1.txt";
+    private string path = "Assets/Logs";
     private string uploadurl = "http://127.0.0.1:8000/UploadGameLog/";
 
 	// Use this for initialization
@@ -44,9 +45,26 @@ public class UploadButton : MonoBehaviour {
     /// <returns></returns>
     IEnumerator UploadLogFiles()
     {
-        byte[] LevelData = File.ReadAllBytes(path);
+        //byte[] LevelData = File.ReadAllBytes(path);
 
-        WWWForm data = new WWWForm();
+        var DInfo = new DirectoryInfo(path);
+        var SubDInfos = DInfo.GetDirectories();
+        foreach (DirectoryInfo SubDInfo in SubDInfos)
+        {
+            var Files = SubDInfo.GetFiles();
+            foreach (FileInfo f in Files)
+            {
+                // Use bit operator to check the flag of Hidden in FileAttributes is set.
+                bool IsHidden = Convert.ToBoolean(f.Attributes.GetHashCode() & FileAttributes.Hidden.GetHashCode());
+                if (!IsHidden)
+                {
+                    Debug.Log(f.FullName);
+                }
+            }
+        }
+
+        yield return 0;
+        /*WWWForm data = new WWWForm();
         data.AddBinaryData("LevelData", LevelData);
 
         UnityWebRequest www = UnityWebRequest.Post(uploadurl, data);
@@ -59,6 +77,6 @@ public class UploadButton : MonoBehaviour {
         else
         {
             Debug.Log("File upload complete!");
-        }
+        }*/
     }
 }
