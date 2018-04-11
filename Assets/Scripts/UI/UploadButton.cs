@@ -10,14 +10,16 @@ using UnityEngine.Networking;
 public class UploadButton : MonoBehaviour {
     public GameObject UploadPanel;
     public GameObject BackButton;
+    public Text Hint;
 
-    private string path = "Assets/Logs";
+    string OriginalText = "";
+    private string LogDirectory = "Assets/Logs/";
     private string uploadurl = "http://127.0.0.1:8000/UploadGameLog/";
 
 	// Use this for initialization
 	void Start () {
-		
-	}
+        OriginalText = Hint.text;
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -26,6 +28,7 @@ public class UploadButton : MonoBehaviour {
 
     private void ActivatePanel()
     {
+        Hint.text = OriginalText;
         BackButton.SetActive(false);
         UploadPanel.SetActive(true);
     }
@@ -45,9 +48,9 @@ public class UploadButton : MonoBehaviour {
     /// <returns></returns>
     IEnumerator UploadLogFiles()
     {
-        //byte[] LevelData = File.ReadAllBytes(path);
+        WWWForm data = new WWWForm();
 
-        var DInfo = new DirectoryInfo(path);
+        var DInfo = new DirectoryInfo(LogDirectory);
         var SubDInfos = DInfo.GetDirectories();
         foreach (DirectoryInfo SubDInfo in SubDInfos)
         {
@@ -58,25 +61,26 @@ public class UploadButton : MonoBehaviour {
                 bool IsHidden = Convert.ToBoolean(f.Attributes.GetHashCode() & FileAttributes.Hidden.GetHashCode());
                 if (!IsHidden)
                 {
-                    Debug.Log(f.FullName);
+                    byte[] LevelData = File.ReadAllBytes(f.FullName);
+                    data.AddBinaryData(f.Name, LevelData);
                 }
             }
         }
-
-        yield return 0;
-        /*WWWForm data = new WWWForm();
-        data.AddBinaryData("LevelData", LevelData);
-
+       
         UnityWebRequest www = UnityWebRequest.Post(uploadurl, data);
         yield return www.Send();
 
         if (www.isNetworkError)
         {
             Debug.Log(www.error);
+            Hint.text = www.error;
         }
         else
         {
             Debug.Log("File upload complete!");
-        }*/
+            Hint.text = "File upload completed!";
+        }
+
+        BackButton.SetActive(true);
     }
 }
