@@ -8,10 +8,11 @@ using UnityEngine.UI;
 using UnityEngine.Networking;
 
 public class UploadButton : MonoBehaviour {
-    public GameObject UploadPanel;
+    public GameObject StuIDPanel;
     public GameObject BackButton;
     public Text Hint;
 
+    string StuID = "";
     string OriginalText = "";
     private string LogDirectory = "Assets/Logs/";
     private string uploadurl = "http://127.0.0.1:8000/UploadGameLog/";
@@ -26,19 +27,17 @@ public class UploadButton : MonoBehaviour {
 		
 	}
 
-    private void ActivatePanel()
+    public void ActivatePanel()
     {
         Hint.text = OriginalText;
         BackButton.SetActive(false);
-        UploadPanel.SetActive(true);
+        StuIDPanel.SetActive(true);
     }
 
     /// <summary>
     /// Interface for the Upload Button.
     /// </summary>
 	public void UploadLog() {
-        ActivatePanel();
-
         StartCoroutine("UploadLogFiles");
 	}
 
@@ -62,7 +61,7 @@ public class UploadButton : MonoBehaviour {
                 if (!IsHidden)
                 {
                     byte[] LevelData = File.ReadAllBytes(f.FullName);
-                    data.AddBinaryData(f.Name, LevelData);
+                    data.AddBinaryData(StuID + "_" + f.Name, LevelData);
                 }
             }
         }
@@ -72,15 +71,26 @@ public class UploadButton : MonoBehaviour {
 
         if (www.isNetworkError)
         {
-            Debug.Log(www.error);
             Hint.text = www.error;
+        }
+        else if (www.isHttpError)
+        {
+            Hint.text = "Server internel error! \n Please try again or contact the administrator.";
         }
         else
         {
-            Debug.Log("File upload complete!");
             Hint.text = "File upload completed!";
         }
 
         BackButton.SetActive(true);
+    }
+
+    /// <summary>
+    /// Set Student ID.
+    /// </summary>
+    /// <param name="_StuID"></param>
+    public void SetStuID(string _StuID)
+    {
+        StuID = _StuID;
     }
 }

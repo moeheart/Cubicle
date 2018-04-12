@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
+using UnityEngine.UI;
 using UnityEngine;
 
-public class FinishedUploadButton : MonoBehaviour {
+public class BackButton : MonoBehaviour {
     public GameObject UploadPanel;
 
     // Use this for initialization
