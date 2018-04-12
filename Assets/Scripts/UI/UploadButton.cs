@@ -14,11 +14,12 @@ public class UploadButton : MonoBehaviour {
 
     string StuID = "";
     string OriginalText = "";
-    private string LogDirectory = "Assets/Logs/";
+    private string LogDirectory = Path.Combine(Application.persistentDataPath, "Logs/");
     private string uploadurl = "http://127.0.0.1:8000/UploadGameLog/";
+    //private string uploadurl = "http://spatialtest.web.engr.illinois.edu/UploadGameLog/";
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         OriginalText = Hint.text;
     }
 	
