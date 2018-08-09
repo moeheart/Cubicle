@@ -23,14 +23,22 @@ public class FPSInput : MonoBehaviour {
 		_charController = GetComponent<CharacterController>();
 		_animator = GetComponent<Animator>();
 	}
+
+	private float GetHorizontalMovement(){
+		return Input.GetAxis("Horizontal");
+	}
+
+	private float GetVerticalMovement() {
+		return Input.GetAxis("Vertical");
+	}
 	
 	// Update is called once per frame
 	void Update () {
 
 		Vector3 movement = Vector3.zero;
 
-		float deltaX = Input.GetAxis("Horizontal") * walkingSpeed;
-		float deltaZ = Input.GetAxis("Vertical") * walkingSpeed;
+		float deltaX = GetHorizontalMovement() * walkingSpeed;
+		float deltaZ = GetVerticalMovement() * walkingSpeed;
 		movement.x = deltaX;
 		movement.z = deltaZ;
 		movement = Vector3.ClampMagnitude(movement, walkingSpeed);
