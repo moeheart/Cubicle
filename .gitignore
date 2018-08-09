@@ -3,6 +3,7 @@
 /.vscode/
 /obj/
 /Assets/Logs/
+/Builds/
 *.sln
 *.csproj
 *.DS_Store
