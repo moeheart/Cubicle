@@ -29,11 +29,19 @@ public class FPSInput : MonoBehaviour {
 	}
 
 	private float GetHorizontalMovement(){
-		return Input.GetAxis("Horizontal");
+		#if UNITY_IOS
+			return joystick.InputDirection.x;
+		#else
+			return Input.GetAxis("Horizontal");
+		#endif
 	}
 
 	private float GetVerticalMovement() {
-		return Input.GetAxis("Vertical");
+		#if UNITY_IOS
+			return joystick.InputDirection.y;
+		#else
+			return Input.GetAxis("Vertical");
+		#endif
 	}
 	
 	// Update is called once per frame
