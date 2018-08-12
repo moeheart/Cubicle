@@ -11,6 +11,7 @@ public class FPSInput : MonoBehaviour {
 	public float terminalVelocity = -20.0f;
 	public float minFall = -1.5f;
 
+	private MovementPanel movementPanel;
 	private float _vertSpeed;
 	private ControllerColliderHit _contact;
 
@@ -22,6 +23,8 @@ public class FPSInput : MonoBehaviour {
 		_vertSpeed = minFall;
 		_charController = GetComponent<CharacterController>();
 		_animator = GetComponent<Animator>();
+
+//		movementPanel = GameObject.Find("Movement Panel").GetComponent<MovementPanel>();
 	}
 
 	private float GetHorizontalMovement(){
