@@ -9,8 +9,8 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour {
 
 	public World worldPrefab;
-
 	public static World worldInstance {get; private set;}
+	public Joystick joystick;
 	private string levelJsonFilePath;
 
 	// Use this for initialization
@@ -18,6 +18,7 @@ public class LevelManager : MonoBehaviour {
 		Debug.Log(Application.streamingAssetsPath);
 		levelJsonFilePath = Path.Combine(Application.streamingAssetsPath, Configurations.jsonFilename);
 		worldInstance = Instantiate(worldPrefab) as World;
+		worldInstance.joystick = joystick;
 		worldInstance.GenerateWorld(levelJsonFilePath);
 		worldInstance.LoadData();
 		//worldInstance.SaveData();

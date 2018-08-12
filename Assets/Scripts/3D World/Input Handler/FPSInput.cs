@@ -11,7 +11,8 @@ public class FPSInput : MonoBehaviour {
 	public float terminalVelocity = -20.0f;
 	public float minFall = -1.5f;
 
-	private MovementPanel movementPanel;
+	public Joystick joystick;
+
 	private float _vertSpeed;
 	private ControllerColliderHit _contact;
 

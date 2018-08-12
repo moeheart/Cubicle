@@ -18,6 +18,7 @@ public class World : MonoBehaviour {
 	public Door doorXY;
 	public Door doorZY;
 	public Room roomPrefab;
+	public Joystick joystick;
 
 	//private List<Room> rooms = new List<Room>();
 	private Dictionary<int, Room> rooms = new Dictionary<int, Room>();
@@ -47,6 +48,7 @@ public class World : MonoBehaviour {
 		}
 		player = Instantiate(playerPrefab) as GameObject;
 		player.transform.position = new Vector3(10,10,10);
+		player.GetComponent<FPSInput>().joystick = joystick;
 	}
 
 	private void ParseJsonString(string data) {
