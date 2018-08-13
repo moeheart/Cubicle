@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class Joystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointerDownHandler {
 
-	public Vector3 InputDirection;
+	public Vector3 inputDirection;
 
 	private Image joystickContainer;
 
@@ -15,11 +15,12 @@ public class Joystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
 	void Start() {
 		joystickContainer = GetComponent<Image>();
 		joystick = transform.GetChild(0).GetComponent<Image>();
-		InputDirection = Vector3.zero;
+		inputDirection = Vector3.zero;
 	}
 
 	public bool IsPositionInContainer(Vector2 position) {
-		return false;
+		return RectTransformUtility.RectangleContainsScreenPoint(
+			joystickContainer.rectTransform, position);
 	}
 
 	public void OnDrag(PointerEventData eventData) {
@@ -38,14 +39,14 @@ public class Joystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
 		float x = position.x * 2;
 		float y = position.y * 2;
 
-		InputDirection = new Vector3(x,y,0);
-		if (InputDirection.magnitude > 1) {
-			InputDirection = InputDirection.normalized;
+		inputDirection = new Vector3(x,y,0);
+		if (inputDirection.magnitude > 1) {
+			inputDirection = inputDirection.normalized;
 		}
 
 		joystick.rectTransform.anchoredPosition = new Vector3 (
-			InputDirection.x * joystickContainer.rectTransform.sizeDelta.x / 3,
-			InputDirection.y * joystickContainer.rectTransform.sizeDelta.y / 3
+			inputDirection.x * joystickContainer.rectTransform.sizeDelta.x / 3,
+			inputDirection.y * joystickContainer.rectTransform.sizeDelta.y / 3
 		);
 	}
 
@@ -54,7 +55,7 @@ public class Joystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
 	}
 
 	public void OnPointerUp(PointerEventData eventData) {
-		InputDirection = Vector3.zero;
+		inputDirection = Vector3.zero;
 		joystick.rectTransform.anchoredPosition = Vector3.zero;
 	}
 

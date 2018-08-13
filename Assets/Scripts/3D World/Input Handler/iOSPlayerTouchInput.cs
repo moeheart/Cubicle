@@ -18,13 +18,18 @@ public class iOSPlayerTouchInput : MonoBehaviour {
 
 	public Joystick joystick;
 	public bool kInverse = false;
+	public bool instructedJump = false;
+	public Vector2 inputDirection;
+	public float sensitivityHor = 9.0f;
+	public float sensitivityVert = 9.0f;
+	public float minimumVert = -45.0f;
+	public float maximumVert = 45.0f;
+
+	private float _rotationX = 0;
+	
 	private Transform cameraTransform;
 	private Camera mainCamera;
 	private CharacterController charController;
-
-	public bool instructedJump = false;
-	public Vector2 inputDirection;
-
 	private int leftFingerId = -1;
 	private int rightFingerId = -1;
 
@@ -33,10 +38,8 @@ public class iOSPlayerTouchInput : MonoBehaviour {
 	private Vector2 rightFingerStartPoint;
 	private Vector2 rightFingerCurrentPoint;
 	private Vector2 rightFingerLastPoint;
-
-
 	private bool isRotating;
-	private bool isMovingToTarget;
+
 	void Start() {
 		mainCamera = Camera.main;
 		cameraTransform = Camera.main.transform;
@@ -70,13 +73,18 @@ public class iOSPlayerTouchInput : MonoBehaviour {
 					OnTouchEnded(touch.fingerId);
 			}
 		}
+		inputDirection = joystick.inputDirection;
+		/*
 		if (leftFingerId != -1)
 			MoveFromJoystick();
 		else if (isMovingToTarget)
 			MoveToTarget();
+		*/
  
 		if (rightFingerId != -1 && isRotating)
 			Rotate();
+
+		RotateFromAccelerometer();
 	}
 
 	private void OnTouchBegan(int fingerId, Vector2 pos) {
@@ -115,16 +123,21 @@ public class iOSPlayerTouchInput : MonoBehaviour {
 		}
 	}
 
-	private void MoveFromJoystick() {
-		isMovingToTarget = false;
-		Vector2 offset = leftFingerCurrentPoint - leftFingerStartPoint;
-		if (offset.magnitude > 10) {
-			offset = offset.normalized * 10;
-		}
-	}
+	private void RotateFromAccelerometer() {
+		float X = Input.acceleration.x;
+		float Y = Input.acceleration.y;
+		float Z = Input.acceleration.z;
 
-	private void MoveToTarget () {
+		X = 0.01f;
 
+      	transform.Rotate(0, X * sensitivityHor, 0);
+		
+		_rotationX -= Y * sensitivityVert;
+		_rotationX = Mathf.Clamp(_rotationX, minimumVert, maximumVert);
+
+		float rotationY = transform.localEulerAngles.y;
+
+		cameraTransform.localEulerAngles = new Vector3(_rotationX, rotationY, 0);
 	}
 
 	void Rotate()

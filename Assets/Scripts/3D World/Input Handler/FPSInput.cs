@@ -11,9 +11,7 @@ public class FPSInput : MonoBehaviour {
 	public float terminalVelocity = -20.0f;
 	public float minFall = -1.5f;
 
-	public Joystick joystick;
 	private iOSPlayerTouchInput touchInput;
-
 	private float _vertSpeed;
 	private ControllerColliderHit _contact;
 
@@ -31,19 +29,11 @@ public class FPSInput : MonoBehaviour {
 	}
 
 	private float GetHorizontalMovement(){
-		#if UNITY_IOS
-			return touchInput.inputDirection.x;
-		#else
-			return Input.GetAxis("Horizontal");
-		#endif
+		return touchInput.inputDirection.x;
 	}
 
 	private float GetVerticalMovement() {
-		#if UNITY_IOS
-			return touchInput.inputDirection.y;
-		#else
-			return Input.GetAxis("Vertical");
-		#endif
+		return touchInput.inputDirection.y;
 	}
 	
 	// Update is called once per frame
@@ -108,6 +98,8 @@ public class FPSInput : MonoBehaviour {
 		movement *= Time.deltaTime;
 		movement = transform.TransformDirection(movement);
 		_charController.Move(movement);
+
+
 	}
 
 	void OnControllerColliderHit(ControllerColliderHit hit) {
