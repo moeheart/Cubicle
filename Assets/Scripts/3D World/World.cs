@@ -48,7 +48,9 @@ public class World : MonoBehaviour {
 		}
 		player = Instantiate(playerPrefab) as GameObject;
 		player.transform.position = new Vector3(10,10,10);
-		player.GetComponent<FPSInput>().joystick = joystick;
+		#if UNITY_IOS
+			player.AddComponent<iOSPlayerTouchInput>().joystick = joystick;
+		#endif
 	}
 
 	private void ParseJsonString(string data) {

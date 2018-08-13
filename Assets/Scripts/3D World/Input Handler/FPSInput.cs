@@ -12,6 +12,7 @@ public class FPSInput : MonoBehaviour {
 	public float minFall = -1.5f;
 
 	public Joystick joystick;
+	private iOSPlayerTouchInput touchInput;
 
 	private float _vertSpeed;
 	private ControllerColliderHit _contact;
@@ -24,13 +25,14 @@ public class FPSInput : MonoBehaviour {
 		_vertSpeed = minFall;
 		_charController = GetComponent<CharacterController>();
 		_animator = GetComponent<Animator>();
+		touchInput = GetComponent<iOSPlayerTouchInput>();
 
 //		movementPanel = GameObject.Find("Movement Panel").GetComponent<MovementPanel>();
 	}
 
 	private float GetHorizontalMovement(){
 		#if UNITY_IOS
-			return joystick.InputDirection.x;
+			return touchInput.inputDirection.x;
 		#else
 			return Input.GetAxis("Horizontal");
 		#endif
@@ -38,7 +40,7 @@ public class FPSInput : MonoBehaviour {
 
 	private float GetVerticalMovement() {
 		#if UNITY_IOS
-			return joystick.InputDirection.y;
+			return touchInput.inputDirection.y;
 		#else
 			return Input.GetAxis("Vertical");
 		#endif
@@ -67,7 +69,8 @@ public class FPSInput : MonoBehaviour {
 			}
 
 		if (hitGround) {
-			if (Input.GetButtonDown("Jump")) {
+			if (Input.GetButtonDown("Jump") || touchInput.instructedJump) {
+				touchInput.instructedJump = false;
 				_vertSpeed = jumpSpeed;
 			}
 			else {
@@ -92,11 +95,6 @@ public class FPSInput : MonoBehaviour {
 					movement += _contact.normal * walkingSpeed;
 				}
 			}
-		}
-
-		//TODO
-		if (Input.GetButton("Jump")) {
-			_vertSpeed = jumpSpeed;
 		}
 
 		movement.y = _vertSpeed;

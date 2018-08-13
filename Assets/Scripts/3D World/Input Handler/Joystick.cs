@@ -18,6 +18,10 @@ public class Joystick : MonoBehaviour, IDragHandler, IPointerUpHandler, IPointer
 		InputDirection = Vector3.zero;
 	}
 
+	public bool IsPositionInContainer(Vector2 position) {
+		return false;
+	}
+
 	public void OnDrag(PointerEventData eventData) {
 		Vector2 position = Vector2.zero;
 
