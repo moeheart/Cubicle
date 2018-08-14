@@ -49,7 +49,7 @@ public class World : MonoBehaviour {
 		player = Instantiate(playerPrefab) as GameObject;
 		player.transform.position = new Vector3(10,10,10);
 		#if UNITY_IOS
-			player.AddComponent<iOSPlayerTouchInput>().joystick = joystick;
+			player.GetComponent<iOSPlayerTouchInput>().joystick = joystick;
 		#endif
 	}
 

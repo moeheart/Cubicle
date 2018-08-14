@@ -24,8 +24,6 @@ public class iOSPlayerTouchInput : MonoBehaviour {
 	public float sensitivityVert = 9.0f;
 	public float minimumVert = -45.0f;
 	public float maximumVert = 45.0f;
-
-	private float _rotationX = 0;
 	
 	private Transform cameraTransform;
 	private Camera mainCamera;
@@ -128,16 +126,21 @@ public class iOSPlayerTouchInput : MonoBehaviour {
 		float Y = Input.acceleration.y;
 		float Z = Input.acceleration.z;
 
-		X = 0.01f;
-
       	transform.Rotate(0, X * sensitivityHor, 0);
+
+		Debug.Log(Input.acceleration);
 		
-		_rotationX -= Y * sensitivityVert;
-		_rotationX = Mathf.Clamp(_rotationX, minimumVert, maximumVert);
+		float rotationX;
+		rotationX = cameraTransform.localEulerAngles.x - Y * sensitivityVert;
+		//Debug.Log(rotationX);
+		if (rotationX > 180) {
+			rotationX -= 360;
+		}
+		rotationX = Mathf.Clamp(rotationX, minimumVert, maximumVert);
 
 		float rotationY = transform.localEulerAngles.y;
 
-		cameraTransform.localEulerAngles = new Vector3(_rotationX, rotationY, 0);
+		cameraTransform.localRotation = Quaternion.Euler(rotationX, 0, 0);
 	}
 
 	void Rotate()
