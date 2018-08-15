@@ -20,10 +20,13 @@ public class iOSPlayerTouchInput : MonoBehaviour {
 	public bool kInverse = false;
 	public bool instructedJump = false;
 	public Vector2 inputDirection;
-	public float sensitivityHor = 9.0f;
-	public float sensitivityVert = 9.0f;
+	public static float sensitivityHor = 9.0f;
+	public static float sensitivityVert = 9.0f;
 	public float minimumVert = -45.0f;
 	public float maximumVert = 45.0f;
+
+	public static float touchSensitivityHor = 0.04f;
+	public static float touchSensitivityVert = 0.04f;
 	
 	private Transform cameraTransform;
 	private Camera mainCamera;
@@ -121,14 +124,33 @@ public class iOSPlayerTouchInput : MonoBehaviour {
 		}
 	}
 
+	private void RotateFromVector2D(Vector2 vec) {
+		float X = vec.x;
+		float Y = vec.y;
+      	transform.Rotate(0, X, 0);
+
+		//Debug.Log(Input.acceleration);
+		
+		float rotationX;
+		rotationX = cameraTransform.localEulerAngles.x - Y;
+		//Debug.Log(rotationX);
+		if (rotationX > 180) {
+			rotationX -= 360;
+		}
+		rotationX = Mathf.Clamp(rotationX, minimumVert, maximumVert);
+
+		cameraTransform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+	}
+
 	private void RotateFromAccelerometer() {
-		float X = Input.acceleration.x;
-		float Y = Input.acceleration.y;
-		float Z = Input.acceleration.z;
+		float X = -Input.gyro.rotationRateUnbiased.y * sensitivityHor;
+		float Y = Input.gyro.rotationRateUnbiased.x * sensitivityVert;
+		float Z = Input.gyro.rotationRateUnbiased.z;
+		RotateFromVector2D(new Vector2(X,Y));
 
-      	transform.Rotate(0, X * sensitivityHor, 0);
+		/* transform.Rotate(0, X * sensitivityHor, 0);
 
-		Debug.Log(Input.acceleration);
+		//Debug.Log(Input.acceleration);
 		
 		float rotationX;
 		rotationX = cameraTransform.localEulerAngles.x - Y * sensitivityVert;
@@ -138,13 +160,16 @@ public class iOSPlayerTouchInput : MonoBehaviour {
 		}
 		rotationX = Mathf.Clamp(rotationX, minimumVert, maximumVert);
 
-		float rotationY = transform.localEulerAngles.y;
-
-		cameraTransform.localRotation = Quaternion.Euler(rotationX, 0, 0);
+		cameraTransform.localRotation = Quaternion.Euler(rotationX, 0, 0); */
 	}
 
 	void Rotate()
 	{
+		Vector2 vec = rightFingerLastPoint - rightFingerCurrentPoint;
+		vec.x *= touchSensitivityHor;
+		vec.y *= touchSensitivityVert;
+		RotateFromVector2D(vec);
+		/*
 		Vector3 lastDirectionInGlobal = mainCamera.ScreenPointToRay(rightFingerLastPoint).direction;
 		Vector3 currentDirectionInGlobal = mainCamera.ScreenPointToRay(rightFingerCurrentPoint).direction;
 
@@ -157,7 +182,7 @@ public class iOSPlayerTouchInput : MonoBehaviour {
 		rotation.SetFromToRotation(cameraTransform.InverseTransformDirection(lastDirectionInGlobal),
 			cameraTransform.InverseTransformDirection(currentDirectionInGlobal));
 		cameraTransform.localRotation = Quaternion.Euler(kInverse ? rotation.eulerAngles.x : -rotation.eulerAngles.x, 0, 0) * cameraTransform.localRotation;
-
+		*/
 		rightFingerLastPoint = rightFingerCurrentPoint;
 	}
 }

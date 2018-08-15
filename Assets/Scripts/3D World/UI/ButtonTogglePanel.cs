@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuButton : MonoBehaviour {
+public class ButtonTogglePanel : MonoBehaviour {
 
 	public GameObject menuPanel;
 
-	public static bool isActive = false;
+	public bool isActive = false;
 
 	// Use this for initialization
 	void Start () {
@@ -16,12 +16,17 @@ public class MenuButton : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetKeyDown(KeyCode.Escape)) {
-			ToggleMenuPanel();
-		}
 	}
 
-	public void ToggleMenuPanel() {
+	public void DisablePanel() {
+		menuPanel.SetActive(false);
+	}
+
+	public void EnablePanel() {
+		menuPanel.SetActive(true);
+	}
+
+	public void TogglePanel() {
 		isActive = !isActive;
 		menuPanel.SetActive(isActive);
 	}
