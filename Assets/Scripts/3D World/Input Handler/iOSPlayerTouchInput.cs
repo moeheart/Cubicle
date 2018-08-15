@@ -125,6 +125,9 @@ public class iOSPlayerTouchInput : MonoBehaviour {
 	}
 
 	private void RotateFromVector2D(Vector2 vec) {
+		if (WorldCanvas.isMenuActive) {
+			return;
+		}
 		float X = vec.x;
 		float Y = vec.y;
       	transform.Rotate(0, X, 0);

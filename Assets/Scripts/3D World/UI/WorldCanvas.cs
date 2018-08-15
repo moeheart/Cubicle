@@ -10,6 +10,8 @@ public class WorldCanvas : MonoBehaviour {
 	private Button menuButton;
 	private Button controlSettingsButton;
 
+	public static bool isMenuActive {get; private set; }
+
 	// Use this for initialization
 	void Start () {
 		menuButton = buttons[0];
@@ -19,6 +21,7 @@ public class WorldCanvas : MonoBehaviour {
 		controlSettingsButton.onClick.AddListener(
 			delegate {OnClickButton(controlSettingsButton); } 
 		);
+		isMenuActive = false;
 	}
 	
 	// Update is called once per frame
@@ -30,6 +33,7 @@ public class WorldCanvas : MonoBehaviour {
 		foreach (Button itButton in buttons) {
 			if (itButton == clickedButton) {
 				clickedButton.GetComponent<ButtonTogglePanel>().TogglePanel();
+				isMenuActive = clickedButton.GetComponent<ButtonTogglePanel>().isActive;
 			}
 			else {
 				itButton.GetComponent<ButtonTogglePanel>().DisablePanel();
