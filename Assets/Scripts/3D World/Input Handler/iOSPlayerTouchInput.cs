@@ -18,7 +18,7 @@ public class iOSPlayerTouchInput : MonoBehaviour {
 
 	public Joystick joystick;
 	public bool kInverse = false;
-	public bool instructedJump = false;
+	public bool pressedRightFinger = false;
 	public Vector2 inputDirection;
 	public static float sensitivityHor = 9.0f;
 	public static float sensitivityVert = 9.0f;
@@ -37,7 +37,7 @@ public class iOSPlayerTouchInput : MonoBehaviour {
 	private Vector2 leftFingerStartPoint;
 	private Vector2 leftFingerCurrentPoint;
 	private Vector2 rightFingerStartPoint;
-	private Vector2 rightFingerCurrentPoint;
+	public Vector2 rightFingerCurrentPoint {get; private set;}
 	private Vector2 rightFingerLastPoint;
 	private bool isRotating;
 
@@ -45,10 +45,14 @@ public class iOSPlayerTouchInput : MonoBehaviour {
 		mainCamera = Camera.main;
 		cameraTransform = Camera.main.transform;
 		charController = this.GetComponent<CharacterController>();
-		instructedJump = false;
+		pressedRightFinger = false;
 	}
 
 	void Update() {
+	}
+
+	public void TrackChanges() {
+		pressedRightFinger = false;
 		if (Application.isEditor)
 		{
 			if (Input.GetMouseButtonDown(0))
@@ -107,7 +111,7 @@ public class iOSPlayerTouchInput : MonoBehaviour {
 		else if (fingerId == rightFingerId) {
 			rightFingerId = -1;
 			if (isRotating == false) {
-				instructedJump = true;
+				pressedRightFinger = true;
 			}
 		}
 	}
