@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine.UI;
 
 public class BaseGrid : MonoBehaviour {
 
@@ -19,12 +20,37 @@ public class BaseGrid : MonoBehaviour {
 	private int id;
 	private string logPath;
 
+	private GameObject selectGridControlPanel;
+
+	private GameObject increaseDecreasePanel;
+
+	private Button up, left, right, down;
+
+	private Button inc, dec;
+
 	public static float startTime {get; private set;}
 
 	// Use this for initialization
 	void Start () {
 		id = DataUtil.GetCurrentRoomId();
 		DrawingHandler = GameObject.Find("Drawing Handler");
+		selectGridControlPanel = GameObject.Find("Select Grid Control Panel");
+		increaseDecreasePanel = GameObject.Find("Increase Decrease Panel");
+		
+		up = selectGridControlPanel.transform.GetChild(0).GetComponent<Button>();
+		left = selectGridControlPanel.transform.GetChild(1).GetComponent<Button>();
+		right = selectGridControlPanel.transform.GetChild(2).GetComponent<Button>();
+		down = selectGridControlPanel.transform.GetChild(3).GetComponent<Button>();
+		inc = increaseDecreasePanel.transform.GetChild(0).GetComponent<Button>();
+		dec = increaseDecreasePanel.transform.GetChild(1).GetComponent<Button>();
+
+		up.onClick.AddListener(OnUpClick);
+		left.onClick.AddListener(OnLeftClick);
+		right.onClick.AddListener(OnRightClick);
+		down.onClick.AddListener(OnDownClick);
+		inc.onClick.AddListener(OnIncreaseClick);
+		dec.onClick.AddListener(OnDecreaseClick);
+		
 		logPath = Path.Combine(Application.persistentDataPath, "Logs/Block Builder/Block Builder.txt");
 		startTime = Time.time;
 		BlockBuilderLog.Log(logPath, id, "Entered Level...!!!");
@@ -182,5 +208,51 @@ public class BaseGrid : MonoBehaviour {
 		designatedCell.DeleteCube();
 
 		DrawingHandler.GetComponent<DrawingHandler>().DrawMultiView(cells);
+	}
+
+	private void OnUpClick() {
+		IntVector2 newCoordinates = currentCoordinates;
+		newCoordinates.z++;
+		ChangeCurrentCoordinates(newCoordinates);
+	}
+
+	private void OnLeftClick() {
+		IntVector2 newCoordinates = currentCoordinates;
+		newCoordinates.x--;
+		ChangeCurrentCoordinates(newCoordinates);
+	}
+
+	private void OnRightClick() {
+		IntVector2 newCoordinates = currentCoordinates;
+		newCoordinates.x++;
+		ChangeCurrentCoordinates(newCoordinates);
+	}
+
+	private void OnDownClick() {
+		IntVector2 newCoordinates = currentCoordinates;
+		newCoordinates.z--;
+		ChangeCurrentCoordinates(newCoordinates);
+	}
+
+	private void OnIncreaseClick(){
+		if (isCompleted) {
+			return;
+		}
+		var cc = currentCoordinates;
+		GenerateLog(1, cc);
+		AddCubeToCoordinate(cc);
+	}
+
+	private void OnDecreaseClick() {
+		if (isCompleted) {
+			return;
+		}
+		var cc = currentCoordinates;
+		GenerateLog(-1, cc);
+		DeleteCubeFromCoordinate(cc);
+	}
+
+	private void OnClickExit() {
+
 	}
 }

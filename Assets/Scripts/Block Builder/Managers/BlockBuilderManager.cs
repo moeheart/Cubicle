@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class BlockBuilderManager : MonoBehaviour {
 
@@ -18,7 +19,7 @@ public class BlockBuilderManager : MonoBehaviour {
 			RestartGame();
 		}*/
 		if (Input.GetKeyDown(KeyCode.Q)) {
-			SceneManager.LoadScene("World Scene");
+			OnClickExit();
 		}
 	}
 
@@ -35,5 +36,9 @@ public class BlockBuilderManager : MonoBehaviour {
 
 	public static void OnComplete() {
 		baseGridInstance.OnCompleteBlockBuilderPuzzle();
+	}
+
+	public void OnClickExit() {
+		SceneManager.LoadScene("World Scene");
 	}
 }
