@@ -54,7 +54,7 @@ public class RotateObject : MonoBehaviour {
 	}
 
 	private void RotateFromGyro() {
-		float X = -Input.gyro.rotationRateUnbiased.y * sensitivityGyroHor;
+		float X = Input.gyro.rotationRateUnbiased.y * sensitivityGyroHor;
 		float Y = Input.gyro.rotationRateUnbiased.x * sensitivityGyroVert;
 		float Z = Input.gyro.rotationRateUnbiased.z;
 		RotateFromVector2D(new Vector2(X,Y));
@@ -82,7 +82,7 @@ public class RotateObject : MonoBehaviour {
 
 	public void SnapBack() {
 		
-		this.transform.localRotation = Quaternion.Slerp(transform.rotation, originalRotation, 15 * Time.deltaTime);
+		this.transform.localRotation = originalRotation;
 		//this.transform.localRotation = originalRotation;
 	}
 }

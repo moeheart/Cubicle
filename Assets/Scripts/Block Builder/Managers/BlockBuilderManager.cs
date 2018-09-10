@@ -25,7 +25,8 @@ public class BlockBuilderManager : MonoBehaviour {
 
 	private void BeginGame() {
 		baseGridInstance = Instantiate (baseGridPrefab) as BaseGrid;
-		StartCoroutine(baseGridInstance.Generate());
+		// StartCoroutine(baseGridInstance.Generate());
+		baseGridInstance.GenerateCells();
 	}
 
 	private void RestartGame(){

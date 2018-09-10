@@ -151,6 +151,16 @@ public class BaseGrid : MonoBehaviour {
 			coordinates.z - size.z * cellLength/2 + cellLength/2);
 	}
 
+	public void GenerateCells() {
+		cells = new BaseGridCell[size.x, size.z];
+		for (int x = 0; x < size.x; ++x) {
+			for (int z = 0; z < size.z; ++z) {
+				CreateCell(new IntVector2(x,z));
+			}
+		}
+		HighlightCell(currentCoordinates);
+	}
+
 
 	//Simply changes the color of the designated cell
 	private void HighlightCell(IntVector2 coordinates) {
