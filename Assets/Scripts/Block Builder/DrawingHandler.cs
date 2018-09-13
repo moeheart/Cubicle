@@ -33,7 +33,8 @@ public class DrawingHandler : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		levelCompleteText.enabled = false;
-		jsonFilePath = Path.Combine(Application.streamingAssetsPath, Configurations.jsonFilename);
+		jsonFilePath = Path.Combine(Application.streamingAssetsPath, BlockBuilderConfigs.jsonFilename);
+		Debug.Log(jsonFilePath);
 		/*
 		saveFilePath = Path.Combine(Application.persistentDataPath, "game.dat");
 
@@ -45,7 +46,8 @@ public class DrawingHandler : MonoBehaviour {
 		id = (int)gameState["current room id"];
 		*/
 
-		id = DataUtil.GetCurrentRoomId();
+		//TODO: change this
+		id = 2;
 
 		height = new int[BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.gridSize.z];
 		ParseJson(jsonFilePath, height, id);

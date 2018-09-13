@@ -9,4 +9,8 @@ public class BlockBuilderConfigs{
 
 	public static int panelLengthPerBlock = 100;
 
+	public static string jsonFilename = "Block Builder.json";
+
+	public static int id = 1;
+
 }

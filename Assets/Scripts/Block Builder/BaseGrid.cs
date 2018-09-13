@@ -23,7 +23,8 @@ public class BaseGrid : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		id = DataUtil.GetCurrentRoomId();
+		// TODO
+		id = 2;
 		DrawingHandler = GameObject.Find("Drawing Handler");
 		logPath = Path.Combine(Application.persistentDataPath, "Logs/Block Builder/Block Builder.txt");
 		startTime = Time.time;
@@ -75,6 +76,7 @@ public class BaseGrid : MonoBehaviour {
 		BaseGridCell designatedCell = 
 			cells[currentCoordinates.x, currentCoordinates.z];
 		int heightBeforeOp = designatedCell.height;
+		Debug.Log("DrawingHandler", DrawingHandler);
 		int[,] target = DrawingHandler.GetComponent<DrawingHandler>().height;
 		int targetHeight = target[currentCoordinates.x, currentCoordinates.z];
 		if (op == 1) {
