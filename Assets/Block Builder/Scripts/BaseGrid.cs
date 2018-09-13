@@ -24,7 +24,7 @@ public class BaseGrid : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		// TODO
-		id = 2;
+		id = BlockBuilderConfigs.id;
 		DrawingHandler = GameObject.Find("Drawing Handler");
 		logPath = Path.Combine(Application.persistentDataPath, "Logs/Block Builder/Block Builder.txt");
 		startTime = Time.time;

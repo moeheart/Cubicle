@@ -34,6 +34,7 @@ public class BlockBuilderManager : MonoBehaviour {
 	}
 
 	public static void OnComplete() {
+		BlockBuilderConfigs.id ++;
 		baseGridInstance.OnCompleteBlockBuilderPuzzle();
 	}
 }

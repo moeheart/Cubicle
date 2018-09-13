@@ -11,6 +11,6 @@ public class BlockBuilderConfigs{
 
 	public static string jsonFilename = "Block Builder.json";
 
-	public static int id = 1;
+	public static int id = 2;
 
 }

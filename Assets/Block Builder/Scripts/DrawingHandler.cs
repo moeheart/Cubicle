@@ -47,7 +47,7 @@ public class DrawingHandler : MonoBehaviour {
 		*/
 
 		//TODO: change this
-		id = 2;
+		id = BlockBuilderConfigs.id;
 
 		height = new int[BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.gridSize.z];
 		ParseJson(jsonFilePath, height, id);
@@ -108,7 +108,7 @@ public class DrawingHandler : MonoBehaviour {
 			//TODO
 			//Unlock this room!
 			//To unlock this room, we only need to store this id in the savefile
-			DataUtil.UnlockCurrentRoom();
+			// DataUtil.UnlockCurrentRoom();
 			/*((List<int>) gameState["unlocked rooms"]).Add(id);
 			FileStream stream = File.Create(saveFilePath);
 			BinaryFormatter formatter = new BinaryFormatter();
