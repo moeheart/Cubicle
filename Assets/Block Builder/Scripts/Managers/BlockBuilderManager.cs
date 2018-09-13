@@ -18,7 +18,7 @@ public class BlockBuilderManager : MonoBehaviour {
 			RestartGame();
 		}*/
 		if (Input.GetKeyDown(KeyCode.Q)) {
-			SceneManager.LoadScene("World Scene");
+			SceneManager.LoadScene("Block Builder Scene");
 		}
 	}
 
