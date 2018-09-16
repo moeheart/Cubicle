@@ -28,7 +28,7 @@ public class DrawingHandler : MonoBehaviour {
 
 	private Dictionary<string, object> gameState;
 
-	public int[,] height {get; private set;}
+	// public int[,] height {get; private set;}
 
 	// Use this for initialization
 	void Start () {
@@ -47,11 +47,11 @@ public class DrawingHandler : MonoBehaviour {
 		*/
 
 		//TODO: change this
-		id = BlockBuilderConfigs.id;
+		// id = BlockBuilderConfigs.id;
 
-		height = new int[BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.gridSize.z];
-		ParseJson(jsonFilePath, height, id);
-		Dictionary<IntVector3, bool> targetBlock = To3DMapping(height);
+		// height = new int[BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.gridSize.z];
+		// ParseJson(jsonFilePath, height, id);
+		Dictionary<IntVector3, bool> targetBlock = To3DMapping(BlockBuilderManager.height);
 		
 		targetTopView = ThreeView.GetTopView(targetBlock);
 		targetFrontView = ThreeView.GetFrontView(targetBlock);

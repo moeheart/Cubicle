@@ -1,15 +1,37 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System.IO;
+using MiniJSON;
 
 public class BlockBuilderManager : MonoBehaviour {
 
 	public BaseGrid baseGridPrefab;
 	public static BaseGrid baseGridInstance {get; private set;}
 
+	public static int [,] height {get; private set;}
+
+	private static bool isTutorialLevel;
+	
+	private int currentLevelId;
+
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		BeginGame();
+		if (SceneManager.GetActiveScene().name == BlockBuilderConfigs.blockBuilderTutorialSceneName) {
+			isTutorialLevel = true;
+			currentLevelId = 0;
+		}
+		else {
+			isTutorialLevel = false;
+			currentLevelId = BlockBuilderConfigs.id;
+		}
+
+		//TODO load the height array, which represents the 3D model
+		height = new int[BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.gridSize.z];
+		string jsonFilePath = Path.Combine(Application.streamingAssetsPath, BlockBuilderConfigs.jsonFilename);
+		ParseJson(jsonFilePath, height, currentLevelId);
 	}
 	
 	// Update is called once per frame
@@ -18,7 +40,7 @@ public class BlockBuilderManager : MonoBehaviour {
 			RestartGame();
 		}*/
 		if (Input.GetKeyDown(KeyCode.Q)) {
-			SceneManager.LoadScene("Block Builder Scene");
+			SceneManager.LoadScene("Block Builder Home");
 		}
 	}
 
@@ -34,7 +56,34 @@ public class BlockBuilderManager : MonoBehaviour {
 	}
 
 	public static void OnComplete() {
-		BlockBuilderConfigs.id ++;
+		//TODO 
+		if (isTutorialLevel) {
+			
+		}
+		else {
+			BlockBuilderConfigs.id ++;
+		}
 		baseGridInstance.OnCompleteBlockBuilderPuzzle();
+	}
+
+	private void ParseJson(string jsonFilePath, int[,] height, int roomId) {
+		string jsonString = File.ReadAllText(jsonFilePath);
+		Dictionary<string, object> dict;
+		dict = Json.Deserialize(jsonString) as Dictionary<string,object>;
+		dict = (Dictionary<string, object>)dict[roomId.ToString()];
+
+		if (dict.ContainsKey("isTutorial")) {
+			if (SceneManager.GetActiveScene().name != "Block Builder Tutorial Scene") {
+				SceneManager.LoadScene("Block Builder Tutorial Scene", LoadSceneMode.Single);
+			}
+		}
+
+		List<object> _2DList = ((List<object>) dict["height"]);
+		for (int i = 0; i < BlockBuilderConfigs.gridSize.x; ++i) {
+			List<object> _list = ((List<object>) _2DList[i]);
+			for (int j = 0; j < BlockBuilderConfigs.gridSize.z; ++j) {
+				height[i,j] = System.Convert.ToInt32(_list[j]);
+			}
+		}
 	}
 }

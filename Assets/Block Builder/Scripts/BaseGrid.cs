@@ -77,7 +77,7 @@ public class BaseGrid : MonoBehaviour {
 			cells[currentCoordinates.x, currentCoordinates.z];
 		int heightBeforeOp = designatedCell.height;
 		Debug.Log("DrawingHandler", DrawingHandler);
-		int[,] target = DrawingHandler.GetComponent<DrawingHandler>().height;
+		int[,] target = BlockBuilderManager.height;
 		int targetHeight = target[currentCoordinates.x, currentCoordinates.z];
 		if (op == 1) {
 			if (heightBeforeOp < targetHeight) {
