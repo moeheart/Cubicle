@@ -20,8 +20,6 @@ public class DrawingHandler : MonoBehaviour {
 	private Dictionary<Segment,LineType> targetFrontView;
 	private Dictionary<Segment,LineType> targetRightView;
 
-	private string jsonFilePath;
-
 	private string saveFilePath;
 
 	private int id;
@@ -33,8 +31,6 @@ public class DrawingHandler : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		levelCompleteText.enabled = false;
-		jsonFilePath = Path.Combine(Application.streamingAssetsPath, BlockBuilderConfigs.jsonFilename);
-		Debug.Log(jsonFilePath);
 		/*
 		saveFilePath = Path.Combine(Application.persistentDataPath, "game.dat");
 
