@@ -11,6 +11,9 @@ public class BlockBuilderConfigs{
 
 	public static string jsonFilename = "Block Builder.json";
 
-	public static int id = 2;
+	public static int id = 1;
+
+	public static string blockBuilderTutorialSceneName = "Block Builder Tutorial";
+	public static string blockBuilderMainGameSceneName = "Block Builder Main Game";
 
 }
