@@ -20,20 +20,17 @@ public class DrawingHandler : MonoBehaviour {
 	private Dictionary<Segment,LineType> targetFrontView;
 	private Dictionary<Segment,LineType> targetRightView;
 
-	private string jsonFilePath;
-
 	private string saveFilePath;
 
 	private int id;
 
 	private Dictionary<string, object> gameState;
 
-	public int[,] height {get; private set;}
+	// public int[,] height {get; private set;}
 
 	// Use this for initialization
 	void Start () {
 		levelCompleteText.enabled = false;
-		jsonFilePath = Path.Combine(Application.streamingAssetsPath, Configurations.jsonFilename);
 		/*
 		saveFilePath = Path.Combine(Application.persistentDataPath, "game.dat");
 
@@ -45,11 +42,12 @@ public class DrawingHandler : MonoBehaviour {
 		id = (int)gameState["current room id"];
 		*/
 
-		id = DataUtil.GetCurrentRoomId();
+		//TODO: change this
+		// id = BlockBuilderConfigs.id;
 
-		height = new int[BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.gridSize.z];
-		ParseJson(jsonFilePath, height, id);
-		Dictionary<IntVector3, bool> targetBlock = To3DMapping(height);
+		// height = new int[BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.gridSize.z];
+		// ParseJson(jsonFilePath, height, id);
+		Dictionary<IntVector3, bool> targetBlock = To3DMapping(BlockBuilderManager.height);
 		
 		targetTopView = ThreeView.GetTopView(targetBlock);
 		targetFrontView = ThreeView.GetFrontView(targetBlock);
@@ -58,6 +56,12 @@ public class DrawingHandler : MonoBehaviour {
 		targetTopViewPanel.GetComponent<ViewPanel>().DrawView(targetTopView);
 		targetFrontViewPanel.GetComponent<ViewPanel>().DrawView(targetFrontView);
 		targetRightViewPanel.GetComponent<ViewPanel>().DrawView(targetRightView);
+	}
+
+	void Update () {
+		targetFrontViewPanel.GetComponent<ViewPanel>().ChangeColorOnViewMatch();
+		targetRightViewPanel.GetComponent<ViewPanel>().ChangeColorOnViewMatch();
+		targetTopViewPanel.GetComponent<ViewPanel>().ChangeColorOnViewMatch();
 	}
 	
 	private void ParseJson(string jsonFilePath, int[,] height, int roomId) {
@@ -88,17 +92,17 @@ public class DrawingHandler : MonoBehaviour {
 		Dictionary<Segment, LineType> topView = ThreeView.GetTopView(cubes);
 		currentTopViewPanel.GetComponent<ViewPanel>().DrawView(topView);
 		isTopViewCorrect = CompareCurrentAndTargetView(topView, targetTopView);
-		targetTopViewPanel.GetComponent<ViewPanel>().ChangeColorOnCompare(isTopViewCorrect);
+		currentTopViewPanel.GetComponent<ViewPanel>().ChangeColorOnCompare(isTopViewCorrect);
 
 		Dictionary<Segment, LineType> frontView = ThreeView.GetFrontView(cubes);
 		currentFrontViewPanel.GetComponent<ViewPanel>().DrawView(frontView);
 		isFrontViewCorrect = CompareCurrentAndTargetView(frontView, targetFrontView);
-		targetFrontViewPanel.GetComponent<ViewPanel>().ChangeColorOnCompare(isFrontViewCorrect);
+		currentFrontViewPanel.GetComponent<ViewPanel>().ChangeColorOnCompare(isFrontViewCorrect);
 
 		Dictionary<Segment, LineType> rightView = ThreeView.GetRightView(cubes);
 		currentRightViewPanel.GetComponent<ViewPanel>().DrawView(rightView);
 		isRightViewCorrect = CompareCurrentAndTargetView(rightView, targetRightView);
-		targetRightViewPanel.GetComponent<ViewPanel>().ChangeColorOnCompare(isRightViewCorrect);
+		currentRightViewPanel.GetComponent<ViewPanel>().ChangeColorOnCompare(isRightViewCorrect);
 
 		if (isTopViewCorrect && isFrontViewCorrect && isRightViewCorrect) {
 			BlockBuilderManager.OnComplete();
@@ -106,7 +110,7 @@ public class DrawingHandler : MonoBehaviour {
 			//TODO
 			//Unlock this room!
 			//To unlock this room, we only need to store this id in the savefile
-			DataUtil.UnlockCurrentRoom();
+			// DataUtil.UnlockCurrentRoom();
 			/*((List<int>) gameState["unlocked rooms"]).Add(id);
 			FileStream stream = File.Create(saveFilePath);
 			BinaryFormatter formatter = new BinaryFormatter();

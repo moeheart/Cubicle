@@ -32,7 +32,8 @@ public class BaseGrid : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		id = DataUtil.GetCurrentRoomId();
+		// TODO
+		id = BlockBuilderConfigs.id;
 		DrawingHandler = GameObject.Find("Drawing Handler");
 		selectGridControlPanel = GameObject.Find("Select Grid Control Panel");
 		increaseDecreasePanel = GameObject.Find("Increase Decrease Panel");
@@ -101,7 +102,8 @@ public class BaseGrid : MonoBehaviour {
 		BaseGridCell designatedCell = 
 			cells[currentCoordinates.x, currentCoordinates.z];
 		int heightBeforeOp = designatedCell.height;
-		int[,] target = DrawingHandler.GetComponent<DrawingHandler>().height;
+		Debug.Log("DrawingHandler", DrawingHandler);
+		int[,] target = BlockBuilderManager.height;
 		int targetHeight = target[currentCoordinates.x, currentCoordinates.z];
 		if (op == 1) {
 			if (heightBeforeOp < targetHeight) {
@@ -121,12 +123,10 @@ public class BaseGrid : MonoBehaviour {
 		}
 	}
 
-	public IEnumerator Generate() {
-		WaitForSeconds delay = new WaitForSeconds(generationStepDelay);
+	public void Generate() {
 		cells = new BaseGridCell[size.x, size.z];
 		for (int x = 0; x < size.x; ++x) {
 			for (int z = 0; z < size.z; ++z) {
-				yield return delay;
 				CreateCell(new IntVector2(x,z));
 			}
 		}

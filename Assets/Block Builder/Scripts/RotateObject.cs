@@ -81,8 +81,6 @@ public class RotateObject : MonoBehaviour {
 	}
 
 	public void SnapBack() {
-		
 		this.transform.localRotation = originalRotation;
-		//this.transform.localRotation = originalRotation;
 	}
 }
