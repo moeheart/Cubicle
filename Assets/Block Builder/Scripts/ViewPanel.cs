@@ -22,6 +22,9 @@ public class ViewPanel : MonoBehaviour {
 
 	private Color defaultColor;
 	private Color highlightColor = new Color(0,1,1,0.2f);
+
+	private BaseGrid baseGridInstance;
+
 	void Awake () {
 		if (viewType == ViewType.TopView) {
 			blockSize.x = BlockBuilderConfigs.gridSize.x;
@@ -51,12 +54,11 @@ public class ViewPanel : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-
+		baseGridInstance = BlockBuilderManager.baseGridInstance;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-	
 	}
 
 	public void ChangeColorOnCompare(bool flag) {
@@ -106,6 +108,50 @@ public class ViewPanel : MonoBehaviour {
 		lineRenderer.SetPosition(1, endPosition);
 
 		lines.Add(lineGameObject);
+
+	}
+
+	public void ChangeColorOnViewMatch() {
+		Vector3 gridEulerAngles = BlockBuilderManager.baseGridInstance.transform.localEulerAngles;
+		Vector3 deltaAngle;
+		switch (viewType) {
+			case ViewType.TopView:
+				deltaAngle = new Vector3(
+					Mathf.DeltaAngle(BlockBuilderConfigs.topViewAngle.x, gridEulerAngles.x),
+					Mathf.DeltaAngle(BlockBuilderConfigs.topViewAngle.y, gridEulerAngles.y),
+					Mathf.DeltaAngle(BlockBuilderConfigs.topViewAngle.z, gridEulerAngles.z)
+				);
+				SetColorBasedOnDeltaAngle(deltaAngle);
+				break;
+			case ViewType.FrontView:
+				deltaAngle = new Vector3(
+					Mathf.DeltaAngle(BlockBuilderConfigs.frontViewAngle.x, gridEulerAngles.x),
+					Mathf.DeltaAngle(BlockBuilderConfigs.frontViewAngle.y, gridEulerAngles.y),
+					Mathf.DeltaAngle(BlockBuilderConfigs.frontViewAngle.z, gridEulerAngles.z)
+				);
+				SetColorBasedOnDeltaAngle(deltaAngle);
+				break;
+			case ViewType.RightView:
+				deltaAngle = new Vector3(
+					Mathf.DeltaAngle(BlockBuilderConfigs.rightViewAngle.x, gridEulerAngles.x),
+					Mathf.DeltaAngle(BlockBuilderConfigs.rightViewAngle.y, gridEulerAngles.y),
+					Mathf.DeltaAngle(BlockBuilderConfigs.rightViewAngle.z, gridEulerAngles.z)
+				);
+				SetColorBasedOnDeltaAngle(deltaAngle);
+				break;
+		}
+	}
+
+	private void SetColorBasedOnDeltaAngle(Vector3 deltaAngle) {
+		float mag = Mathf.Abs(deltaAngle.x) + Mathf.Abs(deltaAngle.y) + Mathf.Abs(deltaAngle.z);
+		mag /= 540;
+		Debug.Log(deltaAngle);
+		if (mag > 0.08) {
+			this.GetComponent<Image>().color = defaultColor;
+		}
+		else {
+			this.GetComponent<Image>().color = new Color(mag, 1f, 1f);
+		}
 
 	}
 
