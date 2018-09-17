@@ -57,6 +57,12 @@ public class DrawingHandler : MonoBehaviour {
 		targetFrontViewPanel.GetComponent<ViewPanel>().DrawView(targetFrontView);
 		targetRightViewPanel.GetComponent<ViewPanel>().DrawView(targetRightView);
 	}
+
+	void Update () {
+		targetFrontViewPanel.GetComponent<ViewPanel>().ChangeColorOnViewMatch();
+		targetRightViewPanel.GetComponent<ViewPanel>().ChangeColorOnViewMatch();
+		targetTopViewPanel.GetComponent<ViewPanel>().ChangeColorOnViewMatch();
+	}
 	
 	private void ParseJson(string jsonFilePath, int[,] height, int roomId) {
 		string jsonString = File.ReadAllText(jsonFilePath);
@@ -86,17 +92,17 @@ public class DrawingHandler : MonoBehaviour {
 		Dictionary<Segment, LineType> topView = ThreeView.GetTopView(cubes);
 		currentTopViewPanel.GetComponent<ViewPanel>().DrawView(topView);
 		isTopViewCorrect = CompareCurrentAndTargetView(topView, targetTopView);
-		targetTopViewPanel.GetComponent<ViewPanel>().ChangeColorOnCompare(isTopViewCorrect);
+		currentTopViewPanel.GetComponent<ViewPanel>().ChangeColorOnCompare(isTopViewCorrect);
 
 		Dictionary<Segment, LineType> frontView = ThreeView.GetFrontView(cubes);
 		currentFrontViewPanel.GetComponent<ViewPanel>().DrawView(frontView);
 		isFrontViewCorrect = CompareCurrentAndTargetView(frontView, targetFrontView);
-		targetFrontViewPanel.GetComponent<ViewPanel>().ChangeColorOnCompare(isFrontViewCorrect);
+		currentFrontViewPanel.GetComponent<ViewPanel>().ChangeColorOnCompare(isFrontViewCorrect);
 
 		Dictionary<Segment, LineType> rightView = ThreeView.GetRightView(cubes);
 		currentRightViewPanel.GetComponent<ViewPanel>().DrawView(rightView);
 		isRightViewCorrect = CompareCurrentAndTargetView(rightView, targetRightView);
-		targetRightViewPanel.GetComponent<ViewPanel>().ChangeColorOnCompare(isRightViewCorrect);
+		currentRightViewPanel.GetComponent<ViewPanel>().ChangeColorOnCompare(isRightViewCorrect);
 
 		if (isTopViewCorrect && isFrontViewCorrect && isRightViewCorrect) {
 			BlockBuilderManager.OnComplete();
