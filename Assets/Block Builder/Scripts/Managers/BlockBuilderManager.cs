@@ -48,6 +48,7 @@ public class BlockBuilderManager : MonoBehaviour {
 		baseGridInstance = Instantiate (baseGridPrefab, Camera.main.transform) as BaseGrid;
 		baseGridInstance.transform.eulerAngles = new Vector3(0, 0 ,0);
 		baseGridInstance.transform.position = new Vector3(0, 0, 0);
+		// Camera.main.transform.LookAt(baseGridInstance.transform);
 		baseGridInstance.Generate();
 		// baseGridInstance.transform.localEulerAngles = new Vector3(-90, 90, -90);
 	}
