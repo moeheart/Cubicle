@@ -32,7 +32,7 @@ public class RotateObject : MonoBehaviour {
 
 	void SnapBack() {
 		
-		this.transform.localRotation = Quaternion.Slerp(transform.rotation, originalRotation, 15 * Time.deltaTime);
+		this.transform.localRotation = Quaternion.Slerp(transform.localRotation, originalRotation, 15 * Time.deltaTime);
 		//this.transform.localRotation = originalRotation;
 	}
 }
