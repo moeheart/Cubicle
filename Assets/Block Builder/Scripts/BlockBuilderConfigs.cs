@@ -16,4 +16,10 @@ public class BlockBuilderConfigs{
 	public static string blockBuilderTutorialSceneName = "Block Builder Tutorial";
 	public static string blockBuilderMainGameSceneName = "Block Builder Main Game";
 
+	public static Vector3 topViewAngle = new Vector3(-90, 90, -90);
+
+	public static Vector3 frontViewAngle = new Vector3(0, 0, 0);
+
+	public static Vector3 rightViewAngle = new Vector3(0, 90, 0);
+
 }
