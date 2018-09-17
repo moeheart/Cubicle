@@ -97,12 +97,10 @@ public class BaseGrid : MonoBehaviour {
 		}
 	}
 
-	public IEnumerator Generate() {
-		WaitForSeconds delay = new WaitForSeconds(generationStepDelay);
+	public void Generate() {
 		cells = new BaseGridCell[size.x, size.z];
 		for (int x = 0; x < size.x; ++x) {
 			for (int z = 0; z < size.z; ++z) {
-				yield return delay;
 				CreateCell(new IntVector2(x,z));
 			}
 		}
