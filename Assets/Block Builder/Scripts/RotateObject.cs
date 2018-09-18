@@ -11,9 +11,11 @@ public class RotateObject : MonoBehaviour {
 
 	private Button snapButton;
 
-	private float sensitivityGyroVert = 9.0f;
+	private float sensitivityGyroX = 9.0f;
 
-	private float sensitivityGyroHor = 9.0f;
+	private float sensitivityGyroY = 9.0f;
+
+	private float sensitivityGyroZ = 9.0f;
 
 	// Use this for initialization
 	void Start () {
@@ -54,10 +56,30 @@ public class RotateObject : MonoBehaviour {
 	}
 
 	private void RotateFromGyro() {
-		float X = Input.gyro.rotationRateUnbiased.y * sensitivityGyroHor;
-		float Y = Input.gyro.rotationRateUnbiased.x * sensitivityGyroVert;
-		float Z = Input.gyro.rotationRateUnbiased.z;
-		RotateFromVector2D(new Vector2(X,Y));
+		Vector3 gyroRotationRate = Input.gyro.rotationRateUnbiased;
+		float X = Input.gyro.rotationRateUnbiased.x * sensitivityGyroX;
+		float Y = Input.gyro.rotationRateUnbiased.y * sensitivityGyroY;
+		float Z = Input.gyro.rotationRateUnbiased.z * sensitivityGyroZ;
+		Vector3 rotateSpeed = new Vector3(-X, Z, Y);
+		Debug.Log(rotateSpeed);
+
+		float XX = Mathf.Abs(X);
+		float YY = Mathf.Abs(Y);
+		float ZZ = Mathf.Abs(Z);
+		if (XX > YY && XX > ZZ) {
+			Debug.Log("XX axis....!!!");
+		}
+		else if (YY>XX && YY > ZZ) {
+			Debug.Log("YY axis....!!!");
+		}
+		else {
+			Debug.Log("ZZ axis....!!!");
+		}
+
+		// rotateSpeed = new Vector3(0, 1, 0);
+
+		transform.Rotate(rotateSpeed, Space.World);
+		// RotateFromVector2D(new Vector2(X,Y));
 	}
 
 	private void RotateFromVector2D(Vector2 vec) {
