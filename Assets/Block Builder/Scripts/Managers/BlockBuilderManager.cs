@@ -70,6 +70,10 @@ public class BlockBuilderManager : MonoBehaviour {
 		baseGridInstance.OnCompleteBlockBuilderPuzzle();
 	}
 
+	public void OnClickExit() {
+		SceneManager.LoadScene("Block Builder Home");
+	}
+
 	private void ParseJson(string jsonFilePath, int[,] height, int roomId) {
 		string jsonString = File.ReadAllText(jsonFilePath);
 		Dictionary<string, object> dict;
