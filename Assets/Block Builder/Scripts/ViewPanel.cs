@@ -146,7 +146,7 @@ public class ViewPanel : MonoBehaviour {
 	private void SetColorBasedOnDeltaAngle(Vector3 deltaAngle) {
 		float mag = Mathf.Abs(deltaAngle.x) + Mathf.Abs(deltaAngle.y) + Mathf.Abs(deltaAngle.z);
 		mag /= 540;
-		Debug.Log(deltaAngle);
+		// Debug.Log(deltaAngle);
 		if (mag > 0.08) {
 			this.GetComponent<Image>().color = defaultColor;
 		}
