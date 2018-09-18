@@ -28,6 +28,8 @@ public class RotateObject : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
+		sensitivityGyroX = sensitivityGyroY = sensitivityGyroZ = BlockBuilderConfigs.sensitivityGyro;
+
 		if (Application.isEditor) {
 
 			if (Input.GetMouseButton(0)) {
@@ -64,7 +66,7 @@ public class RotateObject : MonoBehaviour {
 		Vector3 rotateSpeed = new Vector3(-X, Z, Y);
 		Debug.Log(rotateSpeed);
 
-		float XX = Mathf.Abs(X);
+		/*float XX = Mathf.Abs(X);
 		float YY = Mathf.Abs(Y);
 		float ZZ = Mathf.Abs(Z);
 		if (XX > YY && XX > ZZ) {
@@ -75,7 +77,7 @@ public class RotateObject : MonoBehaviour {
 		}
 		else {
 			Debug.Log("ZZ axis....!!!");
-		}
+		}*/
 
 		// rotateSpeed = new Vector3(0, 1, 0);
 
