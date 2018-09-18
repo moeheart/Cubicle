@@ -20,7 +20,7 @@ public class ViewPanel : MonoBehaviour {
 	private Vector2 panelSize; //E.g., the length is 300 by 500, equals blockSize * lengthPerBlock
 	private int lengthPerBlock = BlockBuilderConfigs.panelLengthPerBlock;
 
-	private Color defaultColor;
+	private Color defaultColor = new Color(1f, 1f, 1f, 1f);
 	private Color highlightColor = new Color(0,1,1,0.2f);
 
 	private BaseGrid baseGridInstance;
@@ -49,7 +49,7 @@ public class ViewPanel : MonoBehaviour {
 
 		this.GetComponent<RectTransform>().sizeDelta = new Vector2(panelSize.x, panelSize.y);
 
-		defaultColor = this.GetComponent<Image>().color;
+		this.GetComponent<Image>().color = defaultColor;
 	}
 
 	// Use this for initialization
@@ -103,6 +103,7 @@ public class ViewPanel : MonoBehaviour {
 			lineGameObject = Instantiate(dashedLine) as GameObject;
 		}
 		lineGameObject.transform.SetParent(this.transform, false);
+		lineGameObject.transform.localPosition = new Vector3(0,0,-1);
 		LineRenderer lineRenderer = lineGameObject.GetComponent<LineRenderer>();
 		lineRenderer.SetPosition(0, startPosition);
 		lineRenderer.SetPosition(1, endPosition);
