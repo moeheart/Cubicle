@@ -22,6 +22,7 @@ public class RotateObject : MonoBehaviour {
 		originalRotation = transform.localRotation;
 		snapButton = GameObject.Find("Snap Button").GetComponent<Button>();
 		snapButton.onClick.AddListener(SnapBack);
+		sensitivityGyroX = sensitivityGyroY = sensitivityGyroZ = BlockBuilderConfigs.sensitivityGyro;
 	}
 	
 	// Update is called once per frame

@@ -22,4 +22,6 @@ public class BlockBuilderConfigs{
 
 	public static Vector3 rightViewAngle = new Vector3(0, 90, 0);
 
+	public static float sensitivityGyro = 8.0f;
+
 }

@@ -36,7 +36,7 @@ public class BaseGrid : MonoBehaviour {
 		id = BlockBuilderConfigs.id;
 		DrawingHandler = GameObject.Find("Drawing Handler");
 		selectGridControlPanel = GameObject.Find("Select Grid Control Panel");
-		increaseDecreasePanel = GameObject.Find("Increase Decrease Panel");
+		increaseDecreasePanel = GameObject.Find("Right Panel");
 		
 		up = selectGridControlPanel.transform.GetChild(0).GetComponent<Button>();
 		left = selectGridControlPanel.transform.GetChild(1).GetComponent<Button>();
