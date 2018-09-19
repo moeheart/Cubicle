@@ -8,6 +8,7 @@ using MiniJSON;
 public class BlockBuilderManager : MonoBehaviour {
 
 	public BaseGrid baseGridPrefab;
+	public static GameObject levelCompletePanel;
 	public static BaseGrid baseGridInstance {get; private set;}
 
 	public static int [,] height {get; private set;}
@@ -32,6 +33,8 @@ public class BlockBuilderManager : MonoBehaviour {
 		height = new int[BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.gridSize.z];
 		string jsonFilePath = Path.Combine(Application.streamingAssetsPath, BlockBuilderConfigs.jsonFilename);
 		ParseJson(jsonFilePath, height, currentLevelId);
+		levelCompletePanel = GameObject.Find("Level Complete Panel");
+		levelCompletePanel.SetActive(false);
 	}
 	
 	// Update is called once per frame
@@ -60,6 +63,7 @@ public class BlockBuilderManager : MonoBehaviour {
 	}
 
 	public static void OnComplete() {
+		levelCompletePanel.SetActive(true);
 		//TODO 
 		if (isTutorialLevel) {
 			
