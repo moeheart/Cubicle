@@ -21,7 +21,8 @@ public class ViewPanel : MonoBehaviour {
 	private int lengthPerBlock = BlockBuilderConfigs.panelLengthPerBlock;
 
 	private Color defaultColor = new Color(1f, 1f, 1f, 1f);
-	private Color highlightColor = new Color(0,1,1,0.2f);
+	private Color highlightColor = new Color(0f ,1f ,1f, 0.2f);
+	private Color viewMatchColor = new Color(0.2f, 1f, 1f);
 
 	private BaseGrid baseGridInstance;
 
@@ -113,47 +114,38 @@ public class ViewPanel : MonoBehaviour {
 	}
 
 	public void ChangeColorOnViewMatch() {
-		Vector3 gridEulerAngles = BlockBuilderManager.baseGridInstance.transform.localEulerAngles;
-		Vector3 deltaAngle;
+		Transform cameraTransform = Camera.main.transform;
 		switch (viewType) {
 			case ViewType.TopView:
-				deltaAngle = new Vector3(
-					Mathf.DeltaAngle(BlockBuilderConfigs.topViewAngle.x, gridEulerAngles.x),
-					Mathf.DeltaAngle(BlockBuilderConfigs.topViewAngle.y, gridEulerAngles.y),
-					Mathf.DeltaAngle(BlockBuilderConfigs.topViewAngle.z, gridEulerAngles.z)
-				);
-				SetColorBasedOnDeltaAngle(deltaAngle);
+				SetColorOnAlignWithWorldXYZ(
+					cameraTransform.right, -cameraTransform.forward, cameraTransform.up);
 				break;
 			case ViewType.FrontView:
-				deltaAngle = new Vector3(
-					Mathf.DeltaAngle(BlockBuilderConfigs.frontViewAngle.x, gridEulerAngles.x),
-					Mathf.DeltaAngle(BlockBuilderConfigs.frontViewAngle.y, gridEulerAngles.y),
-					Mathf.DeltaAngle(BlockBuilderConfigs.frontViewAngle.z, gridEulerAngles.z)
-				);
-				SetColorBasedOnDeltaAngle(deltaAngle);
+				SetColorOnAlignWithWorldXYZ(
+					cameraTransform.right, cameraTransform.up, cameraTransform.forward);
 				break;
 			case ViewType.RightView:
-				deltaAngle = new Vector3(
-					Mathf.DeltaAngle(BlockBuilderConfigs.rightViewAngle.x, gridEulerAngles.x),
-					Mathf.DeltaAngle(BlockBuilderConfigs.rightViewAngle.y, gridEulerAngles.y),
-					Mathf.DeltaAngle(BlockBuilderConfigs.rightViewAngle.z, gridEulerAngles.z)
-				);
-				SetColorBasedOnDeltaAngle(deltaAngle);
+				SetColorOnAlignWithWorldXYZ(
+					-cameraTransform.forward, cameraTransform.up, cameraTransform.right);
 				break;
 		}
 	}
 
-	private void SetColorBasedOnDeltaAngle(Vector3 deltaAngle) {
-		float mag = Mathf.Abs(deltaAngle.x) + Mathf.Abs(deltaAngle.y) + Mathf.Abs(deltaAngle.z);
-		mag /= 540;
-		// Debug.Log(deltaAngle);
-		if (mag > 0.08) {
-			this.GetComponent<Image>().color = defaultColor;
+	private void SetColorOnAlignWithWorldXYZ(Vector3 a, Vector3 b, Vector3 c) {
+		float cos1 = Vector3.Dot(a, Vector3.right);
+		float cos2 = Vector3.Dot(b, Vector3.up);
+		float cos3 = Vector3.Dot(c, Vector3.forward);
+		bool isAligned =  (cos1 > BlockBuilderConfigs.cosineSimilarityLowerBound
+				&& cos2 > BlockBuilderConfigs.cosineSimilarityLowerBound
+				&& cos3 > BlockBuilderConfigs.cosineSimilarityLowerBound);
+		if (isAligned) {
+			this.GetComponent<Image>().color = viewMatchColor;
 		}
 		else {
-			this.GetComponent<Image>().color = new Color(mag, 1f, 1f);
+			this.GetComponent<Image>().color = defaultColor;
 		}
 
 	}
+
 
 }
