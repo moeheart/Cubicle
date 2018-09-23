@@ -48,11 +48,14 @@ public class BlockBuilderManager : MonoBehaviour {
 	}
 
 	private void BeginGame() {
-		baseGridInstance = Instantiate (baseGridPrefab, Camera.main.transform) as BaseGrid;
-		baseGridInstance.transform.eulerAngles = new Vector3(0, 0 ,0);
-		baseGridInstance.transform.position = new Vector3(0, 0, 0);
-		// Camera.main.transform.LookAt(baseGridInstance.transform);
+		baseGridInstance = Instantiate (baseGridPrefab) as BaseGrid;
+
 		baseGridInstance.Generate();
+		baseGridInstance.transform.eulerAngles = new Vector3(0, 0, 0);
+		baseGridInstance.transform.position = new Vector3(0, 0, 0);
+		Camera.main.transform.LookAt(baseGridInstance.transform);
+		// Camera.main.transform.RotateAround(baseGridInstance.transform.position, Vector3.right, 30);
+		// baseGridInstance.transform.localEulerAngles = new Vector3(-20, 0 ,0);
 		// baseGridInstance.transform.localEulerAngles = new Vector3(-90, 90, -90);
 	}
 
