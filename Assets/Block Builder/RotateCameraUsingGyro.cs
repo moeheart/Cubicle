@@ -31,8 +31,8 @@ public class RotateCameraUsingGyro : MonoBehaviour {
 		
 		Vector3 gyroRotationRate = Input.gyro.rotationRateUnbiased;
 		xRotation = - Input.gyro.rotationRateUnbiased.x * sensitivityGyroX;
-		yRotation = Input.gyro.rotationRateUnbiased.y * sensitivityGyroY;
-		zRotation = Input.gyro.rotationRateUnbiased.z * sensitivityGyroZ;
+		yRotation = - Input.gyro.rotationRateUnbiased.y * sensitivityGyroY;
+		zRotation = - Input.gyro.rotationRateUnbiased.z * sensitivityGyroZ;
 
 		if (Application.isEditor) {
 			xRotation = GetRotationFromButton(xPlus, xMinus);
