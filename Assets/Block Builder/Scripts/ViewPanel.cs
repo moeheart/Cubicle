@@ -2,8 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class ViewPanel : MonoBehaviour {
+public class ViewPanel : MonoBehaviour, IPointerClickHandler {
 
 	public GameObject solidLine;
 
@@ -60,6 +61,10 @@ public class ViewPanel : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+	}
+
+	public void OnPointerClick(PointerEventData eventData) {
+		Camera.main.GetComponent<RotateCameraUsingGyro>().SwitchToView(viewType);
 	}
 
 	public void ChangeColorOnCompare(bool flag) {
@@ -146,6 +151,4 @@ public class ViewPanel : MonoBehaviour {
 		}
 
 	}
-
-
 }

@@ -23,7 +23,6 @@ public class RotateCameraUsingGyro : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
 	}
 	
 	// Update is called once per frame
@@ -131,6 +130,23 @@ public class RotateCameraUsingGyro : MonoBehaviour {
 			return -2;
 		}
 		return 0;
+	}
+
+	public void SwitchToView(ViewType viewType) {
+		this.transform.position = new Vector3(0, 0, -8);
+		this.transform.LookAt(Vector3.zero);
+		switch (viewType) {
+			case ViewType.TopView:
+				this.transform.Rotate(Vector3.right, 90);
+				PlaceCameraFromRotation(this.transform, BlockBuilderConfigs.distanceToBaseGrid);
+				break;
+			case ViewType.FrontView:
+				break;
+			case ViewType.RightView:
+				this.transform.Rotate(Vector3.up, 90);
+				PlaceCameraFromRotation(this.transform, BlockBuilderConfigs.distanceToBaseGrid);
+				break;
+		}
 	}
 
 }
