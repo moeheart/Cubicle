@@ -24,10 +24,19 @@ public class BlockBuilderDebugInfo : MonoBehaviour {
 
 		float sensitivityGyroX, sensitivityGyroY, sensitivityGyroZ;
 		sensitivityGyroX = sensitivityGyroY = sensitivityGyroZ = BlockBuilderConfigs.sensitivityGyro;
-		float X = Input.gyro.rotationRateUnbiased.x * sensitivityGyroX;
-		float Y = Input.gyro.rotationRateUnbiased.y * sensitivityGyroY;
-		float Z = Input.gyro.rotationRateUnbiased.z * sensitivityGyroZ;
+		var rotationScript = Camera.main.GetComponent<RotateCameraUsingGyro>();
+		float X = rotationScript.xRotation;
+		float Y = rotationScript.yRotation;
+		float Z = rotationScript.zRotation;
+
 		GUILayout.Label("Input.gyro.rotationRateUnbiased: " + new Vector3(X,Y,Z));
 
+		GUILayout.Label("cameraLocalXAxis: " + Camera.main.transform.right);
+		GUILayout.Label("cameraLocalYAxis: " + Camera.main.transform.up);
+		GUILayout.Label("cameraLocalZAxis: " + Camera.main.transform.forward);
+
+		GUILayout.Label("canRotateAroundXAxis: " + rotationScript.canRotateAroundXAxis());
+		GUILayout.Label("canRotateAroundYAxis: " + rotationScript.canRotateAroundYAxis());
+		GUILayout.Label("canRotateAroundZAxis: " + rotationScript.canRotateAroundZAxis());
 	}
 }
