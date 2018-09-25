@@ -21,6 +21,8 @@ public class RotateCameraUsingGyro : MonoBehaviour {
 	private float sensitivityGyroY = 9.0f;
 	private float sensitivityGyroZ = 9.0f;
 
+	private ViewType lastViewType = ViewType.None;
+
 	// Use this for initialization
 	void Start () {
 		this.transform.Rotate(Vector3.right, 45);
@@ -72,6 +74,9 @@ public class RotateCameraUsingGyro : MonoBehaviour {
 				PlaceCameraFromRotation(this.transform, BlockBuilderConfigs.distanceToBaseGrid);
 			}
 		}
+
+		LogCurrentPosition();
+
 	}
 
 	private void PlaceCameraFromRotation(Transform transform, float dist) {
@@ -99,7 +104,7 @@ public class RotateCameraUsingGyro : MonoBehaviour {
 		return (cos1 > cosineSimilarityLowerBound);
 	}
 
-	private void glueToYZAxis() {
+	/* private void glueToYZAxis() {
 		Vector3 newPosition = this.transform.position;
 		newPosition.x = 0;
 		newPosition = newPosition.normalized * 8;
@@ -124,7 +129,7 @@ public class RotateCameraUsingGyro : MonoBehaviour {
 		newPosition = newPosition.normalized * 8;
 		this.transform.position = newPosition;
 		this.transform.LookAt(BlockBuilderConfigs.baseGridWorldPosition);
-	}
+	} */
 
 	private float GetRotationFromButton(ControlButton plus, ControlButton minus) {
 		if (plus.IsPressed()) {
@@ -143,13 +148,39 @@ public class RotateCameraUsingGyro : MonoBehaviour {
 			case ViewType.TopView:
 				this.transform.Rotate(Vector3.right, 90);
 				PlaceCameraFromRotation(this.transform, BlockBuilderConfigs.distanceToBaseGrid);
+				BlockBuilderLog.Log(BlockBuilderManager.currentLevelId, "Clicked to switch to Top View");
 				break;
 			case ViewType.FrontView:
+				BlockBuilderLog.Log(BlockBuilderManager.currentLevelId, "Clicked to switch to Front View");
 				break;
 			case ViewType.RightView:
+				BlockBuilderLog.Log(BlockBuilderManager.currentLevelId, "Clicked to switch to Right View");
 				this.transform.Rotate(Vector3.up, -90);
 				PlaceCameraFromRotation(this.transform, BlockBuilderConfigs.distanceToBaseGrid);
 				break;
+		}
+	}
+
+	private void LogCurrentPosition() {
+		if (CheckCurrentView.IsAlignedWithFrontView(transform)) {
+			if (lastViewType != ViewType.FrontView) {
+				lastViewType = ViewType.FrontView;
+				BlockBuilderLog.Log(BlockBuilderManager.currentLevelId, "Transition to Front View");
+			}
+		}
+		if (CheckCurrentView.IsAlignedWithTopView(transform)) {
+			if (lastViewType != ViewType.TopView) {
+				lastViewType = ViewType.TopView;
+				BlockBuilderLog.Log(BlockBuilderManager.currentLevelId, "Transition to Top View");
+			}
+			
+		}
+		if (CheckCurrentView.IsAlignedWithRightView(transform)) {
+			if (lastViewType != ViewType.RightView) {
+				lastViewType = ViewType.RightView;
+				BlockBuilderLog.Log(BlockBuilderManager.currentLevelId, "Transition to Right View");
+			}
+
 		}
 	}
 
