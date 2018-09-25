@@ -23,10 +23,14 @@ public class RotateCameraUsingGyro : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		this.transform.Rotate(Vector3.right, 45);
+		PlaceCameraFromRotation(this.transform, BlockBuilderConfigs.distanceToBaseGrid);
 	}
 	
 	// Update is called once per frame
 	void Update () {
+
+		sensitivityGyroX = sensitivityGyroY = sensitivityGyroZ = BlockBuilderConfigs.sensitivityGyro;
 		
 		Vector3 gyroRotationRate = Input.gyro.rotationRateUnbiased;
 		xRotation = - Input.gyro.rotationRateUnbiased.x * sensitivityGyroX;
@@ -143,7 +147,7 @@ public class RotateCameraUsingGyro : MonoBehaviour {
 			case ViewType.FrontView:
 				break;
 			case ViewType.RightView:
-				this.transform.Rotate(Vector3.up, 90);
+				this.transform.Rotate(Vector3.up, -90);
 				PlaceCameraFromRotation(this.transform, BlockBuilderConfigs.distanceToBaseGrid);
 				break;
 		}
