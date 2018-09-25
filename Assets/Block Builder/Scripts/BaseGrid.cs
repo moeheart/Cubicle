@@ -18,7 +18,6 @@ public class BaseGrid : MonoBehaviour {
 	private GameObject DrawingHandler;
 	private bool isCompleted = false;
 	private int id;
-	private string logPath;
 
 	private GameObject selectGridControlPanel;
 
@@ -33,7 +32,7 @@ public class BaseGrid : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		// TODO
-		id = BlockBuilderConfigs.id;
+		id = BlockBuilderManager.currentLevelId;
 		DrawingHandler = GameObject.Find("Drawing Handler");
 		selectGridControlPanel = GameObject.Find("Select Grid Control Panel");
 		increaseDecreasePanel = GameObject.Find("Right Panel");
@@ -52,9 +51,9 @@ public class BaseGrid : MonoBehaviour {
 		inc.onClick.AddListener(OnIncreaseClick);
 		dec.onClick.AddListener(OnDecreaseClick);
 		
-		logPath = Path.Combine(Application.persistentDataPath, "Logs/Block Builder/Block Builder.txt");
+
 		startTime = Time.time;
-		BlockBuilderLog.Log(logPath, id, "Entered Level...!!!");
+		BlockBuilderLog.Log(id, "Entered Level...!!!");
 	}
 	
 	// Update is called once per frame
@@ -107,18 +106,18 @@ public class BaseGrid : MonoBehaviour {
 		int targetHeight = target[currentCoordinates.x, currentCoordinates.z];
 		if (op == 1) {
 			if (heightBeforeOp < targetHeight) {
-				BlockBuilderLog.Log(logPath, id, "Correct Addition");
+				BlockBuilderLog.Log(id, "Correct Addition");
 			}
 			else {
-				BlockBuilderLog.Log(logPath, id, "Incorrect Addition");
+				BlockBuilderLog.Log(id, "Incorrect Addition");
 			}
 		}
 		else {
 			if (heightBeforeOp > targetHeight) {
-				BlockBuilderLog.Log(logPath, id, "Correct Deletion");
+				BlockBuilderLog.Log(id, "Correct Deletion");
 			}
 			else {
-				BlockBuilderLog.Log(logPath, id, "Incorrect Deletion");
+				BlockBuilderLog.Log(id, "Incorrect Deletion");
 			}
 		}
 	}
@@ -135,7 +134,7 @@ public class BaseGrid : MonoBehaviour {
 
 	public void OnCompleteBlockBuilderPuzzle() {
 		isCompleted = true;
-		BlockBuilderLog.Log(logPath, id, "Completed Level...!!!");
+		BlockBuilderLog.Log(id, "Completed Level...!!!");
 		UnhighlightCell(currentCoordinates);
 	}
 
