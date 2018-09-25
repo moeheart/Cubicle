@@ -3,13 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-public static class BlockBuilderLog {
+public static class BlockBuilderLog { 
 
-	public static void Log(string path, int id, string log) {
-		if (!File.Exists(path)) {
-			File.AppendAllText(path, "levelId, PuzzleType:  TimeSinceGameStart, TimeSinceEnterLevel,  Action\n");
+	public static string logPath = Path.Combine(Application.persistentDataPath, "Logs/Block Builder/Block Builder.txt");
+
+	public static void Log(int id, string log) {
+		if (!File.Exists(logPath)) {
+			File.AppendAllText(logPath, "levelId" + '\t' + "TimeSinceGameStart" + '\t' + "TimeSinceEnterLevel" + '\t' + "Action" + "\n");
 		}
 		float t = Time.time - BaseGrid.startTime;
-		File.AppendAllText(path, id + ", Block Builder: " + Time.time + ", " + t + ", " +  log + "\n");
+		File.AppendAllText(logPath, id + "\t" + Time.time + "\t" + t + ", " +  log + "\n");
 	}
 }
