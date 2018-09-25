@@ -15,7 +15,7 @@ public class BlockBuilderManager : MonoBehaviour {
 
 	private static bool isTutorialLevel;
 	
-	private int currentLevelId;
+	public static int currentLevelId;
 
 	// Use this for initialization
 	void Awake () {
@@ -35,6 +35,7 @@ public class BlockBuilderManager : MonoBehaviour {
 		ParseJson(jsonFilePath, height, currentLevelId);
 		levelCompletePanel = GameObject.Find("Level Complete Panel");
 		levelCompletePanel.SetActive(false);
+		
 	}
 	
 	// Update is called once per frame
