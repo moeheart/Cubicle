@@ -35,8 +35,8 @@ public class BlockBuilderDebugInfo : MonoBehaviour {
 		GUILayout.Label("cameraLocalYAxis: " + Camera.main.transform.up);
 		GUILayout.Label("cameraLocalZAxis: " + Camera.main.transform.forward);
 
-		GUILayout.Label("canRotateAroundXAxis: " + rotationScript.canRotateAroundXAxis());
-		GUILayout.Label("canRotateAroundYAxis: " + rotationScript.canRotateAroundYAxis());
-		GUILayout.Label("canRotateAroundZAxis: " + rotationScript.canRotateAroundZAxis());
+		GUILayout.Label("canRotateAroundXAxis: " + ViewUtil.canRotateAroundXAxis(Camera.main.transform));
+		GUILayout.Label("canRotateAroundYAxis: " + ViewUtil.canRotateAroundYAxis(Camera.main.transform));
+		GUILayout.Label("canRotateAroundZAxis: " + ViewUtil.canRotateAroundZAxis(Camera.main.transform));
 	}
 }
