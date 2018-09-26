@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CheckCurrentView {
+public class ViewUtil {
+
+	private static float cosineSimilarityLowerBound = BlockBuilderConfigs.cosineSimilarityLowerBound;
 
 	public static bool IsAlignedWithTopView(Transform transform) {
 		return IsAligned(transform.right, -transform.forward, transform.up);
@@ -24,5 +26,29 @@ public class CheckCurrentView {
 				&& cos2 > BlockBuilderConfigs.cosineSimilarityLowerBound
 				&& cos3 > BlockBuilderConfigs.cosineSimilarityLowerBound);
 		return isAligned;
+	}
+	public static bool canRotateAroundXAxis(Transform transform) {
+		float cos1 = Vector3.Dot(transform.right, Vector3.right);
+		float cos2 = Vector3.Dot(transform.right, Vector3.forward);
+		cos1 = Mathf.Abs(cos1);
+		cos2 = Mathf.Abs(cos2);
+		return (cos1 > cosineSimilarityLowerBound || cos2 > cosineSimilarityLowerBound);
+	}
+
+	public static bool canRotateAroundYAxis(Transform transform) {
+		float cos1 = Vector3.Dot(transform.up, Vector3.up);
+		cos1 = Mathf.Abs(cos1);
+		return (cos1 > cosineSimilarityLowerBound);
+	}
+
+	public static bool canRotateAroundZAxis(Transform transform) {
+		float cos1 = Vector3.Dot(transform.forward, Vector3.up);
+		cos1 = Mathf.Abs(cos1);
+		return (cos1 > cosineSimilarityLowerBound);
+	}
+
+	public static void PlaceCameraFromRotation(Transform transform, float dist) {
+		Vector3 point = transform.position + transform.forward * dist;
+		transform.position -= point;
 	}
 }
