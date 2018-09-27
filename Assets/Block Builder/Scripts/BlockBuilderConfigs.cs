@@ -20,7 +20,7 @@ public class BlockBuilderConfigs{
 
 	public static float sensitivityGyro = 8.0f;
 
-	public static float distanceToBaseGrid = 8.0f;
+	public static float distanceToBaseGrid = 10.0f;
 
 	public static float cosineSimilarityLowerBound = 0.94f;
 
