@@ -7,27 +7,29 @@ public class RotateCameraUsingButton : MonoBehaviour {
 	[SerializeField]
 	public ControlButton xUpButton, xDownButton, clockwiseYButton, counterClockwiseYButton;
 
-	private float xRotation, yRotation;
+	private float xRotationPerFrame = 0.3f, yRotationPerFrame = 0.3f;
 
 	// Use this for initialization
 	void Start () {
-		xRotation = 2;
-		yRotation = 2;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		float xRotation, yRotation;
 		if (xUpButton.IsPressed()) {
+			xRotation = xRotationPerFrame * BlockBuilderConfigs.sensitivityGyro;
 			if (ViewUtil.canRotateAroundXAxis(transform)) {
 				this.transform.Rotate(Vector3.right, xRotation);
 			}
 		}
 		if (xDownButton.IsPressed()) {
+			xRotation = xRotationPerFrame * BlockBuilderConfigs.sensitivityGyro;
 			if (ViewUtil.canRotateAroundXAxis(transform)) {
 				this.transform.Rotate(Vector3.right, -xRotation);
 			}
 		}
 		if (clockwiseYButton.IsPressed()) {
+			yRotation = yRotationPerFrame * BlockBuilderConfigs.sensitivityGyro;
 			if (ViewUtil.canRotateAroundYAxis(transform)) {
 				this.transform.Rotate(Vector3.up, yRotation);
 			}
@@ -36,6 +38,7 @@ public class RotateCameraUsingButton : MonoBehaviour {
 			}
 		}
 		if (counterClockwiseYButton.IsPressed()) {
+			yRotation = yRotationPerFrame * BlockBuilderConfigs.sensitivityGyro;
 			if (ViewUtil.canRotateAroundYAxis(transform)) {
 				this.transform.Rotate(Vector3.up, -yRotation);
 			}
