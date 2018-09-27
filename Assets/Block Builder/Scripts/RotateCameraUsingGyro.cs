@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class RotateCameraUsingGyro : MonoBehaviour {
 
-	public float cosineSimilarityLowerBound = 0.94f;
-
 	public float xRotation {get; private set;}
 	public float yRotation {get; private set;}
 	public float zRotation {get; private set;}
