@@ -9,6 +9,8 @@ public class BaseGrid : MonoBehaviour {
 	public BaseGridCell cellPrefab;
 	public float generationStepDelay = 0.01f;
 
+	public GameObject upArrow;
+
 	private IntVector2 size = BlockBuilderConfigs.gridSize;
 	private BaseGridCell[,] cells;
 	private const float cellLength = 1f;
@@ -129,6 +131,9 @@ public class BaseGrid : MonoBehaviour {
 				CreateCell(new IntVector2(x,z));
 			}
 		}
+
+		CreateUpArrow(new IntVector2(size.x/2, size.z));
+
 		HighlightCell(currentCoordinates);
 	}
 
@@ -145,6 +150,15 @@ public class BaseGrid : MonoBehaviour {
 		newCell.name = "Cell " + coordinates.x + ", " + coordinates.z;
 		newCell.transform.parent = this.transform;
 		newCell.transform.localPosition = new Vector3(
+			coordinates.x - size.x * cellLength/2 + cellLength/2, 
+			-cellHeight/2, 
+			coordinates.z - size.z * cellLength/2 + cellLength/2);
+	}
+
+	private void CreateUpArrow(IntVector2 coordinates) {
+		GameObject arrow = Instantiate (upArrow) as GameObject;
+		arrow.transform.parent = this.transform;
+		arrow.transform.localPosition = new Vector3(
 			coordinates.x - size.x * cellLength/2 + cellLength/2, 
 			-cellHeight/2, 
 			coordinates.z - size.z * cellLength/2 + cellLength/2);
