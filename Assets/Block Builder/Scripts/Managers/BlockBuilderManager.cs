@@ -55,6 +55,8 @@ public class BlockBuilderManager : MonoBehaviour {
 		baseGridInstance.transform.eulerAngles = new Vector3(0, 0, 0);
 		baseGridInstance.transform.position = new Vector3(0, 0, 0);
 		Camera.main.transform.LookAt(baseGridInstance.transform);
+		this.transform.Rotate(Vector3.right, 45);
+		ViewUtil.PlaceCameraFromRotation(this.transform, BlockBuilderConfigs.distanceToBaseGrid);
 		// Camera.main.transform.RotateAround(baseGridInstance.transform.position, Vector3.right, 30);
 		// baseGridInstance.transform.localEulerAngles = new Vector3(-20, 0 ,0);
 		// baseGridInstance.transform.localEulerAngles = new Vector3(-90, 90, -90);

@@ -19,8 +19,6 @@ public class RotateCameraUsingGyro : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		this.transform.Rotate(Vector3.right, 45);
-		ViewUtil.PlaceCameraFromRotation(this.transform, BlockBuilderConfigs.distanceToBaseGrid);
 	}
 	
 	// Update is called once per frame
