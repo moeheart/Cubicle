@@ -17,6 +17,8 @@ public class BlockBuilderManager : MonoBehaviour {
 	
 	public static int currentLevelId;
 
+	public GameObject movementPanel;
+
 	// Use this for initialization
 	void Awake () {
 		BeginGame();
@@ -35,6 +37,17 @@ public class BlockBuilderManager : MonoBehaviour {
 		ParseJson(jsonFilePath, height, currentLevelId);
 		levelCompletePanel = GameObject.Find("Level Complete Panel");
 		levelCompletePanel.SetActive(false);
+
+		if (BlockBuilderConfigs.rotationMethod == BlockBuilderConfigs.RotationMethod.Gyro) {
+			Camera.main.GetComponent<RotateCameraUsingGyro>().enabled = true;
+			Camera.main.GetComponent<RotateCameraUsingButton>().enabled = false;
+			movementPanel.SetActive(false);
+		}
+		else if (BlockBuilderConfigs.rotationMethod == BlockBuilderConfigs.RotationMethod.Button) {
+			Camera.main.GetComponent<RotateCameraUsingGyro>().enabled = false;
+			Camera.main.GetComponent<RotateCameraUsingButton>().enabled = true;
+			movementPanel.SetActive(true);
+		}
 		
 	}
 	
@@ -55,8 +68,8 @@ public class BlockBuilderManager : MonoBehaviour {
 		baseGridInstance.transform.eulerAngles = new Vector3(0, 0, 0);
 		baseGridInstance.transform.position = new Vector3(0, 0, 0);
 		Camera.main.transform.LookAt(baseGridInstance.transform);
-		this.transform.Rotate(Vector3.right, 45);
-		ViewUtil.PlaceCameraFromRotation(this.transform, BlockBuilderConfigs.distanceToBaseGrid);
+		Camera.main.transform.Rotate(Vector3.right, 45);
+		ViewUtil.PlaceCameraFromRotation(Camera.main.transform, BlockBuilderConfigs.distanceToBaseGrid);
 		// Camera.main.transform.RotateAround(baseGridInstance.transform.position, Vector3.right, 30);
 		// baseGridInstance.transform.localEulerAngles = new Vector3(-20, 0 ,0);
 		// baseGridInstance.transform.localEulerAngles = new Vector3(-90, 90, -90);
