@@ -37,9 +37,17 @@ public class RotateCameraUsingGyro : MonoBehaviour {
 		YY = Mathf.Abs(yRotation);
 		ZZ = Mathf.Abs(zRotation);
 
+		if (XX < 0.3 && YY < 0.3 && ZZ < 0.3) {
+			return;
+		}
+
+
+
 		if (XX > YY && XX > ZZ) {
-			this.transform.Rotate(Vector3.right, xRotation);
-			ViewUtil.PlaceCameraFromRotation(this.transform, BlockBuilderConfigs.distanceToBaseGrid);
+			if (ViewUtil.canRotateAroundXAxis(transform)) {
+				this.transform.Rotate(Vector3.right, xRotation);
+				ViewUtil.PlaceCameraFromRotation(this.transform, BlockBuilderConfigs.distanceToBaseGrid);
+			}
 		}
 		else if (YY > XX && YY > ZZ) {
 			if (ViewUtil.canRotateAroundYAxis(transform)) {
