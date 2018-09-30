@@ -108,18 +108,18 @@ public class BaseGrid : MonoBehaviour {
 		int targetHeight = target[currentCoordinates.x, currentCoordinates.z];
 		if (op == 1) {
 			if (heightBeforeOp < targetHeight) {
-				BlockBuilderLog.Log(id, "Correct Addition");
+				BlockBuilderLog.Log(id, "Correct Addition" + currentCoordinates);
 			}
 			else {
-				BlockBuilderLog.Log(id, "Incorrect Addition");
+				BlockBuilderLog.Log(id, "Incorrect Addition" + currentCoordinates);
 			}
 		}
 		else {
 			if (heightBeforeOp > targetHeight) {
-				BlockBuilderLog.Log(id, "Correct Deletion");
+				BlockBuilderLog.Log(id, "Correct Deletion" + currentCoordinates);
 			}
 			else {
-				BlockBuilderLog.Log(id, "Incorrect Deletion");
+				BlockBuilderLog.Log(id, "Incorrect Deletion" + currentCoordinates);
 			}
 		}
 	}
