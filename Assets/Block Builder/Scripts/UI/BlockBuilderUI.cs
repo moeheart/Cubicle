@@ -20,8 +20,11 @@ public class BlockBuilderUI : MonoBehaviour {
 	}
 
 	public void SetParticipantName(InputField inputField) {
-		BlockBuilderConfigs.participantName = inputField.text;
-		Debug.Log("input field name:" + inputField.text);
+		if (inputField.text != null && inputField.text != "") {
+			BlockBuilderConfigs.participantName = inputField.text;
+			Debug.Log("input field name:" + inputField.text);
+		}
+
 	}
 
 	private void ResetLevel() {
