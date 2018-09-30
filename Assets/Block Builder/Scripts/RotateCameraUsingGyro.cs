@@ -41,8 +41,25 @@ public class RotateCameraUsingGyro : MonoBehaviour {
 			return;
 		}
 
+		if (ViewUtil.canRotateAroundXAxis(transform)) {
+			this.transform.Rotate(Vector3.right, xRotation);
+			ViewUtil.PlaceCameraFromRotation(this.transform, BlockBuilderConfigs.distanceToBaseGrid);
+		}
+
+		if (ViewUtil.canRotateAroundYAxis(transform)) {
+			//this.glueToZXAxis();
+			this.transform.Rotate(Vector3.up, yRotation);
+			ViewUtil.PlaceCameraFromRotation(this.transform, BlockBuilderConfigs.distanceToBaseGrid);
+		}
+
+		if (ViewUtil.canRotateAroundZAxis(transform)) {
+			//this.glueToXYAxis();
+			this.transform.Rotate(Vector3.forward, zRotation);
+			ViewUtil.PlaceCameraFromRotation(this.transform, BlockBuilderConfigs.distanceToBaseGrid);
+		}
 
 
+/*
 		if (XX > YY && XX > ZZ) {
 			if (ViewUtil.canRotateAroundXAxis(transform)) {
 				this.transform.Rotate(Vector3.right, xRotation);
@@ -63,6 +80,7 @@ public class RotateCameraUsingGyro : MonoBehaviour {
 				ViewUtil.PlaceCameraFromRotation(this.transform, BlockBuilderConfigs.distanceToBaseGrid);
 			}
 		}
+		*/
 
 		LogCurrentPosition();
 
@@ -110,7 +128,7 @@ public class RotateCameraUsingGyro : MonoBehaviour {
 	}
 
 	public void SwitchToView(ViewType viewType) {
-		this.transform.position = new Vector3(0, 0, -8);
+		this.transform.position = new Vector3(0, 0, -BlockBuilderConfigs.distanceToBaseGrid);
 		this.transform.LookAt(Vector3.zero);
 		switch (viewType) {
 			case ViewType.TopView:
