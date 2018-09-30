@@ -51,4 +51,5 @@ public class ViewUtil {
 		Vector3 point = transform.position + transform.forward * dist;
 		transform.position -= point;
 	}
+
 }
