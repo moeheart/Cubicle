@@ -31,6 +31,17 @@ public class BlockBuilderManager : MonoBehaviour {
 			currentLevelId = BlockBuilderConfigs.id;
 		}
 
+		BlockBuilderConfigs.thisLevelRotationMethod = BlockBuilderConfigs.rotationMethod;
+
+		if (currentLevelId >= BlockBuilderConfigs.switchLevelId) {
+			if (BlockBuilderConfigs.rotationMethod == BlockBuilderConfigs.RotationMethod.Gyro) {
+				BlockBuilderConfigs.thisLevelRotationMethod = BlockBuilderConfigs.RotationMethod.Button;
+			}
+			else {
+				BlockBuilderConfigs.thisLevelRotationMethod = BlockBuilderConfigs.RotationMethod.Gyro;
+			}
+		}
+
 		//TODO load the height array, which represents the 3D model
 		height = new int[BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.gridSize.z];
 		string jsonFilePath = Path.Combine(Application.streamingAssetsPath, BlockBuilderConfigs.jsonFilename);
@@ -38,13 +49,21 @@ public class BlockBuilderManager : MonoBehaviour {
 		levelCompletePanel = GameObject.Find("Level Complete Panel");
 		levelCompletePanel.SetActive(false);
 
-		if (BlockBuilderConfigs.rotationMethod == BlockBuilderConfigs.RotationMethod.Gyro) {
+
+		if (BlockBuilderConfigs.thisLevelRotationMethod == BlockBuilderConfigs.RotationMethod.Gyro) {
 			Camera.main.GetComponent<RotateCameraUsingGyro>().enabled = true;
 			Camera.main.GetComponent<RotateCameraUsingButton>().enabled = false;
 			movementPanel.SetActive(false);
 		}
-		else if (BlockBuilderConfigs.rotationMethod == BlockBuilderConfigs.RotationMethod.Button) {
+		else if (BlockBuilderConfigs.thisLevelRotationMethod == BlockBuilderConfigs.RotationMethod.Button) {
 			Camera.main.GetComponent<RotateCameraUsingGyro>().enabled = false;
+			Camera.main.GetComponent<RotateCameraUsingButton>().enabled = true;
+			movementPanel.SetActive(true);
+		}
+
+
+		if (isTutorialLevel) {
+			Camera.main.GetComponent<RotateCameraUsingGyro>().enabled = true;
 			Camera.main.GetComponent<RotateCameraUsingButton>().enabled = true;
 			movementPanel.SetActive(true);
 		}
