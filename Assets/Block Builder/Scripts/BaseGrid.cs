@@ -212,6 +212,16 @@ public class BaseGrid : MonoBehaviour {
 		GameObject currentTopViewPanel = GameObject.Find("Current Top View Panel");
 		currentTopViewPanel.GetComponent<ViewPanel>().DrawView(topViewMap);*/
 	}
+    
+    public string getCells(){
+        string s = "";
+		for (int x = 0; x < size.x; ++x) {
+			for (int z = 0; z < size.z; ++z) {
+				s += cells[x, z].height.ToString();
+            }
+        }
+        return s;
+    }
 
 	private void DeleteCubeFromCoordinate(IntVector2 coordinates) {
 		BaseGridCell designatedCell = cells[coordinates.x, coordinates.z];

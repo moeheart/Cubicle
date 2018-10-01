@@ -1,14 +1,7 @@
 fileFormatVersion: 2
-<<<<<<< HEAD
-guid: 7e367663bb97a194cb2cec661580c10d
-timeCreated: 1505728675
-licenseType: Free
-=======
-guid: 68b90b774170c45cd8ce4c1f6c4c1c14
-timeCreated: 1505698185
-licenseType: Pro
->>>>>>> upstream/master
+guid : 7e367663bb97a194cb2cec661580c10d
 DefaultImporter:
+  externalObjects: {}
   userData: 
   assetBundleName: 
   assetBundleVariant: 

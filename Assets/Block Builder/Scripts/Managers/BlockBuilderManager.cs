@@ -8,14 +8,19 @@ using MiniJSON;
 public class BlockBuilderManager : MonoBehaviour {
 
 	public BaseGrid baseGridPrefab;
+    public DrawingHandler drawinghandlersample;
 	public static GameObject levelCompletePanel;
 	public static BaseGrid baseGridInstance {get; private set;}
 
 	public static int [,] height {get; private set;}
 
 	private static bool isTutorialLevel;
+    private static bool isCompetition;
 	
 	private int currentLevelId;
+    
+    public TcpComm tcp;
+    public static TcpComm staticTcp;
 
 	// Use this for initialization
 	void Awake () {
@@ -35,6 +40,8 @@ public class BlockBuilderManager : MonoBehaviour {
 		ParseJson(jsonFilePath, height, currentLevelId);
 		levelCompletePanel = GameObject.Find("Level Complete Panel");
 		levelCompletePanel.SetActive(false);
+        print("start setting tcp...");
+        staticTcp = tcp;
 	}
 	
 	// Update is called once per frame
@@ -45,6 +52,28 @@ public class BlockBuilderManager : MonoBehaviour {
 		if (Input.GetKeyDown(KeyCode.Q)) {
 			SceneManager.LoadScene("Block Builder Home");
 		}
+        if (tcp.receivedString.Length != 0 && tcp.receivedString[0] == 's') {
+            print("Data received, ready to start");
+            string s = tcp.receivedString;
+            for (int x = 0; x < BlockBuilderConfigs.gridSize.x; ++x) {
+                for (int z = 0; z < BlockBuilderConfigs.gridSize.z; ++z) {
+                    height[x, z] = (int)(s[x*3+z+1] - '0');
+                }
+            }
+            print(height);
+            currentLevelId = -1;
+            tcp.receivedString = "";
+            drawinghandlersample.updateTarget();
+            StopAllCoroutines();
+            Destroy(baseGridInstance.gameObject);
+            BeginGame();
+            print("Start complete...?");
+        }
+        if (tcp.receivedString.Length != 0 && tcp.receivedString[0] == 'r') {
+            StopAllCoroutines();
+            Destroy(baseGridInstance.gameObject);
+            BeginGame();
+        }
 	}
 
 	private void BeginGame() {
@@ -72,6 +101,7 @@ public class BlockBuilderManager : MonoBehaviour {
 			BlockBuilderConfigs.id ++;
 		}
 		baseGridInstance.OnCompleteBlockBuilderPuzzle();
+        staticTcp.SendMessageTcp("w");
 	}
 
 	public void OnClickExit() {
@@ -98,4 +128,10 @@ public class BlockBuilderManager : MonoBehaviour {
 			}
 		}
 	}
+    
+    public void sendLevelInfo(){
+        string s = baseGridInstance.getCells();
+        staticTcp.SendMessageTcp('q'+s);
+    }
+    
 }

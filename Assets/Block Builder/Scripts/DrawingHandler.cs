@@ -82,6 +82,19 @@ public class DrawingHandler : MonoBehaviour {
 			}
 		}
 	}
+    
+    public void updateTarget(){
+		Dictionary<IntVector3, bool> targetBlock = To3DMapping(BlockBuilderManager.height);
+		targetTopView = ThreeView.GetTopView(targetBlock);
+		targetFrontView = ThreeView.GetFrontView(targetBlock);
+		targetRightView = ThreeView.GetRightView(targetBlock);
+		targetTopViewPanel.GetComponent<ViewPanel>().DrawView(targetTopView);
+		targetFrontViewPanel.GetComponent<ViewPanel>().DrawView(targetFrontView);
+		targetRightViewPanel.GetComponent<ViewPanel>().DrawView(targetRightView);
+		targetFrontViewPanel.GetComponent<ViewPanel>().ChangeColorOnViewMatch();
+		targetRightViewPanel.GetComponent<ViewPanel>().ChangeColorOnViewMatch();
+		targetTopViewPanel.GetComponent<ViewPanel>().ChangeColorOnViewMatch();
+    }
 
 	public void DrawMultiView(BaseGridCell[,] cells) {
 		Dictionary<IntVector3, bool> cubes = To3DMapping(To2DMapping(cells));

@@ -64,7 +64,7 @@ public class RotateObject : MonoBehaviour {
 		float Y = Input.gyro.rotationRateUnbiased.y * sensitivityGyroY;
 		float Z = Input.gyro.rotationRateUnbiased.z * sensitivityGyroZ;
 		Vector3 rotateSpeed = new Vector3(-X, -Z, -Y);
-		Debug.Log(rotateSpeed);
+		//Debug.Log(rotateSpeed);
 
 		/*float XX = Mathf.Abs(X);
 		float YY = Mathf.Abs(Y);
