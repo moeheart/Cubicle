@@ -9,6 +9,7 @@ public class BlockBuilderManager : MonoBehaviour {
 
 	public BaseGrid baseGridPrefab;
 	public static GameObject levelCompletePanel;
+	public static GameObject gameCompletePanel;
 	public static BaseGrid baseGridInstance {get; private set;}
 
 	public static int [,] height {get; private set;}
@@ -18,6 +19,7 @@ public class BlockBuilderManager : MonoBehaviour {
 	public static int currentLevelId;
 
 	public GameObject movementPanel;
+
 
 	// Use this for initialization
 	void Awake () {
@@ -48,6 +50,7 @@ public class BlockBuilderManager : MonoBehaviour {
 		ParseJson(jsonFilePath, height, currentLevelId);
 		levelCompletePanel = GameObject.Find("Level Complete Panel");
 		levelCompletePanel.SetActive(false);
+		gameCompletePanel = GameObject.Find("Game Complete Panel");
 
 
 		if (BlockBuilderConfigs.thisLevelRotationMethod == BlockBuilderConfigs.RotationMethod.Gyro) {
@@ -101,6 +104,11 @@ public class BlockBuilderManager : MonoBehaviour {
 	}
 
 	public static void OnComplete() {
+		baseGridInstance.OnCompleteBlockBuilderPuzzle();
+		if (currentLevelId == BlockBuilderConfigs.totalLevels) {
+			gameCompletePanel.SetActive(true);
+			return;
+		}
 		levelCompletePanel.SetActive(true);
 		//TODO 
 		if (isTutorialLevel) {
@@ -109,7 +117,7 @@ public class BlockBuilderManager : MonoBehaviour {
 		else {
 			BlockBuilderConfigs.id ++;
 		}
-		baseGridInstance.OnCompleteBlockBuilderPuzzle();
+		
 	}
 
 	public void OnClickExit() {
