@@ -2,14 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using System;
 
-public static class BlockBuilderLog {
+public static class BlockBuilderLog { 
 
-	public static void Log(string path, int id, string log) {
-		/*if (!File.Exists(path)) {
-			File.AppendAllText(path, "RoomID, PuzzleType:  TimeSinceGameStart, TimeSinceEnterLevel,  Action\n");
+	public static string logPath = Path.Combine(Application.persistentDataPath, "Logs/Block Builder");
+	public static string logFile = Path.Combine(logPath, "log.csv");
+
+	public static void Log(int id, string log) {
+
+		Directory.CreateDirectory(logPath);
+		
+		if (!File.Exists(logFile)) {
+			File.AppendAllText(logFile, "name" + ", " + "rotationMethod" + ", " + "levelId" + ", " + "TimeSinceGameStart" + ", " + "TimeSinceEnterLevel" + ", " + "Action" + "\n");
 		}
 		float t = Time.time - BaseGrid.startTime;
-		File.AppendAllText(path, id + ", Block Builder: " + Time.time + ", " + t + ", " +  log + "\n");*/
+		// Debug.Log("rotationMethod:" + BlockBuilderConfigs.thisLevelRotationMethod.ToString());
+		File.AppendAllText(
+			logFile, BlockBuilderConfigs.participantName + ", " + BlockBuilderConfigs.thisLevelRotationMethod.ToString() + ", " + id + ", " + Time.time + ", " + t + ", " +  log + "\n");
+		
 	}
 }

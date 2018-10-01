@@ -9,13 +9,17 @@ public class BlockBuilderManager : MonoBehaviour {
 
 	public BaseGrid baseGridPrefab;
 	public static GameObject levelCompletePanel;
+	public static GameObject gameCompletePanel;
 	public static BaseGrid baseGridInstance {get; private set;}
 
 	public static int [,] height {get; private set;}
 
 	private static bool isTutorialLevel;
 	
-	private int currentLevelId;
+	public static int currentLevelId;
+
+	public GameObject movementPanel;
+
 
 	// Use this for initialization
 	void Awake () {
@@ -29,12 +33,44 @@ public class BlockBuilderManager : MonoBehaviour {
 			currentLevelId = BlockBuilderConfigs.id;
 		}
 
+		BlockBuilderConfigs.thisLevelRotationMethod = BlockBuilderConfigs.rotationMethod;
+
+		if (currentLevelId >= BlockBuilderConfigs.switchLevelId) {
+			if (BlockBuilderConfigs.rotationMethod == BlockBuilderConfigs.RotationMethod.Gyro) {
+				BlockBuilderConfigs.thisLevelRotationMethod = BlockBuilderConfigs.RotationMethod.Button;
+			}
+			else {
+				BlockBuilderConfigs.thisLevelRotationMethod = BlockBuilderConfigs.RotationMethod.Gyro;
+			}
+		}
+
 		//TODO load the height array, which represents the 3D model
 		height = new int[BlockBuilderConfigs.gridSize.x, BlockBuilderConfigs.gridSize.z];
 		string jsonFilePath = Path.Combine(Application.streamingAssetsPath, BlockBuilderConfigs.jsonFilename);
 		ParseJson(jsonFilePath, height, currentLevelId);
 		levelCompletePanel = GameObject.Find("Level Complete Panel");
 		levelCompletePanel.SetActive(false);
+		gameCompletePanel = GameObject.Find("Game Complete Panel");
+
+
+		if (BlockBuilderConfigs.thisLevelRotationMethod == BlockBuilderConfigs.RotationMethod.Gyro) {
+			Camera.main.GetComponent<RotateCameraUsingGyro>().enabled = true;
+			Camera.main.GetComponent<RotateCameraUsingButton>().enabled = false;
+			movementPanel.SetActive(false);
+		}
+		else if (BlockBuilderConfigs.thisLevelRotationMethod == BlockBuilderConfigs.RotationMethod.Button) {
+			Camera.main.GetComponent<RotateCameraUsingGyro>().enabled = false;
+			Camera.main.GetComponent<RotateCameraUsingButton>().enabled = true;
+			movementPanel.SetActive(true);
+		}
+
+
+		if (isTutorialLevel) {
+			Camera.main.GetComponent<RotateCameraUsingGyro>().enabled = true;
+			Camera.main.GetComponent<RotateCameraUsingButton>().enabled = true;
+			movementPanel.SetActive(true);
+		}
+		
 	}
 	
 	// Update is called once per frame
@@ -48,11 +84,16 @@ public class BlockBuilderManager : MonoBehaviour {
 	}
 
 	private void BeginGame() {
-		baseGridInstance = Instantiate (baseGridPrefab, Camera.main.transform) as BaseGrid;
-		baseGridInstance.transform.eulerAngles = new Vector3(0, 0 ,0);
-		baseGridInstance.transform.position = new Vector3(0, 0, 0);
-		// Camera.main.transform.LookAt(baseGridInstance.transform);
+		baseGridInstance = Instantiate (baseGridPrefab) as BaseGrid;
+
 		baseGridInstance.Generate();
+		baseGridInstance.transform.eulerAngles = new Vector3(0, 0, 0);
+		baseGridInstance.transform.position = new Vector3(0, 0, 0);
+		Camera.main.transform.LookAt(baseGridInstance.transform);
+		Camera.main.transform.Rotate(Vector3.right, 45);
+		ViewUtil.PlaceCameraFromRotation(Camera.main.transform, BlockBuilderConfigs.distanceToBaseGrid);
+		// Camera.main.transform.RotateAround(baseGridInstance.transform.position, Vector3.right, 30);
+		// baseGridInstance.transform.localEulerAngles = new Vector3(-20, 0 ,0);
 		// baseGridInstance.transform.localEulerAngles = new Vector3(-90, 90, -90);
 	}
 
@@ -63,6 +104,11 @@ public class BlockBuilderManager : MonoBehaviour {
 	}
 
 	public static void OnComplete() {
+		baseGridInstance.OnCompleteBlockBuilderPuzzle();
+		if (currentLevelId == BlockBuilderConfigs.totalLevels) {
+			gameCompletePanel.SetActive(true);
+			return;
+		}
 		levelCompletePanel.SetActive(true);
 		//TODO 
 		if (isTutorialLevel) {
@@ -71,7 +117,7 @@ public class BlockBuilderManager : MonoBehaviour {
 		else {
 			BlockBuilderConfigs.id ++;
 		}
-		baseGridInstance.OnCompleteBlockBuilderPuzzle();
+		
 	}
 
 	public void OnClickExit() {

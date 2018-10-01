@@ -26,7 +26,7 @@ public struct IntVector2 {
 	}
 
 	public override string ToString() {
-		return "(" + x + "," + z + ")";
+		return "(" + x + ":" + z + ")";
 	}
 
     public override int GetHashCode()

@@ -9,6 +9,8 @@ public class BaseGrid : MonoBehaviour {
 	public BaseGridCell cellPrefab;
 	public float generationStepDelay = 0.01f;
 
+	public GameObject upArrow;
+
 	private IntVector2 size = BlockBuilderConfigs.gridSize;
 	private BaseGridCell[,] cells;
 	private const float cellLength = 1f;
@@ -18,7 +20,6 @@ public class BaseGrid : MonoBehaviour {
 	private GameObject DrawingHandler;
 	private bool isCompleted = false;
 	private int id;
-	private string logPath;
 
 	private GameObject selectGridControlPanel;
 
@@ -33,7 +34,7 @@ public class BaseGrid : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		// TODO
-		id = BlockBuilderConfigs.id;
+		id = BlockBuilderManager.currentLevelId;
 		DrawingHandler = GameObject.Find("Drawing Handler");
 		selectGridControlPanel = GameObject.Find("Select Grid Control Panel");
 		increaseDecreasePanel = GameObject.Find("Right Panel");
@@ -52,9 +53,9 @@ public class BaseGrid : MonoBehaviour {
 		inc.onClick.AddListener(OnIncreaseClick);
 		dec.onClick.AddListener(OnDecreaseClick);
 		
-		logPath = Path.Combine(Application.persistentDataPath, "Logs/Block Builder/Block Builder.txt");
+
 		startTime = Time.time;
-		BlockBuilderLog.Log(logPath, id, "Entered Level...!!!");
+		BlockBuilderLog.Log(id, "Entered Level...!!!");
 	}
 	
 	// Update is called once per frame
@@ -102,23 +103,23 @@ public class BaseGrid : MonoBehaviour {
 		BaseGridCell designatedCell = 
 			cells[currentCoordinates.x, currentCoordinates.z];
 		int heightBeforeOp = designatedCell.height;
-		Debug.Log("DrawingHandler", DrawingHandler);
+//		Debug.Log("DrawingHandler", DrawingHandler);
 		int[,] target = BlockBuilderManager.height;
 		int targetHeight = target[currentCoordinates.x, currentCoordinates.z];
 		if (op == 1) {
 			if (heightBeforeOp < targetHeight) {
-				BlockBuilderLog.Log(logPath, id, "Correct Addition");
+				BlockBuilderLog.Log(id, "Correct Addition" + currentCoordinates);
 			}
 			else {
-				BlockBuilderLog.Log(logPath, id, "Incorrect Addition");
+				BlockBuilderLog.Log(id, "Incorrect Addition" + currentCoordinates);
 			}
 		}
 		else {
 			if (heightBeforeOp > targetHeight) {
-				BlockBuilderLog.Log(logPath, id, "Correct Deletion");
+				BlockBuilderLog.Log(id, "Correct Deletion" + currentCoordinates);
 			}
 			else {
-				BlockBuilderLog.Log(logPath, id, "Incorrect Deletion");
+				BlockBuilderLog.Log(id, "Incorrect Deletion" + currentCoordinates);
 			}
 		}
 	}
@@ -130,12 +131,15 @@ public class BaseGrid : MonoBehaviour {
 				CreateCell(new IntVector2(x,z));
 			}
 		}
+
+		CreateUpArrow(new IntVector2(size.x/2, size.z));
+
 		HighlightCell(currentCoordinates);
 	}
 
 	public void OnCompleteBlockBuilderPuzzle() {
 		isCompleted = true;
-		BlockBuilderLog.Log(logPath, id, "Completed Level...!!!");
+		BlockBuilderLog.Log(id, "Completed Level...!!!");
 		UnhighlightCell(currentCoordinates);
 	}
 
@@ -146,6 +150,15 @@ public class BaseGrid : MonoBehaviour {
 		newCell.name = "Cell " + coordinates.x + ", " + coordinates.z;
 		newCell.transform.parent = this.transform;
 		newCell.transform.localPosition = new Vector3(
+			coordinates.x - size.x * cellLength/2 + cellLength/2, 
+			-cellHeight/2, 
+			coordinates.z - size.z * cellLength/2 + cellLength/2);
+	}
+
+	private void CreateUpArrow(IntVector2 coordinates) {
+		GameObject arrow = Instantiate (upArrow) as GameObject;
+		arrow.transform.parent = this.transform;
+		arrow.transform.localPosition = new Vector3(
 			coordinates.x - size.x * cellLength/2 + cellLength/2, 
 			-cellHeight/2, 
 			coordinates.z - size.z * cellLength/2 + cellLength/2);
