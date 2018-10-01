@@ -51,6 +51,7 @@ public class BlockBuilderManager : MonoBehaviour {
 		levelCompletePanel = GameObject.Find("Level Complete Panel");
 		levelCompletePanel.SetActive(false);
 		gameCompletePanel = GameObject.Find("Game Complete Panel");
+		gameCompletePanel.SetActive(false);
 
 
 		if (BlockBuilderConfigs.thisLevelRotationMethod == BlockBuilderConfigs.RotationMethod.Gyro) {
