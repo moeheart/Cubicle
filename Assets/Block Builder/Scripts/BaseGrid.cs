@@ -28,6 +28,8 @@ public class BaseGrid : MonoBehaviour {
 	private Button up, left, right, down;
 
 	private Button inc, dec;
+    
+    public CSGTutorialButton csg;
 
 	public static float startTime {get; private set;}
 
@@ -215,6 +217,10 @@ public class BaseGrid : MonoBehaviour {
 	private void AddCubeToCoordinate(IntVector2 coordinates) {
 		BaseGridCell designatedCell = cells[coordinates.x, coordinates.z];
 		designatedCell.AddCube();
+        print("Added!");
+        if (csg.index == 2) {
+            csg.nextButton.gameObject.SetActive(true);
+        }
 
 		DrawingHandler.GetComponent<DrawingHandler>().DrawMultiView(cells);
 

@@ -65,6 +65,11 @@ public class ViewPanel : MonoBehaviour, IPointerClickHandler {
 
 	public void OnPointerClick(PointerEventData eventData) {
 		Camera.main.GetComponent<RotateCameraUsingGyro>().SwitchToView(viewType);
+        if (viewType == ViewType.TopView) {
+            if (baseGridInstance.csg.index == 4) {
+                baseGridInstance.csg.nextButton.gameObject.SetActive(true);
+            }
+        }
 	}
 
 	public void ChangeColorOnCompare(bool flag) {
@@ -123,20 +128,20 @@ public class ViewPanel : MonoBehaviour, IPointerClickHandler {
 		switch (viewType) {
 			case ViewType.TopView:
 				SetColorOnAlignWithWorldXYZ(
-					cameraTransform.right, -cameraTransform.forward, cameraTransform.up);
+					cameraTransform.right, -cameraTransform.forward, cameraTransform.up, 0);
 				break;
 			case ViewType.FrontView:
 				SetColorOnAlignWithWorldXYZ(
-					cameraTransform.right, cameraTransform.up, cameraTransform.forward);
+					cameraTransform.right, cameraTransform.up, cameraTransform.forward, 1);
 				break;
 			case ViewType.RightView:
 				SetColorOnAlignWithWorldXYZ(
-					-cameraTransform.forward, cameraTransform.up, cameraTransform.right);
+					-cameraTransform.forward, cameraTransform.up, cameraTransform.right, 2);
 				break;
 		}
 	}
 
-	private void SetColorOnAlignWithWorldXYZ(Vector3 a, Vector3 b, Vector3 c) {
+	private void SetColorOnAlignWithWorldXYZ(Vector3 a, Vector3 b, Vector3 c, int direction) {
 		float cos1 = Vector3.Dot(a, Vector3.right);
 		float cos2 = Vector3.Dot(b, Vector3.up);
 		float cos3 = Vector3.Dot(c, Vector3.forward);
@@ -145,6 +150,9 @@ public class ViewPanel : MonoBehaviour, IPointerClickHandler {
 				&& cos3 > BlockBuilderConfigs.cosineSimilarityLowerBound);
 		if (isAligned) {
 			this.GetComponent<Image>().color = viewMatchColor;
+            if (direction == 2 && baseGridInstance.csg.index == 3) {
+                baseGridInstance.csg.nextButton.gameObject.SetActive(true);
+            }
 		}
 		else {
 			this.GetComponent<Image>().color = defaultColor;

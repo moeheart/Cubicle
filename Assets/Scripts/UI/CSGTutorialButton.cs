@@ -8,8 +8,10 @@ public class CSGTutorialButton : MonoBehaviour {
 	public Text[] tutorialTexts;
 
 	public Button showAgainButton;
+    
+    public Button nextButton;
 
-	private int index = 0;
+	public int index = 0;
 
 	// Use this for initialization
 	void Start () {
@@ -34,6 +36,8 @@ public class CSGTutorialButton : MonoBehaviour {
 			if (tutorialTexts[index].gameObject.GetComponent<TextFunc>() != null) {
 				tutorialTexts[index].gameObject.GetComponent<TextFunc>().OnActive();
 			}
+            if (index >= 2)
+                nextButton.gameObject.SetActive(false);
 		}
 		else {
 			this.gameObject.SetActive(false);

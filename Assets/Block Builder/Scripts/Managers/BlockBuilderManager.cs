@@ -19,6 +19,8 @@ public class BlockBuilderManager : MonoBehaviour {
 	public static int currentLevelId;
 
 	public GameObject movementPanel;
+    
+    public CSGTutorialButton csg;
 
 
 	// Use this for initialization
@@ -53,7 +55,6 @@ public class BlockBuilderManager : MonoBehaviour {
 		gameCompletePanel = GameObject.Find("Game Complete Panel");
 		gameCompletePanel.SetActive(false);
 
-
 		if (BlockBuilderConfigs.thisLevelRotationMethod == BlockBuilderConfigs.RotationMethod.Gyro) {
 			Camera.main.GetComponent<RotateCameraUsingGyro>().enabled = true;
 			Camera.main.GetComponent<RotateCameraUsingButton>().enabled = false;
@@ -69,6 +70,7 @@ public class BlockBuilderManager : MonoBehaviour {
 		if (isTutorialLevel) {
 			Camera.main.GetComponent<RotateCameraUsingGyro>().enabled = true;
 			Camera.main.GetComponent<RotateCameraUsingButton>().enabled = true;
+            
 			movementPanel.SetActive(true);
 		}
 		
@@ -93,6 +95,8 @@ public class BlockBuilderManager : MonoBehaviour {
 		Camera.main.transform.LookAt(baseGridInstance.transform);
 		Camera.main.transform.Rotate(Vector3.right, 45);
 		ViewUtil.PlaceCameraFromRotation(Camera.main.transform, BlockBuilderConfigs.distanceToBaseGrid);
+        
+        baseGridInstance.csg = csg;
 		// Camera.main.transform.RotateAround(baseGridInstance.transform.position, Vector3.right, 30);
 		// baseGridInstance.transform.localEulerAngles = new Vector3(-20, 0 ,0);
 		// baseGridInstance.transform.localEulerAngles = new Vector3(-90, 90, -90);
